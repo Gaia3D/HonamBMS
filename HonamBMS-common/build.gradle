@@ -33,7 +33,8 @@ repositories {
 }
 
 test {
-	ignoreFailures = true
+	//ignoreFailures = true
+    exclude '**/*'
 }
 
 dependencies {
