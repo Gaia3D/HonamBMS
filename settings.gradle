@@ -3,9 +3,11 @@ rootProject.name = 'HonamBMS'
 include ':HonamBMS-common'
 include ':HonamBMS-admin'
 include ':HonamBMS-user'
+include ':HonamBMS-html'
 include ':HonamBMS-doc'
 
 project(':HonamBMS-common').projectDir = "$rootDir/HonamBMS-common" as File
 project(':HonamBMS-admin').projectDir = "$rootDir/HonamBMS-admin" as File
 project(':HonamBMS-user').projectDir = "$rootDir/HonamBMS-user" as File
 project(':HonamBMS-doc').projectDir = "$rootDir/HonamBMS-doc" as File
+project(':HonamBMS-html').projectDir = "$rootDir/HonamBMS-html" as File
