@@ -1,0 +1,138 @@
+* https 설명
+- 기본 https 포트 443, Tomcat은 8443을 사용하여이 포트를 구별
+- HTTPS 포트 443과 포트 8443의 차이점
+  443 은 포트 번호가 필요없음, http 80과 동일합니다. 도메인 이름을 통해 직접 액세스 할 수 있습니다. 예 : https://domainname.com.
+  8443 은 포트 번호를 추가해야 함, HTTP 8080에 상응 합니다. 도메인 이름에 포트 번호를 추가해야합니다. 예 : https://domainname.com:8443.
+
+
+* 참조 : https://annajinee.tistory.com/25
+1 spring boot 프로젝트(로컬)에서 인증서 생성
+프로젝트 디렉토리로 이동
+C:\git\repository\hmd\gis-admin>keytool -genkey -alias hmd-ssl -storetype PKCS12 -keyalg RSA -keysize 2048 -keystore keystore.p12 -validity 3650 
+키 저장소 비밀번호 입력 : hmdssl
+이름과 성을 입력 하십시오.
+[Unknown]:hmd
+조직 단위 이름을 입력 하십시오.
+[Unknown]:hmd
+조직 이름을 입력 하십시오.
+[Unknown]:hmd
+구/군/시 이름을 입력 하십시오.
+[Unknown]: 그냥 엔터
+시/도 이름을 입력 하십시오.
+[Unknown]: 그냥 엔터
+이 조직의 두 자리 국가 코드를 입력 하십시오.
+[Unknown]:ko
+CN=hmd, OU=hmd, O=hmd, L=Unknown, ST=Unknown, C=ko이(가) 맞습니까?
+  [아니오]:  y
+
+2 확인
+‪C:\git\repository\hmd\gis-admin\keystore.p12
+파일이 생성된걸 확인할 수 있음
+
+3 application.properties 수정
+server.port=9943
+server.ssl.enabled=true
+# http2 설정을 위해서는 ALPN(Appliction-Layer Protocol Negotiation 설정을 해 줘야 함
+#server.http2.enabled=true
+server.ssl.key-store=keystore.p12
+server.ssl.key-store-password=hmdssl
+server.ssl.key-store-type=PKCS12
+server.ssl.key-alias=hmd-ssl
+
+4 java 소스 수정
+ - hmd.properties 파일에...
+ hmd.server-port-http=9090
+ 자바 설정에
+ 
+ 주석 부분은 http -> https 로 리다이렉트 하는 부분이다.
+ 
+ @Bean
+	public ServletWebServerFactory containerFactory() {
+		String osType = propertiesConfig.getOsType();
+		
+		if(OSType.WINDOW.name().equals(osType)) {
+			TomcatServletWebServerFactory tomcat = new TomcatServletWebServerFactory();
+		    tomcat.addAdditionalTomcatConnectors(createHttpConnector());
+		    return tomcat;
+		} else {
+			TomcatServletWebServerFactory tomcat = new TomcatServletWebServerFactory() {
+		        @Override
+		        protected void postProcessContext(Context context) {
+		        	SecurityConstraint securityConstraint = new SecurityConstraint();
+		        	securityConstraint.setUserConstraint("CONFIDENTIAL");
+		        	SecurityCollection collection = new SecurityCollection();
+		        	collection.addPattern("/*");
+		        	securityConstraint.addCollection(collection);
+		        	context.addConstraint(securityConstraint);
+		        }
+		    };
+		    
+		    tomcat.addAdditionalTomcatConnectors(createHttpConnector());
+		    return tomcat;
+		}
+	}
+	
+	private Connector createHttpConnector() {
+		String osType = propertiesConfig.getOsType();
+		
+		Connector connector = new Connector(TomcatServletWebServerFactory.DEFAULT_PROTOCOL);
+		if(!OSType.WINDOW.name().equals(osType)) {
+			connector.setScheme("http");
+		}
+		connector.setPort(serverHttpPort);
+		if(!OSType.WINDOW.name().equals(osType)) {
+			connector.setSecure(false);
+			connector.setRedirectPort(serverPort);
+		}
+		return connector;
+	}
+ 
+ 
+ <Connector port="443" protocol="HTTP/1.1" SSLEnabled="true"
+               maxThreads="150" scheme="https" secure="true"
+               keystorePass="암호" keystoreFile="경로/sample.p12"
+               keystoreType="pkcs12"
+               clientAuth="false" sslProtocol="TLS" URIEncoding = "utf-8"  />
+ 
+ 
+tomcat8 에서 https2를 적용 하려면...
+tomcat libtcnative library 설치가 필요하다.
+
+톰캣 설치 디렉토리/bin에 가면 아래 파일이 있다.
+-rw-rw-r--.  1 hmd hmd 418909 Apr 12 13:42 tomcat-native.tar.gz
+이런 설정을 해 줘야 하는군...
+http://blog.naver.com/PostView.nhn?blogId=wizardkyn&logNo=220862157530&parentCategoryNo=&categoryNo=3&viewDate=&isShowPopularPosts=true&from=search
+
+
+ 
+tomcat 8 이하에서는 lib 설정이 필요하고... 9 부터는 그냥 가능하다.
+ <Connector port="8080" protocol="HTTP/1.1"
+               connectionTimeout="20000"
+               redirectPort="8443">
+      <UpgradeProtocol className="org.apache.coyote.http2.Http2Protocol" />
+    </Connector>
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
