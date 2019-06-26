@@ -76,7 +76,7 @@ create table bridge(
 	dcr_rou						varchar(50),
 	ddw_max						float,
 	bridge_cm					float,
-	bridge_grade				varchar(1);
+	bridge_grade				varchar(1),
 	update_date					timestamp with time zone,
 	insert_date					timestamp with time zone		default now(),
 	constraint bridge_pk 		primary key (fac_num)
@@ -115,7 +115,7 @@ comment on column bridge.dsg_start is '설계시작일';
 comment on column bridge.dsg_end is '설계완료일';						
 comment on column bridge.dsn_wet is '설계하중';						
 comment on column bridge.dsn_drw is '설계도서보전';						
-comment on column bridge.drw_sub is '설계도서사본 공단제출'
+comment on column bridge.drw_sub is '설계도서사본 공단제출';
 comment on column bridge.rep_chk is '보고 유무';						
 comment on column bridge.dsn_sem is '내진설계적용여부';						
 comment on column bridge.isp_name is '관리자';					
@@ -155,7 +155,7 @@ comment on column bridge.dal_base is '하부구조 교대 기초 형식';
 comment on column bridge.dcr_rou is '하부구조 교차노선(교차하천)';						
 comment on column bridge.ddw_max is '하부구조 교차하천 최고 수심';
 comment on column bridge.bridge_cm is '교량 유지관리 목표 성능';
-comment on column bridge.bridge_grade is '등급';
+comment on column bridge.bridge_grade is '교량등급';
 comment on column bridge.update_date is '수정일';					
 comment on column bridge.insert_date is '등록일';					
 
@@ -170,7 +170,7 @@ create table bridge_group(
 );
 
 comment on table bridge_group is '교량 그룹 정보';
-bridge_group_id.bridge_group_id is '교량 그룹 고유번호';
-bridge_group_id.bridge_group_cm is '교량 그룹의 유지관리 목표 성능'
+comment on column bridge_group.bridge_group_id is '교량 그룹 고유번호';
+comment on column bridge_group.bridge_group_cm is '교량 그룹의 유지관리 목표 성능';
 comment on column bridge_group.update_date is '수정일';
 comment on column bridge_group.insert_date is '등록일';
