@@ -6,10 +6,12 @@
 <configuration>
 	<settings>
 		<setting name="lazyLoadingEnabled" value="false" />
+		<setting name="mapUnderscoreToCamelCase" value="true"/>
 	</settings>
 	
 	<typeAliases>
-
+		<typeAlias type="HonamBMS.domain.AccessLog" alias="accessLog"/>
+		<typeAlias type="HonamBMS.domain.APILog" alias="aPILog"/>
 	</typeAliases>
 	
 </configuration>

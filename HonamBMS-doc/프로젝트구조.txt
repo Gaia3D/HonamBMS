@@ -1,0 +1,64 @@
+ < springboot 프로젝트 구성 >
+  
+ 1. java 
+    |- api
+    |
+    |- config
+    | 	|
+    | 	|- GlobalExceptionHandler
+    | 	|- PropertiesConfig
+    |   |- RestTemplateResponseErrorHandler
+    | 	|- RootConfig
+    | 	|- ServletConfig 
+    |	 		
+    |- controller
+    |
+    |- domain
+    |
+    |- exception
+    |
+    |- filter
+    | 
+    |- geospatial (#)
+    |
+    |- helper
+    |
+    |- interceptor
+    |
+    |- listener
+    |
+    |- persistence/postgresql : persistence
+    |
+    |- service
+    |
+    |- support
+    |
+    |- util
+     	|
+     	|- DateUtil : 날짜 관련 데이터 처리
+     	|- FormatUtil : 데이터 포맷을 처리
+     	|- PageUtil : API 요청을 위한 페이지 처리 
+     	|- StringUtil : Stirng 관련 데이터 처리
+     	|- WebUtil : 유효성 체크. IP 체크
+     	    		  
+ 2. resource
+    |- mybatis/postgresql : mybatis mapper XML
+    |- appication.properties : application properties
+	|- 프로젝트명.properties : Project configuration
+    |- logback-spring.xml : logback 설정
+    |- mybatis-config-postgresqlxml : mybatis 설정
+
+  3.src/main/webapp
+    |- css : css 파일
+    |- externlib : 확장 라이브러리
+    |- images
+    |- js
+    |- WEB-INF/views  
+		|- bridge
+	   	|- bridge-group
+		|- common 
+		|- error 
+		|- layouts 
+		|- log
+	 	|- login
+	  
