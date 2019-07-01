@@ -1,13 +1,13 @@
 rootProject.name = 'honambms'
 
-include ':honambms-common'
-include ':honambms-admin'
-include ':honambms-user'
-include ':honambms-html'
-include ':honambms-doc'
+include ':honam-common'
+include ':honam-admin'
+include ':honam-user'
+include ':honam-html'
+include ':honam-doc'
 
-project(':honambms-common').projectDir = "$rootDir/honambms-common" as File
-project(':honambms-admin').projectDir = "$rootDir/honambms-admin" as File
-project(':honambms-user').projectDir = "$rootDir/honambms-user" as File
-project(':honambms-doc').projectDir = "$rootDir/honambms-doc" as File
-project(':honambms-html').projectDir = "$rootDir/honambms-html" as File
+project(':honam-common').projectDir = "$rootDir/honam-common" as File
+project(':honam-admin').projectDir = "$rootDir/honam-admin" as File
+project(':honam-user').projectDir = "$rootDir/honam-user" as File
+project(':honam-doc').projectDir = "$rootDir/honam-doc" as File
+project(':honam-html').projectDir = "$rootDir/honam-html" as File
