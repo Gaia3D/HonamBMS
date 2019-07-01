@@ -1,4 +1,4 @@
-package HonamBMS.interceptor;
+package honambms.interceptor;
 
 import java.io.IOException;
 

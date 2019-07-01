@@ -1,4 +1,4 @@
-package HonamBMS.config;
+package honambms.config;
 
 import java.io.IOException;
 
@@ -7,7 +7,7 @@ import org.springframework.http.client.ClientHttpResponse;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.ResponseErrorHandler;
 
-import HonamBMS.exception.NotFoundException;
+import honambms.exception.NotFoundException;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j

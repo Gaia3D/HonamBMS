@@ -1,4 +1,4 @@
-package HonamBMS.util;
+package honambms.util;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;

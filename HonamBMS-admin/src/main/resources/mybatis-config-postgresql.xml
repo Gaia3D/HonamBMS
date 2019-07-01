@@ -10,8 +10,8 @@
 	</settings>
 	
 	<typeAliases>
-		<typeAlias type="HonamBMS.domain.AccessLog" alias="accessLog"/>
-		<typeAlias type="HonamBMS.domain.APILog" alias="aPILog"/>
+		<typeAlias type="honambms.domain.AccessLog" alias="accessLog"/>
+		<typeAlias type="honambms.domain.APILog" alias="aPILog"/>
 	</typeAliases>
 	
 </configuration>

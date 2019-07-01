@@ -1,8 +1,8 @@
-package HonamBMS.service;
+package honambms.service;
 
 import java.util.List;
 
-import HonamBMS.domain.AccessLog;
+import honambms.domain.AccessLog;
 
 /**
  * 로그 처리

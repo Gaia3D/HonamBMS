@@ -1,4 +1,4 @@
-package HonamBMS.config;
+package honambms.config;
 
 import javax.sql.DataSource;
 
@@ -20,18 +20,19 @@ import org.springframework.stereotype.Service;
 
 import com.zaxxer.hikari.HikariDataSource;
 
+import honambms.security.Crypt;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
+@MapperScan("honambms.persistence.postgresql")
 @Configuration
-@MapperScan("HonamBMS.persistence.postgresql")
-@ComponentScan(	basePackages = {"HonamBMS.service, HonamBMS.persistence.postgresql"},
+@ComponentScan(	basePackages = {"honambms.service, honambms.persistence.postgresql"},
 				includeFilters = {	@Filter(type = FilterType.ANNOTATION, value = Component.class),
 									@Filter(type = FilterType.ANNOTATION, value = Service.class),
 									@Filter(type = FilterType.ANNOTATION, value = Repository.class) },
 				excludeFilters = @Filter(type = FilterType.ANNOTATION, value = Controller.class) )
 public class RootConfig {
-
+	
 	@Value("${spring.datasource.postgresql.driver-class-name}")
 	private String postgresqlDriverClassName;
 	@Value("${spring.datasource.postgresql.url}")
@@ -44,19 +45,31 @@ public class RootConfig {
 	private Integer postgresqlMaximumPoolSize;
 	@Value("${spring.datasource.postgresql.hikari.minimum-idle}")
 	private Integer postgresqlMinimumIdle;
-
+	
 	@Bean(name="datasourceAdmin")
 	public DataSource dataSource() {
+		
+		// TODO hikari 에서는 min, max 를 동일값을 해 주길 권장
+//		spring.datasource.hikari.minimum-idle=20
+//		spring.datasource.hikari.maximum-pool-size=30
+//		spring.datasource.hikari.idle-timeout=600000 (10분)
+//		spring.datasource.hikari.max-lifetime=1800000 (30분)
+//		spring.datasource.hikari.connection-timeout=15000
+//		spring.datasource.hikari.validation-timeout=10000
+		
 		HikariDataSource dataSource = new HikariDataSource();
 		//dataSource.setPoolName("mago3DAdminPool");
 		dataSource.setDriverClassName(postgresqlDriverClassName);
+//		dataSource.setJdbcUrl(Crypt.decrypt(postgresqlUrl));
+//		dataSource.setUsername(Crypt.decrypt(postgresqlUser));
+//		dataSource.setPassword(Crypt.decrypt(postgresqlPassword));
 		dataSource.setJdbcUrl(postgresqlUrl);
 		dataSource.setUsername(postgresqlUser);
 		dataSource.setPassword(postgresqlPassword);
 		dataSource.setMaximumPoolSize(postgresqlMaximumPoolSize);
 		dataSource.setMinimumIdle(postgresqlMinimumIdle);
-				
-		return dataSource;
+		
+	    return dataSource;
 	}
 	
 	@Bean
@@ -74,5 +87,5 @@ public class RootConfig {
 		factory.setMapperLocations(new PathMatchingResourcePatternResolver().getResources("classpath:mybatis/postgresql/*.xml"));
 		factory.setConfigLocation(new PathMatchingResourcePatternResolver().getResource("mybatis-config-postgresql.xml"));
 		return factory.getObject();
-	}
+    }
 }

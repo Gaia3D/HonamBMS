@@ -1,4 +1,4 @@
-package HonamBMS.domain;
+package honambms.domain;
 
 public enum UserStatus {
 	// 사용중

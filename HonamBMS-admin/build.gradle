@@ -26,7 +26,7 @@ apply plugin: 'war'
 apply plugin: 'project-report'
 
 war {
-    baseName = 'gis-admin'
+    baseName = 'honambms-admin'
     version = '0.0.1-SNAPSHOT'
 }
 
@@ -53,7 +53,7 @@ test {
 }
 
 dependencies {
-    implementation project(':HonamBMS-common')
+    implementation project(':honambms-common')
 
     implementation('org.springframework.boot:spring-boot-starter-actuator')
     implementation('org.springframework.boot:spring-boot-starter-web')

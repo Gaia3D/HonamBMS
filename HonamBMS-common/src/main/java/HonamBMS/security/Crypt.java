@@ -1,4 +1,4 @@
-package HonamBMS.security;
+package honambms.security;
 
 import org.apache.commons.codec.binary.Base64;
 

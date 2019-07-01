@@ -1,4 +1,4 @@
-package HonamBMS;
+package honambms;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,31 +23,31 @@ import org.springframework.web.filter.HiddenHttpMethodFilter;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
-import HonamBMS.config.PropertiesConfig;
-import HonamBMS.domain.OSType;
-import HonamBMS.filter.XSSFilter;
-import HonamBMS.listener.Gaia3dHttpSessionBindingListener;
+//import honambms.config.PropertiesConfig;
+//import honambms.domain.OSType;
+//import honambms.filter.XSSFilter;
+//import honambms.listener.Gaia3dHttpSessionBindingListener;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @SpringBootApplication
-public class HonamBMSAdminApplication extends SpringBootServletInitializer {
-
-	@Value("${server.port}")
-	private Integer serverPort;
-	@Value("${server.http.port}")
-    private int serverHttpPort;
+public class honambmsAdminApplication extends SpringBootServletInitializer {
 	
-	@Autowired
-	private PropertiesConfig propertiesConfig;
+//	@Value("${server.port}")
+//	private Integer serverPort;
+//	@Value("${server.http.port}")
+//    private int serverHttpPort;
+//	
+//	@Autowired
+//	private PropertiesConfig propertiesConfig;
 	
-	public static void main(String[] args) throws Exception{
-		SpringApplication.run(HonamBMSAdminApplication.class, args);
+	public static void main(String[] args) {
+		SpringApplication.run(honambmsAdminApplication.class, args);
 	}
 
 	@Override
 	protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
-		return application.sources(HonamBMSAdminApplication.class);
+		return application.sources(honambmsAdminApplication.class);
 	}
 	
 	/**
@@ -65,81 +65,81 @@ public class HonamBMSAdminApplication extends SpringBootServletInitializer {
 		};
 	}
 	
-	@Bean
-    public FilterRegistrationBean<XSSFilter> xSSFilter() {
-		FilterRegistrationBean<XSSFilter> registrationBean = new FilterRegistrationBean<>(new XSSFilter());
-		
-		List<String> urls = getUrlList();
-		
-		registrationBean.setUrlPatterns(urls);
-		//registrationBean.addUrlPatterns(/*);
-		return registrationBean;
-    }
-    
-  @Bean
-	public FilterRegistrationBean<HiddenHttpMethodFilter> hiddenHttpMethodFilter() {
-		FilterRegistrationBean<HiddenHttpMethodFilter> registrationBean = new FilterRegistrationBean<>(new HiddenHttpMethodFilter());
-		List<String> urls = getUrlList();
-		
-		registrationBean.setUrlPatterns(urls);
-		//registrationBean.addUrlPatterns("/*");
-		return registrationBean;
-	}
-	
-	@Bean
-	public HttpSessionBindingListener httpSessionBindingListener() {
-		log.info(" $$$ HonamBMSAdminApplication registerListener $$$ ");
-		return new Gaia3dHttpSessionBindingListener();
-	}
-	
-	@Bean
-	public ServletWebServerFactory containerFactory() {
-		String osType = propertiesConfig.getOsType();
-		
-		if(OSType.WINDOW.name().equals(osType)) {
-			TomcatServletWebServerFactory tomcat = new TomcatServletWebServerFactory();
-		    tomcat.addAdditionalTomcatConnectors(createHttpConnector());
-		    return tomcat;
-		} else {
-			TomcatServletWebServerFactory tomcat = new TomcatServletWebServerFactory() {
-		        @Override
-		        protected void postProcessContext(Context context) {
-		        	SecurityConstraint securityConstraint = new SecurityConstraint();
-		        	securityConstraint.setUserConstraint("CONFIDENTIAL");
-		        	SecurityCollection collection = new SecurityCollection();
-		        	collection.addPattern("/*");
-		        	securityConstraint.addCollection(collection);
-		        	context.addConstraint(securityConstraint);
-		        }
-		    };
-		    
-		    tomcat.addAdditionalTomcatConnectors(createHttpConnector());
-		    return tomcat;
-		}
-	}
-	
-	private Connector createHttpConnector() {
-		String osType = propertiesConfig.getOsType();
-		
-		Connector connector = new Connector(TomcatServletWebServerFactory.DEFAULT_PROTOCOL);
-		if(!OSType.WINDOW.name().equals(osType)) {
-			connector.setScheme("http");
-		}
-		connector.setPort(serverHttpPort);
-		if(!OSType.WINDOW.name().equals(osType)) {
-			connector.setSecure(false);
-			connector.setRedirectPort(serverPort);
-		}
-		return connector;
-	}
+//	@Bean
+//    public FilterRegistrationBean<XSSFilter> xSSFilter() {
+//		FilterRegistrationBean<XSSFilter> registrationBean = new FilterRegistrationBean<>(new XSSFilter());
+//		
+//		List<String> urls = getUrlList();
+//		
+//		registrationBean.setUrlPatterns(urls);
+//		//registrationBean.addUrlPatterns(/*);
+//		return registrationBean;
+//    }
+//    
+//    @Bean
+//	public FilterRegistrationBean<HiddenHttpMethodFilter> hiddenHttpMethodFilter() {
+//		FilterRegistrationBean<HiddenHttpMethodFilter> registrationBean = new FilterRegistrationBean<>(new HiddenHttpMethodFilter());
+//		List<String> urls = getUrlList();
+//		
+//		registrationBean.setUrlPatterns(urls);
+//		//registrationBean.addUrlPatterns("/*");
+//		return registrationBean;
+//	}
+//	
+//	@Bean
+//	public HttpSessionBindingListener httpSessionBindingListener() {
+//		log.info(" $$$ GisAdminApplication registerListener $$$ ");
+//		return new Gaia3dHttpSessionBindingListener();
+//	}
+//	
+//	@Bean
+//	public ServletWebServerFactory containerFactory() {
+//		String osType = propertiesConfig.getOsType();
+//		
+//		if(OSType.WINDOW.name().equals(osType)) {
+//			TomcatServletWebServerFactory tomcat = new TomcatServletWebServerFactory();
+//		    tomcat.addAdditionalTomcatConnectors(createHttpConnector());
+//		    return tomcat;
+//		} else {
+//			TomcatServletWebServerFactory tomcat = new TomcatServletWebServerFactory() {
+//		        @Override
+//		        protected void postProcessContext(Context context) {
+//		        	SecurityConstraint securityConstraint = new SecurityConstraint();
+//		        	securityConstraint.setUserConstraint("CONFIDENTIAL");
+//		        	SecurityCollection collection = new SecurityCollection();
+//		        	collection.addPattern("/*");
+//		        	securityConstraint.addCollection(collection);
+//		        	context.addConstraint(securityConstraint);
+//		        }
+//		    };
+//		    
+//		    tomcat.addAdditionalTomcatConnectors(createHttpConnector());
+//		    return tomcat;
+//		}
+//	}
+//	
+//	private Connector createHttpConnector() {
+//		String osType = propertiesConfig.getOsType();
+//		
+//		Connector connector = new Connector(TomcatServletWebServerFactory.DEFAULT_PROTOCOL);
+//		if(!OSType.WINDOW.name().equals(osType)) {
+//			connector.setScheme("http");
+//		}
+//		connector.setPort(serverHttpPort);
+//		if(!OSType.WINDOW.name().equals(osType)) {
+//			connector.setSecure(false);
+//			connector.setRedirectPort(serverPort);
+//		}
+//		return connector;
+//	}
 	
 	private List<String> getUrlList() {
 		List<String> urls = new ArrayList<>();
 //		urls.add("/user/*");
 //		urls.add("/layer/*");
 //		urls.add("/layers/*");
-		urls.add("/apilog/*");
-		urls.add("/access/*");
+//		urls.add("/apilog/*");
+//		urls.add("/access/*");
 //		urls.add("/server/*");
 //		urls.add("/servers/*");
 //		urls.add("/menus/*");
@@ -148,4 +148,5 @@ public class HonamBMSAdminApplication extends SpringBootServletInitializer {
 //		urls.add("/policy/*");
 		return urls;
 	}
+	
 }

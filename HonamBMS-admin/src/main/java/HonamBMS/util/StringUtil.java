@@ -1,4 +1,4 @@
-package HonamBMS.util;
+package honambms.util;
 
 public class StringUtil {
 

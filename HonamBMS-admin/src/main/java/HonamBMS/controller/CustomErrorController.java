@@ -1,4 +1,4 @@
-package HonamBMS.controller;
+package honambms.controller;
 
 import java.util.Enumeration;
 

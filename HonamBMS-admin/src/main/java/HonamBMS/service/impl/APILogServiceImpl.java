@@ -1,4 +1,4 @@
-package HonamBMS.service.impl;
+package honambms.service.impl;
 
 import java.util.List;
 
@@ -6,9 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import HonamBMS.domain.APILog;
-import HonamBMS.persistence.postgresql.APILogMapper;
-import HonamBMS.service.APILogService;
+import honambms.domain.APILog;
+import honambms.persistence.postgresql.APILogMapper;
+import honambms.service.APILogService;
 
 @Service
 public class APILogServiceImpl implements APILogService {

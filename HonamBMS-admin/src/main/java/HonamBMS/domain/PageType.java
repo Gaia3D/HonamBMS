@@ -1,4 +1,4 @@
-package HonamBMS.domain;
+package honambms.domain;
 
 public enum PageType {
 	LIST(0), MODIFY(1), DETAIL(2);

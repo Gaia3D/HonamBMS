@@ -1,9 +1,9 @@
-package HonamBMS.listener;
+package honambms.listener;
 
 import javax.servlet.http.HttpSessionBindingEvent;
 import javax.servlet.http.HttpSessionBindingListener;
 
-import HonamBMS.support.SessionUserSupport;
+import honambms.support.SessionUserSupport;
 import lombok.extern.slf4j.Slf4j;
 
 /**

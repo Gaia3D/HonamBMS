@@ -1,9 +1,9 @@
-package HonamBMS.config;
+package honambms.config;
 
 import org.springframework.boot.web.client.RestTemplateCustomizer;
 import org.springframework.web.client.RestTemplate;
 
-import HonamBMS.interceptor.CustomClientHttpRequestInterceptor;
+import honambms.interceptor.CustomClientHttpRequestInterceptor;
 
 /**
  * customize rest template with an interceptor

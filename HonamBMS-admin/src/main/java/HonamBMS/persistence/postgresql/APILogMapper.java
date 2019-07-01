@@ -1,10 +1,10 @@
-package HonamBMS.persistence.postgresql;
+package honambms.persistence.postgresql;
 
 import java.util.List;
 
 import org.springframework.stereotype.Repository;
 
-import HonamBMS.domain.APILog;
+import honambms.domain.APILog;
 
 @Repository
 public interface APILogMapper {

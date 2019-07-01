@@ -1,4 +1,4 @@
-package HonamBMS.annotation;
+package honambms.annotation;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;

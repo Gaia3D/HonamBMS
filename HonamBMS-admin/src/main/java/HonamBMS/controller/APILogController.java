@@ -1,4 +1,4 @@
-package HonamBMS.controller;
+package honambms.controller;
 
 import java.net.URLEncoder;
 import java.util.ArrayList;
@@ -18,14 +18,14 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import HonamBMS.domain.APIError;
-import HonamBMS.domain.APILog;
-import HonamBMS.domain.Pagination;
-import HonamBMS.domain.Search;
-import HonamBMS.service.APILogService;
-import HonamBMS.util.DateUtil;
-import HonamBMS.util.FormatUtil;
-import HonamBMS.util.StringUtil;
+import honambms.domain.APIError;
+import honambms.domain.APILog;
+import honambms.domain.Pagination;
+import honambms.domain.Search;
+import honambms.service.APILogService;
+import honambms.util.DateUtil;
+import honambms.util.FormatUtil;
+import honambms.util.StringUtil;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j

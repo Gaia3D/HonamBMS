@@ -1,4 +1,4 @@
-package HonamBMS.security;
+package honambms.security;
 
 import org.junit.Test;
 

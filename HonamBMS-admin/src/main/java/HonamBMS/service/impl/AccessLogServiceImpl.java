@@ -1,4 +1,4 @@
-package HonamBMS.service.impl;
+package honambms.service.impl;
 
 import java.util.List;
 
@@ -6,9 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import HonamBMS.domain.AccessLog;
-import HonamBMS.persistence.postgresql.AccessLogMapper;
-import HonamBMS.service.AccessLogService;
+import honambms.domain.AccessLog;
+import honambms.persistence.postgresql.AccessLogMapper;
+import honambms.service.AccessLogService;
 
 /**
  * 로그 처리

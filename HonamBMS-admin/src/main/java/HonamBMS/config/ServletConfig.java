@@ -1,4 +1,4 @@
-package HonamBMS.config;
+package honambms.config;
 
 import java.security.KeyManagementException;
 import java.security.KeyStoreException;
@@ -13,14 +13,12 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.ssl.TrustStrategy;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.ComponentScan.Filter;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.DependsOn;
 import org.springframework.context.annotation.FilterType;
 import org.springframework.context.support.MessageSourceAccessor;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
@@ -43,34 +41,61 @@ import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import HonamBMS.interceptor.ConfigInterceptor;
-import HonamBMS.interceptor.LogInterceptor;
-import HonamBMS.interceptor.SecurityInterceptor;
+import honambms.interceptor.ConfigInterceptor;
+import honambms.interceptor.LogInterceptor;
+import honambms.interceptor.SecurityInterceptor;
 import lombok.extern.slf4j.Slf4j;
-
-
+import springfox.documentation.builders.ApiInfoBuilder;
+import springfox.documentation.builders.RequestHandlerSelectors;
+import springfox.documentation.service.ApiInfo;
+import springfox.documentation.service.Contact;
+import springfox.documentation.spi.DocumentationType;
+import springfox.documentation.spring.web.plugins.Docket;
+import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 @Slf4j
+@EnableSwagger2
 @EnableWebMvc
 @Configuration
-@ComponentScan(basePackages = { "HonamBMS.config, HonamBMS.api, HonamBMS.controller, HonamBMS.interceptor, HonamBMS.validator" }, includeFilters = {
+@ComponentScan(basePackages = { "honambms.config, honambms.api, honambms.controller, honambms.interceptor, honambms.validator" }, includeFilters = {
 		@Filter(type = FilterType.ANNOTATION, value = Component.class),
 		@Filter(type = FilterType.ANNOTATION, value = Controller.class),
 		@Filter(type = FilterType.ANNOTATION, value = RestController.class)})
 public class ServletConfig implements WebMvcConfigurer {
 	
+	@Autowired
+	private PropertiesConfig propertiesConfig;
+	
+	@Autowired
+	private ConfigInterceptor configInterceptor;
+	@Autowired
+	private SecurityInterceptor securityInterceptor;
+	
+	@Autowired
+	private LogInterceptor logInterceptor;
+	
 	@Override
     public void configureDefaultServletHandling(DefaultServletHandlerConfigurer configurer) {
         configurer.enable();
     }
-    
+	
 	@Override
-    public void addViewControllers(ViewControllerRegistry registry) {
-        registry.addViewController("/").setViewName("forward:/index.jsp");
-        registry.setOrder(Ordered.HIGHEST_PRECEDENCE);
+	public void addInterceptors(InterceptorRegistry registry) {
+		log.info(" @@@ ServletConfig addInterceptors @@@@ ");
+		
+		registry.addInterceptor(securityInterceptor)
+				.addPathPatterns("/**")
+				.excludePathPatterns("/login/**", "/css/**", "/externlib/**", "/images/**", "/js/**");
+		registry.addInterceptor(logInterceptor)
+				.addPathPatterns("/**")
+				.excludePathPatterns("/login/**", "/css/**", "/externlib/**", "/images/**", "/js/**");
+		registry.addInterceptor(configInterceptor)
+		.addPathPatterns("/**")
+		.excludePathPatterns("/login/**", "/css/**", "/externlib/**", "/images/**", "/js/**");
     }
 	
-    @Bean
+	@Bean
+	@ConditionalOnMissingBean(InternalResourceViewResolver.class)
 	public InternalResourceViewResolver viewResolver() {
 		log.info(" @@@ ServletConfig viewResolver @@@");
 		InternalResourceViewResolver viewResolver = new InternalResourceViewResolver();
@@ -80,13 +105,55 @@ public class ServletConfig implements WebMvcConfigurer {
 		
 		return viewResolver;
 	}
-    
-    @Bean
+	
+//	@Bean
+//	public HandlebarsViewResolver viewResolver() {
+//		HandlebarsViewResolver handlebarsViewResolver = new HandlebarsViewResolver();
+//		handlebarsViewResolver.setPrefix("/WEB-INF/templates");
+//		handlebarsViewResolver.setSuffix(".html");
+//		handlebarsViewResolver.setOrder(1);
+//		handlebarsViewResolver.setCache(false);
+//		
+//		handlebarsViewResolver.registerHelper("math", new MathHelper());
+//		handlebarsViewResolver.registerHelpers(ConditionalHelpers.class);
+//		
+//		return handlebarsViewResolver;
+//	}
+	
+	// TODO nashorn 적용 하다 실패. https://github.com/kingbbode/spring-nashorn-isomorphic
+//	@Bean
+//	public ViewResolver viewResolver() {
+//		ScriptTemplateViewResolver viewResolver = new ScriptTemplateViewResolver();
+//		viewResolver.setPrefix("/WEB-INF/templates");
+//		viewResolver.setSuffix(".html");
+//		viewResolver.setOrder(1);
+//		viewResolver.setCache(false);
+//		return viewResolver;
+//	}
+//	
+//	@Bean
+//	public ScriptTemplateConfigurer handlebarsConfigurer() { 
+//		ScriptTemplateConfigurer configurer = new ScriptTemplateConfigurer();
+//		configurer.setEngineName("nashorn");
+//		configurer.setScripts("/static/polyfill.js", 
+//				"/META-INF/resources/webjars/handlebars/4.0.11-1/handlebars.js",
+//				"/static/render.js");
+//		configurer.setRenderFunction("render");
+//		configurer.setSharedEngine(false);
+//		return configurer;
+//	}
+
+	@Bean
+	public LocaleResolver localeResolver() {
+		SessionLocaleResolver sessionLocaleResolver = new SessionLocaleResolver();
+		return sessionLocaleResolver;
+	}
+
+	@Bean
 	public ReloadableResourceBundleMessageSource messageSource(){
 		ReloadableResourceBundleMessageSource messageSource = new ReloadableResourceBundleMessageSource();
 		messageSource.setBasename("classpath:/messages/messages");
 		messageSource.setDefaultEncoding("UTF-8");
-		//messageSource.setCacheSeconds(messagesCacheSeconds);
 		return messageSource;
 	}
 
@@ -96,33 +163,72 @@ public class ServletConfig implements WebMvcConfigurer {
 		return new MessageSourceAccessor(m);
 	}
 	
-	@Bean
-    @Qualifier("customRestTemplateCustomizer")
-    public CustomRestTemplateCustomizer customRestTemplateCustomizer() {
-        return new CustomRestTemplateCustomizer();
+	@Override
+    public void addViewControllers(ViewControllerRegistry registry) {
+		registry.addViewController("/").setViewName("forward:/login/login");
+        registry.setOrder(Ordered.HIGHEST_PRECEDENCE);
     }
-
-    @Bean
-    @DependsOn(value = {"customRestTemplateCustomizer"})
-    public RestTemplateBuilder restTemplateBuilder() {
-        return new RestTemplateBuilder(customRestTemplateCustomizer());
-    }
-    
-    @Override
-    public void addResourceHandlers(ResourceHandlerRegistry registry) {
-    	
-    	registry.addResourceHandler("/css/**").addResourceLocations("/css/");
+	
+	@Override
+	public void addResourceHandlers(ResourceHandlerRegistry registry) {
+		log.info(" @@@ ServletConfig addResourceHandlers @@@");
+		registry.addResourceHandler("/css/**").addResourceLocations("/css/");
 		registry.addResourceHandler("/externlib/**").addResourceLocations("/externlib/");
 		registry.addResourceHandler("/images/**").addResourceLocations("/images/");
 		registry.addResourceHandler("/js/**").addResourceLocations("/js/");
+		
+		registry.addResourceHandler("swagger-ui.html").addResourceLocations("classpath:/META-INF/resources/");
+		
+		registry.addResourceHandler("/webjars/**").addResourceLocations("classpath:/META-INF/resources/webjars/");
+	}
+	
+	@Bean
+	public ObjectMapper objectMapper() {
+		ObjectMapper objectMapper = new ObjectMapper();
+		objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+		
+		return objectMapper;
+	}
+	
+	/**
+	 * TODO rest-template-mode 값으로 결정 하는게 아니라 request.isSecure 로 http, https 를 판별해서 결정 해야 하는데....
+	 *      그럴경우 bean 설정이 아니라.... 개별 코드에서 판별을 해야 함 ㅠ.ㅠ
+	 * @return
+	 * @throws KeyStoreException
+	 * @throws NoSuchAlgorithmException
+	 * @throws KeyManagementException
+	 */
+	@Bean
+    public RestTemplate restTempate() throws KeyStoreException, NoSuchAlgorithmException, KeyManagementException {
+    	// https://github.com/jonashackt/spring-boot-rest-clientcertificate/blob/master/src/test/java/de/jonashackt/RestClientCertTestConfiguration.java
     	
-    	registry
-    		.addResourceHandler("swagger-ui.html")
-    		.addResourceLocations("classpath:/META-INF/resources/");
-     
-    	registry
-    		.addResourceHandler("/webjars/**")
-    		.addResourceLocations("classpath:/META-INF/resources/webjars/");
+    	String restTemplateMode = propertiesConfig.getRestTemplateMode();
+    	RestTemplate restTemplate = null;
+    	RestTemplateBuilder builder = new RestTemplateBuilder(new CustomRestTemplateCustomizer());
+    	if("http".equals(restTemplateMode)) {
+    		restTemplate = builder.errorHandler(new RestTemplateResponseErrorHandler())
+						.setConnectTimeout(Duration.ofMillis(30000))
+	            		.setReadTimeout(Duration.ofMillis(30000))
+	            		.build();
+    	} else {
+    		TrustStrategy acceptingTrustStrategy = (X509Certificate[] chain, String authType) -> true;
+	    	SSLContext sslContext = org.apache.http.ssl.SSLContexts.custom().loadTrustMaterial(null, acceptingTrustStrategy).build();
+	 
+	    	SSLConnectionSocketFactory csf = new SSLConnectionSocketFactory(sslContext);
+	    	CloseableHttpClient httpClient = HttpClients.custom().setSSLSocketFactory(csf).build();
+	 
+	    	HttpComponentsClientHttpRequestFactory requestFactory = new HttpComponentsClientHttpRequestFactory();
+	        requestFactory.setHttpClient(httpClient);
+	        
+	    	restTemplate = builder.errorHandler(new RestTemplateResponseErrorHandler())
+						.setConnectTimeout(Duration.ofMillis(30000))
+	            		.setReadTimeout(Duration.ofMillis(30000))
+	            		.build();
+			restTemplate.setRequestFactory(requestFactory);
+    	}
+    	
+		return restTemplate;
     }
-    
+	
+
 }

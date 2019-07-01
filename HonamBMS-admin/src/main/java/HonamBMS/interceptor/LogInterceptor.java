@@ -1,4 +1,4 @@
-package HonamBMS.interceptor;
+package honambms.interceptor;
 
 import java.util.Enumeration;
 import java.util.Map;
@@ -14,11 +14,11 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
-import HonamBMS.domain.AccessLog;
-import HonamBMS.domain.UserSession;
-import HonamBMS.service.AccessLogService;
-import HonamBMS.support.URLSupport;
-import HonamBMS.util.WebUtil;
+import honambms.domain.AccessLog;
+import honambms.domain.UserSession;
+import honambms.service.AccessLogService;
+import honambms.support.URLSupport;
+import honambms.util.WebUtil;
 
 /**
  * 모든 요청에 대한 이력을 남김

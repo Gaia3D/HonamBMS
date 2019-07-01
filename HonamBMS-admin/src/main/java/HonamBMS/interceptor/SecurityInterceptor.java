@@ -1,4 +1,4 @@
-package HonamBMS.interceptor;
+package honambms.interceptor;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -13,10 +13,10 @@ import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import HonamBMS.domain.APIError;
-import HonamBMS.domain.UserSession;
-import HonamBMS.support.URLSupport;
-import HonamBMS.util.WebUtil;
+import honambms.domain.APIError;
+import honambms.domain.UserSession;
+import honambms.support.URLSupport;
+import honambms.util.WebUtil;
 import lombok.extern.slf4j.Slf4j;
 
 /**

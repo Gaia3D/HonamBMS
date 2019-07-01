@@ -1,4 +1,4 @@
-package HonamBMS.domain;
+package honambms.domain;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -7,7 +7,7 @@ import javax.validation.constraints.NotBlank;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
-import HonamBMS.util.FormatUtil;
+import honambms.util.FormatUtil;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;

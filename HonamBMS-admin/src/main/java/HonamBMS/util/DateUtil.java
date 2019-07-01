@@ -1,4 +1,4 @@
-package HonamBMS.util;
+package honambms.util;
 
 import java.util.Calendar;
 import java.util.Date;

@@ -1,13 +1,13 @@
-package HonamBMS;
+package honambms;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class HonamBMSUserApplication {
+public class honambmsUserApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(HonamBMSUserApplication.class, args);
+		SpringApplication.run(honambmsUserApplication.class, args);
 	}
 
 }

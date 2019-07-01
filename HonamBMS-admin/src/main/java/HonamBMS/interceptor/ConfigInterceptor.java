@@ -1,4 +1,4 @@
-package HonamBMS.interceptor;
+package honambms.interceptor;
 
 import java.util.List;
 
@@ -9,10 +9,10 @@ import javax.servlet.http.HttpSession;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
-import HonamBMS.domain.CacheManager;
-import HonamBMS.domain.Menu;
-import HonamBMS.domain.UserGroupMenu;
-import HonamBMS.domain.UserSession;
+import honambms.domain.CacheManager;
+import honambms.domain.Menu;
+import honambms.domain.UserGroupMenu;
+import honambms.domain.UserSession;
 
 /**
  * 사이트 전체 설정 관련 처리를 담당

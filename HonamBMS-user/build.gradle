@@ -18,7 +18,7 @@ apply plugin: 'io.spring.dependency-management'
 apply plugin: 'war'
 
 war {
-	baseName = 'HonamBMS-user'
+	baseName = 'honambms-user'
 	version = '0.0.1-SNAPSHOT'
 }
 
@@ -42,7 +42,7 @@ test {
 }
 
 dependencies {
-	implementation project(':HonamBMS-common')
+	implementation project(':honambms-common')
 
 	implementation('org.springframework.boot:spring-boot-starter-web')
 	implementation('org.mybatis.spring.boot:mybatis-spring-boot-starter:1.3.2')

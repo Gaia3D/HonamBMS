@@ -1,8 +1,8 @@
-package HonamBMS.service;
+package honambms.service;
 
 import java.util.List;
 
-import HonamBMS.domain.APILog;
+import honambms.domain.APILog;
 
 /**
  * API 이력

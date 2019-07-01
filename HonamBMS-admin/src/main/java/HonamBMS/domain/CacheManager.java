@@ -1,4 +1,4 @@
-package HonamBMS.domain;
+package honambms.domain;
 
 import java.util.List;
 import java.util.Map;

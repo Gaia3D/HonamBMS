@@ -1,4 +1,4 @@
-package HonamBMS.domain;
+package honambms.domain;
 
 import lombok.Getter;
 import lombok.Setter;

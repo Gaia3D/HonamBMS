@@ -1,4 +1,4 @@
-package HonamBMS.config;
+package honambms.config;
 
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;

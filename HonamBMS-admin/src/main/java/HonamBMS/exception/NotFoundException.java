@@ -1,4 +1,4 @@
-package HonamBMS.exception;
+package honambms.exception;
 
 public class NotFoundException extends RuntimeException {
 
