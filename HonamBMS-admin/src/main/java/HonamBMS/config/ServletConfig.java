@@ -45,16 +45,9 @@ import honambms.interceptor.ConfigInterceptor;
 import honambms.interceptor.LogInterceptor;
 import honambms.interceptor.SecurityInterceptor;
 import lombok.extern.slf4j.Slf4j;
-import springfox.documentation.builders.ApiInfoBuilder;
-import springfox.documentation.builders.RequestHandlerSelectors;
-import springfox.documentation.service.ApiInfo;
-import springfox.documentation.service.Contact;
-import springfox.documentation.spi.DocumentationType;
-import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 @Slf4j
-@EnableSwagger2
 @EnableWebMvc
 @Configuration
 @ComponentScan(basePackages = { "honambms.config, honambms.api, honambms.controller, honambms.interceptor, honambms.validator" }, includeFilters = {
