@@ -19,7 +19,7 @@ comment on table bridge is '교량 정보';
 comment on column bridge.bridge_id is '교량 고유번호';
 comment on column bridge.fac_num is '시설물 번호';
 comment on column bridge.brg_nam is '교량 명';
-comment on column bridge.bridge_group_id is '교량 그룹 고유번';
+comment on column bridge.bridge_group_id is '교량 그룹 고유번호';
 comment on column bridge.bridge_cm is '교량 유지관리 목표 성능';
 comment on column bridge.bridge_grade is '교량등급';
 comment on column bridge.update_date is '수정일';					
