@@ -1,0 +1,3 @@
+SELECT geom, avg(displacement)
+ FROM public.sat
+ GROUP BY geom;
