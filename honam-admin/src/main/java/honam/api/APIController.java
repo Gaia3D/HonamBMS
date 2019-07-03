@@ -1,7 +1,13 @@
 package honam.api;
 
+import org.slf4j.Logger;
+import org.springframework.http.HttpStatus;
+import org.springframework.util.StringUtils;
+
 import honam.domain.APIHeader;
 import honam.domain.APILog;
+import honam.domain.APIResult;
+import honam.domain.APIValidationType;
 import honam.service.APILogService;
 
 public interface APIController {
