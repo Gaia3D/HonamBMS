@@ -1,0 +1,2 @@
+postgres.conf 파일에서 아래 설정 해 줘야 함
+max_prepared_transactions
