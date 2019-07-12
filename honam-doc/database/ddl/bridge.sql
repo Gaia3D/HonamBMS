@@ -9,6 +9,7 @@ create table bridge(
 	brg_nam						varchar(100)					not null,
 	bridge_group_id				bigint,
 	bridge_cm					float,
+	bridge_lcc					float,
 	bridge_grade				varchar(1),
 	update_date					timestamp with time zone,
 	insert_date					timestamp with time zone		default now(),
@@ -21,6 +22,7 @@ comment on column bridge.fac_num is '시설물 번호';
 comment on column bridge.brg_nam is '교량 명';
 comment on column bridge.bridge_group_id is '교량 그룹 고유번호';
 comment on column bridge.bridge_cm is '교량 유지관리 목표 성능';
+comment on column bridge.bridge_lcc is '내하성능(Load Carrying Capacity)';
 comment on column bridge.bridge_grade is '교량등급';
 comment on column bridge.update_date is '수정일';					
 comment on column bridge.insert_date is '등록일';					
