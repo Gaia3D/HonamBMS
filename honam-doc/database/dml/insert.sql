@@ -236,7 +236,7 @@ values
     (85, 1105, 87, 'admin', 'Y', 'layer_etc_terrain_00000000.dbf', 'layer_etc_terrain_00000000.dbf', '/data/shp_data/2019/', 0, 'dbf', 'CP949', NOW(), NOW()),
     (86, 1105, 87, 'admin', 'Y', 'layer_etc_terrain_00000000.shx', 'layer_etc_terrain_00000000.shx', '/data/shp_data/2019/', 0, 'shx', 'CP949', NOW(), NOW()),
     (87, 1105, 87, 'admin', 'Y', 'layer_etc_terrain_00000000.shp', 'layer_etc_terrain_00000000.shp', '/data/shp_data/2019/', 0, 'shp', 'CP949', NOW(), NOW()),
-  (88, 5, 90, 'admin', 'Y', 'layer_boundary_area_00000000.dbf', 'layer_boundary_area_00000000.dbf', '/data/shp_data/2019/', 0, 'dbf', 'CP949', NOW(), NOW()),
+    (88, 5, 90, 'admin', 'Y', 'layer_boundary_area_00000000.dbf', 'layer_boundary_area_00000000.dbf', '/data/shp_data/2019/', 0, 'dbf', 'CP949', NOW(), NOW()),
     (89, 5, 90, 'admin', 'Y', 'layer_boundary_area_00000000.shx', 'layer_boundary_area_00000000.shx', '/data/shp_data/2019/', 0, 'shx', 'CP949', NOW(), NOW()),
     (90, 5, 90, 'admin', 'Y', 'layer_boundary_area_00000000.shp', 'layer_boundary_area_00000000.shp', '/data/shp_data/2019/', 0, 'shp', 'CP949', NOW(), NOW());
 commit;
