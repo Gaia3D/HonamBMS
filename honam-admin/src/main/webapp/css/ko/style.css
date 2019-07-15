@@ -116,11 +116,10 @@ top: 0;
 left: 0;
 height: 50px;
 cursor: pointer;
-background: url(../../images/ico.png) no-repeat -740px -190px;
 }
 h1 > span {
 display: inline-block;
-margin: 15px 0 0 70px;
+margin: 15px 0 0 15px;
 font-size: 18px;
 color: #fff;
 }
