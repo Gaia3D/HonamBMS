@@ -70,12 +70,4 @@ public class BridgeServiceImpl implements BridgeService {
 		return bridgeMapper.updateBridge(bridge);
 	}
 	
-	/**
-	 * bridge 종료 
-	 */
-	@Transactional
-	public int updateBridgeClose() {
-		return bridgeMapper.updateBridgeClose();
-	}
-	
 }

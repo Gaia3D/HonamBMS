@@ -12,6 +12,7 @@
 	<typeAliases>
 		<typeAlias type="honam.domain.AccessLog" alias="accessLog"/>
 		<typeAlias type="honam.domain.APILog" alias="aPILog"/>
+		<typeAlias type="honam.domain.Bridge" alias="bridge"/>
 	</typeAliases>
 	
 </configuration>

@@ -44,8 +44,4 @@ public interface BridgeMapper {
 	 */
 	int updateBridge(Bridge bridge);
 
-	/**
-	 * bridge 종료 
-	 */
-	int updateBridgeClose();
 }

@@ -42,8 +42,4 @@ public interface BridgeService {
 	 */
 	int updateBridge(Bridge bridge);
 
-	/**
-	 * bridge 종료 
-	 */
-	int updateBridgeClose();
 }

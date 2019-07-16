@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="honam.persistence.postgresql.BridgeMapper">
+
+    <!-- Bridge(교량) 총 건수 -->
+	<Select id="getBridgeTotalCount" parameterType="bridge" resultType="long">
+		/* getBridgeTotalCount */
+		SELECT COUNT(bridge_id)
+		FROM bridge
+		<trim prefix="WHERE" prefixOverrides="AND">
+			
+		</trim>
+	</Select>
+	
+	<!-- Bridge(교량) 목록 -->
+	<Select id="getListBridge" parameterType="bridge" resultType="bridge">
+		/* getListBridge */
+		
+	</Select>
+	
+	<!-- Bridge(교량) 정보 조회 -->
+	<Select id="getBridge" parameterType="bridge" resultType="bridge">
+		/* getBridge */
+		
+	</Select>
+	
+	<!-- Bridge(교량) 정보 등록 -->
+	<insert id="insertBridge" parameterType="bridge">
+		/* insetBridge */
+		
+	</insert>
+	<!-- Bridge(교량) 정보 수정 -->
+	<update id="updateBridge" parameterType="bridge">
+		/* updateBridge */
+		
+	</update>
+
+</mapper>
