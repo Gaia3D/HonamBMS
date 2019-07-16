@@ -1,0 +1,15 @@
+1 지연 테스트(Latency test)
+ - 종단 트랜잭션에 걸리는 시간은?
+2 처리율 테스트(Throughput test)
+ - 현재 시스템이 처리 가능한 동시 트랜잭션 개수는?
+3 부하 테스트(Load test)
+ - 특정 부하를 시스템이 감당 할 수 있는가?
+4 스트레스 테스트(Stress test)
+ - 이 시스템의 한계점(breaking point)은 어디까지인가?
+5 내구성 테스트(Endurance test)
+ - 시스템을 장시간 실행할 경우 성능 이상 증상이 나타 나는가?
+6 용량 계획 테스트(Capacity plainning test)
+ - 리소스를 추가한 만큼 시스템이 확장 되는가?
+7 저하 테스트(Degradation)
+ - 시스템이 부분적으로 실패할 경우 어떤 일이 벌어지나?
+
