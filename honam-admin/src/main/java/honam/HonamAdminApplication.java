@@ -135,17 +135,16 @@ public class HonamAdminApplication extends SpringBootServletInitializer {
 	
 	private List<String> getUrlList() {
 		List<String> urls = new ArrayList<>();
-//		urls.add("/user/*");
-//		urls.add("/layer/*");
-//		urls.add("/layers/*");
+		urls.add("/user/*");
+		urls.add("/bridge/*");
 		urls.add("/apilog/*");
 		urls.add("/access/*");
-//		urls.add("/server/*");
-//		urls.add("/servers/*");
-//		urls.add("/menus/*");
-//		urls.add("/roles/*");
-//		urls.add("/role/*");
-//		urls.add("/policy/*");
+		urls.add("/server/*");
+		urls.add("/servers/*");
+		urls.add("/menus/*");
+		urls.add("/roles/*");
+		urls.add("/role/*");
+		urls.add("/policy/*");
 		return urls;
 	}
 	

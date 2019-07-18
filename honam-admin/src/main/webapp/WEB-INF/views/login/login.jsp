@@ -10,7 +10,7 @@
 	<title>로그인</title>
 	<link rel="shortcut icon" href="/images/favicon.ico">
 	<link rel="stylesheet" href="/css/${lang}/style.css" />
-	<script type="text/javascript" src="/externlib/jquery/jquery.js"></script>
+	<script type="text/javascript" src="/externlib/jquery-3.4.1/jquery.js"></script>
 	<script type="text/javascript" src="/js/${lang}/message.js"></script>
 </head>
 <body>

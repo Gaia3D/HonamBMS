@@ -4,26 +4,26 @@
 <mapper namespace="honam.persistence.postgresql.BridgeMapper">
 
     <!-- Bridge(교량) 총 건수 -->
-	<Select id="getBridgeTotalCount" parameterType="bridge" resultType="long">
+	<select id="getBridgeTotalCount" parameterType="bridge" resultType="long">
 		/* getBridgeTotalCount */
 		SELECT COUNT(bridge_id)
 		FROM bridge
 		<trim prefix="WHERE" prefixOverrides="AND">
 			
 		</trim>
-	</Select>
+	</select>
 	
 	<!-- Bridge(교량) 목록 -->
-	<Select id="getListBridge" parameterType="bridge" resultType="bridge">
+	<select id="getListBridge" parameterType="bridge" resultType="bridge">
 		/* getListBridge */
 		
-	</Select>
+	</select>
 	
 	<!-- Bridge(교량) 정보 조회 -->
-	<Select id="getBridge" parameterType="bridge" resultType="bridge">
+	<select id="getBridge" parameterType="bridge" resultType="bridge">
 		/* getBridge */
 		
-	</Select>
+	</select>
 	
 	<!-- Bridge(교량) 정보 등록 -->
 	<insert id="insertBridge" parameterType="bridge">

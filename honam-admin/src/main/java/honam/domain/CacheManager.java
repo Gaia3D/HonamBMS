@@ -1,5 +1,7 @@
 package honam.domain;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -13,19 +15,70 @@ import java.util.Map;
 public class CacheManager {
 
     private volatile static CacheManager cacheManager = new CacheManager();;
-
     private CacheManager() {
     }
-
+    
+    // 운영 정책
+ 	private Policy policy = null;
+ 	// 대메뉴 정보
+ 	private Map<Integer, Menu> menuMap = null;
+ 	// url과 menu_id를 매핑
+ 	private Map<String, Integer> menuUrlMap = null;
     // 사용자 그룹별 메뉴 목록
     private Map<Integer, List<UserGroupMenu>> userGroupMenuMap = null;
     // 사용자 그룹별 Role 목록
     private Map<Integer, List<String>> userGroupRoleMap = null;
 
-    public static Map<Integer, List<UserGroupMenu>> getUserGroupMenuMap() {
+    /**
+	 * 운영 정책
+	 * @return
+	 */
+	public static Policy getPolicy() {
+		return cacheManager.policy;
+	}
+	public static void setPolicy(Policy policy) {
+		cacheManager.policy = policy;
+	}
+	
+	/**
+	 * 대메뉴(1 Depth) Map, 화면 왼쪽 메뉴 표시용
+	 * @param userGroupId
+	 * @return
+	 */
+	public static Map<Integer, Menu> getMenuMap() {
+		if(cacheManager.menuMap == null) {
+			return new HashMap<Integer, Menu>();
+		}
+		return cacheManager.menuMap;
+	}
+	
+	public static void setMenuMap(Map<Integer, Menu> menuMap) {
+		cacheManager.menuMap = menuMap;
+	}
+	
+	/**
+	 * url과 menuId를 매핑
+	 * @param url
+	 * @return
+	 */
+	public static Map<String, Integer> getMenuUrlMap() {
+		if(cacheManager.menuUrlMap == null) {
+			return new HashMap<String, Integer>();
+		}
+		return cacheManager.menuUrlMap;
+	}
+	
+	public static void setMenuUrlMap(Map<String, Integer> menuUrlMap) {
+		cacheManager.menuUrlMap = menuUrlMap;
+	}
+	
+	public static Map<Integer, List<UserGroupMenu>> getUserGroupMenuMap() {
         return cacheManager.userGroupMenuMap;
     }
     public static List<UserGroupMenu> getUserGroupMenuList(Integer userGroupId) {
+    	if(userGroupId == null) {
+			return new ArrayList<UserGroupMenu>();
+		}
         return cacheManager.userGroupMenuMap.get(userGroupId);
     }
     public static void setUserGroupMenuMap(Map<Integer, List<UserGroupMenu>> userGroupMenuMap) {

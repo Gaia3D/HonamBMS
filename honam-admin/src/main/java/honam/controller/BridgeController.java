@@ -17,8 +17,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import honam.service.BridgeService;
 import honam.config.PropertiesConfig;
 
+import honam.domain.Bridge;
 import honam.domain.CacheManager;
 import honam.domain.PageType;
 import honam.domain.Pagination;
@@ -27,8 +29,21 @@ import honam.util.StringUtil;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-@RequestMapping("/bridge/")
+@RequestMapping("/")
 @Controller
 public class BridgeController {
 	
+	@Autowired
+	private PropertiesConfig propertiesConfig;
+	@Autowired
+	private BridgeService bridgeService;
+	
+	@RequestMapping(value = "list-bridge")
+	public String listBridge(HttpServletRequest request, Bridge bridge, @RequestParam(defaultValue="1") String pageNo, Model model) {
+		
+		log.info("@@ bridge = {}", bridge);
+		
+		return "/bridge/list-bridge";
+	}
+
 }

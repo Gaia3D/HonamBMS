@@ -24,20 +24,25 @@ public class UserSession implements Serializable {
 	/******* 세션 하이재킹 체크 *******/
 	private String loginIp;
 	
+	// rest api http status code
+	private int statusCode;
+	
 	private String userId;
-	private String empNo;
+	private String passw;
 	private String korNm;
-	private String engNm;
 	private String asgnCd;
+	private String asgnname;
 	private String deptCd;
-	private String jotTitNm;
-	private String offNm;
-	private String deptNm;
-	private String respCd;
-	private String respNm;
-	private String userPwd;
-	private String offiTel;
 	private String deptname;
+	private String jobTitNm;
+	private String chk;
+	private String roles;
+	
+	// db 용
+	private String user_id;
+	private String kor_nm;
+	private String dept_cd;
+	private String job_tit_nm;
 	
 	// 사용자 그룹명
 	private String userGroupName;

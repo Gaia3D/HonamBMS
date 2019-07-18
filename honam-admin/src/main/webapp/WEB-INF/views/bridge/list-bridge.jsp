@@ -41,7 +41,7 @@
 		<!-- E: 프로젝트 제목, 목록가기, 닫기 -->
 				
 		<div class="subContents">
-			<form:form id="searchForm" modelAttribute="droneProject" method="post" action="/drone-project/list-drone-project" onsubmit="return searchCheck();">
+			<form:form id="searchForm" modelAttribute="droneProject" method="post" action="/bridge/list-bridge" onsubmit="return searchCheck();">
 				<ul class="projectSearch input-group row">
 					<li class="input-set">
 						<label for="search_word">프로젝트</label>

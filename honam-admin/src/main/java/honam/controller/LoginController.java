@@ -1,72 +1,72 @@
-//package honam.controller;
-//
-//import java.util.List;
-//
-//import javax.servlet.http.HttpServletRequest;
-//import javax.servlet.http.HttpSession;
-//import javax.validation.Valid;
-//
-//import org.springframework.beans.factory.annotation.Autowired;
-//import org.springframework.stereotype.Controller;
-//import org.springframework.ui.Model;
-//import org.springframework.validation.BindingResult;
-//import org.springframework.web.bind.annotation.GetMapping;
-//import org.springframework.web.bind.annotation.ModelAttribute;
-//import org.springframework.web.bind.annotation.PostMapping;
-//import org.springframework.web.bind.annotation.RequestMapping;
-//
-//import honam.domain.CacheManager;
-//import honam.domain.Policy;
-//import honam.domain.RoleKey;
-//import honam.domain.UserGroup;
-//import honam.domain.UserInfo;
-//import honam.domain.UserSession;
-//import honam.domain.UserStatus;
-//import honam.domain.YOrN;
-//import honam.listener.Gaia3dHttpSessionBindingListener;
+package honam.controller;
+
+import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import honam.domain.CacheManager;
+import honam.domain.Policy;
+import honam.domain.RoleKey;
+import honam.domain.UserGroup;
+import honam.domain.UserInfo;
+import honam.domain.UserSession;
+import honam.domain.UserStatus;
+import honam.domain.YOrN;
+import honam.listener.Gaia3dHttpSessionBindingListener;
 //import honam.service.LoginService;
-//import honam.service.PolicyService;
-//import honam.service.UserGroupService;
-//import honam.support.RoleSupport;
-//import honam.util.WebUtil;
-//import lombok.extern.slf4j.Slf4j;
-//
-//@Slf4j
-//@Controller
-//@RequestMapping("/login/")
-//public class LoginController {
-//
+import honam.service.PolicyService;
+import honam.service.UserGroupService;
+import honam.support.RoleSupport;
+import honam.util.WebUtil;
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
+@Controller
+@RequestMapping("/login/")
+public class LoginController {
+
 //	@Autowired
 //	private LoginService loginService;
-//	
-//	@Autowired
-//	private PolicyService policyService;
-//	
-//	@Autowired
-//	private UserGroupService userGroupService;
-//	
-//	/**
-//	 * 로그인
-//	 * @param model
-//	 * @return
-//	 */
-//	@RequestMapping(value = "login")
-//	public String index(HttpServletRequest request, Model model) {
-//		UserInfo loginForm = new UserInfo();
-//		model.addAttribute("loginForm", loginForm);
-//		
-//		return "/login/login";
-//	}
-//	
-//	/**
-//	 * 로그인 처리
-//	 * @param locale
-//	 * @param model
-//	 * @return
-//	 */
-//	@PostMapping(value = "process-login")
-//	public String processLogin(HttpServletRequest request, @Valid @ModelAttribute("loginForm") UserInfo loginForm, BindingResult bindingResult, Model model) {
-//		
+	
+	@Autowired
+	private PolicyService policyService;
+	
+	@Autowired
+	private UserGroupService userGroupService;
+	
+	/**
+	 * 로그인
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value = "login")
+	public String index(HttpServletRequest request, Model model) {
+		UserInfo loginForm = new UserInfo();
+		model.addAttribute("loginForm", loginForm);
+		
+		return "/login/login";
+	}
+	
+	/**
+	 * 로그인 처리
+	 * @param locale
+	 * @param model
+	 * @return
+	 */
+	@PostMapping(value = "process-login")
+	public String processLogin(HttpServletRequest request, @Valid @ModelAttribute("loginForm") UserInfo loginForm, BindingResult bindingResult, Model model) {
+		
 //		Policy policy = policyService.getPolicy();
 //		
 //		if(bindingResult.hasErrors()) {
@@ -132,42 +132,42 @@
 //			// 세션 타임 아웃 시간을 초 단위로 변경해서 설정
 //			request.getSession().setMaxInactiveInterval(Integer.valueOf(policy.getSecuritySessionTimeout()).intValue() * 60);
 //		}
-//
-//		return "redirect:/layer/list";
-//	}
-//	
-////	/**
-////	 * 사용자 정보 유효성을 체크하여 에러 코드를 리턴
-////	 * @param request
-////	 * @param policy
-////	 * @param loginForm
-////	 * @param userSession
-////	 * @return
-////	 */
-////	private String validateUserInfo(HttpServletRequest request, boolean isSSO, Policy policy, UserInfo loginForm, UserSession userSession) {
-////		// TODO 사용자 상태를 체크 해야 함
-////		return null;
-////	}
-//	
+
+		return "redirect:/bridge/list-bridge";
+	}
+	
 //	/**
-//	 * 로그아웃 페이지
-//	 * @param model
+//	 * 사용자 정보 유효성을 체크하여 에러 코드를 리턴
+//	 * @param request
+//	 * @param policy
+//	 * @param loginForm
+//	 * @param userSession
 //	 * @return
 //	 */
-//	@GetMapping(value = "logout")
-//	public String logout(HttpServletRequest request, Model model) {
-//		HttpSession session = request.getSession();
-//		UserSession userSession = (UserSession)session.getAttribute(UserSession.KEY);
-//		if(userSession == null) {
-//			log.info("------------- userSession is null ");
-//			return "redirect:/login/login";
-//		}
-//		
-//		session.removeAttribute(userSession.getUserId());
-//		session.removeAttribute(UserSession.KEY);
-//		session.invalidate();
-//		log.info("------------- userSession invaliate ");
-//		
-//		return "redirect:/login/login";
+//	private String validateUserInfo(HttpServletRequest request, boolean isSSO, Policy policy, UserInfo loginForm, UserSession userSession) {
+//		// TODO 사용자 상태를 체크 해야 함
+//		return null;
 //	}
-//}
+	
+	/**
+	 * 로그아웃 페이지
+	 * @param model
+	 * @return
+	 */
+	@GetMapping(value = "logout")
+	public String logout(HttpServletRequest request, Model model) {
+		HttpSession session = request.getSession();
+		UserSession userSession = (UserSession)session.getAttribute(UserSession.KEY);
+		if(userSession == null) {
+			log.info("------------- userSession is null ");
+			return "redirect:/login/login";
+		}
+		
+		session.removeAttribute(userSession.getUserId());
+		session.removeAttribute(UserSession.KEY);
+		session.invalidate();
+		log.info("------------- userSession invaliate ");
+		
+		return "redirect:/login/login";
+	}
+}
