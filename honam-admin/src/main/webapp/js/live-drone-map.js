@@ -4,7 +4,7 @@
 //url 페이지로 이동
 function goPage(url) {
 	if(url === location.pathname) {
-		if (url === '/bridge/list-bridge') {
+		if (url === '/drone-project/list-drone-project') {
 			var currentUrl = location.href;
 			if(currentUrl.indexOf(url) >= 0) {
 				console.log("내 페이지에서 나를 누름");
