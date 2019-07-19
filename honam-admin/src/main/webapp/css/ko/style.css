@@ -1224,3 +1224,45 @@ border: 1px solid #3c49a8;
 background-position: -349px -395px;	
 background-color: #4855b5;
 }
+
+/* error 페이지 */
+#errorPage {
+width: 100%;
+height: 60%;
+margin-top: 10%;
+display: inline-block;
+text-align: center;
+}
+#errorPage img {
+display: inline-block;
+margin: 40px 100px 40px 0px;
+}
+#errorPage div {
+display: inline-block;
+border-left: 1px dotted #3a3b4c;
+padding-left: 50px;
+}
+#errorPage > div p:first-child {
+margin-top: 20px;
+font-size: 25px;
+font-weight: bold;
+color: #3a3b4c;
+}
+#errorPage > div p:nth-child(2) {
+margin: 35px;
+font-size: 20px;
+line-height: 1.7em;
+}
+#errorPage > div a {
+padding: 15px 20px;
+color: #fff;
+font-size: 18px;
+border-radius: 7px;
+border: none;
+background-color: #3a3b4c;
+}
+#errorPage > div a:hover {
+color: #3a3b4c;
+background-color: #fff;
+border: 1px solid #3a3b4c;
+}
