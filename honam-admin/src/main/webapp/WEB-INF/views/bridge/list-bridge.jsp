@@ -75,7 +75,7 @@
 	    requestVertexNormals: true
 	});
 		
-
+	
 //	Cesium.Ion.defaultAccessToken = '${cesiumIonToken}';
     Cesium.Ion.defaultAccessToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJlMjc5MjdmNS05MjBjLTQ2MzEtOTQwOC1jNjVmMDA1MzlhODMiLCJpZCI6Mzk5Miwic2NvcGVzIjpbImFzciIsImdjIl0sImlhdCI6MTUzOTU4MDQ5N30.v1FiFQDcHTMyQJXxIPzxGkQYGIY6K2OAy6tRJjV57yY';
 
