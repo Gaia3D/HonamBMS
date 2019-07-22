@@ -78,13 +78,13 @@ public class ServletConfig implements WebMvcConfigurer {
 		
 		registry.addInterceptor(securityInterceptor)
 				.addPathPatterns("/**")
-				.excludePathPatterns("/login/**", "/css/**", "/externlib/**", "/images/**", "/js/**");
+				.excludePathPatterns("/login/**", "/css/**", "/externlib/**", "/images/**", "/js/**", "/bridge/**");
 		registry.addInterceptor(logInterceptor)
 				.addPathPatterns("/**")
-				.excludePathPatterns("/login/**", "/css/**", "/externlib/**", "/images/**", "/js/**");
+				.excludePathPatterns("/login/**", "/css/**", "/externlib/**", "/images/**", "/js/**", "/bridge/**");
 		registry.addInterceptor(configInterceptor)
 		.addPathPatterns("/**")
-		.excludePathPatterns("/login/**", "/css/**", "/externlib/**", "/images/**", "/js/**");
+		.excludePathPatterns("/login/**", "/css/**", "/externlib/**", "/images/**", "/js/**", "/bridge/**");
     }
 	
 	@Bean

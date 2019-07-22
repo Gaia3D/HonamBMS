@@ -1,0 +1,102 @@
+diff a/honam-admin/src/main/java/honam/HonamAdminApplication.java b/honam-admin/src/main/java/honam/HonamAdminApplication.java	(rejected hunks)
+@@ -33,10 +33,10 @@
+ @SpringBootApplication
+ public class HonamAdminApplication extends SpringBootServletInitializer {
+ 	
+-	@Value("${server.port}")
+-	private Integer serverPort;
+-	@Value("${server.http.port}")
+-    private int serverHttpPort;
++//	@Value("${server.port}")
++//	private Integer serverPort;
++//	@Value("${server.http.port}")
++//  private int serverHttpPort;
+ 	
+ 	@Autowired
+ 	private PropertiesConfig propertiesConfig;
+@@ -92,46 +92,46 @@
+ 		return new Gaia3dHttpSessionBindingListener();
+ 	}
+ 	
+-	@Bean
+-	public ServletWebServerFactory containerFactory() {
+-		String osType = propertiesConfig.getOsType();
+-		
+-		if(OSType.WINDOW.name().equals(osType)) {
+-			TomcatServletWebServerFactory tomcat = new TomcatServletWebServerFactory();
+-		    tomcat.addAdditionalTomcatConnectors(createHttpConnector());
+-		    return tomcat;
+-		} else {
+-			TomcatServletWebServerFactory tomcat = new TomcatServletWebServerFactory() {
+-		        @Override
+-		        protected void postProcessContext(Context context) {
+-		        	SecurityConstraint securityConstraint = new SecurityConstraint();
+-		        	securityConstraint.setUserConstraint("CONFIDENTIAL");
+-		        	SecurityCollection collection = new SecurityCollection();
+-		        	collection.addPattern("/*");
+-		        	securityConstraint.addCollection(collection);
+-		        	context.addConstraint(securityConstraint);
+-		        }
+-		    };
+-		    
+-		    tomcat.addAdditionalTomcatConnectors(createHttpConnector());
+-		    return tomcat;
+-		}
+-	}
++//	@Bean
++//	public ServletWebServerFactory containerFactory() {
++//		String osType = propertiesConfig.getOsType();
++//		
++//		if(OSType.WINDOW.name().equals(osType)) {
++//			TomcatServletWebServerFactory tomcat = new TomcatServletWebServerFactory();
++//		    tomcat.addAdditionalTomcatConnectors(createHttpConnector());
++//		    return tomcat;
++//		} else {
++//			TomcatServletWebServerFactory tomcat = new TomcatServletWebServerFactory() {
++//		        @Override
++//		        protected void postProcessContext(Context context) {
++//		        	SecurityConstraint securityConstraint = new SecurityConstraint();
++//		        	securityConstraint.setUserConstraint("CONFIDENTIAL");
++//		        	SecurityCollection collection = new SecurityCollection();
++//		        	collection.addPattern("/*");
++//		        	securityConstraint.addCollection(collection);
++//		        	context.addConstraint(securityConstraint);
++//		        }
++//		    };
++//		    
++//		    tomcat.addAdditionalTomcatConnectors(createHttpConnector());
++//		    return tomcat;
++//		}
++//	}
+ 	
+-	private Connector createHttpConnector() {
+-		String osType = propertiesConfig.getOsType();
+-		
+-		Connector connector = new Connector(TomcatServletWebServerFactory.DEFAULT_PROTOCOL);
+-		if(!OSType.WINDOW.name().equals(osType)) {
+-			connector.setScheme("http");
+-		}
+-		connector.setPort(serverHttpPort);
+-		if(!OSType.WINDOW.name().equals(osType)) {
+-			connector.setSecure(false);
+-			connector.setRedirectPort(serverPort);
+-		}
+-		return connector;
+-	}
++//	private Connector createHttpConnector() {
++//		String osType = propertiesConfig.getOsType();
++//		
++//		Connector connector = new Connector(TomcatServletWebServerFactory.DEFAULT_PROTOCOL);
++//		if(!OSType.WINDOW.name().equals(osType)) {
++//			connector.setScheme("http");
++//		}
++//		connector.setPort(serverHttpPort);
++//		if(!OSType.WINDOW.name().equals(osType)) {
++//			connector.setSecure(false);
++//			connector.setRedirectPort(serverPort);
++//		}
++//		return connector;
++//	}
+ 	
+ 	private List<String> getUrlList() {
+ 		List<String> urls = new ArrayList<>();

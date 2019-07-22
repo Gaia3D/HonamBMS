@@ -22,13 +22,22 @@ public class PropertiesConfig {
     // http, https
     private String restTemplateMode;
     
-//    private String outputDir;
-//    private String logBaseDir;
-//    private String logBaseName;
-//    
-//    private String uploadDir;
-//    
-//    private String gdalCmdPath;
+    /**
+     * mock(로컬), rest(블럭 물류 모니터링 시스템을 REST API 로 호출), db(인사 DB를 이용)
+     * rest는 종속이라서 하고 싶지 않지만 SSO 같은게 문제가 생기면 해야 할지도
+     */
+    //private String loginType;
+    //private String restLoginUrl;
+    
+    //private String outputDir;
+    //private String logBaseDir;
+    //private String logBaseName;
+    
+    //private String uploadDir;
+    
+    //private String gdalCmdPath;
+    
+    //private String mapDefaultLayer;
     
 	// cesium ion token
 	private String cesiumIonToken;

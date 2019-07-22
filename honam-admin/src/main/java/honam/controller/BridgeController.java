@@ -29,7 +29,7 @@ import honam.util.StringUtil;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-@RequestMapping("/")
+@RequestMapping("/bridge/")
 @Controller
 public class BridgeController {
 	
@@ -37,11 +37,17 @@ public class BridgeController {
 	private PropertiesConfig propertiesConfig;
 	@Autowired
 	private BridgeService bridgeService;
+
 	
 	@RequestMapping(value = "list-bridge")
 	public String listBridge(HttpServletRequest request, Bridge bridge, @RequestParam(defaultValue="1") String pageNo, Model model) {
 		
 		log.info("@@ bridge = {}", bridge);
+		
+		String cesiumIonToken = propertiesConfig.getCesiumIonToken();
+		
+		model.addAttribute("cesoumIonToken", cesiumIonToken);
+		log.info("@@ cesoumIonToken = {}", cesiumIonToken);
 		
 		return "/bridge/list-bridge";
 	}
