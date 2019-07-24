@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import honam.domain.Menu;
-import honam.persistence.postgresql.MenuMapper;
+import honam.persistence.MenuMapper;
 import honam.service.MenuService;
 
 /**

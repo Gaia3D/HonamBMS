@@ -10,7 +10,7 @@ import honam.domain.UserGroup;
 import honam.domain.UserGroupMenu;
 import honam.domain.UserGroupRole;
 import honam.domain.YOrN;
-import honam.persistence.postgresql.UserGroupMapper;
+import honam.persistence.UserGroupMapper;
 import honam.service.UserGroupService;
 
 /**

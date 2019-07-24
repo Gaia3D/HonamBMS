@@ -9,7 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import honam.domain.UserInfo;
 import honam.domain.UserStatus;
-import honam.persistence.postgresql.UserMapper;
+import honam.persistence.UserMapper;
 import honam.service.UserService;
 
 /**

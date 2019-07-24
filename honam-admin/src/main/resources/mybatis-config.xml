@@ -6,13 +6,14 @@
 <configuration>
 	<settings>
 		<setting name="lazyLoadingEnabled" value="false" />
-		<setting name="mapUnderscoreToCamelCase" value="true"/>
 	</settings>
 	
 	<typeAliases>
 		<typeAlias type="honam.domain.AccessLog" alias="accessLog"/>
 		<typeAlias type="honam.domain.APILog" alias="aPILog"/>
 		<typeAlias type="honam.domain.Bridge" alias="bridge"/>
+		<typeAlias type="honam.domain.SkSdo" alias="skSdo"/>
+		<typeAlias type="honam.domain.SkSgg" alias="skSgg"/>
 	</typeAliases>
 	
 </configuration>

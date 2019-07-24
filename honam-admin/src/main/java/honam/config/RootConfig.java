@@ -24,26 +24,26 @@ import honambms.security.Crypt;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-@MapperScan("honam.persistence.postgresql")
+@MapperScan("honam.persistence")
 @Configuration
-@ComponentScan(	basePackages = {"honam.service, honam.persistence.postgresql"},
+@ComponentScan(	basePackages = {"honam.service, honam.persistence"},
 				includeFilters = {	@Filter(type = FilterType.ANNOTATION, value = Component.class),
 									@Filter(type = FilterType.ANNOTATION, value = Service.class),
 									@Filter(type = FilterType.ANNOTATION, value = Repository.class) },
 				excludeFilters = @Filter(type = FilterType.ANNOTATION, value = Controller.class) )
 public class RootConfig {
 	
-	@Value("${spring.datasource.postgresql.driver-class-name}")
+	@Value("${spring.datasource.driver-class-name}")
 	private String postgresqlDriverClassName;
-	@Value("${spring.datasource.postgresql.url}")
+	@Value("${spring.datasource.url}")
 	private String postgresqlUrl;
-	@Value("${spring.datasource.postgresql.user}")
+	@Value("${spring.datasource.user}")
 	private String postgresqlUser;
-	@Value("${spring.datasource.postgresql.password}")
+	@Value("${spring.datasource.password}")
 	private String postgresqlPassword;
-	@Value("${spring.datasource.postgresql.hikari.maximum-pool-size}")
+	@Value("${spring.datasource.hikari.maximum-pool-size}")
 	private Integer postgresqlMaximumPoolSize;
-	@Value("${spring.datasource.postgresql.hikari.minimum-idle}")
+	@Value("${spring.datasource.hikari.minimum-idle}")
 	private Integer postgresqlMinimumIdle;
 	
 	@Bean(name="datasourceAdmin")
@@ -84,8 +84,8 @@ public class RootConfig {
 		log.info(" ### RootConfig sqlSessionFactory ### ");
 		SqlSessionFactoryBean factory = new SqlSessionFactoryBean();
 		factory.setDataSource(dataSource());
-		factory.setMapperLocations(new PathMatchingResourcePatternResolver().getResources("classpath:mybatis/postgresql/*.xml"));
-		factory.setConfigLocation(new PathMatchingResourcePatternResolver().getResource("mybatis-config-postgresql.xml"));
+		factory.setMapperLocations(new PathMatchingResourcePatternResolver().getResources("classpath:mybatis/*.xml"));
+		factory.setConfigLocation(new PathMatchingResourcePatternResolver().getResource("mybatis-config.xml"));
 		return factory.getObject();
     }
 }

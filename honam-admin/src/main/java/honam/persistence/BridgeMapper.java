@@ -1,14 +1,44 @@
-package honam.persistence.postgresql;
+package honam.persistence;
 
 import java.util.List;
 
 import org.springframework.stereotype.Repository;
 
 import honam.domain.Bridge;
-import honam.domain.BridgeAttribute;
+import honam.domain.SkSdo;
+import honam.domain.SkSgg;
 
 @Repository
 public interface BridgeMapper {
+	
+	/**
+	 * Sdo 목록(geom 은 제외)
+	 * @return
+	 */
+	List<SkSdo> getListSdoExceptGeom();
+	
+	/**
+	 * Sgg 목록(geom 은 제외)
+	 * @param sdo_code
+	 * @return
+	 */
+	List<SkSgg> getListSggBySdoExceptGeom(String sdo_code);
+	
+	/**
+	 * 선택한 시도의 center point를 구함
+	 * @param skSdo
+	 * @return
+	 */
+	String getCentroidSdo(SkSdo skSdo);
+	
+	/**
+	 * 선택한 시군구 center point를 구함
+	 * @param skSgg
+	 * @return
+	 */
+	String getCentroidSgg(SkSgg skSgg);
+	
+	
 	/**
 	 * 총건수
 	 * @param bridge

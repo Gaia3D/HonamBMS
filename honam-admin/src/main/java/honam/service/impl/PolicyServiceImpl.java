@@ -5,7 +5,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import honam.domain.Policy;
-import honam.persistence.postgresql.PolicyMapper;
+import honam.persistence.PolicyMapper;
 import honam.service.PolicyService;
 
 @Service
