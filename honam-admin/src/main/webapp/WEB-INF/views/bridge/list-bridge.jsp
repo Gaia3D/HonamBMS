@@ -39,7 +39,8 @@
 			</div>
 		</div>
 		<!-- E: 프로젝트 제목, 목록가기, 닫기 -->
-				
+		
+		<!-- S: 교량 검색 입력 폼 -->		
 		<div class="subContents">
 			<form:form id="searchForm" modelAttribute="bridge" method="post" action="/bridge/list-bridge" onsubmit="return searchCheck();">
 				<ul class="projectSearch input-group row">
@@ -52,10 +53,10 @@
 					<li class="input-set">
 						<label>주소</label>
 						<select id="sdoList" name="sdoList" class="select" style="width: 97px;">
-							<option value>시도</option>
+							<option value> 시도 </option>
 						</select>
 						<select id="sggList" name="sggList" class="select" style="width: 85px;">
-							<option value>시군구</option>
+							<option value> 시군구 </option>
 						</select>					
 					</li>
 					<li class="input-set">
@@ -69,13 +70,15 @@
 					</li>
 				</ul>
 			</form:form>
-			
-			
-			<%@ include file="/WEB-INF/views/common/pagination.jsp" %>
 		</div>
-		<!-- E: 영상목록 -->
+		<!-- E: 교량 검색 입력 폼 -->	
+		<!-- S: 교량 목록 -->
+		
+		<!-- E: 교량 목록 -->
+		
 	</div>
 	<!-- E: 1depth / 프로젝트 목록 -->
+	<!-- S: MAPWRAP -->
 	<div id="MapContainer" class="mapWrap">
 	</div>
 	<!-- E: MAPWRAP -->

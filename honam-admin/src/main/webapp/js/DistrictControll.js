@@ -54,7 +54,7 @@ var sgg_code = "";
 var district_map_type = 1;
 
 var defaultSdo = '<option value>시도</option>';
-var defaultSgg = '<option value>시군구</option>';
+var defaultSgg = '<option value>전체</option>';
 
 
 /**
@@ -94,12 +94,17 @@ function loadDistrict()
 $('#sdoList').on("change",function() {
 	sdo_code =$("#sdoList").val();
 	changeSdo(sdo_code);
+	var name = [sdo_name, sgg_name].join(" ").trim();
     district.drawDistrict(name, sdo_code, sgg_code);
     getCentroid(name, sdo_code, sgg_code);
 });
 $('#sggList').on("change",function() {
 	sgg_code =$("#sggList").val();
-	district_map_type = 2;
+	if(sgg_code == "") {
+		district_map_type = 1;
+	} else {
+		district_map_type = 2;
+	}
     var name = [sdo_name, sgg_name].join(" ").trim();
     district.drawDistrict(name, sdo_code, sgg_code);
     getCentroid(name, sdo_code, sgg_code);
@@ -152,7 +157,7 @@ function getCentroid(name, sdo_code, sgg_code) {
             if(msg.result === "success") {
                 var altitude = 300000;
                 if(layerType === 2) {
-                    altitude = 100000;
+                    altitude = 50000;
                 } else if(layerType === 3) {
                     altitude = 15000;
                 }
