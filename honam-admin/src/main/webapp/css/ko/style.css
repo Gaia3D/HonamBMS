@@ -547,6 +547,7 @@ border-bottom: 1px dotted #fff;
 .subHeader {
 position: relative;
 height: 35px;
+width: 341px;
 background-color: #5563cf;
 }
 .subHeader > h2 {
