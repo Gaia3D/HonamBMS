@@ -1,4 +1,4 @@
-package honam.persistence.postgresql;
+package honam.persistence;
 
 import java.util.List;
 

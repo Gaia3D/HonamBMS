@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import honam.domain.Server;
-import honam.persistence.postgresql.ServerMapper;
+import honam.persistence.ServerMapper;
 import honam.service.ServerService;
 
 @Service

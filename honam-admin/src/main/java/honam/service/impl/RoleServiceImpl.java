@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import honam.domain.Role;
-import honam.persistence.postgresql.RoleMapper;
+import honam.persistence.RoleMapper;
 import honam.service.RoleService;
 
 /**

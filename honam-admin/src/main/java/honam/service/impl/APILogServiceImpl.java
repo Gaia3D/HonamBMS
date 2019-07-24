@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import honam.domain.APILog;
-import honam.persistence.postgresql.APILogMapper;
+import honam.persistence.APILogMapper;
 import honam.service.APILogService;
 
 @Service
