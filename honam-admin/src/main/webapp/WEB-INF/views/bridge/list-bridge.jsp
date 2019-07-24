@@ -61,8 +61,7 @@
 					</li>
 					<li class="input-set">
 						<label>관리주체</label>
-						<select id="aaa" name="sdolist" class="select" style="width: 187px;">
-							<option>전라남도</option>	
+						<select id="mngOrgList" name="mngOrgList" class="select" style="width: 187px;">
 						</select>				
 					</li>
 					<li class="input-set btn">
@@ -87,9 +86,10 @@
 	
 <script type="text/javascript" src="/externlib/jquery-ui-1.12.1/jquery-ui.min.js"></script>
 <script type="text/javascript" src="/js/${lang}/common.js"></script>
-<script type="text/javascript" src="/js/honam-bms.js"></script>
-<script type="text/javascript" src="/js/geospatial.js"></script>
+<script type="text/javascript" src="/js/Honam-BMS.js"></script>
+<script type="text/javascript" src="/js/Geospatial.js"></script>
 <script type="text/javascript" src="/js/DistrictControll.js"></script>
+<script type="text/javascript" src="/js/BridgeAttribute.js"></script>
 <script type="text/javascript">
 	// 초기 위치 설정
 	var INIT_WEST = 126.0;
@@ -109,6 +109,7 @@
    	viewer.scene.globe.depthTestAgainstTerrain = false;
     
 	DistrictControll(viewer);
+	loadManagerOrg() ;
     var bridgeGroupLayers = viewer.imageryLayers;
 	bridgeGroupLayers.addImageryProvider(new Cesium.WebMapServiceImageryProvider({
 	    url : 'http://localhost:8080/geoserver/honambms/wms',

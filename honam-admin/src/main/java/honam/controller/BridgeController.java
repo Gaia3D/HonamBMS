@@ -50,7 +50,6 @@ public class BridgeController {
 		Map<String, Object> map = new HashMap<>();
 		String result = "success";
 		try {
-
 			List<SkSdo> sdoList = bridgeService.getListSdoExceptGeom();
 			map.put("sdoList", sdoList);
 		} catch (Exception e) {
@@ -95,7 +94,7 @@ public class BridgeController {
 	
 	/**
 	 * 선택 한 위치의 center point를 구함
-	 * @param skEmd
+	 * @param skSgg
 	 * @return
 	 */
 	@GetMapping("centroids")
@@ -133,7 +132,29 @@ public class BridgeController {
 		map.put("result", result);
 		return map;
 	}
+	
+	/**
+	 * 관리 주체 목록
+	 * @return
+	 */
+	@GetMapping("manage")
+	@ResponseBody
+	public Map<String, Object> getListMngOrg() {
+		Map<String, Object> map = new HashMap<>();
+		String result = "success";
+		try {
 
+			List<Bridge> bridgeList = bridgeService.getListMngOrg();
+			map.put("bridgeList", bridgeList);
+		} catch (Exception e) {
+			e.printStackTrace();
+			result = "db.exception";
+		}
+		
+		map.put("result", result);
+		return map;
+	}
+	
 	@RequestMapping(value = "list-bridge")
 	public String listBridge(HttpServletRequest request, Bridge bridge, @RequestParam(defaultValue="1") String pageNo, Model model) {
 		

@@ -56,12 +56,20 @@
 			ORDER BY bjcd LIMIT 1
 		) A
 	</select>
-
+	
+	<!-- 관리주체 목록 -->
+	<select id="getListMngOrg" resultType="bridge">
+		/* getCentroidSgg */
+		SELECT DISTINCT  mng_org 
+ 		FROM bridge 
+ 		WHERE NOT mng_org is NULL 
+		ORDER BY mng_org 
+	</select>
 
     <!-- Bridge(교량) 총 건수 -->
 	<select id="getBridgeTotalCount" parameterType="bridge" resultType="long">
 		/* getBridgeTotalCount */
-		SELECT COUNT(bridge_id)
+		SELECT COUNT(gid)
 		FROM bridge 
 		<trim prefix="WHERE" prefixOverrides="AND">
 			

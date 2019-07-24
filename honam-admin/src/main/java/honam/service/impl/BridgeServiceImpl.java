@@ -7,10 +7,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import honam.domain.Bridge;
-import honam.domain.BridgeAttribute;
-import honam.service.BridgeService;
 import honam.domain.SkSdo;
 import honam.domain.SkSgg;
+import honam.service.BridgeService;
 import honam.persistence.BridgeMapper;
 import lombok.extern.slf4j.Slf4j;
 
@@ -59,6 +58,16 @@ public class BridgeServiceImpl implements BridgeService {
 	@Transactional(readOnly=true)
 	public String getCentroidSgg(SkSgg skSgg) {
 		return bridgeMapper.getCentroidSgg(skSgg);
+	}
+	
+	/**
+	 * 관리주체 목록
+	 * @param bridge
+	 * @return
+	 */
+	@Transactional(readOnly=true)
+	public List<Bridge> getListMngOrg() {
+		return bridgeMapper.getListMngOrg();
 	}
 	
 	/**
