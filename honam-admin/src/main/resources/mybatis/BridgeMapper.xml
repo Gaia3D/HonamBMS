@@ -59,7 +59,7 @@
 	
 	<!-- 관리주체 목록 -->
 	<select id="getListMngOrg" resultType="bridge">
-		/* getCentroidSgg */
+		/* getListMngOrg */
 		SELECT DISTINCT  mng_org 
  		FROM bridge 
  		WHERE NOT mng_org is NULL 
@@ -69,17 +69,54 @@
     <!-- Bridge(교량) 총 건수 -->
 	<select id="getBridgeTotalCount" parameterType="bridge" resultType="long">
 		/* getBridgeTotalCount */
-		SELECT COUNT(gid)
-		FROM bridge 
-		<trim prefix="WHERE" prefixOverrides="AND">
-			
-		</trim>
+		SELECT COUNT(A.gid)
+		FROM bridge A
+		LEFT JOIN sk_sdo B ON A.fac_sido = B.name
+		LEFT JOIN sk_sgg C ON A.fac_sgg = C.name
+		<where>
+			<if test="searchWord != null and searchWord != '' and searchValue != null and searchValue != '' and searchOption == '0'.toString()">
+			A.${searchWord} = #{searchValue}
+			</if>
+			<if test="searchWord != null and searchWord != '' and searchValue != null and searchValue != '' and searchOption == '1'.toString()">
+			AND A.${searchWord} LIKE '%' || #{searchValue} || '%'
+			</if>
+			<if test="sdoCode != null and sdoCode != ''">
+			AND B.bjcd LIKE #{sdoCode} || '%'
+			</if>
+			<if test="sggCode != null and sggCode != ''">
+			AND C.bjcd LIKE '%' || #{sggCode} || '%'
+			</if>
+			<if test="mng_org != null and mng_org != ''">
+			AND A.mng_org = #{mng_org}
+			</if>		
+		</where>					
 	</select>
 	
 	<!-- Bridge(교량) 목록 -->
 	<select id="getListBridge" parameterType="bridge" resultType="bridge">
 		/* getListBridge */
-		
+		SELECT A.brg_nam, A.end_amd, A.bridge_grade
+		FROM bridge A
+		LEFT JOIN sk_sdo B ON A.fac_sido = B.name
+		LEFT JOIN sk_sgg C ON A.fac_sgg = C.name
+		<where>
+			<if test="searchWord != null and searchWord != '' and searchValue != null and searchValue != '' and searchOption == '0'.toString()">
+			A.${searchWord} = #{searchValue}
+			</if>
+			<if test="searchWord != null and searchWord != '' and searchValue != null and searchValue != '' and searchOption == '1'.toString()">
+			AND A.${searchWord} LIKE '%' || #{searchValue} || '%'
+			</if>
+			<if test="sdoCode != null and sdoCode != ''">
+			AND B.bjcd LIKE #{sdoCode} || '%'
+			</if>
+			<if test="sggCode != null and sggCode != ''">
+			AND C.bjcd LIKE '%' || #{sggCode} || '%'
+			</if>
+			<if test="mng_org != null and mng_org != ''">
+			AND A.mng_org = #{mng_org}
+			</if>		
+		</where>
+		ORDER BY A.brg_nam
 	</select>
 	
 	<!-- Bridge(교량) 정보 조회 -->

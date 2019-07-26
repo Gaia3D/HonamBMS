@@ -16,10 +16,10 @@ function loadManagerOrg() {
 	            for(var i=0, len=bridgeList.length; i < len; i++)                    
 	            {
 	                var bridge = bridgeList[i];
-	                content += '<option value>' + bridge.mng_org + '</option>';
+	                content += '<option value=' + bridge.mng_org + '>' + bridge.mng_org + '</option>';
 	            }
 	            
-	            $('#mngOrgList').html(content);
+	            $('#mng_org').html(content);
 	        }
 	    },
 	    error : function(request, status, error) {

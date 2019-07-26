@@ -9,6 +9,7 @@
 	<meta name="viewport" content="width=device-width">
 	<title>교량 목록 | Honam-BMS</title>
 	<link rel="stylesheet" href="/css/${lang}/style.css">
+	<link rel="stylesheet" href="/css/${lang}/honam-bms.css">
 	<link rel="stylesheet" href="/css/fontawesome-free-5.2.0-web/css/all.min.css">
 	<link rel="stylesheet" href="/externlib/cesium-1.59/Widgets/widgets.css?cache_version=${cache_version}" /> 
 	<link rel="stylesheet" href="/externlib/jquery-ui-1.12.1/jquery-ui.min.css" />
@@ -40,41 +41,69 @@
 		</div>
 		<!-- E: 프로젝트 제목, 목록가기, 닫기 -->
 		
-		<!-- S: 교량 검색 입력 폼 -->		
 		<div class="subContents">
+			<!-- S: 교량 검색 입력 폼 -->		
 			<form:form id="searchForm" modelAttribute="bridge" method="post" action="/bridge/list-bridge" onsubmit="return searchCheck();">
 				<ul class="projectSearch input-group row">
 					<li class="input-set">
-						<label for="search_word">교량 명</label>
+						<label for="searchWord">교량명</label>
 						<form:input path="searchValue" type="search" size="25" cssClass="m" />
-						<form:hidden path="searchWord" value="brg" />
+						<form:hidden path="searchWord" value="brg_nam" />
 						<form:hidden path="searchOption" value="1" />
 					</li>
 					<li class="input-set">
 						<label>주소</label>
-						<select id="sdoList" name="sdoList" class="select" style="width: 97px;">
+						<form:select path="sdoCode" name="sdoCode" class="select" style="width: 97px;">
 							<option value> 시도 </option>
-						</select>
-						<select id="sggList" name="sggList" class="select" style="width: 85px;">
+						</form:select>
+						<form:select path="sggCode" name="sggCode" class="select" style="width: 85px;">
 							<option value> 시군구 </option>
-						</select>					
+						</form:select>					
 					</li>
 					<li class="input-set">
 						<label>관리주체</label>
-						<select id="mngOrgList" name="mngOrgList" class="select" style="width: 187px;">
-						</select>				
+						<form:select path="mng_org" name="mng_org" class="select" style="width: 187px;">
+						</form:select>				
 					</li>
 					<li class="input-set btn">
 						<button type="submit" value="search" class="point" id="search">검색</button>
 					</li>
 				</ul>
 			</form:form>
+			<!-- E: 교량 검색 입력 폼 -->				
+			<!-- S: 교량 목록 -->	
+			<div id="projectListHeader" class="count" style="margin-top: 20px; margin-bottom: 5px;">
+				전체 <em><fmt:formatNumber value="${pagination.totalCount}" type="number"/></em> 건
+				<fmt:formatNumber value="${pagination.pageNo}" type="number"/> / <fmt:formatNumber value="${pagination.lastPage }" type="number"/> 페이지
+			</div>
+			<div class="transferDataList" style="max-height: 650px; overflow-y: auto; height:590px;">
+				<table class="list-table scope-col">
+					<col class="col-number" />
+					<col class="col-toggle" />
+					<col class="col-name" />
+					<thead>
+						<tr>
+							<th scope="col" class="col-number" style="width:5%; font-weight: bold">번호</th>
+							<th scope="col" class="col-toggle">교량 명</th>
+							<th scope="col" class="col-name">준공년도</th>
+							<th scope="col" class="col-name">상태</th>
+						</tr>
+					</thead>
+					<tbody id="transferDataList">
+<c:forEach var="bridge" items="${bridgeList}" varStatus="status">
+						<tr>
+							<td class="col-number">${status.index+1}</td>
+							<td class="col-toggle">${bridge.brg_nam}</td>
+							<td class="col-name">${bridge.end_amd}</td>
+							<td class="col-name">${bridge.bridge_grade}</td>
+						</tr>
+</c:forEach> 
+					</tbody>
+				</table>
+				<%@ include file="/WEB-INF/views/common/pagination.jsp" %>		
+			</div>
+			<!-- E: 교량 목록 -->		
 		</div>
-		<!-- E: 교량 검색 입력 폼 -->	
-		<!-- S: 교량 목록 -->
-		
-		<!-- E: 교량 목록 -->
-		
 	</div>
 	<!-- E: 1depth / 프로젝트 목록 -->
 	<!-- S: MAPWRAP -->
@@ -91,6 +120,7 @@
 <script type="text/javascript" src="/js/DistrictControll.js"></script>
 <script type="text/javascript" src="/js/BridgeAttribute.js"></script>
 <script type="text/javascript">
+
 	// 초기 위치 설정
 	var INIT_WEST = 126.0;
 	var INIT_SOUTH = 32.0;
@@ -107,33 +137,16 @@
    	Cesium.Ion.defaultAccesToken = '${cesiumIonToken}';
    	var viewer = new Cesium.Viewer('MapContainer', {imageryProvider : imageryProvider, baseLayerPicker : true, animation:false, timeline:false, fullscreenButton:false, terrainProvider : worldTerrain});
    	viewer.scene.globe.depthTestAgainstTerrain = false;
-    
+   	
 	DistrictControll(viewer);
 	loadManagerOrg() ;
-    var bridgeGroupLayers = viewer.imageryLayers;
-	bridgeGroupLayers.addImageryProvider(new Cesium.WebMapServiceImageryProvider({
-	    url : 'http://localhost:8080/geoserver/honambms/wms',
-	    layers : 'honambms:BridgeGroup',
-	    parameters : {
-			service : 'WMS'
-				,version : '1.3.0'
-				,request : 'GetMap'
-				,transparent : 'true'
-				,tiled : 'true'
-				,format : 'image/png'
-	    }
-		//,proxy: new Cesium.DefaultProxy('/proxy/')
-		,enablePickFeatures: false
-	}));
 	
 	// TODO: policy에 추가
 	var INTERVAL_TIME = 5000; 
 	$(document).ready(function() {
 		$("#projectMenu").addClass("on");
-
 	});
-
-    
+	
 </script>
 </body>
 </html>

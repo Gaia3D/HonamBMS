@@ -82,7 +82,7 @@ function loadDistrict()
                     }
                 }
                 
-                $('#sdoList').html(content);
+                $('#sdoCode').html(content);
             }
         },
         error : function(request, status, error) {
@@ -91,24 +91,6 @@ function loadDistrict()
     });
 }
 
-$('#sdoList').on("change",function() {
-	sdo_code =$("#sdoList").val();
-	changeSdo(sdo_code);
-	var name = [sdo_name, sgg_name].join(" ").trim();
-    district.drawDistrict(name, sdo_code, sgg_code);
-    getCentroid(name, sdo_code, sgg_code);
-});
-$('#sggList').on("change",function() {
-	sgg_code =$("#sggList").val();
-	if(sgg_code == "") {
-		district_map_type = 1;
-	} else {
-		district_map_type = 2;
-	}
-    var name = [sdo_name, sgg_name].join(" ").trim();
-    district.drawDistrict(name, sdo_code, sgg_code);
-    getCentroid(name, sdo_code, sgg_code);
-});
 // 시도가 변경되면 하위 시군구가 변경됨
 function changeSdo(_sdo_code) {
     sdo_code = _sdo_code;
@@ -132,7 +114,7 @@ function changeSdo(_sdo_code) {
                     var sgg = sggList[i];               
                     content += '<option value=' + sgg.sgg_code + '>' + sgg.name + '</option>';
                 }             
-                $('#sggList').html(content);
+                $('#sggCode').html(content);
 
             }
         },
@@ -141,6 +123,30 @@ function changeSdo(_sdo_code) {
         }
     });
 }
+
+$("#sdoCode").on("change", function() {
+	sdo_code =$("#sdoCode").val();
+	changeSdo(sdo_code);
+	var name = [sdo_name, sgg_name].join(" ").trim();
+    district.drawDistrict(name, sdo_code, sgg_code);
+    getCentroid(name, sdo_code, sgg_code);
+});
+$("#sggCode").on("change", function() {
+	sgg_code =$("#sggCode").val();
+	if(sgg_code == "") {
+		district_map_type = 1;
+	} else {
+		district_map_type = 2;
+	}
+    var name = [sdo_name, sgg_name].join(" ").trim();
+    district.drawDistrict(name, sdo_code, sgg_code);
+//    getCentroid(name, sdo_code, sgg_code);
+});
+
+$("#search").button().click( function () {
+    district.drawDistrict(name, sdo_code, sgg_code);
+    getCentroid(name, sdo_code, sgg_code);
+});
 
 function getCentroid(name, sdo_code, sgg_code) {
     var layerType = district_map_type;
@@ -157,7 +163,7 @@ function getCentroid(name, sdo_code, sgg_code) {
             if(msg.result === "success") {
                 var altitude = 300000;
                 if(layerType === 2) {
-                    altitude = 50000;
+                    altitude = 150000;
                 } else if(layerType === 3) {
                     altitude = 15000;
                 }
@@ -172,3 +178,5 @@ function getCentroid(name, sdo_code, sgg_code) {
         }
     });		
 }
+
+

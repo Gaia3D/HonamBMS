@@ -68,10 +68,16 @@ public class Bridge extends Search {
 	// 교량의 내하 성능 수치
 	private Double bridge_lcc;
 	// 교량 등급
-	private String bridgeGrade;
+	private String bridge_grade;
 	
 	@JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy-MM-dd HH:mm:ss", timezone="Asia/Seoul")
 	private Date update_date;
 	@JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy-MM-dd HH:mm:ss", timezone="Asia/Seoul")
-	private Date insert_date;		
+	private Date insert_date;
+	
+	// 시도 코드
+	private String sdoCode;
+	// 시군구 코드
+	private String sggCode;
+	
 }
