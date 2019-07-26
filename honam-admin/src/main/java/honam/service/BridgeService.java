@@ -3,7 +3,6 @@ package honam.service;
 import java.util.List;
 
 import honam.domain.Bridge;
-import honam.domain.BridgeAttribute;
 import honam.domain.SkSdo;
 import honam.domain.SkSgg;
 
@@ -36,6 +35,12 @@ public interface BridgeService {
 	 */
 	String getCentroidSgg(SkSgg skSgg);
 	
+	/**
+	 * 관리주체 목록
+	 * @param bridge
+	 * @return
+	 */
+	List<Bridge> getListMngOrg();
 	
 	/**
 	 * 총건수

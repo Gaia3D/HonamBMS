@@ -38,6 +38,11 @@ public interface BridgeMapper {
 	 */
 	String getCentroidSgg(SkSgg skSgg);
 	
+	/**
+	 * 관리주체 목록
+	 * @return
+	 */
+	List<Bridge> getListMngOrg();
 	
 	/**
 	 * 총건수
