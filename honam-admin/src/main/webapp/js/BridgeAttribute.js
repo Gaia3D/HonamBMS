@@ -1,6 +1,5 @@
 
-
-function loadManagerOrg() {
+function loadManageOrg() {
 	var defaultMngOrg = '<option value> </option>';
 	var url = "./manage";
 	$.ajax({
@@ -27,4 +26,3 @@ function loadManagerOrg() {
 	    }
 	});
 }
-

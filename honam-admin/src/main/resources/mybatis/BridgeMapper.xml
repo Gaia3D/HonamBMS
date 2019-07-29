@@ -57,6 +57,15 @@
 		) A
 	</select>
 	
+	<!-- 선택한 교량의 center point를 구함 -->
+	<select id="getCentroidBridge" parameterType="bridge" resultType="string">
+		/* getCentroidBridge */
+		SELECT ST_AsText(ST_Centroid(A.geom))
+		FROM bridge A
+		WHERE gid = #{gid}
+		ORDER BY gid LIMIT 1
+	</select>
+	
 	<!-- 관리주체 목록 -->
 	<select id="getListMngOrg" resultType="bridge">
 		/* getListMngOrg */
@@ -95,7 +104,7 @@
 	<!-- Bridge(교량) 목록 -->
 	<select id="getListBridge" parameterType="bridge" resultType="bridge">
 		/* getListBridge */
-		SELECT A.brg_nam, A.end_amd, A.bridge_grade
+		SELECT A.gid, A.brg_nam, A.end_amd, A.bridge_grade
 		FROM bridge A
 		LEFT JOIN sk_sdo B ON A.fac_sido = B.name
 		LEFT JOIN sk_sgg C ON A.fac_sgg = C.name

@@ -7,7 +7,7 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width">
-	<title>교량 목록 | Honam-BMS</title>
+	<title>교량 검색 | Honam-BMS</title>
 	<link rel="stylesheet" href="/css/${lang}/style.css">
 	<link rel="stylesheet" href="/css/${lang}/honam-bms.css">
 	<link rel="stylesheet" href="/css/fontawesome-free-5.2.0-web/css/all.min.css">
@@ -34,7 +34,7 @@
 	<div id= "leftMenuArea" class="subWrap">
 		<!-- S: 프로젝트 제목, 목록가기, 닫기 -->
 		<div class="subHeader">
-			<h2>교량 목록 </h2>
+			<h2>교량 검색 </h2>
 			<div id="menuCloseButton" class="ctrlBtn">
 				<button type="button" title="닫기" class="close">닫기</button>
 			</div>
@@ -83,7 +83,7 @@
 					<col class="col-name" />
 					<thead>
 						<tr>
-							<th scope="col" class="col-number" style="width:5%; font-weight: bold">번호</th>
+							<th scope="col" class="col-number" style="width:5%; font-weight: bold"></th>
 							<th scope="col" class="col-toggle">교량 명</th>
 							<th scope="col" class="col-name">준공년도</th>
 							<th scope="col" class="col-name">상태</th>
@@ -137,15 +137,84 @@
    	Cesium.Ion.defaultAccesToken = '${cesiumIonToken}';
    	var viewer = new Cesium.Viewer('MapContainer', {imageryProvider : imageryProvider, baseLayerPicker : true, animation:false, timeline:false, fullscreenButton:false, terrainProvider : worldTerrain});
    	viewer.scene.globe.depthTestAgainstTerrain = false;
-   	
-	DistrictControll(viewer);
-	loadManagerOrg() ;
-	
+   		
 	// TODO: policy에 추가
 	var INTERVAL_TIME = 5000; 
 	$(document).ready(function() {
 		$("#projectMenu").addClass("on");
+		loadManageOrg();
+		DistrictControll(viewer);
 	});
+	drawBridge();
+
+	function drawBridge() {
+		  <c:if test="${!empty bridgeList }">
+		  	<c:forEach var="bridge" items="${bridgeList}" varStatus="status">
+				getCentroid("${bridge.gid}","${bridge.brg_nam}","${bridge.bridge_grade}")
+		  	</c:forEach>
+		  </c:if>
+	}
+
+	function getCentroid(gid, name, grade) {
+		var url = "./" + gid + "/centroid"; 
+
+	  $.ajax({
+	      url: url,
+	      type: "GET",
+	      dataType: "json",
+	      success : function(msg) {
+	          if(msg.result === "success") {
+	        	  addMarkerBillboards(name, msg.longitude,  msg.latitude, grade);
+	          }
+	      },
+	      error : function(request, status, error) {
+	          //alert(JS_MESSAGE["ajax.error.message"]);
+	          console.log("code : " + request.status + "\n message : " + request.responseText + "\n error : " + error);
+	      }
+	  });		
+	}
+	
+	function addMarkerBillboards(bridgeName, longitude, latitude, bridgeGrade) {
+		var markerImage = null; 
+		if(bridgeGrade == 'A'){
+			markerImage = '/images/${lang}/A.png';
+		} else if(bridgeGrade == 'B') {
+			markerImage = '/images/${lang}/B.png';
+		} else if(bridgeGrade == 'C') {
+			markerImage = '/images/${lang}/C.png';
+		} else if(bridgeGrade == 'D') {
+			markerImage = '/images/${lang}/D.png';
+		} else if(bridgeGrade == 'E') {
+			markerImage = '/images/${lang}/E.png';
+		} else {
+			markerImage = '/images/${lang}/E.png';
+		}
+		
+		
+		viewer.entities.add({
+			name : bridgeName,
+	        position : Cesium.Cartesian3.fromDegrees(parseFloat(longitude), parseFloat(latitude), 30),
+	        billboard : {
+	            image : markerImage,
+	            width : 25, // default: undefined
+	            height : 25, // default: undefined
+	            disableDepthTestDistance : Number.POSITIVE_INFINITY
+	            /* image : '../images/Cesium_Logo_overlay.png', // default: undefined
+	            show : true, // default
+	            pixelOffset : new Cesium.Cartesian2(0, -50), // default: (0, 0)
+	            eyeOffset : new Cesium.Cartesian3(0.0, 0.0, 0.0), // default
+	            horizontalOrigin : Cesium.HorizontalOrigin.CENTER, // default
+	            verticalOrigin : Cesium.VerticalOrigin.BOTTOM, // default: CENTER
+	            scale : 2.0, // default: 1.0
+	            color : Cesium.Color.LIME, // default: WHITE
+	            rotation : Cesium.Math.PI_OVER_FOUR, // default: 0.0
+	            alignedAxis : Cesium.Cartesian3.ZERO, // default
+	            width : 100, // default: undefined
+	            height : 25 // default: undefined */
+	        }
+	    });
+	}
+	
 	
 </script>
 </body>

@@ -143,11 +143,6 @@ $("#sggCode").on("change", function() {
 //    getCentroid(name, sdo_code, sgg_code);
 });
 
-$("#search").button().click( function () {
-    district.drawDistrict(name, sdo_code, sgg_code);
-    getCentroid(name, sdo_code, sgg_code);
-});
-
 function getCentroid(name, sdo_code, sgg_code) {
     var layerType = district_map_type;
     var bjcd = sdo_code.toString().padStart(2, '0') + sgg_code.toString().padStart(3, '0')+'00000';
@@ -178,5 +173,3 @@ function getCentroid(name, sdo_code, sgg_code) {
         }
     });		
 }
-
-

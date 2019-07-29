@@ -36,6 +36,13 @@ public interface BridgeService {
 	String getCentroidSgg(SkSgg skSgg);
 	
 	/**
+	 * 선택한 교량의 center point를 구함
+	 * @param gid
+	 * @return
+	 */
+	String getCentroidBridge(Integer gid);
+	
+	/**
 	 * 관리주체 목록
 	 * @param bridge
 	 * @return

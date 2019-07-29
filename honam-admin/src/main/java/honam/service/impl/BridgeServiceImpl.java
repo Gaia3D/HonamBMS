@@ -61,6 +61,16 @@ public class BridgeServiceImpl implements BridgeService {
 	}
 	
 	/**
+	 * 선택한 교량의 center point를 구함
+	 * @param gid
+	 * @return
+	 */
+	@Transactional(readOnly=true)
+	public String getCentroidBridge(Integer gid) {
+		return bridgeMapper.getCentroidBridge(gid);
+	}
+	
+	/**
 	 * 관리주체 목록
 	 * @param bridge
 	 * @return

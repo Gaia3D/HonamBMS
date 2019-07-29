@@ -92,7 +92,7 @@ public class BridgeController {
 	}
 	
 	/**
-	 * 선택 한 위치의 center point를 구함
+	 * 선택 한 주소별(시도, 시군구)의 center point를 구함
 	 * @param skSgg
 	 * @return
 	 */
@@ -131,6 +131,28 @@ public class BridgeController {
 		return map;
 	}
 	
+	@GetMapping("{gid:[0-9]+}/centroid")
+	@ResponseBody 
+	public Map<String, Object> getCentroidBridge(@PathVariable Integer gid) {
+		log.info("@@@@ gid = {}", gid);
+		
+		Map<String, Object> map = new HashMap<>();
+		String result = "success";
+		try {
+			String centerPoint =  bridgeService.getCentroidBridge(gid);
+			
+			String[] location = centerPoint.substring(centerPoint.indexOf("(") + 1, centerPoint.indexOf(")")).split(" "); 
+			map.put("longitude", location[0]);
+			map.put("latitude", location[1]);
+		} catch (Exception e) {
+			e.printStackTrace();
+			result = "db.exception";
+		}
+		
+		map.put("result", result);
+		return map;
+	}
+	
 	/**
 	 * 관리 주체 목록
 	 * @return
@@ -154,6 +176,11 @@ public class BridgeController {
 		return map;
 	}
 	
+	/**
+	 * 교량 목록
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping(value = "list-bridge")
 	public String listBridge(HttpServletRequest request, Bridge bridge, @RequestParam(defaultValue="1") String pageNo, Model model) {
 		log.info("@@ bridge = {}", bridge);
