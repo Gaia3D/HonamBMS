@@ -66,11 +66,11 @@ public interface BridgeMapper {
 	List<Bridge> getListBridge(Bridge bridge);
 	
 	/**
-	 * 프로젝트 정보 조회
-	 * @param bridge_id
+	 * 교량 정보 조회
+	 * @param gid
 	 * @return
 	 */
-	Bridge getBridge(Integer bridgeId);
+	Bridge getBridge(Integer gid);
 
 	/**
 	 * bridge 등록

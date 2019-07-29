@@ -65,10 +65,10 @@ public interface BridgeService {
 	
 	/**
 	 * bridge 정보 조회
-	 * @param bridge_id
+	 * @param gid
 	 * @return
 	 */
-	Bridge getBridge(Integer bridgeId);
+	Bridge getBridge(Integer gid);
 
 	/**
 	 * bridge 등록

@@ -102,12 +102,12 @@ public class BridgeServiceImpl implements BridgeService {
 
 	/**
 	 * bridge 정보 조회
-	 * @param bridge_id
+	 * @param gid
 	 * @return
 	 */
 	@Transactional(readOnly=true)
-	public Bridge getBridge(Integer bridgeId) {
-		return bridgeMapper.getBridge(bridgeId);
+	public Bridge getBridge(Integer gid) {
+		return bridgeMapper.getBridge(gid);
 	}
 
 	/**

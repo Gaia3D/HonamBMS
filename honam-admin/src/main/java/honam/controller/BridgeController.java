@@ -249,6 +249,53 @@ public class BridgeController {
 		return map;
 	}
 	
+	@RequestMapping(value = "detail-bridge")
+	public String detailBridge(HttpServletRequest request, @RequestParam(value="gid", required = true) Integer gid, Model model) {
+		log.info("@@ bridge_id = {}", gid);
+		
+		Bridge bridge = bridgeService.getBridge(gid);
+		log.info("############### Bridge = {}", bridge);
+	
+		
+		model.addAttribute("policy", CacheManager.getPolicy());
+		model.addAttribute("bridge", bridge);
+		model.addAttribute("searchParameters", getSearchParameters(PageType.DETAIL, request, null));
+		return "/bridge/detail-bridge";
+	}
+	
+	/**
+	 * 교량 조회 by 교량 id
+	 * @param request
+	 * @param gid
+	 * @return
+	 */
+	@GetMapping("{gid}")
+	@ResponseBody
+	public Map<String, Object> getBridge(HttpServletRequest request, @PathVariable Integer gid) { 
+		log.info("@@@@@@@@@@ bridge id = {}", gid);
+		
+		Map<String, Object> map = new HashMap<>();
+		String result = "success";
+		try {
+			if(gid == null || gid.intValue() <= 0) {
+				result = "bridge.id.require";
+				map.put("result", result);
+				return map;
+			}
+			
+			Bridge bridge = bridgeService.getBridge(gid);
+			map.put("bridge", bridge);
+			
+		} catch(Exception e) {
+			e.printStackTrace();
+			result = "db.exception";
+		}
+		
+		map.put("result", result);		
+		return map;
+	}
+	
+	
 	/**
 	 * 검색 조건
 	 * @param bridge

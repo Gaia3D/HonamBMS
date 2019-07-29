@@ -93,7 +93,11 @@
 <c:forEach var="bridge" items="${bridgeList}" varStatus="status">
 						<tr>
 							<td class="col-number">${status.index+1}</td>
-							<td class="col-toggle">${bridge.brg_nam}</td>
+							<td class="col-toggle">
+								<a href="/bridge/detail-bridge?gid=${bridge.gid}&pageNo=${pagination.pageNo}${pagination.searchParameters}">
+									${bridge.brg_nam} 
+								</a>	
+							</td>
 							<td class="col-name">${bridge.end_amd}</td>
 							<td class="col-name">${bridge.bridge_grade}</td>
 						</tr>
@@ -138,25 +142,24 @@
    	var viewer = new Cesium.Viewer('MapContainer', {imageryProvider : imageryProvider, baseLayerPicker : true, animation:false, timeline:false, fullscreenButton:false, terrainProvider : worldTerrain});
    	viewer.scene.globe.depthTestAgainstTerrain = false;
    		
-	// TODO: policy에 추가
-	var INTERVAL_TIME = 5000; 
 	$(document).ready(function() {
 		$("#projectMenu").addClass("on");
-		loadManageOrg();
 		DistrictControll(viewer);
+		loadManageOrg();
+		drawBridge();
 	});
-	drawBridge();
 
 	function drawBridge() {
 		  <c:if test="${!empty bridgeList }">
 		  	<c:forEach var="bridge" items="${bridgeList}" varStatus="status">
-				getCentroid("${bridge.gid}","${bridge.brg_nam}","${bridge.bridge_grade}")
+				getCentroidBridge("${bridge.gid}","${bridge.brg_nam}","${bridge.bridge_grade}")
 		  	</c:forEach>
 		  </c:if>
 	}
 
-	function getCentroid(gid, name, grade) {
+	function getCentroidBridge(gid, name, grade) {
 		var url = "./" + gid + "/centroid"; 
+		var cnt = null;
 
 	  $.ajax({
 	      url: url,
@@ -164,7 +167,8 @@
 	      dataType: "json",
 	      success : function(msg) {
 	          if(msg.result === "success") {
-	        	  addMarkerBillboards(name, msg.longitude,  msg.latitude, grade);
+	        	  cnt++;
+	        	  addMarkerBillboards(name, msg.longitude,  msg.latitude, grade, cnt);
 	          }
 	      },
 	      error : function(request, status, error) {
@@ -174,7 +178,7 @@
 	  });		
 	}
 	
-	function addMarkerBillboards(bridgeName, longitude, latitude, bridgeGrade) {
+	function addMarkerBillboards(bridgeName, longitude, latitude, bridgeGrade, cnt) {
 		var markerImage = null; 
 		if(bridgeGrade == 'A'){
 			markerImage = '/images/${lang}/A.png';
@@ -187,13 +191,16 @@
 		} else if(bridgeGrade == 'E') {
 			markerImage = '/images/${lang}/E.png';
 		} else {
-			markerImage = '/images/${lang}/E.png';
+			markerImage = '/images/${lang}/X.png';
 		}
 		
+//		if(cnt == 1) {
+//			cameraFlyTo(longitude, latitude, 200000, 3);
+//		}
 		
 		viewer.entities.add({
 			name : bridgeName,
-	        position : Cesium.Cartesian3.fromDegrees(parseFloat(longitude), parseFloat(latitude), 30),
+	        position : Cesium.Cartesian3.fromDegrees(parseFloat(longitude), parseFloat(latitude), 40),
 	        billboard : {
 	            image : markerImage,
 	            width : 25, // default: undefined
@@ -214,8 +221,7 @@
 	        }
 	    });
 	}
-	
-	
+		
 </script>
 </body>
 </html>

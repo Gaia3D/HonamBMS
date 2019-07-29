@@ -131,7 +131,11 @@
 	<!-- Bridge(교량) 정보 조회 -->
 	<select id="getBridge" parameterType="bridge" resultType="bridge">
 		/* getBridge */
-		
+		SELECT gid, brg_nam, mng_org, fac_sido, fac_sgg, fac_emd, fac_ri, fac_gra, end_amd, dsn_wet, 
+			brg_len, brg_hit, eff_wid, tot_wid, spa_cnt, max_len, tra_cnt, usp_rep, dpi_rep, geom, 
+			bridge_group_id, bridge_cm, bridge_lcc, bridge_grade
+		FROM bridge
+		WHERE gid = #{gid}	
 	</select>
 	
 	<!-- Bridge(교량) 정보 등록 -->
