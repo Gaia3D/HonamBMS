@@ -30,7 +30,6 @@ function District(viewer)
 	            ,maxZoom : 25
 	            ,maxNativeZoom : 23
 	            ,CQL_FILTER: queryString
-	            //bjcd LIKE '47820253%' AND name='청도읍'
 	        },
 	        enablePickFeatures : false
 	    });

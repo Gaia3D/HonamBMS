@@ -98,7 +98,7 @@
 									${bridge.brg_nam} 
 								</a>	
 							</td>
-							<td class="col-name">${bridge.end_amd}</td>
+							<td class="col-name">${bridge.end_amd.substring(0,4)} </td>
 							<td class="col-name">${bridge.bridge_grade}</td>
 						</tr>
 </c:forEach> 
@@ -161,21 +161,21 @@
 		var url = "./" + gid + "/centroid"; 
 		var cnt = null;
 
-	  $.ajax({
-	      url: url,
-	      type: "GET",
-	      dataType: "json",
-	      success : function(msg) {
-	          if(msg.result === "success") {
-	        	  cnt++;
-	        	  addMarkerBillboards(name, msg.longitude,  msg.latitude, grade, cnt);
-	          }
-	      },
-	      error : function(request, status, error) {
-	          //alert(JS_MESSAGE["ajax.error.message"]);
-	          console.log("code : " + request.status + "\n message : " + request.responseText + "\n error : " + error);
-	      }
-	  });		
+		$.ajax({
+		    url: url,
+		    type: "GET",
+		    dataType: "json",
+		    success : function(msg) {
+		        if(msg.result === "success") {
+		      	  cnt++;
+		      	  addMarkerBillboards(name, msg.longitude,  msg.latitude, grade, cnt);
+		        }
+		    },
+		    error : function(request, status, error) {
+		        //alert(JS_MESSAGE["ajax.error.message"]);
+		        console.log("code : " + request.status + "\n message : " + request.responseText + "\n error : " + error);
+		    }
+		});		
 	}
 	
 	function addMarkerBillboards(bridgeName, longitude, latitude, bridgeGrade, cnt) {
@@ -200,11 +200,11 @@
 		
 		viewer.entities.add({
 			name : bridgeName,
-	        position : Cesium.Cartesian3.fromDegrees(parseFloat(longitude), parseFloat(latitude), 40),
+	        position : Cesium.Cartesian3.fromDegrees(parseFloat(longitude), parseFloat(latitude), 35),
 	        billboard : {
 	            image : markerImage,
-	            width : 25, // default: undefined
-	            height : 25, // default: undefined
+	            width : 35, // default: undefined/
+	            height : 35, // default: undefined
 	            disableDepthTestDistance : Number.POSITIVE_INFINITY
 	            /* image : '../images/Cesium_Logo_overlay.png', // default: undefined
 	            show : true, // default
