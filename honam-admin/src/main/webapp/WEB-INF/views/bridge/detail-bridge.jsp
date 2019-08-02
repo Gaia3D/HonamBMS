@@ -93,63 +93,48 @@
   	function getCentroidBridge(gid, name, grade) {
 		var url = "./" + gid + "/centroid"; 
 		var cnt = null;
+		
+		//해당 교량으로 이동
+		$.ajax({
+		    url: url,
+		    type: "GET",
+		    dataType: "json",
+		    success : function(msg) {
+		        if(msg.result === "success") {
+		      	  cameraFlyTo(msg.longitude,  msg.latitude, 500, 3);
+		        }
+		    },
+		    error : function(request, status, error) {
+		        //alert(JS_MESSAGE["ajax.error.message"]);
+		        console.log("code : " + request.status + "\n message : " + request.responseText + "\n error : " + error);
+		    }
+		});
 
-	  $.ajax({
-	      url: url,
-	      type: "GET",
-	      dataType: "json",
-	      success : function(msg) {
-	          if(msg.result === "success") {
-	        	  cameraFlyTo(msg.longitude,  msg.latitude, 500, 3);
-	        	  addMarkerBillboards(name, msg.longitude,  msg.latitude, grade)
-	          }
-	      },
-	      error : function(request, status, error) {
-	          //alert(JS_MESSAGE["ajax.error.message"]);
-	          console.log("code : " + request.status + "\n message : " + request.responseText + "\n error : " + error);
-	      }
-	  });
-	}
-  	
-	function addMarkerBillboards(bridgeName, longitude, latitude, bridgeGrade) {
-		var markerImage = null; 
-		if(bridgeGrade == 'A'){
-			markerImage = '/images/${lang}/A.png';
-		} else if(bridgeGrade == 'B') {
-			markerImage = '/images/${lang}/B.png';
-		} else if(bridgeGrade == 'C') {
-			markerImage = '/images/${lang}/C.png';
-		} else if(bridgeGrade == 'D') {
-			markerImage = '/images/${lang}/D.png';
-		} else if(bridgeGrade == 'E') {
-			markerImage = '/images/${lang}/E.png';
-		} else {
-			markerImage = '/images/${lang}/X.png';
-		}
-			
-		viewer.entities.add({
-			name : bridgeName,
-	        position : Cesium.Cartesian3.fromDegrees(parseFloat(longitude), parseFloat(latitude), 40),
-	        billboard : {
-	            image : markerImage,
-	            width : 25, // default: undefined
-	            height : 25, // default: undefined
-	            disableDepthTestDistance : Number.POSITIVE_INFINITY
-	            /* image : '../images/Cesium_Logo_overlay.png', // default: undefined
-	            show : true, // default
-	            pixelOffset : new Cesium.Cartesian2(0, -50), // default: (0, 0)
-	            eyeOffset : new Cesium.Cartesian3(0.0, 0.0, 0.0), // default
-	            horizontalOrigin : Cesium.HorizontalOrigin.CENTER, // default
-	            verticalOrigin : Cesium.VerticalOrigin.BOTTOM, // default: CENTER
-	            scale : 2.0, // default: 1.0
-	            color : Cesium.Color.LIME, // default: WHITE
-	            rotation : Cesium.Math.PI_OVER_FOUR, // default: 0.0
-	            alignedAxis : Cesium.Cartesian3.ZERO, // default
-	            width : 100, // default: undefined
-	            height : 25 // default: undefined */
-	        }
+		// 해당 교량에 해당되는 영역을 폴리곤으로 표시
+	  	var now = new Date();
+	    var rand = ( now - now % 5000) / 5000;
+	  	var queryString = "brg_nam = '" + name + "'";
+	    var provider = new Cesium.WebMapServiceImageryProvider({
+	        url : "http://localhost:8080/geoserver/honambms/wms",
+	        layers : 'honambms:bridge',
+	        parameters : {
+	            service : 'WMS'
+	            ,version : '1.1.1'
+	            ,request : 'GetMap'
+	            ,transparent : 'true'
+	            ,format : 'image/png'
+	            ,time : 'P2Y/PRESENT'
+	            ,rand:rand
+	            ,maxZoom : 25
+	            ,maxNativeZoom : 23
+	            ,CQL_FILTER: queryString
+	        },
+	        enablePickFeatures : false
 	    });
+	    
+	    DISTRICT_PROVIDER = viewer.imageryLayers.addImageryProvider(provider);
 	}
+  
   	
 </script>
 </body>
