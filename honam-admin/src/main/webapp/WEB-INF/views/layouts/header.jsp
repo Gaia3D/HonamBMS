@@ -10,6 +10,15 @@
 		<li>
 			도움말
 		</li>
-
+		<li>
+<%
+	UserSession userSession = (UserSession)request.getSession().getAttribute(UserSession.KEY);
+	if(userSession != null && userSession.getUser_id() != null && !"".equals(userSession.getUser_id())) {
+%>		
+			<a href="/login/logout" style="color: #fff;">로그 아웃</a>
+<% } else { %>
+			<a href="/login/login" style="color: #fff;">로그인</a>
+<% } %>
+		</li>
 	</ul>
 </div>

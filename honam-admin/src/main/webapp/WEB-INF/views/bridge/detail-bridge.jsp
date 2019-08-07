@@ -134,7 +134,6 @@
 	    
 	    DISTRICT_PROVIDER = viewer.imageryLayers.addImageryProvider(provider);
 	}
-  
   	
 </script>
 </body>

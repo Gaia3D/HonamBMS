@@ -76,7 +76,7 @@ function loadDistrict()
                 for(var i=0, len=sdoList.length; i < len; i++)                    
                 {
                     var sdo = sdoList[i];
-                    if(sdo.sdo_code==='45' || sdo.sdo_code==='46') {
+                    if(sdo.sdo_code==='45' || sdo.sdo_code==='46' || sdo.sdo_code==='29') {
                     	content += '<option value=' + sdo.sdo_code + '>' + sdo.name + '</option>';
                     }
                 }

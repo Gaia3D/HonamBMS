@@ -119,7 +119,7 @@
 	
 <script type="text/javascript" src="/externlib/jquery-ui-1.12.1/jquery-ui.min.js"></script>
 <script type="text/javascript" src="/js/${lang}/common.js"></script>
-<script type="text/javascript" src="/js/Honam-BMS.js"></script>
+<script type="text/javascript" src="/js/Honam-bms.js"></script>
 <script type="text/javascript" src="/js/Geospatial.js"></script>
 <script type="text/javascript" src="/js/DistrictControll.js"></script>
 <script type="text/javascript" src="/js/BridgeAttribute.js"></script>
