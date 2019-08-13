@@ -4,7 +4,7 @@
 <%@page import="honam.domain.UserSession"%>
 
 <div id="header">
-	<h1><span>Honam - BMS</span></h1>
+	<h1><span>호남지역 중소교량의 멀티스케일 Mock-Up 시스템</span></h1>
 
 	<ul class="gnb">
 		<li>

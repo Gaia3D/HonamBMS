@@ -256,7 +256,6 @@ public class BridgeController {
 		Bridge bridge = bridgeService.getBridge(gid);
 		log.info("############### Bridge = {}", bridge);
 	
-		
 		model.addAttribute("policy", CacheManager.getPolicy());
 		model.addAttribute("bridge", bridge);
 		model.addAttribute("searchParameters", getSearchParameters(PageType.DETAIL, request, null));

@@ -38,7 +38,7 @@ public class Bridge extends Search {
 	// 준공일
 	private String end_amd;
 	// 설계 하중
-	private String den_wet;
+	private String dsn_wet;
 	// 연장
 	private Double brg_len; 
 	// 교고
