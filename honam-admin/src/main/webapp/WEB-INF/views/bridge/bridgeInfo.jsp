@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 
-<div id="bridgeInfoLayer" class="layer" style="top:100px; right:15px; z-index:1; display: none; width: 350px; ">
+<div id="bridgeInfoLayer" class="layer" style="top:100px; right:15px; z-index:1; display: none; width: 360px; ">
 	<div class="layerHeader">
 		<h2>교량 상세정보</h2>
 		<div class="ctrlBtn">
@@ -55,6 +55,10 @@
 		<li>
 			<label>최대경간장 (m)</label>
 			50
+		</li>
+		<li>
+			<label>교통량</label>
+			2350
 		</li>
 		<li>
 			<label>상부 형식</label>

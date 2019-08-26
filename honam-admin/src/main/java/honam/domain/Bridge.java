@@ -57,12 +57,13 @@ public class Bridge extends Search {
 	private String usp_rep;
 	// 하부 고각 대표
 	private String dpi_rep;
+	// 교량그룹 고유변호
+	private String gru_num;
 	
 	// Multi Polygon
 	@Setter(AccessLevel.NONE)
 	private String geom;
 	
-	private String bridge_group_id;
 	// 교량의 유지 관리 목표 성능
 	private Double bridge_cm;
 	// 교량의 내하 성능 수치
