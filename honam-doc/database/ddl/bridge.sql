@@ -7,7 +7,7 @@ create table bridge(
 	bridge_id					bigint,
 	fac_num						varchar(254)				    not null,
 	brg_nam						varchar(100)					not null,
-	bridge_group_id				bigint,
+	gru_num				bigint,
 	bridge_cm					float,
 	bridge_lcc					float,
 	bridge_grade				varchar(1),
@@ -30,7 +30,7 @@ comment on column bridge.insert_date is '등록일';
 
 -- 교량 그룹 정보
 create table bridge_group(
-	bridge_group_id						int,
+	gru_num								bigint,
 	bridge_group_cm						float,	
 	update_date							timestamp with time zone,
 	insert_date							timestamp with time zone		default now(),
@@ -38,7 +38,7 @@ create table bridge_group(
 );
 
 comment on table bridge_group is '교량 그룹 정보';
-comment on column bridge_group.bridge_group_id is '교량 그룹 고유번호';
+comment on column bridge_group.gru_num is '교량 그룹 고유번호';
 comment on column bridge_group.bridge_group_cm is '교량 그룹의 유지관리 목표 성능';
 comment on column bridge_group.update_date is '수정일';
 comment on column bridge_group.insert_date is '등록일';

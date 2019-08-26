@@ -78,7 +78,7 @@
     <!-- Bridge(교량) 총 건수 -->
 	<select id="getBridgeTotalCount" parameterType="bridge" resultType="long">
 		/* getBridgeTotalCount */
-		SELECT COUNT(A.gid)
+		SELECT COUNT(DISTINCT A.gid)
 		FROM bridge A
 		LEFT JOIN sk_sdo B ON A.fac_sido = B.name
 		LEFT JOIN sk_sgg C ON A.fac_sgg = C.name
@@ -104,7 +104,7 @@
 	<!-- Bridge(교량) 목록 -->
 	<select id="getListBridge" parameterType="bridge" resultType="bridge">
 		/* getListBridge */
-		SELECT A.gid, A.brg_nam, A.end_amd, A.bridge_grade
+		SELECT DISTINCT A.gid, A.brg_nam, A.end_amd, A.bridge_grade
 		FROM bridge A
 		LEFT JOIN sk_sdo B ON A.fac_sido = B.name
 		LEFT JOIN sk_sgg C ON A.fac_sgg = C.name
@@ -131,9 +131,9 @@
 	<!-- Bridge(교량) 정보 조회 -->
 	<select id="getBridge" parameterType="bridge" resultType="bridge">
 		/* getBridge */
-		SELECT gid, brg_nam, mng_org, fac_sido, fac_sgg, fac_emd, fac_ri, fac_gra, end_amd, dsn_wet, 
+		SELECT DISTINCT gid, brg_nam, mng_org, fac_sido, fac_sgg, fac_emd, fac_ri, fac_gra, end_amd, dsn_wet, 
 			brg_len, brg_hit, eff_wid, tot_wid, spa_cnt, max_len, tra_cnt, usp_rep, dpi_rep, geom, 
-			bridge_group_id, bridge_cm, bridge_lcc, bridge_grade
+			gru_num, bridge_cm, bridge_lcc, bridge_grade
 		FROM bridge
 		WHERE gid = #{gid}	
 	</select>

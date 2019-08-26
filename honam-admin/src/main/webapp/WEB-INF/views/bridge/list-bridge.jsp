@@ -111,7 +111,26 @@
 	</div>
 	<!-- E: 1depth / 프로젝트 목록 -->
 	<!-- S: MAPWRAP -->
-	<div id="MapContainer" class="mapWrap">
+	<div id="MapContainer" class="mapWrap" >
+		<div class="ctrlBtn">
+			<button type="button" class="divide" title="화면분할">화면분할</button>
+			<button type="button" class="fullscreen" title="전체화면">전체화면</button>
+		</div>
+		
+		<div class="compass">
+			<button id="mapCtrlCompass" type="button" title="compass">compass</button>
+		</div>
+				
+		<div class="zoom" >
+			<button id="mapCtrlZoomIn" type="button" class="zoomin">확대</button>
+			<button id="mapCtrlReset" type="button" class="reset">원위치</button>
+			<button id="mapCtrlZoomOut" type="button"  class="zoomout">축소</button>
+		</div>
+			
+		<div class="mapInfo">
+			<span id="positionDD">127.156797°, 38.012334°</span>
+			<span><label>고도: </label><span id="positionAlt"><!--10m--></span></span>
+		</div>
 	</div>
 	<!-- E: MAPWRAP -->
 </div>
@@ -119,12 +138,15 @@
 	
 <script type="text/javascript" src="/externlib/jquery-ui-1.12.1/jquery-ui.min.js"></script>
 <script type="text/javascript" src="/js/${lang}/common.js"></script>
-<script type="text/javascript" src="/js/Honam-BMS.js"></script>
+<script type="text/javascript" src="/js/Honam-bms.js"></script>
 <script type="text/javascript" src="/js/Geospatial.js"></script>
 <script type="text/javascript" src="/js/DistrictControll.js"></script>
+<script type="text/javascript" src="/js/NumberFormatter.js"></script>
+<script type="text/javascript" src="/js/MapControll.js"></script>
+<script type="text/javascript" src="/js/MouseControll.js"></script>
 <script type="text/javascript" src="/js/BridgeAttribute.js"></script>
 <script type="text/javascript">
-
+	
 	// 초기 위치 설정
 	var INIT_WEST = 126.0;
 	var INIT_SOUTH = 32.0;
@@ -136,19 +158,25 @@
 	var worldTerrain = Cesium.createWorldTerrain({
 	    requestWaterMask: false,
 	    requestVertexNormals: true
-	});		
+	});
+	var EsriTerrain =  new Cesium.ArcGISTiledElevationTerrainProvider({
+        url: 'https://elevation3d.arcgis.com/arcgis/rest/services/WorldElevation3D/Terrain3D/ImageServer'
+    });
 	        
    	Cesium.Ion.defaultAccesToken = '${cesiumIonToken}';
-   	var viewer = new Cesium.Viewer('MapContainer', {imageryProvider : imageryProvider, baseLayerPicker : true, animation:false, timeline:false, fullscreenButton:false, terrainProvider : worldTerrain});
+   	var viewer = new Cesium.Viewer('MapContainer', {imageryProvider : imageryProvider, baseLayerPicker : true, terrainProvider : EsriTerrain, 
+   		animation:false, timeline:false, geocoder:false, navigationHelpButton: false, fullscreenButton:false, homeButton: false, sceneModePicker: false });
    	viewer.scene.globe.depthTestAgainstTerrain = false;
-   		
+   	
 	$(document).ready(function() {
-		$("#projectMenu").addClass("on");
-		DistrictControll(viewer);
+		$("#bridgeMenu").addClass("on");
 		loadManageOrg();
+		MouseControll(viewer);
+		MapControll(viewer);
 		drawBridge();
+		DistrictControll(viewer);
 	});
-
+   	
 	function drawBridge() {
 		  <c:if test="${!empty bridgeList }">
 		  	<c:forEach var="bridge" items="${bridgeList}" varStatus="status">
@@ -200,7 +228,7 @@
 		
 		viewer.entities.add({
 			name : bridgeName,
-	        position : Cesium.Cartesian3.fromDegrees(parseFloat(longitude), parseFloat(latitude), 35),
+	        position : Cesium.Cartesian3.fromDegrees(parseFloat(longitude), parseFloat(latitude), 0),
 	        billboard : {
 	            image : markerImage,
 	            width : 35, // default: undefined/
