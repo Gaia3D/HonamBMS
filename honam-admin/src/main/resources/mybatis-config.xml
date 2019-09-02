@@ -14,6 +14,7 @@
 		<typeAlias type="honam.domain.Bridge" alias="bridge"/>
 		<typeAlias type="honam.domain.SkSdo" alias="skSdo"/>
 		<typeAlias type="honam.domain.SkSgg" alias="skSgg"/>
+		<typeAlias type="honam.domain.Sat" alias="sat"/>
 	</typeAliases>
 	
 </configuration>

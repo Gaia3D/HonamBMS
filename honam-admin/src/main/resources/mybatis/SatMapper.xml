@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="honam.persistence.SatMapper">
+
+	<!-- 년간 변위율(평균값) 목록  -->
+	<select id="getListSatAvg" parameterType="string" resultType="sat">
+		/* getListSatAvg */
+		SELECT A.lon, A.lat , AVG(A.value) AS displacement
+		FROM sat A
+		WHERE A.fac_num = #{fac_num}
+		GROUP BY A.lon, A.lat;
+	</select>
+	
+	<!-- 선택된 지점의 날짜별 변위값 목록  -->
+	<select id="getListSatValueByLonLat" parameterType="sat" resultType="sat">
+		/* getListSatValueByLonLat */
+		SELECT A.acquire_date, A.value
+		FROM sat A
+		WHERE A.fac_num = #{fac_num}
+		AND A.lon = #{lon}
+		AND A.lat = #{lat};
+	</select>
+	
+</mapper>

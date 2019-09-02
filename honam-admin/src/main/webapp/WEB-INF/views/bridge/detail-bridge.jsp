@@ -78,23 +78,33 @@
 		</div>
 		<!-- E: 교량 상세 정보 -->
 		<!-- S: 교량  레이어 -->	
-		<br>		
-		<ul class="listLayer">
-			<hr><h3 style="margin: 8px;">Layers</h3><hr>
-			
-			<li class="imageLayer on" >
-				<p>3차원 교량 모델</p>
-			</li>
-			<li class="imageLayer" >
-				<p>위성 영상</p>
-			</li>
-			<li class="imageLayer" >
-				<p>접촉식 센서</p> 
-			</li>
-			<li class="imageLayer" >
-				<p>드론 영상</p>
-			</li>
-		</ul>		
+		<br>
+		<div id = "bridgeLayer">	
+			<hr> <h3 style="margin: 8px;">Layers</h3> <hr>	
+			<ul class="listLayer">				
+				<li id="3dModel" >
+					<p>3차원 교량 모델</p>
+				</li>
+				<li id="satImageAnalysis" >
+					<p>위성 영상 결과</p>
+					<div class="listContents">
+						범례 표시
+					</div>
+				</li>
+				<li id="sensor"  >
+					<p>접촉식 센서</p>
+					<div class="listContents">
+						센서 리스트
+					</div> 
+				</li>
+				<li id="droneImage" >
+					<p>드론 영상</p>
+					<div class="listContents">
+						Time, 드론 영상 리스트
+					</div>
+				</li>
+			</ul>
+		</div>		
 		<!-- E: 교량  레이어 -->		
 	</div>
 	<!-- E: 1depth / 프로젝트 목록 -->
@@ -144,6 +154,7 @@
 	var rectangle = Cesium.Rectangle.fromDegrees(INIT_WEST, INIT_SOUTH, INIT_EAST, INIT_NORTH);
 	Cesium.Camera.DEFAULT_VIEW_FACTOR = 1;
 	Cesium.Camera.DEFAULT_VIEW_RECTANGLE = rectangle;
+	// Terrain
 	var worldTerrain = Cesium.createWorldTerrain({
 	    requestWaterMask: false,
 	    requestVertexNormals: true
@@ -156,15 +167,21 @@
    	var viewer = new Cesium.Viewer('MapContainer', {imageryProvider : imageryProvider, baseLayerPicker : true, terrainProvider : EsriTerrain, 
    		animation:false, timeline:false, geocoder:false, navigationHelpButton: false, fullscreenButton:false, homeButton: false, sceneModePicker: false });
    	viewer.scene.globe.depthTestAgainstTerrain = false;
-	
+   	var entities = viewer.entities;
+   	
+   	var satValue = entities.add(new Cesium.Entity());
+   	
+   	// 초기 로딩 설정
   	$(document).ready(function() {
 		$("#projectMenu").addClass("on");
-		getCentroidBridge("${bridge.gid}","${bridge.brg_nam}","${bridge.bridge_grade}")
+		getCentroidBridge("${bridge.gid}","${bridge.brg_nam}","${bridge.bridge_grade}");
+		getSatAvg("${bridge.gid}","${bridge.brg_nam}");
 		$("#bridgeInfoLayer").hide();
 		MouseControll(viewer);
 		MapControll(viewer);
 	});
   	
+   	// function
   	function getCentroidBridge(gid, name, grade) {
 		var url = "./" + gid + "/centroid"; 
 		var cnt = null;
@@ -209,9 +226,171 @@
 	    
 	    DISTRICT_PROVIDER = viewer.imageryLayers.addImageryProvider(provider);
 	}
+   	
+   	function getSatAvg(gid, facNum) {
+   		var url = "./" + gid + "/sat/avg";
+   		var info = "fac_num=" + "${bridge.fac_num}";
+   		
+   		$.ajax({
+		    url: url,
+		    type: "GET",
+		    data: info,
+		    dataType: "json",
+		    success : function(msg) {
+		        if(msg.result === "success") {
+		       		var satAvgList = msg.satAvgList;
+		       		var len = satAvgList.length;
+		       		if(len > 0) {
+		       			$('#bridgeLayer ul.listLayer > li:eq(1)').toggleClass('on');
+		       		}
+		       		for(var i=0; i < len; i++) {
+	                	var satPoint = satAvgList[i];
+	                	viewBridgeSatAvg(satPoint.lon, satPoint.lat, satPoint.displacement);
+	                }
+		        }
+		    },
+		    error : function(request, status, error) {
+		        //alert(JS_MESSAGE["ajax.error.message"]);
+		        console.log("code : " + request.status + "\n message : " + request.responseText + "\n error : " + error);
+		    }
+		});
+   	}
+   	
+   	function viewBridgeSatAvg(lon, lat, avg) {		
+ 		if(avg >= 5){
+			entities.add({
+				parent : satValue,
+				id : lon + ',' + lat ,
+				name : '연간변위율',
+			    description  : '<table class="cesium-infoBox-defaultTable"><tbody>' +
+                '<tr><th>Longitude</th><td>' + lon + '</td></tr>' +
+                '<tr><th>Latitude</th><td>' +  lat + '</td></tr>' +
+                '<tr><th>value</th><td>' +  avg + '</td></tr>' +
+                '</tbody></table>',
+				position : Cesium.Cartesian3.fromDegrees(lon, lat, 2),
+				ellipsoid : {
+						radii : new Cesium.Cartesian3(1.3, 1.3, 1.3),
+						material : Cesium.Color.RED
+						}
+			});
+		} else if((avg > 3) && (avg < 5)) {
+			entities.add({
+				parent : satValue,
+				id : lon + ',' + lat ,
+				name : '연간변위율',
+			    description  : '<table class="cesium-infoBox-defaultTable"><tbody>' +
+                '<tr><th>Longitude</th><td>' + lon + '</td></tr>' +
+                '<tr><th>Latitude</th><td>' +  lat + '</td></tr>' +
+                '<tr><th>년간 변위율</th><td>' +  avg + '</td></tr>' +
+                '</tbody></table>',
+				position : Cesium.Cartesian3.fromDegrees(lon, lat, 2),
+				ellipsoid : {
+						radii : new Cesium.Cartesian3(1.3, 1.3, 1.3),
+				        material : Cesium.Color.ORANGERED
+				        }
+			});
+		} else if((avg > 2) && (avg <= 3)) {
+			entities.add({
+				parent : satValue,
+				id : lon + ',' + lat ,
+				name : '연간변위율',
+			    description  : '<table class="cesium-infoBox-defaultTable"><tbody>' +
+                '<tr><th>Longitude</th><td>' + lon + '</td></tr>' +
+                '<tr><th>Latitude</th><td>' +  lat + '</td></tr>' +
+                '<tr><th>value</th><td>' +  avg + '</td></tr>' +
+                '</tbody></table>',
+				position : Cesium.Cartesian3.fromDegrees(lon, lat, 2),
+				ellipsoid : {
+						radii : new Cesium.Cartesian3(1.3, 1.3, 1.3),
+				        material : Cesium.Color.ORANGE
+				    }
+			});
+		} else if((avg > 1) && (avg <= 2)) {
+			entities.add({
+				parent : satValue,
+				id : lon + ',' + lat ,
+				name : '연간변위율',
+			    description  : '<table class="cesium-infoBox-defaultTable"><tbody>' +
+                '<tr><th>Longitude</th><td>' + lon + '</td></tr>' +
+                '<tr><th>Latitude</th><td>' +  lat + '</td></tr>' +
+                '<tr><th>value</th><td>' +  avg + '</td></tr>' +
+                '</tbody></table>',
+				position : Cesium.Cartesian3.fromDegrees(lon, lat, 2),
+				ellipsoid : {
+						radii : new Cesium.Cartesian3(1.3, 1.3, 1.3),
+				        material : Cesium.Color.YELLOW
+				    }
+			});
+		} else if((avg > -1) && (avg <= 1)) {
+			entities.add({
+				parent : satValue,
+				id : lon + ',' + lat ,
+				name : '연간변위율',
+			    description  : '<table class="cesium-infoBox-defaultTable"><tbody>' +
+                '<tr><th>Longitude</th><td>' + lon + '</td></tr>' +
+                '<tr><th>Latitude</th><td>' +  lat + '</td></tr>' +
+                '<tr><th>value</th><td>' +  '<a>' + avg + '</a>' + '</td></tr>' +
+                '</tbody></table>',
+             	position : Cesium.Cartesian3.fromDegrees(lon, lat, 2),
+				ellipsoid : {
+						radii : new Cesium.Cartesian3(1.3, 1.3, 1.3),
+				        material : Cesium.Color.SPRINGGREEN
+				    }
+			});
+		} else if((avg > -3) && (avg <= -1)) {
+			entities.add({
+				parent : satValue,
+				id : lon + ',' + lat ,
+				name : '연간변위율',
+			    description  : '<table class="cesium-infoBox-defaultTable"><tbody>' +
+                '<tr><th>Longitude</th><td>' + lon + '</td></tr>' +
+                '<tr><th>Latitude</th><td>' +  lat + '</td></tr>' +
+                '<tr><th>value</th><td>' +  avg + '</td></tr>' +
+                '</tbody></table>',	    
+				position : Cesium.Cartesian3.fromDegrees(lon,lat, 2),
+				ellipsoid : {
+						radii : new Cesium.Cartesian3(1.3, 1.3, 1.3),
+				        material : Cesium.Color.DEEPSKYBLUE
+				    }
+			});
+		} else if((avg > -4) && (avg <= -3)) {
+			entities.add({
+				parent : satValue,
+				id : lon + ',' + lat ,
+				name : '연간변위율',
+			    description  : '<table class="cesium-infoBox-defaultTable"><tbody>' +
+                '<tr><th>Longitude</th><td>' + lon + '</td></tr>' +
+                '<tr><th>Latitude</th><td>' +  lat + '</td></tr>' +
+                '<tr><th>value</th><td>' +  avg + '</td></tr>' +
+                '</tbody></table>',
+				position : Cesium.Cartesian3.fromDegrees(lon, lat, 2),
+				ellipsoid : {
+						radii : new Cesium.Cartesian3(1.3, 1.3, 1.3),
+				        material : Cesium.Color.BLUE
+				    }
+			});
+		} else if(avg >= -4){
+			entities.add({
+				parent : satValue,
+				id : lon + ',' + lat ,
+				name : '연간변위율',
+			    description  : '<table class="cesium-infoBox-defaultTable"><tbody>' +
+                '<tr><th>Longitude</th><td>' + lon + '</td></tr>' +
+                '<tr><th>Latitude</th><td>' +  lat + '</td></tr>' +
+                '<tr><th>value</th><td>' +  avg + '</td></tr>' +
+                '</tbody></table>',
+				position : Cesium.Cartesian3.fromDegrees(lon, lat, 2),
+				ellipsoid : {
+						radii : new Cesium.Cartesian3(1.3, 1.3, 1.3),
+				        material : Cesium.Color.DARKBLUE
+				    }
+			});		
+		} 
+   	}
   	
   	function viewBridgeInfo() {
   		var bridgeInfoHtml = "<li><label>교량명</label>" + "${bridge.brg_nam}" + "</li>" +
+  								"<li><label>시설물 번호</label>" + "${bridge.fac_num}" + "</li>" +
   								"<li><label>관리주체</label>" + "${bridge.mng_org}" + "</li>" +
   								"<li><label>주소</label>" + "${bridge.fac_sido} ${bridge.fac_sgg} ${bridge.fac_emd} ${bridge.fac_ri}" + "</li>" +
   								"<li><label>종별</label>" + "${bridge.fac_gra}" + "</li>" +
@@ -232,9 +411,35 @@
 		$("#bridgeInfo").html(bridgeInfoHtml);
 		$("#bridgeInfoLayer").show();
   	}
+  	
   	function closeBridgeInfo() {
    		$("#bridgeInfoLayer").hide();
    	}
+  	
+	$('#bridgeLayer ul.listLayer li > p').click(function () {
+		var parentObj = $(this).parent();
+		var index = parentObj.index();
+		$('#bridgeLayer ul.listLayer > li:eq('+ index +')').toggleClass('on');
+		if(index === 1) {
+			satValue.show = !satValue.show;		
+		}
+	 });
+	
+    var scene = viewer.scene;
+    var featurePosition = { lat: null, lon: null, alt: null };
+
+    var handler = new Cesium.ScreenSpaceEventHandler(scene.canvas);
+    handler.setInputAction(function (movement) {
+        var pick = scene.pick(movement.position);
+        if (Cesium.defined(pick)) {
+          console.log('Mouse clicked Object.');
+          var featureId = pick.id._id;
+          var jbSplit = featureId.split(',');
+          featurePosition.lon = jbSplit[0];
+          featurePosition.lat = jbSplit[1];
+        }
+      }, Cesium.ScreenSpaceEventType.LEFT_CLICK);
+
 </script>
 </body>
 </html>

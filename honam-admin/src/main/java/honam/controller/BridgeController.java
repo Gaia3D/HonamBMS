@@ -18,15 +18,19 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import honam.service.BridgeService;
+import honam.service.SatService;
 import honam.config.PropertiesConfig;
 
 import honam.domain.Bridge;
 import honam.domain.CacheManager;
 import honam.domain.PageType;
 import honam.domain.Pagination;
-import honam.util.StringUtil;
 import honam.domain.SkSdo;
 import honam.domain.SkSgg;
+import honam.domain.Sat;
+import honam.util.StringUtil;
+
+
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -38,6 +42,8 @@ public class BridgeController {
 	private PropertiesConfig propertiesConfig;
 	@Autowired
 	private BridgeService bridgeService;
+	@Autowired
+	private SatService satService;
 	
 	/**
 	 * 시도 목록
@@ -131,6 +137,11 @@ public class BridgeController {
 		return map;
 	}
 	
+	/**
+	 * 선택된 교량의 center point를 구함
+	 * @param gid
+	 * @return
+	 */
 	@GetMapping("{gid:[0-9]+}/centroid")
 	@ResponseBody 
 	public Map<String, Object> getCentroidBridge(@PathVariable Integer gid) {
@@ -291,6 +302,25 @@ public class BridgeController {
 		}
 		
 		map.put("result", result);		
+		return map;
+	}
+	
+	@GetMapping("{gid:[0-9]+}/sat/avg")
+	@ResponseBody 
+	public Map<String, Object> getSatAvg(Bridge bridge, @PathVariable Integer gid) {
+		log.info("@@@@ gid = {}", gid);
+		
+		Map<String, Object> map = new HashMap<>();
+		String result = "success";
+		try {
+			List<Sat> satAvgList = satService.getListSatAvg(bridge.getFac_num());
+			map.put("satAvgList", satAvgList);
+		} catch (Exception e) {
+			e.printStackTrace();
+			result = "db.exception";
+		}
+		
+		map.put("result", result);
 		return map;
 	}
 	

@@ -155,6 +155,7 @@
 	var rectangle = Cesium.Rectangle.fromDegrees(INIT_WEST, INIT_SOUTH, INIT_EAST, INIT_NORTH);
 	Cesium.Camera.DEFAULT_VIEW_FACTOR = 1;
 	Cesium.Camera.DEFAULT_VIEW_RECTANGLE = rectangle;
+	// Terrain
 	var worldTerrain = Cesium.createWorldTerrain({
 	    requestWaterMask: false,
 	    requestVertexNormals: true
@@ -168,15 +169,18 @@
    		animation:false, timeline:false, geocoder:false, navigationHelpButton: false, fullscreenButton:false, homeButton: false, sceneModePicker: false });
    	viewer.scene.globe.depthTestAgainstTerrain = false;
    	
+   	// 초기 로딩 설정
 	$(document).ready(function() {
 		$("#bridgeMenu").addClass("on");
-		loadManageOrg();
+		DistrictControll(viewer);
 		MouseControll(viewer);
 		MapControll(viewer);
+		loadManageOrg();
 		drawBridge();
-		DistrictControll(viewer);
+
 	});
    	
+   	// function 	
 	function drawBridge() {
 		  <c:if test="${!empty bridgeList }">
 		  	<c:forEach var="bridge" items="${bridgeList}" varStatus="status">
