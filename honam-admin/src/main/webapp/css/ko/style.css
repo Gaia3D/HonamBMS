@@ -849,8 +849,17 @@ padding-left: 12px;
 color: #888;
 text-align: right;
 background: url(../../images/ico.png) no-repeat -150px -300px;
-} 
+}
 
+ul.listLayer li > div.listContents {
+display: none;
+}
+ul.listLayer li.on > div.listContents {
+display: block;
+padding: 10px;
+border:1px solid #e0e0e0;
+background-color: #eaeaea; 
+}
 
 /* ////////// 게시판 ////////// */
 /* 검색 */
@@ -1016,7 +1025,7 @@ cursor: pointer;
 border: 0px;
 margin: 0 -2px;
 border-radius: 2px;
-background-position: -3px -5px;
+background-position: -3px -9px;
 background-image: url(../../images/ko/ico_compass.png);
 background-color: transparent;	
 }
@@ -1076,11 +1085,24 @@ border-radius: 0 0 2px 2px;
 background-position: -541px -393px;
 background-color: #555;
 }
-
 /* ///// VIEWWRAP ///// */
 
-
-
+/* ///// Analysis 결과 ///// */
+.analysisGraphic {
+	position: absolute;
+	bottom: 20px;
+	left: 410px;
+	right: 0;
+	height: 200px;
+	padding: 20px;
+	margin: 10px;
+	background-color: #fff;
+	z-index: 9;
+	display: none;
+}
+.analysisGraphic canvas {
+	border: 1px dotted red;
+}
 
 
 /* ////////// 레이어 ////////// */
