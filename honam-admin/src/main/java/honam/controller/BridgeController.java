@@ -1,5 +1,6 @@
 package honam.controller;
 
+import java.math.BigDecimal;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -307,7 +308,7 @@ public class BridgeController {
 	
 	@GetMapping("{gid:[0-9]+}/sat/avg")
 	@ResponseBody 
-	public Map<String, Object> getSatAvg(Bridge bridge, @PathVariable Integer gid) {
+	public Map<String, Object> getListSatAvg(Bridge bridge, @PathVariable Integer gid) {
 		log.info("@@@@ gid = {}", gid);
 		
 		Map<String, Object> map = new HashMap<>();
@@ -324,6 +325,25 @@ public class BridgeController {
 		return map;
 	}
 	
+	@GetMapping("{gid:[0-9]+}/sat/value")
+	@ResponseBody
+	public Map<String, Object> getListSatValue(Sat sat, @PathVariable Integer gid) {
+		log.info("@@@@ gid = {}", gid);
+		
+		Map<String, Object> map = new HashMap<>();
+		String result = "success";
+		try {
+			List<Sat> satValueList = satService.getListSatValueByLonLat(sat);
+			map.put("satValueList", satValueList);
+		} catch (Exception e) {
+			e.printStackTrace();
+			result = "db.exception";
+		}
+		
+	
+		map.put("result", result);
+		return map;
+	}
 	
 	/**
 	 * 검색 조건

@@ -1085,11 +1085,24 @@ border-radius: 0 0 2px 2px;
 background-position: -541px -393px;
 background-color: #555;
 }
-
 /* ///// VIEWWRAP ///// */
 
-
-
+/* ///// Analysis 결과 ///// */
+.analysisGraphic {
+	position: absolute;
+	bottom: 20px;
+	left: 410px;
+	right: 0;
+	height: 200px;
+	padding: 20px;
+	margin: 10px;
+	background-color: #fff;
+	z-index: 9;
+	display: none;
+}
+.analysisGraphic canvas {
+	border: 1px dotted red;
+}
 
 
 /* ////////// 레이어 ////////// */
