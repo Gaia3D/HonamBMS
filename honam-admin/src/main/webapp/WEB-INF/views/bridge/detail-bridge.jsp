@@ -12,10 +12,11 @@
 	<link rel="stylesheet" href="/css/${lang}/style.css">
 	<link rel="stylesheet" href="/css/${lang}/honam-bms.css">
 	<link rel="stylesheet" href="/css/fontawesome-free-5.2.0-web/css/all.min.css">
-	<link rel="stylesheet" href="/externlib/cesium-1.59/Widgets/widgets.css?cache_version=${cache_version}" /> 
+	<link rel="stylesheet" href="/externlib/cesium-1.61/Widgets/widgets.css?cache_version=${cache_version}" /> 
 	<link rel="stylesheet" href="/externlib/jquery-ui-1.12.1/jquery-ui.min.css" />
+	<link rel="stylesheet" href="/externlib/geostats/geostats.css">
 	<script type="text/javascript" src="/externlib/jquery-3.4.1/jquery.js"></script>
-	<script type="text/javascript" src="/externlib/cesium-1.59/Cesium.js"></script>
+	<script type="text/javascript" src="/externlib/cesium-1.61/Cesium.js"></script>
 	<script type="text/javascript" src="/externlib/jquery-3.4.1/fixedheadertable.js"></script>
 
 	<style>
@@ -82,15 +83,15 @@
 		<br>
 		<div id = "bridgeLayer">	
 			<hr> <h3 style="margin: 8px;">Layers</h3> <hr>	
-			<ul class="listLayer">				
+			<ul class="listLayer yScroll" style="height: 450px;">				
 				<li id="3dModel" >
 					<p>3차원 교량 모델</p>
 				</li>
 				<li id="satImageAnalysis" >
 					<p>위성 영상 결과</p>
 					<div class="listContents">
-						범례 표시
-					</div>
+						<div class="legend"></div>
+					</div>					
 				</li>
 				<li id="sensor"  >
 					<p>접촉식 센서</p>
@@ -146,6 +147,7 @@
 <script type="text/javascript" src="/externlib/moment-2.22.2/moment-with-locales.min.js"></script>
 <script type="text/javascript" src="/externlib/moment-2.22.2/moment.js"></script>
 <script type="text/javascript" src="/externlib/chartjs/Chart.js"></script>
+<script type="text/javascript" src="/externlib/geostats/geostats.js"></script>
 <script type="text/javascript" src="/js/${lang}/common.js"></script>
 <script type="text/javascript" src="/js/Honam-bms.js"></script>
 <script type="text/javascript" src="/js/Geospatial.js"></script>
@@ -172,7 +174,7 @@
         url: 'https://elevation3d.arcgis.com/arcgis/rest/services/WorldElevation3D/Terrain3D/ImageServer'
     });
 	        
-   	Cesium.Ion.defaultAccesToken = '${cesiumIonToken}';
+//   	Cesium.Ion.defaultAccesToken = '${cesiumIonToken}';
    	var viewer = new Cesium.Viewer('MapContainer', {imageryProvider : imageryProvider, baseLayerPicker : true, terrainProvider : EsriTerrain, 
    		animation:false, timeline:false, geocoder:false, navigationHelpButton: false, fullscreenButton:false, homeButton: false, sceneModePicker: false });
    	viewer.scene.globe.depthTestAgainstTerrain = false;
@@ -237,6 +239,7 @@
 	}
    	
    	function getListSatAvg(gid, facNum) {
+   		var arrSatValue = new Array(); 
    		var url = "./" + gid + "/sat/avg";
    		var info = "fac_num=" + "${bridge.fac_num}";
 
@@ -255,7 +258,10 @@
 		       		for(var i=0; i < len; i++) {
 	                	var satPoint = satAvgList[i];
 	                	viewBridgeSatAvg(satPoint.lon, satPoint.lat, satPoint.displacement);
+	                	arrSatValue.push(satPoint.displacement);
 	                }
+		       		getClassBreaks(arrSatValue);
+		       		
 		        }
 		    },
 		    error : function(request, status, error) {
@@ -294,7 +300,7 @@
    	}
    	
    	function viewBridgeSatAvg(lon, lat, avg) {		
- 		if(avg >= 5){
+ 		if(avg >= 4){
 			entities.add({
 				parent : satValue,
 				id : lon + ',' + lat ,
@@ -310,7 +316,7 @@
 						material : Cesium.Color.RED
 						}
 			});
-		} else if((avg > 3) && (avg < 5)) {
+		} else if((avg >= 3) && (avg < 4)) {
 			entities.add({
 				parent : satValue,
 				id : lon + ',' + lat ,
@@ -326,7 +332,7 @@
 				        material : Cesium.Color.ORANGERED
 				        }
 			});
-		} else if((avg > 2) && (avg <= 3)) {
+		} else if((avg >= 2) && (avg < 3)) {
 			entities.add({
 				parent : satValue,
 				id : lon + ',' + lat ,
@@ -334,15 +340,15 @@
 			    description  : '<table class="cesium-infoBox-defaultTable"><tbody>' +
                 '<tr><th>Longitude</th><td>' + lon + '</td></tr>' +
                 '<tr><th>Latitude</th><td>' +  lat + '</td></tr>' +
-                '<tr><th>value</th><td>' +  avg + '</td></tr>' +
+                '<tr><th>년간 변위율</th><td>' +  avg + '</td></tr>' +
                 '</tbody></table>',
 				position : Cesium.Cartesian3.fromDegrees(lon, lat, 2),
 				ellipsoid : {
 						radii : new Cesium.Cartesian3(1.3, 1.3, 1.3),
 				        material : Cesium.Color.ORANGE
-				    }
+				        }
 			});
-		} else if((avg > 1) && (avg <= 2)) {
+		} else if((avg >= 1) && (avg < 2)) {
 			entities.add({
 				parent : satValue,
 				id : lon + ',' + lat ,
@@ -358,7 +364,7 @@
 				        material : Cesium.Color.YELLOW
 				    }
 			});
-		} else if((avg > -1) && (avg <= 1)) {
+		} else if((avg >= -1) && (avg < 1)) {
 			entities.add({
 				parent : satValue,
 				id : lon + ',' + lat ,
@@ -366,15 +372,15 @@
 			    description  : '<table class="cesium-infoBox-defaultTable"><tbody>' +
                 '<tr><th>Longitude</th><td>' + lon + '</td></tr>' +
                 '<tr><th>Latitude</th><td>' +  lat + '</td></tr>' +
-                '<tr><th>value</th><td>' +  '<a>' + avg + '</a>' + '</td></tr>' +
+                '<tr><th>value</th><td>' +  avg + '</td></tr>' +
                 '</tbody></table>',
-             	position : Cesium.Cartesian3.fromDegrees(lon, lat, 2),
+				position : Cesium.Cartesian3.fromDegrees(lon, lat, 2),
 				ellipsoid : {
 						radii : new Cesium.Cartesian3(1.3, 1.3, 1.3),
 				        material : Cesium.Color.SPRINGGREEN
 				    }
 			});
-		} else if((avg > -3) && (avg <= -1)) {
+		} else if((avg >= -2) && (avg < -1)) {
 			entities.add({
 				parent : satValue,
 				id : lon + ',' + lat ,
@@ -387,10 +393,26 @@
 				position : Cesium.Cartesian3.fromDegrees(lon,lat, 2),
 				ellipsoid : {
 						radii : new Cesium.Cartesian3(1.3, 1.3, 1.3),
-				        material : Cesium.Color.DEEPSKYBLUE
+				        material : Cesium.Color.CYAN 
 				    }
 			});
-		} else if((avg > -4) && (avg <= -3)) {
+		} else if((avg >= -3) && (avg < -2)) {
+			entities.add({
+				parent : satValue,
+				id : lon + ',' + lat ,
+				name : 'Mean velocity (mm/yr)',
+			    description  : '<table class="cesium-infoBox-defaultTable"><tbody>' +
+                '<tr><th>Longitude</th><td>' + lon + '</td></tr>' +
+                '<tr><th>Latitude</th><td>' +  lat + '</td></tr>' +
+                '<tr><th>value</th><td>' +  avg + '</td></tr>' +
+                '</tbody></table>',	    
+				position : Cesium.Cartesian3.fromDegrees(lon,lat, 2),
+				ellipsoid : {
+						radii : new Cesium.Cartesian3(1.3, 1.3, 1.3),
+				        material : Cesium.Color.DEEPSKYBLUE 
+				    }
+			});
+		} else if((avg >= -4) && (avg < -3)) {
 			entities.add({
 				parent : satValue,
 				id : lon + ',' + lat ,
@@ -423,6 +445,22 @@
 				    }
 			});		
 		} 
+
+   	}
+   	var breaks;
+   	function getClassBreaks(features) {
+   			var colors  = new Array('#00008B', '#0000FF', '#00BFFF', '#00FFFF', '#00FF7F', '#FFFF00', '#FF8C00', '#FF4500', '#FF0000');   			
+   		    var stat = new geostats(features);
+   		    
+ 		    var ranges = new Array('-5.0','-4.0','-3.0','-2.0','-1.0','1.0','2.0','3.0','4.0','5.0');
+   		 	stat.setBounds(ranges);
+   		 	stat.setRanges();
+   		 	stat.legendSeparator = ' ⇔ ';
+   		 	stat.setPrecision(2);
+
+   			$('#bridgeLayer ul.listLayer > li:eq(1) .legend').html(
+   				stat.getHtmlLegend(colors, "legend", true, null, null, 'DESC')
+   			);
    	}
    	
 	$('#bridgeLayer ul.listLayer li > p').click(function () {
@@ -442,11 +480,12 @@
 	    var m = str.substr(4, 2);
 	    var d = str.substr(6, 2);
 	    return new Date(y,m-1,d);
-	}
-
+	}	
+	
 	var satValueChart = null;
 	function createSatValueGraph(data) {
 		var date= [];
+		var displacement = [];
 		var value = [];
 		var label = [];
 		
@@ -454,6 +493,7 @@
 			date.push(parse(String(data[i][0])));
 			label.push(moment.utc(date[i]).format('YYYY/MM/DD'));
 			value.push({x: date[i], y: data[i][1]});
+			displacement.push(data[i][1]);
 		}
 
 		if (satValueChart != null) {
@@ -529,7 +569,7 @@
 		        }
 		    }
 		});
-		
+
 	}
 	
     var scene = viewer.scene;
@@ -572,8 +612,7 @@
   								"<li><label>교량등급</label>" + "${bridge.bridge_grade}" + "</li>"
 		$("#bridgeInfo").html(bridgeInfoHtml);
 		$("#bridgeInfoLayer").show();
-  	}
-  	
+  	} 	
   	function closeBridgeInfo() {
    		$("#bridgeInfoLayer").hide();
    	} 	

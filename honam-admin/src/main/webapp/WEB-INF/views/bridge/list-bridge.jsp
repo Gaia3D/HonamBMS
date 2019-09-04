@@ -11,10 +11,10 @@
 	<link rel="stylesheet" href="/css/${lang}/style.css">
 	<link rel="stylesheet" href="/css/${lang}/honam-bms.css">
 	<link rel="stylesheet" href="/css/fontawesome-free-5.2.0-web/css/all.min.css">
-	<link rel="stylesheet" href="/externlib/cesium-1.59/Widgets/widgets.css?cache_version=${cache_version}" /> 
+	<link rel="stylesheet" href="/externlib/cesium-1.61/Widgets/widgets.css?cache_version=${cache_version}" /> 
 	<link rel="stylesheet" href="/externlib/jquery-ui-1.12.1/jquery-ui.min.css" />
 	<script type="text/javascript" src="/externlib/jquery-3.4.1/jquery.js"></script>
-	<script type="text/javascript" src="/externlib/cesium-1.59/Cesium.js"></script>
+	<script type="text/javascript" src="/externlib/cesium-1.61/Cesium.js"></script>
 	<style>
 		.mapWrap {
 			min-width: 1420px;
