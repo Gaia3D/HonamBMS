@@ -32,7 +32,6 @@
 		ORDER BY C.name	
 	</select>
 
-
 	<!-- 선택한 시도의 center point를 구함 -->
 	<select id="getCentroidSdo" parameterType="skSdo" resultType="string">
 		/* getCentroidSdo */
@@ -79,7 +78,7 @@
 	<select id="getBridgeTotalCount" parameterType="bridge" resultType="long">
 		/* getBridgeTotalCount */
 		SELECT COUNT(DISTINCT A.gid)
-		FROM bridge A
+		FROM bridge A 
 		LEFT JOIN sk_sdo B ON A.fac_sido = B.name
 		LEFT JOIN sk_sgg C ON A.fac_sgg = C.name
 		<where>
@@ -133,10 +132,11 @@
 		/* getBridge */
 		SELECT DISTINCT gid, ufid, fac_num, brg_nam, mng_org, fac_sido, fac_sgg, fac_emd, fac_ri, fac_gra, end_amd, dsn_wet, 
 			brg_len, brg_hit, eff_wid, tot_wid, spa_cnt, max_len, tra_cnt, usp_rep, dpi_rep, geom, 
-			gru_num, bridge_cm, bridge_lcc, bridge_grade
+			gru_num, bridge_cm, bridge_lcc, bridge_grade, bridge_model
 		FROM bridge
 		WHERE gid = #{gid}	
 	</select>
+
 	
 	<!-- Bridge(교량) 정보 등록 -->
 	<insert id="insertBridge" parameterType="bridge">

@@ -11,17 +11,8 @@
 	<link rel="stylesheet" href="/css/${lang}/style.css">
 	<link rel="stylesheet" href="/css/${lang}/honam-bms.css">
 	<link rel="stylesheet" href="/css/fontawesome-free-5.2.0-web/css/all.min.css">
-	<link rel="stylesheet" href="/externlib/cesium-1.61/Widgets/widgets.css?cache_version=${cache_version}" /> 
+	<link rel="stylesheet" href="/externlib/cesium/Widgets/widgets.css" />
 	<link rel="stylesheet" href="/externlib/jquery-ui-1.12.1/jquery-ui.min.css" />
-	<script type="text/javascript" src="/externlib/jquery-3.4.1/jquery.js"></script>
-	<script type="text/javascript" src="/externlib/cesium-1.61/Cesium.js"></script>
-	<style>
-		.mapWrap {
-			min-width: 1420px;
-			padding-left: 391px;
-			height:100%;
-		}
-	</style>
 </head>
 
 <body>
@@ -116,16 +107,6 @@
 			<button type="button" class="divide" title="화면분할">화면분할</button>
 			<button type="button" class="fullscreen" title="전체화면">전체화면</button>
 		</div>
-		
-		<div class="compass">
-			<button id="mapCtrlCompass" type="button" title="compass">compass</button>
-		</div>
-				
-		<div class="zoom" >
-			<button id="mapCtrlZoomIn" type="button" class="zoomin">확대</button>
-			<button id="mapCtrlReset" type="button" class="reset">원위치</button>
-			<button id="mapCtrlZoomOut" type="button"  class="zoomout">축소</button>
-		</div>
 			
 		<div class="mapInfo">
 			<span id="positionDD">127.156797°, 38.012334°</span>
@@ -136,7 +117,10 @@
 </div>
 <!-- E: wrap -->
 	
+<script type="text/javascript" src="/externlib/jquery-3.4.1/jquery.js"></script>
 <script type="text/javascript" src="/externlib/jquery-ui-1.12.1/jquery-ui.min.js"></script>
+<script type="text/javascript" src="/externlib/cesium/Cesium.js"></script>
+<script type="text/javascript" src="/externlib/cesium-navigation/viewerCesiumNavigationMixin.js"></script>
 <script type="text/javascript" src="/js/${lang}/common.js"></script>
 <script type="text/javascript" src="/js/Honam-bms.js"></script>
 <script type="text/javascript" src="/js/Geospatial.js"></script>
@@ -145,39 +129,30 @@
 <script type="text/javascript" src="/js/MapControll.js"></script>
 <script type="text/javascript" src="/js/MouseControll.js"></script>
 <script type="text/javascript" src="/js/BridgeAttribute.js"></script>
-<script type="text/javascript">
-	
+<script type="text/javascript">	
 	// 초기 위치 설정
-	var INIT_WEST = 126.0;
-	var INIT_SOUTH = 32.0;
-	var INIT_EAST = 130.0;
-	var INIT_NORTH = 39.0;
+	var INIT_WEST = 124.67;
+	var INIT_SOUTH = 35.72;
+	var INIT_EAST = 128.46;
+	var INIT_NORTH = 33.77;
 	var rectangle = Cesium.Rectangle.fromDegrees(INIT_WEST, INIT_SOUTH, INIT_EAST, INIT_NORTH);
-	Cesium.Camera.DEFAULT_VIEW_FACTOR = 1;
+	Cesium.Camera.DEFAULT_VIEW_FACTOR = 0;
 	Cesium.Camera.DEFAULT_VIEW_RECTANGLE = rectangle;
-	// Terrain
-	var worldTerrain = Cesium.createWorldTerrain({
-	    requestWaterMask: false,
-	    requestVertexNormals: true
-	});
-	var EsriTerrain =  new Cesium.ArcGISTiledElevationTerrainProvider({
-        url: 'https://elevation3d.arcgis.com/arcgis/rest/services/WorldElevation3D/Terrain3D/ImageServer'
-    });
-	        
-   	Cesium.Ion.defaultAccesToken = '${cesiumIonToken}';
-   	var viewer = new Cesium.Viewer('MapContainer', {imageryProvider : imageryProvider, baseLayerPicker : true, terrainProvider : EsriTerrain, 
+	
+   	var viewer = new Cesium.Viewer('MapContainer', {imageryProvider : imageryProvider, baseLayerPicker : false,
    		animation:false, timeline:false, geocoder:false, navigationHelpButton: false, fullscreenButton:false, homeButton: false, sceneModePicker: false });
-   	viewer.scene.globe.depthTestAgainstTerrain = false;
+   	viewer.extend(Cesium.viewerCesiumNavigationMixin, {});
+   	var satValueCount = null;
+
    	
    	// 초기 로딩 설정
 	$(document).ready(function() {
 		$("#bridgeMenu").addClass("on");
 		DistrictControll(viewer);
-		MouseControll(viewer);
+		MouseControll(viewer,null,null);
 		MapControll(viewer);
 		loadManageOrg();
 		drawBridge();
-
 	});
    	
    	// function 	

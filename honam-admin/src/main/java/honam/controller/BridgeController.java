@@ -1,6 +1,5 @@
 package honam.controller;
 
-import java.math.BigDecimal;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -20,6 +19,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import honam.service.BridgeService;
 import honam.service.SatService;
+import honam.service.SensorService;
 import honam.config.PropertiesConfig;
 
 import honam.domain.Bridge;
@@ -29,6 +29,7 @@ import honam.domain.Pagination;
 import honam.domain.SkSdo;
 import honam.domain.SkSgg;
 import honam.domain.Sat;
+import honam.domain.Sensor;
 import honam.util.StringUtil;
 
 
@@ -45,6 +46,8 @@ public class BridgeController {
 	private BridgeService bridgeService;
 	@Autowired
 	private SatService satService;
+	@Autowired
+	private SensorService sensorService;
 	
 	/**
 	 * 시도 목록
@@ -220,7 +223,7 @@ public class BridgeController {
 		model.addAttribute(pagination);
 		model.addAttribute("bridge", bridge);
 		model.addAttribute("bridgeList", bridgeList);
-		model.addAttribute("cesoumIonToken", cesiumIonToken);
+		model.addAttribute("cesiumIonToken", cesiumIonToken);
 		
 		return "/bridge/list-bridge";
 	}
@@ -267,10 +270,13 @@ public class BridgeController {
 		
 		Bridge bridge = bridgeService.getBridge(gid);
 		log.info("############### Bridge = {}", bridge);
+		
+		String cesiumIonToken = propertiesConfig.getCesiumIonToken();
 	
 		model.addAttribute("policy", CacheManager.getPolicy());
 		model.addAttribute("bridge", bridge);
 		model.addAttribute("searchParameters", getSearchParameters(PageType.DETAIL, request, null));
+		model.addAttribute("cesiumIonToken", cesiumIonToken);
 		return "/bridge/detail-bridge";
 	}
 	
@@ -314,8 +320,10 @@ public class BridgeController {
 		Map<String, Object> map = new HashMap<>();
 		String result = "success";
 		try {
+			long satAvgCount = satService.getSatAvgTotalCount(bridge.getFac_num());
 			List<Sat> satAvgList = satService.getListSatAvg(bridge.getFac_num());
 			map.put("satAvgList", satAvgList);
+			map.put("satAvgCount", satAvgCount);
 		} catch (Exception e) {
 			e.printStackTrace();
 			result = "db.exception";
@@ -338,9 +346,29 @@ public class BridgeController {
 		} catch (Exception e) {
 			e.printStackTrace();
 			result = "db.exception";
+		}	
+	
+		map.put("result", result);
+		return map;
+	}
+	
+	@GetMapping("{gid:[0-9]+}/sensor")
+	@ResponseBody
+	public Map<String, Object> getListSensorId(Bridge bridge, @PathVariable Integer gid) {
+		log.info("@@@@ gid = {}", gid);
+		
+		Map<String, Object> map = new HashMap<>();
+		String result = "success";
+		try {
+			long sensorIDCount = sensorService.getSensorIDTotalCount(bridge.getFac_num());
+			List<Sensor> sensorIDList = sensorService.getListSensorID(bridge.getFac_num());
+			map.put("sensorIDList", sensorIDList);
+			map.put("sensorIDCount", sensorIDCount);
+		} catch (Exception e) {
+			e.printStackTrace();
+			result = "db.exception";			
 		}
 		
-	
 		map.put("result", result);
 		return map;
 	}

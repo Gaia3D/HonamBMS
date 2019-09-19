@@ -4,7 +4,6 @@ import java.util.List;
 
 import org.springframework.stereotype.Repository;
 
-import honam.domain.Bridge;
 import honam.domain.Sat;
 
 @Repository
@@ -22,4 +21,10 @@ public interface SatMapper {
 	 * @return
 	 */
 	List<Sat> getListSatValueByLonLat(Sat sat);
+	
+	/**
+	 * 년간 변위율(평균값) 건수
+	 * @return
+	 */
+	Long getSatAvgTotalCount(String fac_num);
 }

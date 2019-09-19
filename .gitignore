@@ -7,3 +7,6 @@ build
 bin
 /resource/static/
 /resource/templates/
+
+# f4d file
+/honam-admin/src/main/webapp/f4d

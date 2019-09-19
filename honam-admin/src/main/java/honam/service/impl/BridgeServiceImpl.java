@@ -109,7 +109,7 @@ public class BridgeServiceImpl implements BridgeService {
 	public Bridge getBridge(Integer gid) {
 		return bridgeMapper.getBridge(gid);
 	}
-
+	
 	/**
 	 * bridge 등록
 	 * @param bridge

@@ -1,7 +1,8 @@
-function MouseControll(viewer) {
+function MouseControll(viewer, gid, facNum) {
     var scene = viewer.scene;
     var pickPosition = { lat: null, lon: null, alt: null };
-
+    var featurePosition = { lat: null, lon: null, alt: null };
+  
     var handler = new Cesium.ScreenSpaceEventHandler(viewer.canvas);
     handler.setInputAction(function (event) {
         var newPosition = viewer.scene.pickPosition(event.endPosition);
@@ -10,10 +11,30 @@ function MouseControll(viewer) {
             pickPosition.lon = Cesium.Math.toDegrees(cartographic.longitude);
             pickPosition.lat = Cesium.Math.toDegrees(cartographic.latitude);
             pickPosition.alt = Math.round(cartographic.height);
-
             showClickPosition(pickPosition);
-        }
+        }      
     }, Cesium.ScreenSpaceEventType.MOUSE_MOVE);
+  
+    handler.setInputAction(function (movement) {
+    	var pick = scene.pick(movement.position);
+        if (Cesium.defined(pick)) {
+		   	var featureId = pick.id._id;
+	     	var jbSplit = featureId.split(',');
+	     	featurePosition.lon = jbSplit[0];
+	     	featurePosition.lat = jbSplit[1];
+	     	if(satValueCount > 0) {
+		        getListSatValue(gid, facNum, featurePosition.lon, featurePosition.lat);    		
+				$('.analysisGraphic').css('display','block');
+	     	}
+        	if(sensorIDCount > 0) {
+        		
+        	}
+	    } else {
+	    	$('.analysisGraphic').css('display','none');
+		}
+        
+    }, Cesium.ScreenSpaceEventType.LEFT_CLICK);
+    
 }
 
 // display current mouse position

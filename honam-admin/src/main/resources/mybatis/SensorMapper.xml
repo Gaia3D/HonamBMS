@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="honam.persistence.SensorMapper">
+
+	<!-- sensorId 목록  -->
+	<select id="getListSensorID" parameterType="string" resultType="sensor">
+		/* getListSensorID */
+		SELECT DISTINCT ON(A.geom) 
+		A.gid, ST_AsText(A.geom) AS location, A.z AS alt, A.condition, A.time, A.meanvalue, A.maxvalue
+		FROM sensorid A
+		WHERE A.fac_num = #{fac_num}
+	</select>
+	
+	<!-- sensorId 건수  -->
+	<select id="getSensorIDTotalCount" parameterType="string" resultType="long">
+		/* getSensorIDTotalCount */
+		SELECT COUNT(A.gid)
+		FROM sensorid A
+		WHERE A.fac_num = #{fac_num}		
+	</select>
+	
+	<!-- 선택된 지점의 SensorID 목록  -->	
+	<select id="getListSensorIDByLonLat" parameterType="sensor" resultType="sensor">
+		/* getListSensorIDByLonLat */
+		SELECT 
+		A.gid, ST_AsText(A.geom) AS location, A.z AS alt, A.condition, A.time, A.meanvalue, A.maxvalue
+		FROM sensorid A
+		WHERE ST_AsText(A.geom) LIKE '%' || #{lat_wgs} || '%'
+		AND ST_AsText(A.geom) LIKE '%' || #{lon_wgs} || '%';	
+	</select>
+		
+</mapper>

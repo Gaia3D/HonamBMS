@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import honam.domain.Bridge;
 import honam.domain.Sat;
 import honam.service.SatService;
 import honam.persistence.SatMapper;
@@ -35,6 +34,15 @@ public class SatServiceImpl implements SatService {
 	@Transactional(readOnly=true)
 	public List<Sat> getListSatValueByLonLat(Sat sat) {
 		 return satMapper.getListSatValueByLonLat(sat);
+	}
+	
+	/**
+	 * 년간 변위율(평균값) 건수
+	 * @return
+	 */
+	@Transactional(readOnly=true)
+	public Long getSatAvgTotalCount(String fac_num) {
+		return satMapper.getSatAvgTotalCount(fac_num);
 	}
 	
 }

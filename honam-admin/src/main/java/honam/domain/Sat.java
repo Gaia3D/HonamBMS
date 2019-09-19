@@ -1,7 +1,5 @@
 package honam.domain;
 
-import java.util.Date;
-
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
@@ -30,4 +28,6 @@ public class Sat {
 	
 	// 년간 변위율(displacement)
 	private Double displacement;
+	// 총 건수
+	private Double satAvgCount;
 }

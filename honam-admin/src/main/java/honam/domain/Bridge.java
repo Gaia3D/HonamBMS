@@ -59,6 +59,8 @@ public class Bridge extends Search {
 	private String dpi_rep;
 	// 교량그룹 고유변호
 	private String gru_num;
+	// 3D 교량 모델 유무 및 개수
+	private Integer bridge_model;
 	
 	// Multi Polygon
 	@Setter(AccessLevel.NONE)

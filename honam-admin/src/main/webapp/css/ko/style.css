@@ -49,13 +49,18 @@ float: left;
 position: relative;
 min-width: 1420px;
 padding-left: 391px;
-width: 300px;
+width: 100%;
 height: 100%;
 background-color: #eee;
-background: url(../../images/@map.png);
-
-			height:100%;
+position: absolute;
+overflow: hidden;
 }
+.mapWrap {
+min-width: 1420px;
+padding-left: 391px;
+height:100%;
+}
+
 #viewWrap {
 float: left;
 position: relative;
@@ -1010,83 +1015,7 @@ text-align: right;
 background: rgba(53, 53, 61, 0.7);
 }
 
-.compass {
-position: absolute;
-background-color: #fff;
-bottom: 227px;
-right: 25px;
-width: 30px;
-z-index: 1;
-}
-.compass > button {
-width: 30px;
-height: 30px;
-cursor: pointer;
-text-indent: -999em;
-cursor: pointer;
-border: 0px;
-margin: 0 -2px;
-border-radius: 2px;
-background-position: -3px -9px;
-background-image: url(../../images/ko/ico_compass.png);
-background-color: transparent;	
-}
-.compass > button.on {
-width: 30px;
-height: 30px;
-cursor: pointer;
-text-indent: -999em;
-cursor: pointer;
-border: 0px;
-margin: 0 -2px;
-border-radius: 2px;
-background-position: -3px -5px;
-background-image: url(../../images/ko/ico_compass_n.png);
-background-color: transparent;	
-}
 
-.zoom {
-position: absolute;
-bottom: 150px;
-right: 25px;
-width: 30px;
-height: 60px;
-background-color: rgba(53, 53, 61, 0.8);
-z-index : 1;
-}
-
-.zoom > button {
-width: 30px;
-height: 30px;
-cursor: pointer;
-text-indent: -999em;
-cursor: pointer;
-border: none;
-border-radius: 2px;
-background-image: url(../../images/ico.png);
-background-repeat: no-repeat;
-}
-
-.zoom > button.zoomin {
-border-bottom: 1px solid #666;
-border-radius: 2px 2px 0 0;
-background-position: -489px -393px;
-background-color: #555;
-}
-
-.zoom > button.reset {
-border-bottom: 1px solid #666;
-border-radius: 2px 2px 0 0;
-background-image: url(../../images/ico2.png);
-background-repeat: no-repeat;
-background-position: -305px -106px;
-}
-
-.zoom > button.zoomout {
-border-radius: 0 0 2px 2px;
-background-position: -541px -393px;
-background-color: #555;
-}
 /* ///// VIEWWRAP ///// */
 
 /* ///// Analysis 결과 ///// */
@@ -1143,83 +1072,6 @@ display: inline-block;
 width: 140px;
 font-weight: bold;
 }
-
-/* 프로젝트 / 드론상태모니터링 */
-.droneState {
-position: relative;
-}
-.drone {
-display: inline-block;
-margin: 0 auto;
-margin-bottom: 15px;
-padding-left: 150px;
-background: url(../../images/ico.png) no-repeat -650px -470px;	
-}
-.drone > li > label {
-display: inline-block;
-width: 65px;
-color: #999;
-}
-.drone > li {
-width: 230px;
-padding: 3px 0;
-color: #000;
-word-break: keep-all;
-border-bottom: 1px solid #eee;
-}
-.stateList {
-overflow-x: hidden;
-overflow-y: auto;
-max-height: 600px;
-}
-.stateList > table td {
-padding: 7px 7px;
-border-top: 1px solid #ccc;
-border-left: 1px solid #eee;
-border-right: 1px solid #eee;
-border-bottom: 1px solid #ccc;
-}
-.stateList > table tr.fail td {
-background-color: #ffe5ef;
-}
-
-/* 장비모니터링 */
-.monitoringWrap {
-position: relative;
-}
-.monitoring {
-margin: 0 auto;
-margin-bottom: 15px;
-padding-left: 150px;
-background: url(../../images/ico.png) no-repeat 10px -500px;	
-}
-.monitoring > li {
-position: relative;
-width: 230px;
-padding: 5px 0;
-color: #000;
-word-break: keep-all;
-border-bottom: 1px solid #ddd;
-}
-.monitoring > li > span.title {
-display: block;
-margin-bottom: 10px;
-}
-.monitoring > li > span.title * {
-vertical-align: middle;
-}
-.monitoring > li span > label {
-display: inline-block;
-width: 100px;
-color: #000;
-font-size: 15px;
-font-weight: bold;
-}
-.monitoring > li > span.date {
-display: inline-block;
-color: #999;
-}
-
 
 /* ////////// 스타일 ////////// */
 .contents > h2 {

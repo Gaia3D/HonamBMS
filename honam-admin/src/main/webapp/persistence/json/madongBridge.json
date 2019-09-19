@@ -1,0 +1,96 @@
+{
+	"attributes": {
+		"isPhysical": false,
+		"nodeType": "root",
+		"projectType": "madongBridge",
+		"specularLighting": true
+	},
+	"children": [
+		{
+			"attributes": {
+				"isPhysical": true,
+				"nodeType": "madongBridge"
+			},
+			"children": [],
+			"data_key": "3DS_GWBR0005",
+			"data_name": "3DS_GWBR0005",
+			"mapping_type": "origin",
+            "heading": 0,
+			"height": 25,
+			"latitude": 34.93031897893139,
+			"longitude": 127.7038865346081,
+			"pitch": 0,
+			"roll": 0
+		},
+		{
+			"attributes": {
+				"isPhysical": true,
+				"nodeType": "madongBridge"
+			},
+			"children": [],
+			"data_key": "3DS_GWBR0008",
+			"data_name": "3DS_GWBR0008",
+			"mapping_type": "origin",
+            "heading": 0,
+			"height": 25,
+			"latitude": 34.93280370926726,
+			"longitude": 127.7036108738872,
+			"pitch": 0,
+			"roll": 0
+		},
+		{
+			"attributes": {
+				"isPhysical": true,
+				"nodeType": "madongBridge"
+			},
+			"children": [],
+			"data_key": "3DS_GWBR0037",
+			"data_name": "3DS_GWBR0037",
+			"mapping_type": "origin",
+            "heading": 0,
+			"height": 25,
+			"latitude": 34.93202207158904,
+			"longitude": 127.701439827364,
+			"pitch": 0,
+			"roll": 0
+		},
+		{
+			"attributes": {
+				"isPhysical": true,
+				"nodeType": "madongBridge"
+			},
+			"children": [],
+			"data_key": "3DS_GWBR0042",
+			"data_name": "3DS_GWBR0042",
+			"mapping_type": "origin",
+            "heading": 0,
+			"height": 26,
+			"latitude": 34.93302527831248,
+			"longitude": 127.7036787786765,
+			"pitch": 0,
+			"roll": 0
+		},
+		{
+			"attributes": {
+				"isPhysical": true,
+				"nodeType": "madongBridge"
+			},
+			"children": [],
+			"data_key": "3DS_GWBR0047",
+			"data_name": "3DS_GWBR0047",
+			"mapping_type": "origin",
+            "heading": 0,
+			"height": 25,
+			"latitude": 34.9315305583643,
+			"longitude": 127.7015103767483,
+			"pitch": 0,
+			"roll": 0
+		}
+	],
+	"parent": 0,
+	"depth": 1,
+	"view_order": 2,
+	"data_key": "madongBridge",
+	"data_name": "madongBridge",
+    "mapping_type": "origin"
+}

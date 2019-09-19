@@ -1,0 +1,32 @@
+{
+	"attributes": {
+		"isPhysical": false,
+		"nodeType": "root",
+		"projectType": "deokyangBridge",
+		"specularLighting": true
+	},
+	"children": [
+		{
+			"attributes": {
+				"isPhysical": true,
+				"nodeType": "deokyangBridge"
+			},
+			"children": [],
+			"data_key": "deokyangBridge3DModel",
+			"data_name": "덕양교",
+			"mapping_type": "origin",
+            "heading": 0,
+			"height": 30,
+			"latitude": 34.79933057924463,
+			"longitude": 127.6353538849569,
+			"pitch": 360,
+			"roll": 0
+		}
+	],
+	"parent": 0,
+	"depth": 1,
+	"view_order": 2,
+	"data_key": "deokyangBridge",
+	"data_name": "deokyangBridge",
+    "mapping_type": "origin"
+}

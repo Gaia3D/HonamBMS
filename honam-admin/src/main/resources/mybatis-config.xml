@@ -15,6 +15,7 @@
 		<typeAlias type="honam.domain.SkSdo" alias="skSdo"/>
 		<typeAlias type="honam.domain.SkSgg" alias="skSgg"/>
 		<typeAlias type="honam.domain.Sat" alias="sat"/>
+		<typeAlias type="honam.domain.Sensor" alias="sensor"/>
 	</typeAliases>
 	
 </configuration>

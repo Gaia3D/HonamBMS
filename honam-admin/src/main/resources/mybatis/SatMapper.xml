@@ -22,4 +22,12 @@
 		AND A.lat = #{lat};
 	</select>
 	
+	<!-- 년간 변위율(평균값) 건수  -->
+	<select id="getSatAvgTotalCount" parameterType="string" resultType="long">
+		/* getSatAvgTotalCount */
+		SELECT COUNT(A.id)
+		FROM sat A
+		WHERE A.fac_num = #{fac_num}		
+	</select>
+	
 </mapper>
