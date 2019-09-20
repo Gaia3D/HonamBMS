@@ -7,7 +7,7 @@
 	<select id="getListSensorID" parameterType="string" resultType="sensor">
 		/* getListSensorID */
 		SELECT DISTINCT ON(A.geom) 
-		A.gid, ST_AsText(A.geom) AS location, A.z AS alt, A.condition, A.time, A.meanvalue, A.maxvalue
+		A.gid, sensorid, ST_AsText(A.geom) AS location, A.z AS alt, A.condition, A.time, A.meanvalue, A.maxvalue
 		FROM sensorid A
 		WHERE A.fac_num = #{fac_num}
 	</select>
@@ -24,10 +24,20 @@
 	<select id="getListSensorIDByLonLat" parameterType="sensor" resultType="sensor">
 		/* getListSensorIDByLonLat */
 		SELECT 
-		A.gid, ST_AsText(A.geom) AS location, A.z AS alt, A.condition, A.time, A.meanvalue, A.maxvalue
+		A.gid, sensorid, ST_AsText(A.geom) AS location, A.z AS alt, A.condition, A.time, A.meanvalue, A.maxvalue
 		FROM sensorid A
 		WHERE ST_AsText(A.geom) LIKE '%' || #{lat_wgs} || '%'
-		AND ST_AsText(A.geom) LIKE '%' || #{lon_wgs} || '%';	
+		AND ST_AsText(A.geom) LIKE '%' || #{lon_wgs} || '%'	
+	</select>
+	
+	<!-- SensorType별 SensorID 목록  -->
+	<select id="getListSensorIDBySensorType" parameterType="sensor" resultType="sensor">
+		/* getListSensorIDBySensorType */
+		SELECT 
+		A.gid, sensorid, ST_AsText(A.geom) AS location, A.z AS alt, A.condition, A.time, A.meanvalue, A.maxvalue
+		FROM sensorid A
+		WHERE A.fac_num = #{fac_num}
+		AND A.sensorid LIKE '%' || #{sensorType} || '%'	
 	</select>
 		
 </mapper>

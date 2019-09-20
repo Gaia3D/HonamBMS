@@ -84,8 +84,10 @@
 				<li id="sensor"  >
 					<p>접촉식 센서</p>
 					<div class="listContents">
-						<h5>선택한 지점의 SensorID 목록</h5>
-						table
+						<h3>Display Variable</h3> <hr>				
+						<input type="radio" name="sensor" value="ACC" /> ACC (가속도계) <br>
+						<input type="radio" name="sensor" value="STR" /> STR (변형률계) <br>
+						<input type="radio" name="sensor" value="TMP" /> TMP (온도계) <br>
 					</div> 
 				</li>
 				<li id="droneImage" >
@@ -161,27 +163,31 @@
 	options.imageBaseUrl = "/images/ko";
 	
 	var managerFactory;
+	var viewer; 
 	var satValue, sensorID;
    	var satValueCount = null, sensorIDCount = null;
    	var isVisibleModel;
- 	
+   	var gid = "${bridge.gid}";
+   	var facNum = "${bridge.fac_num}";
+   	
 	var mago = new Mago3D.Mago3D('MapContainer', options);
 	mago.on("finished", function () { 
 		managerFactory = this.getManagerFactory();
-		viewer = managerFactory.getViewer();
+		var _viewer = managerFactory.getViewer();
+		viewer = _viewer;
 	   	viewer.extend(Cesium.viewerCesiumNavigationMixin, {});
 		viewer.scene.globe.depthTestAgainstTerrain = false;
 		viewer.terrainProvider = Cesium.createWorldTerrain({
 	            requestWaterMask : false
-	        });		
-   	   	this.satValue = managerFactory.getViewer().entities.add(new Cesium.Entity());
-   		this.sensorID = managerFactory.getViewer().entities.add(new Cesium.Entity());	
-		getCentroidBridge(viewer, "${bridge.gid}", "${bridge.brg_nam}", "${bridge.bridge_grade}", "${bridge.fac_num}");
+	        });	
+		satValue = viewer.entities.add(new Cesium.Entity());
+		sensorID = viewer.entities.add(new Cesium.Entity());	
+		getCentroidBridge(viewer, "${bridge.gid}", "${bridge.brg_nam}", "${bridge.bridge_grade}", "${bridge.fac_num}");		
 		MouseControll(viewer, "${bridge.gid}", "${bridge.fac_num}");
 		MapControll(viewer);
 	});
 	mago.start();
-
+	
 	$(document).ready(function() {
 		$("#projectMenu").addClass("on");
 		$("#bridgeInfoLayer").hide();
@@ -228,7 +234,7 @@
 			isVisibleModel = !isVisibleModel;
 			changeMagoStateAPI(managerFactory, isVisibleModel);
 		}
-/*  		if(index === 1) {
+  		if(index === 1) {
 			satValue.show = !satValue.show;		
 		}
 		if(!satValue.show) {
@@ -239,7 +245,7 @@
 		}
 		if(!sensorID.show) {
 			$('.analysisGraphic').css('display','none');
-		} */
+		} 
  	});    
     
 </script>

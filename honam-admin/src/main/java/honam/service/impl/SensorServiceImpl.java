@@ -43,4 +43,13 @@ public class SensorServiceImpl implements SensorService {
 	public List<Sensor> getListSensorIDByLonLat(Sensor sensor) {
 		return sensorMapper.getListSensorIDByLonLat(sensor);
 	}
+	
+	/**
+	 * SensorType별 SensorID 목록
+	 * @return
+	 */
+	@Transactional(readOnly=true)
+	public List<Sensor> getListSensorIDBySensorType(Sensor sensor) {
+		return sensorMapper.getListSensorIDBySensorType(sensor);
+	}
 }

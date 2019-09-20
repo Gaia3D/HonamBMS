@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 
-<div id="bridgeInfoLayer" class="layer" style="top:100px; right:30px; z-index:1; display: none; width: 360px; ">
+<div id="bridgeInfoLayer" class="layer" style="top:100px; right:100px; z-index:1; display: none; width: 360px; ">
 	<div class="layerHeader">
 		<h2>교량 상세정보</h2>
 		<div class="ctrlBtn">

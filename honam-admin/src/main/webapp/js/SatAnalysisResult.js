@@ -224,9 +224,7 @@ function viewBridgeSatAvg(viewer, lon, lat, avg) {
 		        material : Cesium.Color.DARKBLUE
 		    }
 		});		
-	}
-	
-	return satValue;
+	}	
 }
 
 var breaks;
