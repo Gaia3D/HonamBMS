@@ -1,5 +1,6 @@
 // 센서 데이터 가시화
-function getListSensorID(viewer, gid, facNum) {
+function getListSensorID(gid, facNum) {
+	var condition;
 	var url = "./" + gid + "/sensor";
 	var info = "fac_num=" + facNum;
 
@@ -19,20 +20,24 @@ function getListSensorID(viewer, gid, facNum) {
 		       			var sensorID = sensorIDList[i];
 	                	var location = sensorID.location.substring(sensorID.location.indexOf('(') + 1, sensorID.location.indexOf(')'));
 	                	var lonlat = location.split(' ');
-	                	viewSensorID(viewer, sensorID.sensorid, lonlat[0], lonlat[1], sensorID.alt, sensorID.condition);
+	                	viewSensorID(sensorID.sensorid, lonlat[0], lonlat[1], sensorID.alt, sensorID.condition);
+	                	if(sensorID.condition === 0) {
+	                		condition = "Normal";
+	                	} else {
+	                		condition = "Abnormal";
 	                	}
-		       		}		       		
-	       		}
+	                }
+		       	}
+	    	}
 		},
 	    error : function(request, status, error) {
 	        //alert(JS_MESSAGE["ajax.error.message"]);
 	        console.log("code : " + request.status + "\n message : " + request.responseText + "\n error : " + error);
 	    }
-	});
-	
-}
+	});	
+}	
 
-function getListSensorType(viewer, gid, facNum, sensorType) {
+function getListSensorType(gid, facNum, sensorType) {
 	var url = "./" + gid + "/sensor/" + sensorType;
 	var info = "sensorType=" + sensorType + "&fac_num=" + facNum;
 
@@ -50,10 +55,15 @@ function getListSensorType(viewer, gid, facNum, sensorType) {
 		       			var sensor = sensorList[i];
 	                	var location = sensor.location.substring(sensor.location.indexOf('(') + 1, sensor.location.indexOf(')'));
 	                	var lonlat = location.split(' ');
-	                	viewSensorID(viewer, sensor.sensorid, lonlat[0], lonlat[1], sensor.alt, sensor.condition);
+	                	viewSensorID(sensor.sensorid, lonlat[0], lonlat[1], sensor.alt, sensor.condition);
+	                	if(sensor.condition === 0) {
+	                		condition = "Normal";
+	                	} else {
+	                		condition = "Abnormal";
 	                	}
-		       		}		       				
-	       		}
+	                }
+		       	}		       				
+	       	}
 		},
 	    error : function(request, status, error) {
 	        //alert(JS_MESSAGE["ajax.error.message"]);
@@ -62,10 +72,11 @@ function getListSensorType(viewer, gid, facNum, sensorType) {
 	});
 }
 
-function viewSensorID(viewer, sensorid, lon, lat, alt, condition) {
+function viewSensorID(sensorid, lon, lat, alt, condition) {
 	var entities = viewer.entities;
-
-	if(condition == 0) {
+	
+	// condition: 0. true, 1.false
+	if(condition === 0) {
 		entities.add({
 			parent : sensorID,
 			name : sensorid,
@@ -79,7 +90,7 @@ function viewSensorID(viewer, sensorid, lon, lat, alt, condition) {
 					material : Cesium.Color.SPRINGGREEN
 					}
 		});			
-	} else if(condition == 1) {
+	} else if(condition === 1) {
 		entities.add({
 			parent : sensorID,
 			name : sensorid,
@@ -96,12 +107,31 @@ function viewSensorID(viewer, sensorid, lon, lat, alt, condition) {
 	}
 }
 
+function getSensorMonitoringData(gid, facNum, featurename) {	
+	var url = "http://testapi-dev.ap-northeast-2.elasticbeanstalk.com/v1/";	
+	var object = { "payload": { "SensorID": "ACC001", "time": "6/19/2019 23:10"}};
+	var jsonData = JSON.stringify(object);
+	var request = $.ajax({
+		crossOrigin: true,
+		url: url,
+	    dataType: "json",
+	    data: jsonData,
+	    success: function(response) {
+	    	console.log("success" + response);
+	    },
+	    error : function(request, status, error) {
+	        //alert(JS_MESSAGE["ajax.error.message"]);
+	        console.log("code : " + request.status + "\n message : " + request.responseText + "\n error : " + error);
+	    }
+	});
+	console.log(request);
+}
+
 $('input[name="sensor"]').change(function() {
 	var sensorType;
     $('input[name="sensor"]').each(function() {
         var value = $(this).val();            
         var checked = $(this).prop('checked'); 
-        var $label = $(this).next();
        
         if(checked) {
         	sensorType = value;
@@ -111,8 +141,7 @@ $('input[name="sensor"]').change(function() {
         	while (sensorID._children.length) {
         		sensorID._children.pop();
         	}
-        	getListSensorType(viewer, gid, facNum, sensorType);
+        	getListSensorType(gid, facNum, sensorType);
         }
     });
 });
-

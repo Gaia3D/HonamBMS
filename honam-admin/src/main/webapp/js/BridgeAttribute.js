@@ -73,6 +73,6 @@ function getCentroidBridge(viewer, gid, name, grade, facNum) {
 	    }
 	});
 	
-	getListSatAvg(viewer, gid, facNum);
-	getListSensorID(viewer, gid, facNum);
+	getListSatAvg(gid, facNum);
+	getListSensorID(gid, facNum);
 }

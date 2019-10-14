@@ -84,11 +84,13 @@
 				<li id="sensor"  >
 					<p>접촉식 센서</p>
 					<div class="listContents">
-						<h3>Display Variable</h3> <hr>				
+						<h3>Sensor Type</h3> <hr>				
 						<input type="radio" name="sensor" value="ACC" /> ACC (가속도계) <br>
 						<input type="radio" name="sensor" value="STR" /> STR (변형률계) <br>
-						<input type="radio" name="sensor" value="TMP" /> TMP (온도계) <br>
+						<input type="radio" name="sensor" value="TMP" /> TMP (온도계) <br><br>
+						<div class="legend"></div>					
 					</div> 
+
 				</li>
 				<li id="droneImage" >
 					<p>드론 영상</p>
@@ -131,6 +133,7 @@
 <script type="text/javascript" src="/externlib/jquery-3.4.1/jquery.js"></script>
 <script type="text/javascript" src="/externlib/jquery-ui-1.12.1/jquery-ui.min.js"></script>
 <script type="text/javascript" src="/externlib/jquery-3.4.1/fixedheadertable.js"></script>
+<script type="text/javascript" src="/externlib/ajax-cross-origin/jquery.ajax-cross-origin.min.js"></script>
 <script type="text/javascript" src="/externlib/cesium/Cesium.js"></script>
 <script type="text/javascript" src="/externlib/cesium-navigation/viewerCesiumNavigationMixin.js"></script>
 <script type="text/javascript" src="/externlib/mago3d/mago3d.js"></script>

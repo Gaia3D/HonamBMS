@@ -1,9 +1,8 @@
 // 위성영상 결과 가시화
-function getListSatAvg(viewer, gid, facNum) {
+function getListSatAvg(gid, facNum) {
 	var arrSatValue = new Array(); 
 	var url = "./" + gid + "/sat/avg";
 	var info = "fac_num=" + facNum;
-
 	$.ajax({
     url: url,
     type: "GET",
@@ -18,7 +17,7 @@ function getListSatAvg(viewer, gid, facNum) {
        			$('#bridgeLayer ul.listLayer > li:eq(1)').toggleClass('on');
 	       		for(var i=0; i < len; i++) {
                 	var satPoint = satAvgList[i];
-                	this.satValue = viewBridgeSatAvg(viewer, satPoint.lon, satPoint.lat, satPoint.displacement);
+                	this.satValue = viewBridgeSatAvg(satPoint.lon, satPoint.lat, satPoint.displacement);
                 	arrSatValue.push(satPoint.displacement);
                 }
 	       		getClassBreaks(arrSatValue);
@@ -61,7 +60,7 @@ function getListSatValue(gid, facNum, lon, lat) {
 });
 }
 	
-function viewBridgeSatAvg(viewer, lon, lat, avg) {
+function viewBridgeSatAvg(lon, lat, avg) {
 	var entities = viewer.entities;
 	
 	if(avg >= 4){
@@ -106,7 +105,7 @@ function viewBridgeSatAvg(viewer, lon, lat, avg) {
         '<tr><th>Latitude</th><td>' +  lat + '</td></tr>' +
         '<tr><th>value</th><td>' +  avg + '</td></tr>' +
         '</tbody></table>',
-		position : Cesium.Cartesian3.fromDegrees(lon, lat, 30),
+		position : Cesium.Cartesian3.fromDegrees(lon, lat, 25),
 		ellipsoid : {
 				radii : new Cesium.Cartesian3(1.3, 1.3, 1.3),
 		        material : Cesium.Color.ORANGE
@@ -122,7 +121,7 @@ function viewBridgeSatAvg(viewer, lon, lat, avg) {
         '<tr><th>Latitude</th><td>' +  lat + '</td></tr>' +
         '<tr><th>value</th><td>' +  avg + '</td></tr>' +
         '</tbody></table>',
-		position : Cesium.Cartesian3.fromDegrees(lon, lat, 30),
+		position : Cesium.Cartesian3.fromDegrees(lon, lat, 25),
 		ellipsoid : {
 				radii : new Cesium.Cartesian3(1.3, 1.3, 1.3),
 		        material : Cesium.Color.YELLOW
@@ -170,7 +169,7 @@ function viewBridgeSatAvg(viewer, lon, lat, avg) {
         '<tr><th>Latitude</th><td>' +  lat + '</td></tr>' +
         '<tr><th>value</th><td>' +  avg + '</td></tr>' +
         '</tbody></table>',	    
-		position : Cesium.Cartesian3.fromDegrees(lon,lat, 30),
+		position : Cesium.Cartesian3.fromDegrees(lon,lat, 25),
 		ellipsoid : {
 				radii : new Cesium.Cartesian3(1.3, 1.3, 1.3),
 		        material : Cesium.Color.CYAN 
@@ -186,7 +185,7 @@ function viewBridgeSatAvg(viewer, lon, lat, avg) {
         '<tr><th>Latitude</th><td>' +  lat + '</td></tr>' +
         '<tr><th>value</th><td>' +  avg + '</td></tr>' +
         '</tbody></table>',	    
-		position : Cesium.Cartesian3.fromDegrees(lon,lat, 30),
+		position : Cesium.Cartesian3.fromDegrees(lon,lat, 25),
 		ellipsoid : {
 				radii : new Cesium.Cartesian3(1.3, 1.3, 1.3),
 		        material : Cesium.Color.DEEPSKYBLUE 
@@ -235,7 +234,7 @@ function getClassBreaks(features) {
 	    var ranges = new Array('-5.0','-4.0','-3.0','-2.0','-1.0','0','1.0','2.0','3.0','4.0','5.0');
 	 	stat.setBounds(ranges);
 	 	stat.setRanges();
-	 	stat.legendSeparator = ' ⇔ ';
+	 	stat.legendSeparator = '⇔  ';
 	 	stat.setPrecision(2);
 
 		$('#bridgeLayer ul.listLayer > li:eq(1) .legend').html(
