@@ -1,5 +1,5 @@
 function MouseControll(viewer, gid, facNum) {
-    var scene = viewer.scene;
+	var scene = viewer.scene;
     var pickPosition = { lat: null, lon: null, alt: null };
     var featurePosition = { lat: null, lon: null, alt: null };
   
@@ -19,6 +19,7 @@ function MouseControll(viewer, gid, facNum) {
     	var pick = scene.pick(movement.position);
         if (Cesium.defined(pick)) {
 		   	var featureId = pick.id._id;
+		   	var featurename = pick.id._name;
 	     	var jbSplit = featureId.split(',');
 	     	featurePosition.lon = jbSplit[0];
 	     	featurePosition.lat = jbSplit[1];
@@ -27,10 +28,12 @@ function MouseControll(viewer, gid, facNum) {
 				$('.analysisGraphic').css('display','block');
 	     	}
         	if(sensorIDCount > 0) {
-        		
+        		getSensorMonitoringData(gid, facNum, featurename);
+//        		$('.analysisGraphic').css('display','block');
         	}
 	    } else {
 	    	$('.analysisGraphic').css('display','none');
+	    	
 		}
         
     }, Cesium.ScreenSpaceEventType.LEFT_CLICK);

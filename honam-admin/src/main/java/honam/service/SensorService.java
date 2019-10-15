@@ -22,4 +22,10 @@ public interface SensorService {
 	 * @return
 	 */
 	List<Sensor> getListSensorIDByLonLat(Sensor sensor);
+	
+	/**
+	 * SensorType별 SensorID 목록
+	 * @return
+	 */
+	List<Sensor> getListSensorIDBySensorType(Sensor sensor);	
 }

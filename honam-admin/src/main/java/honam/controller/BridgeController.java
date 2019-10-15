@@ -373,6 +373,28 @@ public class BridgeController {
 		return map;
 	}
 	
+	@GetMapping("{gid:[0-9]+}/sensor/{sensorType}")
+	@ResponseBody
+	public Map<String, Object> getListSensorIdBysensorType(HttpServletRequest request, Sensor sensor, @PathVariable Integer gid, @PathVariable String sensorType) {
+		log.info("@@@@ gid = {}", gid);
+				
+		sensor.setSensorType(sensorType);
+		log.info("@@@@ Sensor = {}", sensor);
+		
+		Map<String, Object> map = new HashMap<>();
+		String result = "success";
+		try {
+			List<Sensor> sensorIDList = sensorService.getListSensorIDBySensorType(sensor);
+			map.put("sensorIDList", sensorIDList);
+		} catch (Exception e) {
+			e.printStackTrace();
+			result = "db.excepiton";
+		}
+		
+		map.put("result", result);
+		return map;
+	}
+	
 	/**
 	 * 검색 조건
 	 * @param bridge

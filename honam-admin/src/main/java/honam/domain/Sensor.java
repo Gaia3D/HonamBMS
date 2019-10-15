@@ -18,6 +18,8 @@ public class Sensor {
 	private Integer gid;	
 	// 시섧물 번호
 	private String fac_num;
+	// sensor Type
+	private String sensorType;
 	// sensor id
 	private String sensorid;
 	// x (TM좌표)
