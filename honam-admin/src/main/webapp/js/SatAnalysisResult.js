@@ -332,7 +332,9 @@ function createSatValueGraph(data) {
 					},
 					ticks: {
 						autoSkip: true,
-						minRotation: 0
+						minRotation: 0,
+						min: -15,
+						max: 15
 					}
 	            }]
 	        }
