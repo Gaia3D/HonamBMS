@@ -1,15 +1,39 @@
 package honam.domain;
 
+/**
+ * 검색 공통 항목
+ * @author Jeongdae
+ *
+ */
 public class Search {
+
+	public Search() {
+	}
+	
+	public Search(Long totalCount, Long offset, Long limit, String searchWord, String searchOption, String searchValue,
+			String startDate, String endDate, String orderWord, String orderValue, Long listCounter) {
+		super();
+		this.totalCount = totalCount;
+		this.offset = offset;
+		this.limit = limit;
+		this.searchWord = searchWord;
+		this.searchOption = searchOption;
+		this.searchValue = searchValue;
+		this.startDate = startDate;
+		this.endDate = endDate;
+		this.orderWord = orderWord;
+		this.orderValue = orderValue;
+		this.listCounter = listCounter;
+	}
 
 	// 총건수
 	private Long totalCount;
-	
+
 	// 페이지 처리를 위한 시작
 	private Long offset;
 	// 페이지별 표시할 건수
 	private Long limit;
-	
+
 	/********** 검색 조건 ************/
 	private String searchWord;
 	// 검색 옵션. 0 : 일치, 1 : 포함
@@ -86,6 +110,43 @@ public class Search {
 	}
 	public void setListCounter(Long listCounter) {
 		this.listCounter = listCounter;
+	}
+	
+	/**
+	 * 검색 조건
+	 * @param search
+	 * @return
+	 */
+	public String getParameters() {
+		StringBuffer buffer = new StringBuffer();
+		buffer.append("&");
+		buffer.append("searchWord=" + getDefaultValue(this.searchWord));
+		buffer.append("&");
+		buffer.append("searchOption=" + getDefaultValue(this.searchOption));
+		buffer.append("&");
+//		try {
+			buffer.append("searchValue=" + getDefaultValue(this.searchValue));
+			//buffer.append("searchValue=" + URLEncoder.encode(getDefaultValue(this.searchValue), "UTF-8"));
+//		} catch(Exception e) {
+//			buffer.append("searchValue=");
+//		}
+		buffer.append("&");
+		buffer.append("startDate=" + getDefaultValue(this.startDate));
+		buffer.append("&");
+		buffer.append("endDate=" + getDefaultValue(this.endDate));
+		buffer.append("&");
+		buffer.append("orderWord=" + getDefaultValue(this.orderWord));
+		buffer.append("&");
+		buffer.append("orderValue=" + getDefaultValue(this.orderValue));
+		return buffer.toString();
+	}
+	
+	private String getDefaultValue(String value) {
+		if(value == null || "".equals(value.trim())) {
+			return "";
+		}
+		
+		return value;
 	}
 	
 	@Override

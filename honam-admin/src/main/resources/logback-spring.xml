@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration scan="true" scanPeriod="5 minutes">
-	
+
 	<appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
 		<layout class="ch.qos.logback.classic.PatternLayout">
 			<Pattern>
-				%d{yyyy-MM-dd HH:mm:ss.SSS} %-5level %logger{36}[%method:%line] - %msg%n
+				%d{yyyy-MM-dd HH:mm:ss.SSS} %-5level %logger{36}[%method:%line] - %replace(%msg){'[\r\n]', ''}%n
 			</Pattern>
 		</layout>
 	</appender>
@@ -21,17 +21,15 @@
 		</filter>
 
 		<encoder>
-		    <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} %-5level %logger{36}[%method:%line] - %msg%n</pattern>
+		    <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} %-5level %logger{36}[%method:%line] - %replace(%msg){'[\r\n]', ''}%n</pattern>
 		</encoder>
 	</appender> -->
 
 	<logger name="org.apache.tomcat" level="debug" additivity="false" />
 	<logger name="org.apache.commons" level="info" additivity="false" />
-	<logger name="org.springframework" level="info" additivity="false" />
+	<logger name="org.springframework.web" level="info" additivity="false" />
+	<!-- <logger name="org.springframework.web" level="info" additivity="false" /> -->
 	<logger name="com.zaxxer.hikari.pool.HikariPool" level="info" additivity="false" />
-	<logger name="springfox.documentation.spring.web" level="debug" additivity="false" />
-	<logger name="springfox.documentation.swagger" level="info" additivity="false" />
-	<logger name="springfox.documentation.schema" level="info" additivity="false" />
 	
 	<root level="debug">
 		<appender-ref ref="STDOUT" />

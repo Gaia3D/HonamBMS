@@ -2,7 +2,9 @@ package honam.support;
 
 public class URLSupport {
 
-	public static final String LOGIN_URL = "/login/login";
+	public static final String SIGNIN_URL = "/sign/signin";
+	public static final String POPUP_SIGNIN_URL = "/sign/popup-signin";
+	public static final String POPUP_URL = "popup";
 	
 	// login 의 경우 통과
 	public static final String[] EXCEPTION_URI = { "error", "login", "/api/", "swagger" };

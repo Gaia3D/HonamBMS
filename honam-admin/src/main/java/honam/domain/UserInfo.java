@@ -1,75 +1,129 @@
 package honam.domain;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.sql.Timestamp;
 
 import javax.validation.constraints.NotBlank;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
+import org.springframework.format.annotation.DateTimeFormat;
 
-import honam.util.FormatUtil;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
+@ToString(callSuper = true)
+@Builder
 @Getter
 @Setter
-@ToString
-public class UserInfo implements Serializable {
+@NoArgsConstructor
+@AllArgsConstructor
+public class UserInfo extends Search implements Serializable {
 
-	private static final long serialVersionUID = 8349597082356588759L;
+    private static final long serialVersionUID = 8349597082356588759L;
+
+    /******** 화면 오류 표시용 ********/
+	private String message;
+	private String errorCode;
+	// 일정 기간 동안 미 접속시 잠금 처리(예 3개월 90일)
+	private String userLastSigninLock;
+	// 아이디 중복 확인 hidden 값
+	private String duplicationValue;
+	// 논리 삭제 
+	private String deleteFlag;
 	
-	private Search search;
+	/****** validator ********/
+	private String methodMode;
 	
-	// 고유번호(사번)
-	@NotBlank(message="아이디는 필수 입력 값 입니다.")
+	/********** Policy ************/
+	// 사용자 사인인 실패 잠금 해제 기간
+	private String userFailLockRelease;
+	
+	/********** DB 사용 *************/
+	// 고유번호
+	@NotBlank
 	private String userId;
-	@NotBlank(message="비밀번호는 필수 입력 값 입니다.")
-	private String password;
 	// 사용자 그룹 고유번호
 	private Integer userGroupId;
+	// 사용자 그룹명(화면용)
 	private String userGroupName;
 	// 이름
 	private String userName;
-	// 부서번호
-	private String deptNo;
-	// 부서명
-	private String deptName;
-	// 직급
-	private String position;
-	// 사용자 상태. 0:사용중, 1:사용중지(관리자), 2:잠금(비밀번호 실패횟수 초과), 3:휴면(로그인 기간), 4:만료(사용기간 종료), 5:삭제(화면 비표시, policy.user_delete_type=0), 6:임시비밀번호
+	// 비밀번호
+	@NotBlank
+	private String password;
+	// 비밀번호 확인
+	private String passwordConfirm;
+	// SALT(spring5부터 사용 안함)
+	private String salt;
+	// 전화번호1
+	private String telephone1;
+	// 전화번호2
+	private String telephone2;
+	// 전화번호3
+	private String telephone3;
+	// 전화번호
+	private String telephone;
+	// 핸드폰 번호1
+	private String mobilePhone1;
+	// 핸드폰 번호2
+	private String mobilePhone2;
+	// 핸드폰 번호3
+	private String mobilePhone3;
+	// 핸드폰 번호
+	private String mobilePhone;
+	// 이메일
+	private String email;
+	// 이메일1
+	private String email1;
+	// 이메일2
+	private String email2;
+	// 메신저 아이디
+	private String messanger;
+	// 우편번호
+	private String postalCode;
+	// 주소
+	private String address;
+	// 상세주소
+	private String addressEtc;
+	// 사인인 횟수
+	private Long signinCount;
+	// 사인인 실패 횟수
+	private Integer failSigninCount;
+	// 마지막 사인인 비밀번호 변경 날짜
+	private String lastPasswordChangeDate;
+	// 마지막 사인인 날짜
+	@DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
+	private Timestamp lastSigninDate;
+	// 최초 사인인시 사용자 Role 권한 체크 패스 기능
+	private String userRoleCheckYn;
+	// 사용자 상태. 0:사용중, 1:사용중지(관리자), 2:잠금(비밀번호 실패횟수 초과), 3:휴면(사인인 기간), 4:만료(사용기간 종료), 5:삭제(화면 비표시, policy.user_delete_method=0), 6:임시비밀번호
 	private String status;
 	// 현재 사용자 상태값
 	private String dbStatus;
-	// 로그인 횟수
-	private Integer loginCount;
-	// 로그인 실패 횟수
-	private Integer failLoginCount;
-	// 마지막 로그인 날짜
-	@JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy-MM-dd HH:mm:ss", timezone="Asia/Seoul")
-	private Date lastLoginDate;
-	// 수정일
-	@JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy-MM-dd HH:mm:ss", timezone="Asia/Seoul")
-	private Date updateDate;
+	// 새로운 비밀번호
+	private String newPassword;
+	// 새로운 비밀번호 확인
+	private String newPasswordConfirm;
+	// 패스워드 변경 주기
+	private String passwordChangeTerm;
+	// 패스워드 변경 주기 값
+	private Boolean passwordChangeTermOver;
+	// 이메일 From
+	private String from;
+	// 이메일 Subject
+	private String subject;
+	// 임시 비밀번호
+	private String tempPassword;
+	// 일정 기간 동안 미 접속시 잠금 처리 결과 값
+	private Boolean userLastSigninLockOver;
+	
+	// 개인정보 수정 날짜
+	@DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
+	private Timestamp updateDate;
 	// 등록일
-	@JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy-MM-dd HH:mm:ss", timezone="Asia/Seoul")
-	private Date insertDate;
-	
-	public String getViewLastLoginDate() {
-		if(getLastLoginDate() == null) {
-			return "";
-		}
-		
-		String tempDate = FormatUtil.getViewDateyyyyMMddHHmmss(getLastLoginDate());
-		return tempDate.substring(0, 19);
-	}
-	
-	public String getViewInsertDate() {
-		if(getInsertDate() == null) {
-			return "";
-		}
-		
-		String tempDate = FormatUtil.getViewDateyyyyMMddHHmmss(getInsertDate());
-		return tempDate.substring(0, 19);
-	}
+	@DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
+	private Timestamp insertDate;
 }

@@ -34,42 +34,30 @@ import lombok.extern.slf4j.Slf4j;
 public class RootConfig {
 	
 	@Value("${spring.datasource.driver-class-name}")
-	private String postgresqlDriverClassName;
+	private String driverClassName;
 	@Value("${spring.datasource.url}")
-	private String postgresqlUrl;
-	@Value("${spring.datasource.user}")
-	private String postgresqlUser;
+	private String url;
+	@Value("${spring.datasource.username}")
+	private String username;
 	@Value("${spring.datasource.password}")
-	private String postgresqlPassword;
+	private String password;
 	@Value("${spring.datasource.hikari.maximum-pool-size}")
-	private Integer postgresqlMaximumPoolSize;
+	private Integer maximumPoolSize;
 	@Value("${spring.datasource.hikari.minimum-idle}")
-	private Integer postgresqlMinimumIdle;
+	private Integer minimumIdle;
 	
-	@Bean(name="datasourceAdmin")
+	@Bean(name="datasourceUser")
 	public DataSource dataSource() {
-		
-		// TODO hikari 에서는 min, max 를 동일값을 해 주길 권장
-//		spring.datasource.hikari.minimum-idle=20
-//		spring.datasource.hikari.maximum-pool-size=30
-//		spring.datasource.hikari.idle-timeout=600000 (10분)
-//		spring.datasource.hikari.max-lifetime=1800000 (30분)
-//		spring.datasource.hikari.connection-timeout=15000
-//		spring.datasource.hikari.validation-timeout=10000
-		
 		HikariDataSource dataSource = new HikariDataSource();
 		//dataSource.setPoolName("mago3DAdminPool");
-		dataSource.setDriverClassName(postgresqlDriverClassName);
-//		dataSource.setJdbcUrl(Crypt.decrypt(postgresqlUrl));
-//		dataSource.setUsername(Crypt.decrypt(postgresqlUser));
-//		dataSource.setPassword(Crypt.decrypt(postgresqlPassword));
-		dataSource.setJdbcUrl(postgresqlUrl);
-		dataSource.setUsername(postgresqlUser);
-		dataSource.setPassword(postgresqlPassword);
-		dataSource.setMaximumPoolSize(postgresqlMaximumPoolSize);
-		dataSource.setMinimumIdle(postgresqlMinimumIdle);
+		dataSource.setDriverClassName(driverClassName);
+		dataSource.setJdbcUrl(Crypt.decrypt(url));
+		dataSource.setUsername(Crypt.decrypt(username));
+		dataSource.setPassword(Crypt.decrypt(password));
+		dataSource.setMaximumPoolSize(maximumPoolSize);
+		dataSource.setMinimumIdle(minimumIdle);
 		
-	    return dataSource;
+		return dataSource;
 	}
 	
 	@Bean

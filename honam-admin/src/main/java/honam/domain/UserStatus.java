@@ -25,4 +25,16 @@ public enum UserStatus {
 	public String getValue() {
 		return this.value;
 	}
+	
+	/**
+	 * TODO values for loop 로 변환
+	 * @param value
+	 * @return
+	 */
+	public static UserStatus findBy(String value) {
+		for(UserStatus userStatus : values()) {
+			if(userStatus.getValue().equals(value)) return userStatus; 
+		}
+		return null;
+	}
 }

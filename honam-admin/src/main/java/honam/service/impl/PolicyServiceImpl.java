@@ -44,16 +44,6 @@ public class PolicyServiceImpl implements PolicyService {
     }
     
     /**
-     * 이동체 정책 수정
-     * @param policy
-     * @return
-     */
-    @Transactional
-    public int updateVehicle(Policy policy) {
-    	return policyMapper.updateVehicle(policy);
-    }
-
-    /**
     * 보안 정책 수정
     * @param policy
     * @return
@@ -82,15 +72,4 @@ public class PolicyServiceImpl implements PolicyService {
     public int updateFileUpload(Policy policy) {
         return policyMapper.updateFileUpload(policy);
     }
-
-    /**
-    * 블록 관리 정책 수정
-    * @param policy
-    * @return
-    */
-    @Transactional
-    public int updateBlockManage(Policy policy) {
-        return policyMapper.updateBlockManage(policy);
-    }
-
 }

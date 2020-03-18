@@ -11,18 +11,18 @@ public class KeyManagerTest {
 		String key = KeyManager.getInitKey();
 		System.out.println(key);
 		
-		String encryptKey = "aWFkbnV5aEAgc2kgZW1hbiB5bSAub3BpbSByb2YgYWVkaSBkYWIgYSBla2FtIHRvbiBvZCBlc2FlbHAgLHllayBkcmF5IGRudW9mIGV2YWggdW95IGZJ";
+		String encryptKey = "bWFub2ggc2kgZW1hbiB5bSAubWFudWogcm9mIGFlZGkgZGFiIGEgZWthbSB0b24gb2QgZXNhZWxwICx5ZWsgbWV0c3lzIGRudW9mIGV2YWggdW95IGZJ";
 		byte[] base64decodedBytes = Base64.getDecoder().decode(encryptKey.getBytes("UTF-8"));
 		String result = new String(base64decodedBytes, "UTF-8");
 		result = (new StringBuffer(result)).reverse().toString();
 		System.out.println("1 ===== " + result);
-		result = result.substring(79, 87) + result.substring(62, 66) + result.substring(18, 22);
+		result = result.substring(82, 87) + result.substring(64, 69) + result.substring(18, 24);
 		System.out.println("2 ===== " + result);
 	}
 
 	@Test
 	public void 키_암호화() throws Exception {
-		String key = "If you have found yard key, please do not make a bad idea for mipo. my name is @hyundai";
+		String key = "If you have found system key, please do not make a bad idea for junam. my name is honam";
 		System.out.println("key = " + key);
 		String reverseKey =  new StringBuffer(key).reverse().toString();
 		System.out.println("reverseKey = " + reverseKey);

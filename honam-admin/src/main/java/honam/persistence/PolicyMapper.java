@@ -28,13 +28,6 @@ public interface PolicyMapper {
     int updateLayer(Policy policy);
     
     /**
-     * 이동체 정책 수정
-     * @param policy
-     * @return
-     */
-     int updateVehicle(Policy policy);
-
-    /**
     * 보안 정책 수정
     * @param policy
     * @return
@@ -54,12 +47,4 @@ public interface PolicyMapper {
     * @return
     */
     int updateFileUpload(Policy policy);
-
-    /**
-    * 블록 관리 정책 수정
-    * @param policy
-    * @return
-    */
-    int updateBlockManage(Policy policy);
-
 }

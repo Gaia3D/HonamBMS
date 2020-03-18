@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="honam.persistence.PolicyMapper">
+
+    <!-- 운영 정책 정보 조회 -->
+    <select id="getPolicy" resultType="policy">
+        /* getPolicy */
+        SELECT * FROM policy
+    </select>
+
+    <!-- Geoserver 정책 수정 -->
+    <update id="updateGeoserver" parameterType="policy">
+        /* updateGeoserver */
+        UPDATE policy
+        SET geoserver_enable = #{geoserverEnable},
+            geoserver_wms_version = #{geoserverWmsVersion},
+            geoserver_data_url = #{geoserverDataUrl},
+            geoserver_data_workspace = #{geoserverDataWorkspace},
+            geoserver_data_store = #{geoserverDataStore},
+            geoserver_user = #{geoserverUser},
+            geoserver_password = #{geoserverPassword}
+        WHERE policy_id = #{policyId}
+    </update>
+
+    <!-- 지도 레이어 정책 수정 -->
+    <update id="updateLayer" parameterType="policy">
+        /* updateLayer */
+        UPDATE policy
+        SET layer_source_coordinate = #{layerSourceCoordinate},
+            layer_target_coordinate = #{layerTargetCoordinate},
+            layer_init_aerial = #{layerInitAerial},
+            layer_init_drone = #{layerInitDrone},
+            layer_init_map_center = #{layerInitMapCenter},
+            layer_init_map_extent = #{layerInitMapExtent},
+            layer_init_map_extent_bonsa = #{layerInitMapExtentBonsa},
+            layer_init_map_extent_onsan = #{layerInitMapExtentOnsan},
+            layer_init_map_extent_yongyeon = #{layerInitMapExtentYongyeon},
+            layer_init_map_extent_mohwa = #{layerInitMapExtentMohwa}
+        WHERE policy_id = #{policyId}
+    </update>
+    
+    <!-- 보안 정책 수정 -->
+    <update id="updateSecurity" parameterType="policy">
+        /* updateSecurity */
+        UPDATE policy
+        SET security_session_timeout_yn = #{securitySessionTimeoutYn},
+            security_session_timeout = #{securitySessionTimeout},
+            security_user_ip_check_yn = #{securityUserIpCheckYn},
+            security_session_hijacking = #{securitySessionHijacking},
+            mobile_workplace_check_yn = #{mobileWorkplaceCheckYn}
+        WHERE policy_id = #{policyId}
+    </update>
+
+    <!-- 컨텐츠 정책 수정 -->
+    <update id="updateContents" parameterType="policy">
+        /* updateContents */
+        UPDATE policy
+        SET content_cache_version = #{contentCacheVersion},
+            content_layer_group_root = #{contentLayerGroupRoot}
+        WHERE policy_id = #{policyId}
+    </update>
+
+    <!-- 파일 업로드 정책 수정 -->
+    <update id="updateFileUpload" parameterType="policy">
+        /* updateFileUpload */
+        UPDATE policy
+        SET user_upload_type = #{userUploadType},
+            user_upload_max_filesize = #{userUploadMaxFilesize},
+            user_upload_max_count = #{userUploadMaxCount}
+        WHERE policy_id = #{policyId}
+    </update>
+
+</mapper>

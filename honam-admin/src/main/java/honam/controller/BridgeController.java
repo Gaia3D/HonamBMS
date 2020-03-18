@@ -1,6 +1,5 @@
 package honam.controller;
 
-import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -17,33 +16,32 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import honam.service.BridgeService;
-import honam.service.SatService;
-import honam.service.SensorService;
 import honam.config.PropertiesConfig;
-
 import honam.domain.Bridge;
-import honam.domain.CacheManager;
 import honam.domain.PageType;
 import honam.domain.Pagination;
-import honam.domain.SkSdo;
-import honam.domain.SkSgg;
 import honam.domain.Sat;
 import honam.domain.Sensor;
-import honam.util.StringUtil;
-
-
+import honam.domain.SkSdo;
+import honam.domain.SkSgg;
+import honam.service.BridgeService;
+import honam.service.PolicyService;
+import honam.service.SatService;
+import honam.service.SensorService;
+import honam.utils.StringUtil;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-@RequestMapping("/bridge/")
+@RequestMapping("/bridge")
 @Controller
 public class BridgeController {
 	
 	@Autowired
+	private BridgeService bridgeService;
+	@Autowired
 	private PropertiesConfig propertiesConfig;
 	@Autowired
-	private BridgeService bridgeService;
+	private PolicyService policyService;
 	@Autowired
 	private SatService satService;
 	@Autowired
@@ -53,7 +51,7 @@ public class BridgeController {
 	 * 시도 목록
 	 * @return
 	 */
-	@GetMapping("sdos")
+	@GetMapping("/sdos")
 	@ResponseBody
 	public Map<String, Object> getListSdo() {
 		Map<String, Object> map = new HashMap<>();
@@ -76,7 +74,7 @@ public class BridgeController {
 	 * @param sdo_code
 	 * @return
 	 */
-	@GetMapping("sdos/{sdo_code:[0-9]+}/sggs")
+	@GetMapping("/sdos/{sdo_code:[0-9]+}/sggs")
 	@ResponseBody
 	public Map<String, Object> getListSggBySdo(@PathVariable String sdo_code) {
 		Map<String, Object> map = new HashMap<>();
@@ -106,7 +104,7 @@ public class BridgeController {
 	 * @param skSgg
 	 * @return
 	 */
-	@GetMapping("centroids")
+	@GetMapping("/centroids")
 	@ResponseBody
 	public Map<String, Object> getCentroid(SkSgg skSgg) {
 		log.info("@@@@ SkSgg = {}", skSgg);
@@ -146,7 +144,7 @@ public class BridgeController {
 	 * @param gid
 	 * @return
 	 */
-	@GetMapping("{gid:[0-9]+}/centroid")
+	@GetMapping("/{gid:[0-9]+}/centroid")
 	@ResponseBody 
 	public Map<String, Object> getCentroidBridge(@PathVariable Integer gid) {
 		log.info("@@@@ gid = {}", gid);
@@ -172,7 +170,7 @@ public class BridgeController {
 	 * 관리 주체 목록
 	 * @return
 	 */
-	@GetMapping("manage")
+	@GetMapping("/manage")
 	@ResponseBody
 	public Map<String, Object> getListMngOrg() {
 		Map<String, Object> map = new HashMap<>();
@@ -196,7 +194,7 @@ public class BridgeController {
 	 * @param model
 	 * @return
 	 */
-	@RequestMapping(value = "list-bridge")
+	@RequestMapping(value = "/list-bridge")
 	public String listBridge(HttpServletRequest request, Bridge bridge, @RequestParam(defaultValue="1") String pageNo, Model model) {
 		log.info("@@ bridge = {}", bridge);
 		bridge.setListCounter(10l);
@@ -219,7 +217,7 @@ public class BridgeController {
 		
 		String cesiumIonToken = propertiesConfig.getCesiumIonToken();
 		
-		model.addAttribute("policy", CacheManager.getPolicy());
+		model.addAttribute("policy", policyService.getPolicy());
 		model.addAttribute(pagination);
 		model.addAttribute("bridge", bridge);
 		model.addAttribute("bridgeList", bridgeList);
@@ -228,7 +226,7 @@ public class BridgeController {
 		return "/bridge/list-bridge";
 	}
 	
-	@GetMapping("bridges")
+	@GetMapping("/bridges")
 	@ResponseBody
 	public Map<String, Object> getListbridge(HttpServletRequest request, Bridge bridge, @RequestParam(defaultValue="1") String pageNo) {
 		Map<String, Object> map = new HashMap<>();
@@ -264,7 +262,7 @@ public class BridgeController {
 		return map;
 	}
 	
-	@RequestMapping(value = "detail-bridge")
+	@RequestMapping(value = "/detail-bridge")
 	public String detailBridge(HttpServletRequest request, @RequestParam(value="gid", required = true) Integer gid, Model model) {
 		log.info("@@ bridge_id = {}", gid);
 		
@@ -273,7 +271,7 @@ public class BridgeController {
 		
 		String cesiumIonToken = propertiesConfig.getCesiumIonToken();
 	
-		model.addAttribute("policy", CacheManager.getPolicy());
+		model.addAttribute("policy", policyService.getPolicy());
 		model.addAttribute("bridge", bridge);
 		model.addAttribute("searchParameters", getSearchParameters(PageType.DETAIL, request, null));
 		model.addAttribute("cesiumIonToken", cesiumIonToken);
@@ -286,7 +284,7 @@ public class BridgeController {
 	 * @param gid
 	 * @return
 	 */
-	@GetMapping("{gid}")
+	@GetMapping("/{gid}")
 	@ResponseBody
 	public Map<String, Object> getBridge(HttpServletRequest request, @PathVariable Integer gid) { 
 		log.info("@@@@@@@@@@ bridge id = {}", gid);
@@ -312,7 +310,7 @@ public class BridgeController {
 		return map;
 	}
 	
-	@GetMapping("{gid:[0-9]+}/sat/avg")
+	@GetMapping("/{gid:[0-9]+}/sat/avg")
 	@ResponseBody 
 	public Map<String, Object> getListSatAvg(Bridge bridge, @PathVariable Integer gid) {
 		log.info("@@@@ gid = {}", gid);
@@ -333,7 +331,7 @@ public class BridgeController {
 		return map;
 	}
 	
-	@GetMapping("{gid:[0-9]+}/sat/value")
+	@GetMapping("/{gid:[0-9]+}/sat/value")
 	@ResponseBody
 	public Map<String, Object> getListSatValue(Sat sat, @PathVariable Integer gid) {
 		log.info("@@@@ gid = {}", gid);
@@ -352,7 +350,7 @@ public class BridgeController {
 		return map;
 	}
 	
-	@GetMapping("{gid:[0-9]+}/sensor")
+	@GetMapping("/{gid:[0-9]+}/sensor")
 	@ResponseBody
 	public Map<String, Object> getListSensorId(Bridge bridge, @PathVariable Integer gid) {
 		log.info("@@@@ gid = {}", gid);
@@ -373,7 +371,7 @@ public class BridgeController {
 		return map;
 	}
 	
-	@GetMapping("{gid:[0-9]+}/sensor/{sensorType}")
+	@GetMapping("/{gid:[0-9]+}/sensor/{sensorType}")
 	@ResponseBody
 	public Map<String, Object> getListSensorIdBysensorType(HttpServletRequest request, Sensor sensor, @PathVariable Integer gid, @PathVariable String sensorType) {
 		log.info("@@@@ gid = {}", gid);
@@ -401,39 +399,18 @@ public class BridgeController {
 	 * @return
 	 */
 	private String getSearchParameters(PageType pageType, HttpServletRequest request, Bridge bridge) {
-		StringBuffer buffer = new StringBuffer();
+		StringBuffer buffer = new StringBuffer(bridge.getParameters());
 		boolean isListPage = true;
 		if(pageType.equals(PageType.MODIFY) || pageType.equals(PageType.DETAIL)) {
 			isListPage = false;
 		}
 		
-		if(!isListPage) {
-			buffer.append("pageNo=" + request.getParameter("pageNo"));
-		}
-		buffer.append("&");
-		buffer.append("searchWord=" + StringUtil.getDefaultValue(isListPage ? bridge.getSearchWord() : request.getParameter("searchWord")));
-		buffer.append("&");
-		buffer.append("searchOption=" + StringUtil.getDefaultValue(isListPage ? bridge.getSearchOption() : request.getParameter("searchOption")));
-		buffer.append("&");
-		try {
-			buffer.append("searchValue=" + URLEncoder.encode(StringUtil.getDefaultValue(
-					isListPage ? bridge.getSearchValue() : request.getParameter("searchValue")), "UTF-8"));
-		} catch(Exception e) {
-			e.printStackTrace();
-			buffer.append("searchValue=");
-		}
 		buffer.append("&");
 		buffer.append("sdoCode=" + StringUtil.getDefaultValue(isListPage ? bridge.getSdoCode() : request.getParameter("sdoCode")));
 		buffer.append("&");
 		buffer.append("sggCode=" + StringUtil.getDefaultValue(isListPage ? bridge.getSggCode() : request.getParameter("sggCode")));
 		buffer.append("&");
 		buffer.append("mng_org=" + StringUtil.getDefaultValue(isListPage ? bridge.getMng_org() : request.getParameter("mng_org")));
-		buffer.append("&");
-		buffer.append("orderWord=" + StringUtil.getDefaultValue(isListPage ? bridge.getOrderWord() : request.getParameter("orderWord")));
-		buffer.append("&");
-		buffer.append("orderValue=" + StringUtil.getDefaultValue(isListPage ? bridge.getOrderValue() : request.getParameter("orderValue")));
-		buffer.append("&");
-		buffer.append("listCounter=" + (isListPage ? bridge.getListCounter() : StringUtil.getDefaultValue(request.getParameter("listCount"))));
 		return buffer.toString();
 	}
 
