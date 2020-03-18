@@ -8,10 +8,10 @@
 		/* getListSdoExceptGeom */
 		SELECT A.bjcd, SUBSTR(A.bjcd, 1, 2) AS sdo_code, A.name
 		FROM sk_sdo A, ( 
-			SELECT MIN(gid) AS gid, name 
+			SELECT MIN(ogc_fid) AS gid, name 
 			FROM sk_sdo GROUP BY name
 		) B
-		WHERE A.gid = B.gid
+		WHERE A.ogc_fid = B.ogc_fid
 		ORDER BY A.name
 	</select>
 		
@@ -22,13 +22,13 @@
 		FROM sk_sgg B, (
 			SELECT MIN(A.gid) AS gid, A.code AS bjcd, A.name 
 			FROM (
-				SELECT gid, SUBSTR(bjcd, 1, 5) as code, name 
+				SELECT ogc_fid as gid, SUBSTR(bjcd, 1, 5) as code, name 
 				FROM sk_sgg 
 				WHERE bjcd LIKE #{sdo_code} || '%'
 			) A
 			GROUP BY A.code, A.name
 		) C
-		WHERE B.gid = C.gid
+		WHERE B.ogc_fid = C.ogc_fid
 		ORDER BY C.name	
 	</select>
 
@@ -37,7 +37,7 @@
 		/* getCentroidSdo */
 		SELECT ST_AsText(ST_Centroid(A.geom))
 		FROM (
-			SELECT geom 
+			SELECT wkb_geometry as geom 
 			FROM sk_sdo 
 			WHERE bjcd = #{bjcd}
 			ORDER BY bjcd LIMIT 1
@@ -49,7 +49,7 @@
 		/* getCentroidSgg */
 		SELECT ST_AsText(ST_Centroid(A.geom))
 		FROM (
-			SELECT geom 
+			SELECT wkb_geometry as geom 
 			FROM sk_sgg 
 			WHERE bjcd = #{bjcd}
 			ORDER BY bjcd LIMIT 1
@@ -59,10 +59,10 @@
 	<!-- 선택한 교량의 center point를 구함 -->
 	<select id="getCentroidBridge" parameterType="bridge" resultType="string">
 		/* getCentroidBridge */
-		SELECT ST_AsText(ST_Centroid(A.geom))
+		SELECT ST_AsText(ST_Centroid(A.wkb_geometry))
 		FROM bridge A
-		WHERE gid = #{gid}
-		ORDER BY gid LIMIT 1
+		WHERE ogc_fid = #{gid}
+		ORDER BY ogc_fid LIMIT 1
 	</select>
 	
 	<!-- 관리주체 목록 -->
@@ -77,7 +77,7 @@
     <!-- Bridge(교량) 총 건수 -->
 	<select id="getBridgeTotalCount" parameterType="bridge" resultType="long">
 		/* getBridgeTotalCount */
-		SELECT COUNT(DISTINCT A.gid)
+		SELECT COUNT(DISTINCT A.ogc_fid)
 		FROM bridge A 
 		LEFT JOIN sk_sdo B ON A.fac_sido = B.name
 		LEFT JOIN sk_sgg C ON A.fac_sgg = C.name
@@ -103,7 +103,7 @@
 	<!-- Bridge(교량) 목록 -->
 	<select id="getListBridge" parameterType="bridge" resultType="bridge">
 		/* getListBridge */
-		SELECT DISTINCT A.gid, A.brg_nam, A.end_amd, A.bridge_grade
+		SELECT DISTINCT A.ogc_fid as gid, A.brg_nam, A.end_amd, A.bridge_grade
 		FROM bridge A
 		LEFT JOIN sk_sdo B ON A.fac_sido = B.name
 		LEFT JOIN sk_sgg C ON A.fac_sgg = C.name
@@ -130,11 +130,11 @@
 	<!-- Bridge(교량) 정보 조회 -->
 	<select id="getBridge" parameterType="bridge" resultType="bridge">
 		/* getBridge */
-		SELECT DISTINCT gid, ufid, fac_num, brg_nam, mng_org, fac_sido, fac_sgg, fac_emd, fac_ri, fac_gra, end_amd, dsn_wet, 
-			brg_len, brg_hit, eff_wid, tot_wid, spa_cnt, max_len, tra_cnt, usp_rep, dpi_rep, geom, 
+		SELECT DISTINCT ogc_fid as gid, ufid, fac_num, brg_nam, mng_org, fac_sido, fac_sgg, fac_emd, fac_ri, fac_gra, end_amd, dsn_wet, 
+			brg_len, brg_hit, eff_wid, tot_wid, spa_cnt, max_len, tra_cnt, usp_rep, dpi_rep, wkb_geometry as geom, 
 			gru_num, bridge_cm, bridge_lcc, bridge_grade, bridge_model
 		FROM bridge
-		WHERE gid = #{gid}	
+		WHERE ogc_fid = #{gid}	
 	</select>
 
 	

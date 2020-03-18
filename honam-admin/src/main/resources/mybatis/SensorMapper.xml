@@ -6,8 +6,8 @@
 	<!-- sensorId 목록  -->
 	<select id="getListSensorID" parameterType="string" resultType="sensor">
 		/* getListSensorID */
-		SELECT DISTINCT ON(A.geom) 
-		A.gid, sensorid, ST_AsText(A.geom) AS location, A.z AS alt, A.condition, A.time, A.meanvalue, A.maxvalue
+		SELECT DISTINCT ON(A.wkb_geometry) 
+		A.ogc_fid as gid, sensorid, ST_AsText(A.geom) AS location, A.z AS alt, A.condition, A.time, A.meanvalue, A.maxvalue
 		FROM sensorid A
 		WHERE A.fac_num = #{fac_num}
 	</select>
@@ -15,7 +15,7 @@
 	<!-- sensorId 건수  -->
 	<select id="getSensorIDTotalCount" parameterType="string" resultType="long">
 		/* getSensorIDTotalCount */
-		SELECT COUNT(A.gid)
+		SELECT COUNT(A.ogc_fid)
 		FROM sensorid A
 		WHERE A.fac_num = #{fac_num}		
 	</select>
@@ -24,17 +24,17 @@
 	<select id="getListSensorIDByLonLat" parameterType="sensor" resultType="sensor">
 		/* getListSensorIDByLonLat */
 		SELECT 
-		A.gid, sensorid, ST_AsText(A.geom) AS location, A.z AS alt, A.condition, A.time, A.meanvalue, A.maxvalue
+		A.ogc_fid as gid, sensorid, ST_AsText(A.wkb_geometry) AS location, A.z AS alt, A.condition, A.time, A.meanvalue, A.maxvalue
 		FROM sensorid A
-		WHERE ST_AsText(A.geom) LIKE '%' || #{lat_wgs} || '%'
-		AND ST_AsText(A.geom) LIKE '%' || #{lon_wgs} || '%'	
+		WHERE ST_AsText(A.wkb_geometry) LIKE '%' || #{lat_wgs} || '%'
+		AND ST_AsText(A.wkb_geometry) LIKE '%' || #{lon_wgs} || '%'	
 	</select>
 	
 	<!-- SensorType별 SensorID 목록  -->
 	<select id="getListSensorIDBySensorType" parameterType="sensor" resultType="sensor">
 		/* getListSensorIDBySensorType */
 		SELECT 
-		A.gid, sensorid, ST_AsText(A.geom) AS location, A.z AS alt, A.condition, A.time, A.meanvalue, A.maxvalue
+		A.ogc_fid as gid, sensorid, ST_AsText(A.wkb_geometry) AS location, A.z AS alt, A.condition, A.time, A.meanvalue, A.maxvalue
 		FROM sensorid A
 		WHERE A.fac_num = #{fac_num}
 		AND A.sensorid LIKE '%' || #{sensorType} || '%'	
