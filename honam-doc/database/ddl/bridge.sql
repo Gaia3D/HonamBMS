@@ -34,7 +34,7 @@ create table bridge_group(
 	bridge_group_cm						float,	
 	update_date							timestamp with time zone,
 	insert_date							timestamp with time zone		default now(),
-	constraint bridge_group_pk			primary key (bridge_group_id)
+	constraint bridge_group_pk			primary key (gru_num)
 );
 
 comment on table bridge_group is '교량 그룹 정보';
