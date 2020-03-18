@@ -4,7 +4,7 @@ drop table if exists sat cascade;
 create table sat(
 	id						    bigint,
 	fac_num						varchar(254)				    not null,
-	displacement				double precesion,
+	displacement				double precision,
 	date						integer,
 	gem							geometry,
 	constraint sat_pk 		primary key (id)
