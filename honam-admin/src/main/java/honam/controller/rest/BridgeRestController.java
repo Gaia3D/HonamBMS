@@ -73,6 +73,7 @@ public class BridgeRestController {
 		int statusCode = HttpStatus.OK.value();
 		
 		result.put("bridgeList", bridgeList);
+		result.put("pagination", pagination);
 		result.put("statusCode", statusCode);
 		result.put("errorCode", errorCode);
 		result.put("message", message);

@@ -65,39 +65,8 @@
 				</form:form>
 				<!-- E: 교량 검색 입력 폼 -->
 				<!-- S: 교량 목록 -->
-				<div id="projectListHeader" class="count" style="margin-top: 20px; margin-bottom: 5px;">
-					전체 <em><fmt:formatNumber value="${pagination.totalCount}" type="number"/></em> 건
-					<fmt:formatNumber value="${pagination.pageNo}" type="number"/> / <fmt:formatNumber value="${pagination.lastPage }" type="number"/> 페이지
-				</div>
-				<div class="transferDataList">
-					<table class="list-table scope-col">
-						<col class="col-number" />
-						<col class="col-toggle" />
-						<col class="col-name" />
-						<thead>
-							<tr>
-								<th scope="col" class="col-number" style="width:5%; font-weight: bold"></th>
-								<th scope="col" class="col-toggle">교량 명</th>
-								<th scope="col" class="col-name">준공년도</th>
-								<th scope="col" class="col-name">상태</th>
-							</tr>
-						</thead>
-						<tbody id="transferDataList">
-						<c:forEach var="bridge" items="${bridgeList}" varStatus="status">
-							<tr>
-								<td class="col-number">${status.index+1}</td>
-								<td class="col-toggle">
-									<a href="/bridge/detail-bridge?gid=${bridge.gid}&pageNo=${pagination.pageNo}${pagination.searchParameters}">
-										${bridge.brgNam}
-									</a>
-								</td>
-								<td class="col-name">${bridge.endAmd.substring(0,4)} </td>
-								<td class="col-name">${bridge.grade}</td>
-							</tr>
-						</c:forEach>
-						</tbody>
-					</table>
-					<%@ include file="/WEB-INF/views/common/pagination.jsp" %>
+				<div id="bridgeListTable">
+					<%@ include file="/WEB-INF/views/bridge/list-bridge-template.jsp" %>	
 				</div>
 				<!-- E: 교량 목록 -->
 			</div>
@@ -125,6 +94,8 @@
 <script type="text/javascript" src="/externlib/jquery-3.3.1/jquery.min.js"></script>
 <script type="text/javascript" src="/externlib/jquery-ui-1.12.1/jquery-ui.min.js"></script>
 <script type="text/javascript" src="/externlib/cesium/Cesium.js"></script>
+<script type="text/javascript" src="/externlib/handlebars-4.1.2/handlebars.js"></script>
+<script type="text/javascript" src="/js/${lang}/handlebarsHelper.js"></script>
 <script type="text/javascript" src="/js/${lang}/common.js"></script>
 <script type="text/javascript" src="/js/Honam-bms.js"></script>
 <script type="text/javascript" src="/js/Geospatial.js"></script>
@@ -242,6 +213,16 @@
 			dataType: 'json',
 			success: function(res){
 				if(res.statusCode <= 200) {
+					res.pagination.pageList = [];
+					var start = res.pagination.startPage;
+					var end = res.pagination.endPage;
+					for(i = start; i <= end; i++) {
+						res.pagination.pageList.push(i);
+					}
+					var template = Handlebars.compile($("#templateBridgeList").html());
+					var htmlList = template(res);
+					$("#bridgeListTable").html("");
+					$("#bridgeListTable").append(htmlList);
 				} else {
 					alert(JS_MESSAGE[res.errorCode]);
 					console.log("---- " + res.message);
