@@ -37,23 +37,23 @@
 	
 {{#if pagination.totalCount}}
     <ul class="pagination">
+        <li class="ico first" onClick="getListBridge({{pagination.firstPage}})"></li>
     {{#if pagination.existPrePage}}
-        <li class="ico first" onClick=""></li>
-        <li class="ico forward" onClick=""></li>
+        <li class="ico forward" onClick="getListBridge({{pagination.prePageNo}})"></li>
     {{/if}}
 
     {{#each pagination.pageList}}
         {{#if (indexCompare this ../pagination.pageNo)}}
             <li class="on"><a href='#'>{{this}}</a></li>
         {{else}}
-            <li onClick=""><a href='#'>{{this}}</a></li>
+            <li onClick="getListBridge({{this}})"><a href='#'>{{this}}</a></li>
         {{/if}}
     {{/each}}
 
     {{#if pagination.existNextPage}}
-        <li class="ico back" onClick=""></li>
-        <li class="ico end" onClick=""></li>
+        <li class="ico back" onClick="getListBridge({{pagination.nextPageNo}})"></li>
     {{/if}}
+        <li class="ico end" onClick="getListBridge({{pagination.lastPage}})"></li>
     </ul>
 {{/if}}
 

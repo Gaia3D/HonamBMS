@@ -888,106 +888,106 @@ vertical-align: middle;
 
 
 /* PAGINATION */
-.paginationWrap {
-position: relative;
-}
-.paginationWrap .count {
-float: left;
-margin-top: 5px;
-}
-.paginationWrap .count > span {
-color: #386ae8;
-}
-.pagination {
-position: relative;
-margin: 20px 0;
-text-align: center;
-}
-.pagination li {
-display: inline-block;
-margin: 0 -5px;
-padding: 0;
-font-size: 10pt;
-padding: 4px 8px;
-cursor: pointer;
-}
-.pagination li * {
-vertical-align: middle;
-}
-.pagination li.on {
-font-weight: bold;
-text-decoration: underline;
-}
-.pagination .ico {
-padding: 5px 7px;
-text-indent: -999em;
-background-image: url(../../images/ico.png);
-background-repeat: no-repeat;
-}
-.pagination .first {
-background-position: -643px -385px;
-}
-.pagination .forward {
-background-position: -674px -385px;
-}
-.pagination .back {
-background-position: -697px -388px;
-}
-.pagination .end {
-background-position: -726px -388px;
-}
-.pagerInput {
-padding:10px;
-background-color: #fff;
-}
-.pagerInput * {
-vertical-align: middle;
-}
-.pagerInput .countPage {
-color: #477cdb;
-}
-.pagerInput > div {
-float: right;
-}
-.pagerInput div > input {
-border: none;
-text-align: center;
-border-bottom: 1px solid #757575;
-}
-.pagerInput div > button {
-margin: 0 -2px;
-background-color: #fff;
-background-image: url(../../images/ico.png);
-background-repeat: no-repeat;
-}
-.pagerInput div > button.first {
-width: 20px;
-height: 20px;
-border: none;
-text-indent: -999em;	
-background-position: -673px -395px;
-}
-.pagerInput div > button.forward {
-width: 20px;
-height: 20px;
-border: none;
-text-indent: -999em;
-background-position: -673px -395px;
-}
-.pagerInput div > button.next {
-width: 20px;
-height: 20px;
-border: none;
-text-indent: -999em;
-background-position: -696px -395px;
-}
-.pagerInput div > button.last {
-width: 20px;
-height: 20px;
-border: none;
-text-indent: -999em;	
-background-position: -132px -299px;
-}
+/* .paginationWrap { */
+/* position: relative; */
+/* } */
+/* .paginationWrap .count { */
+/* float: left; */
+/* margin-top: 5px; */
+/* } */
+/* .paginationWrap .count > span { */
+/* color: #386ae8; */
+/* } */
+/* .pagination { */
+/* position: relative; */
+/* margin: 20px 0; */
+/* text-align: center; */
+/* } */
+/* .pagination li { */
+/* display: inline-block; */
+/* margin: 0 -5px; */
+/* padding: 0; */
+/* font-size: 10pt; */
+/* padding: 4px 8px; */
+/* cursor: pointer; */
+/* } */
+/* .pagination li * { */
+/* vertical-align: middle; */
+/* } */
+/* .pagination li.on { */
+/* font-weight: bold; */
+/* text-decoration: underline; */
+/* } */
+/* .pagination .ico { */
+/* padding: 5px 7px; */
+/* text-indent: -999em; */
+/* background-image: url(../../images/ico.png); */
+/* background-repeat: no-repeat; */
+/* } */
+/* .pagination .first { */
+/* background-position: -643px -385px; */
+/* } */
+/* .pagination .forward { */
+/* background-position: -674px -385px; */
+/* } */
+/* .pagination .back { */
+/* background-position: -697px -388px; */
+/* } */
+/* .pagination .end { */
+/* background-position: -726px -388px; */
+/* } */
+/* .pagerInput { */
+/* padding:10px; */
+/* background-color: #fff; */
+/* } */
+/* .pagerInput * { */
+/* vertical-align: middle; */
+/* } */
+/* .pagerInput .countPage { */
+/* color: #477cdb; */
+/* } */
+/* .pagerInput > div { */
+/* float: right; */
+/* } */
+/* .pagerInput div > input { */
+/* border: none; */
+/* text-align: center; */
+/* border-bottom: 1px solid #757575; */
+/* } */
+/* .pagerInput div > button { */
+/* margin: 0 -2px; */
+/* background-color: #fff; */
+/* background-image: url(../../images/ico.png); */
+/* background-repeat: no-repeat; */
+/* } */
+/* .pagerInput div > button.first { */
+/* width: 20px; */
+/* height: 20px; */
+/* border: none; */
+/* text-indent: -999em;	 */
+/* background-position: -673px -395px; */
+/* } */
+/* .pagerInput div > button.forward { */
+/* width: 20px; */
+/* height: 20px; */
+/* border: none; */
+/* text-indent: -999em; */
+/* background-position: -673px -395px; */
+/* } */
+/* .pagerInput div > button.next { */
+/* width: 20px; */
+/* height: 20px; */
+/* border: none; */
+/* text-indent: -999em; */
+/* background-position: -696px -395px; */
+/* } */
+/* .pagerInput div > button.last { */
+/* width: 20px; */
+/* height: 20px; */
+/* border: none; */
+/* text-indent: -999em;	 */
+/* background-position: -132px -299px; */
+/* } */
 
 /* ///// MAPWRAP ///// */
 .mapInfo {
@@ -1271,4 +1271,44 @@ border: 1px solid #3a3b4c;
 .transferDataList {
 overflow-y:auto;
 height:400px;
+}
+
+.pagination {
+position: relative;
+margin: 7px 0;
+text-align: center;
+}
+.pagination li {
+display: inline-block;
+margin: 0;
+padding: 0;
+font-size: 14px;
+padding: 0px 7px;
+cursor: pointer;
+line-height: 22px;
+}
+.pagination li * {
+line-height: 22px;
+}
+.pagination li.on {
+font-weight: bold;
+text-decoration: underline;
+}
+.pagination .ico {
+width: 19px;
+height: 19px;
+padding: 0;
+text-indent: -999em;
+}
+.pagination .first {
+background: url(/images/ko/pagenation_first.png) no-repeat 0 0;
+}
+.pagination .forward {
+background: url(/images/ko/pagenation_forward.png) no-repeat 0 0;
+}
+.pagination .back {
+background: url(/images/ko/pagenation_back.png) no-repeat 0 0;
+}
+.pagination .end {
+background: url(/images/ko/pagenation_end.png) no-repeat 0 0;
 }

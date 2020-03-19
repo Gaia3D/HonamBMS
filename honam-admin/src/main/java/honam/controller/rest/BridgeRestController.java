@@ -39,7 +39,10 @@ public class BridgeRestController {
 	private SatService satService;
 	@Autowired
 	private SensorService sensorService;
-
+	
+	private static final long PAGE_ROWS = 10l;
+	private static final long PAGE_LIST = 5l;
+	
 	/**
 	 * 교량 목록 정보
 	 * @param 
@@ -53,14 +56,15 @@ public class BridgeRestController {
 		String errorCode = null;
 		String message = null;
 		
-		bridge.setListCounter(10l);
 		long totalCount = bridgeService.getBridgeTotalCount(bridge);
 		log.info("@@@@ totalCount = {}", totalCount);
 		Pagination pagination = new Pagination(	request.getRequestURI(),
 												getSearchParameters(PageType.LIST, request, bridge),
 												totalCount,
 												Long.valueOf(pageNo).longValue(),
-												bridge.getListCounter());
+												PAGE_ROWS,
+												PAGE_LIST
+												);
 
 		bridge.setOffset(pagination.getOffset());
 		bridge.setLimit(pagination.getPageRows());

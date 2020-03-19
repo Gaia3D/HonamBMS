@@ -65,9 +65,8 @@
 				</form:form>
 				<!-- E: 교량 검색 입력 폼 -->
 				<!-- S: 교량 목록 -->
-				<div id="bridgeListTable">
+				<div id="bridgeListTable"></div>
 					<%@ include file="/WEB-INF/views/bridge/list-bridge-template.jsp" %>	
-				</div>
 				<!-- E: 교량 목록 -->
 			</div>
 		</div>
@@ -205,10 +204,12 @@
 	    });
 	}
 	
-	function getListBridge() {
+	function getListBridge(number) {
+		var pageNo = (number === undefined) ? 1 : number;
 		$.ajax({
 			url: '/bridges',
 			type: 'GET',
+			data: {pageNo : pageNo},
 			headers: {'X-Requested-With': 'XMLHttpRequest'},
 			dataType: 'json',
 			success: function(res){
