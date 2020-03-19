@@ -8,13 +8,4 @@ ALTER TABLE user_group_role ADD CONSTRAINT user_group_role_group_fk FOREIGN KEY 
 ALTER TABLE user_group_menu ADD CONSTRAINT user_group_menu_menu_fk FOREIGN KEY (menu_id) REFERENCES menu (menu_id);
 ALTER TABLE user_group_menu ADD CONSTRAINT user_group_menu_group_fk FOREIGN KEY (user_group_id) REFERENCES user_group (user_group_id);
 
-
-
-
-
-
-
-
-
-
-
+alter table only bridge_drone_file add constraint bridge_drone_file_fk_bridge_ogc_fid foreign key (ogc_fid) references bridge(ogc_fid);
