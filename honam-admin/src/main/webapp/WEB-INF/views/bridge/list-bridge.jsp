@@ -36,7 +36,7 @@
 	
 			<div class="subContents">
 				<!-- S: 교량 검색 입력 폼 -->
-				<form:form id="searchForm" modelAttribute="bridge" method="post" action="/bridge/list-bridge" onsubmit="return searchCheck();">
+				<form:form id="searchForm" modelAttribute="bridge" method="post" action="/bridge/list-bridge" onsubmit="return false;">
 					<ul class="projectSearch input-group row">
 						<li class="input-set">
 							<label for="searchWord">교량명</label>
@@ -45,9 +45,8 @@
 							<form:hidden path="searchOption" value="1" />
 						</li>
 						<li class="input-set">
-							<label>주소</label>
+							<label>행정구역</label>
 							<form:select path="sdoCode" name="sdoCode" class="select" style="width: 97px;">
-								<option value=""> 시도 </option>
 							</form:select>
 							<form:select path="sggCode" name="sggCode" class="select" style="width: 85px;">
 								<option value=""> 시군구 </option>
@@ -66,7 +65,7 @@
 				<!-- E: 교량 검색 입력 폼 -->
 				<!-- S: 교량 목록 -->
 				<div id="bridgeListTable"></div>
-					<%@ include file="/WEB-INF/views/bridge/list-bridge-template.jsp" %>	
+				<%@ include file="/WEB-INF/views/bridge/list-bridge-template.jsp" %>	
 				<!-- E: 교량 목록 -->
 			</div>
 		</div>
@@ -97,38 +96,124 @@
 <script type="text/javascript" src="/js/${lang}/handlebarsHelper.js"></script>
 <script type="text/javascript" src="/js/${lang}/common.js"></script>
 <script type="text/javascript" src="/js/Honam-bms.js"></script>
-<script type="text/javascript" src="/js/Geospatial.js"></script>
-<script type="text/javascript" src="/js/DistrictControll.js"></script>
 <script type="text/javascript" src="/js/NumberFormatter.js"></script>
-<script type="text/javascript" src="/js/MapControll.js"></script>
 <script type="text/javascript" src="/js/MouseControll.js"></script>
-<script type="text/javascript" src="/js/BridgeAttribute.js"></script>
+<!-- <script type="text/javascript" src="/js/Geospatial.js"></script> -->
+<!-- <script type="text/javascript" src="/js/DistrictControll.js"></script> -->
+<!-- <script type="text/javascript" src="/js/MapControll.js"></script> -->
+<!-- <script type="text/javascript" src="/js/BridgeAttribute.js"></script> -->
 <script type="text/javascript">
-	// 초기 위치 설정
-	var INIT_WEST = 124.67;
-	var INIT_SOUTH = 35.72;
-	var INIT_EAST = 128.46;
-	var INIT_NORTH = 33.77;
-	var rectangle = Cesium.Rectangle.fromDegrees(INIT_WEST, INIT_SOUTH, INIT_EAST, INIT_NORTH);
-	Cesium.Camera.DEFAULT_VIEW_FACTOR = 0;
-	Cesium.Camera.DEFAULT_VIEW_RECTANGLE = rectangle;
-
-   	var viewer = new Cesium.Viewer('MapContainer', {imageryProvider : imageryProvider, baseLayerPicker : false,
-   		animation:false, timeline:false, geocoder:false, navigationHelpButton: false, fullscreenButton:false, homeButton: false, sceneModePicker: false });
-   	//viewer.extend(Cesium.viewerCesiumNavigationMixin, {});
-   	var satValueCount = null;
-
-
    	// 초기 로딩 설정
 	$(document).ready(function() {
-		$("#bridgeMenu").addClass("on");
-		DistrictControll(viewer);
-		MouseControll(viewer,null,null);
-		MapControll(viewer);
-		loadManageOrg();
+		var INIT_WEST = 124.67;
+		var INIT_SOUTH = 35.72;
+		var INIT_EAST = 128.46;
+		var INIT_NORTH = 33.77;
+		var rectangle = Cesium.Rectangle.fromDegrees(INIT_WEST, INIT_SOUTH, INIT_EAST, INIT_NORTH);
+		Cesium.Camera.DEFAULT_VIEW_FACTOR = 0;
+		Cesium.Camera.DEFAULT_VIEW_RECTANGLE = rectangle;
+		
+		var imageryProvider = new Cesium.ArcGisMapServerImageryProvider({
+			url: 'https://services.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer',
+			enablePickFeatures: false
+		});
+		
+	   	var viewer = new Cesium.Viewer('MapContainer', {imageryProvider : imageryProvider, baseLayerPicker : false,
+	   		animation:false, timeline:false, geocoder:false, navigationHelpButton: false, fullscreenButton:false, homeButton: false, sceneModePicker: false });
+	   	var satValueCount = null;
+	   	
+	   	MouseControll(viewer,null,null);
+		getListSdo();
+	   	getListManageOrg();
 		getListBridge();
+// 		DistrictControll(viewer);
+// 		MapControll(viewer);
 // 		drawBridge();
 	});
+   	
+	$("#sdoCode").on("change", function() {
+		getListSgg($("#sdoCode").val());		
+	});
+	
+	// 시도 목록
+	function getListSdo() {
+		$.ajax({
+	        url: "../bridges/sdos",
+	        type: "GET",
+	        dataType: "json",
+	        success : function(res) {
+	        	if(res.statusCode <= 200) {
+	                var sdoList = res.sdoList;
+	                var content = "<option value=''> 시도 </option>";
+	                for(var i=0, len=sdoList.length; i < len; i++) {
+	                    var sdo = sdoList[i];
+                    	content += '<option value=' + sdo.sdoCode + '>' + sdo.name + '</option>';
+	                }
+	                $('#sdoCode').html(content);
+	        	} else {
+					alert(JS_MESSAGE[res.errorCode]);
+					console.log("---- " + res.message);
+				}
+	        },
+	        error: function(request, status, error) {
+				alert(JS_MESSAGE["ajax.error.message"]);
+			}
+	    });
+	}
+	
+	// 시도에 해당하는 시군구 목록
+	function getListSgg(bjcd) {
+		$.ajax({
+	        url: "../bridges/sdos/" + bjcd + "/sggs",
+	        type: "GET",
+	        dataType: "json",
+	        success : function(res) {
+	        	if(res.statusCode <= 200) {
+	                var sggList = res.sggList;
+	                $('#sggCode').empty()
+	                var content = "<option value=''> 시군구 </option>";
+	                for(var i=0, len=sggList.length; i < len; i++) {
+	                    var sgg = sggList[i];
+                    	content += '<option value=' + sgg.sggCode + '>' + sgg.name + '</option>';
+	                }
+	                $('#sggCode').html(content);
+	        	} else {
+					alert(JS_MESSAGE[res.errorCode]);
+					console.log("---- " + res.message);
+				}
+	        },
+	        error: function(request, status, error) {
+				alert(JS_MESSAGE["ajax.error.message"]);
+			}
+	    });
+	}
+	
+	// 관리주체 목록 로딩
+	function getListManageOrg() {
+		var url = "../bridges/manage";
+		$.ajax({
+		    url: url,
+		    type: "GET",
+		    dataType: "json",
+		    success : function(res) {
+		    	if(res.statusCode <= 200) {
+		            var bridgeList = res.bridgeList;
+		            var content = "<option value=''>전체</option>";
+		            for(var i=0, len=bridgeList.length; i < len; i++) {
+		                var bridge = bridgeList[i];
+		                content += '<option value=' + bridge.mngOrg + '>' + bridge.mngOrg + '</option>';
+		            }
+		            $('#mngOrg').html(content);
+		    	} else {
+					alert(JS_MESSAGE[res.errorCode]);
+					console.log("---- " + res.message);
+				}
+		    },
+		    error: function(request, status, error) {
+				alert(JS_MESSAGE["ajax.error.message"]);
+			}
+		});
+	}
 
    	// function
 	function drawBridge() {
@@ -176,34 +261,19 @@
 			markerImage = '/images/${lang}/X.png';
 		}
 
-//		if(cnt == 1) {
-//			cameraFlyTo(longitude, latitude, 200000, 3);
-//		}
-
 		viewer.entities.add({
 			name : bridgeName,
 	        position : Cesium.Cartesian3.fromDegrees(parseFloat(longitude), parseFloat(latitude), 0),
 	        billboard : {
 	            image : markerImage,
-	            width : 35, // default: undefined/
-	            height : 35, // default: undefined
+	            width : 35, 
+	            height : 35, 
 	            disableDepthTestDistance : Number.POSITIVE_INFINITY
-	            /* image : '../images/Cesium_Logo_overlay.png', // default: undefined
-	            show : true, // default
-	            pixelOffset : new Cesium.Cartesian2(0, -50), // default: (0, 0)
-	            eyeOffset : new Cesium.Cartesian3(0.0, 0.0, 0.0), // default
-	            horizontalOrigin : Cesium.HorizontalOrigin.CENTER, // default
-	            verticalOrigin : Cesium.VerticalOrigin.BOTTOM, // default: CENTER
-	            scale : 2.0, // default: 1.0
-	            color : Cesium.Color.LIME, // default: WHITE
-	            rotation : Cesium.Math.PI_OVER_FOUR, // default: 0.0
-	            alignedAxis : Cesium.Cartesian3.ZERO, // default
-	            width : 100, // default: undefined
-	            height : 25 // default: undefined */
 	        }
 	    });
 	}
 	
+	// 교량 목록 로드
 	function getListBridge(number) {
 		var pageNo = (number === undefined) ? 1 : number;
 		$.ajax({
@@ -234,7 +304,6 @@
 			}
 		});
 	}
-
 </script>
 </body>
 </html>

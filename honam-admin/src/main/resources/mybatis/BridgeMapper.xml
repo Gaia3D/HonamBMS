@@ -6,30 +6,21 @@
 	<!-- Sdo 목록(geom 은 제외) -->
 	<select id="getListSdoExceptGeom" resultType="skSdo">
 		/* getListSdoExceptGeom */
-		SELECT A.bjcd, SUBSTR(A.bjcd, 1, 2) AS sdo_code, A.name
-		FROM sk_sdo A, (
-			SELECT MIN(ogc_fid) AS gid, name
-			FROM sk_sdo GROUP BY name
-		) B
-		WHERE A.ogc_fid = B.gid
-		ORDER BY A.name
+		SELECT 
+			SUBSTR(bjcd, 1, 2) AS sdo_code, name 
+		FROM sk_sdo
+		WHERE bjcd IN ('2900000000', '4500000000', '4600000000')
+		ORDER BY name
 	</select>
 
 	<!-- Sgg 목록(geom 은 제외) -->
 	<select id="getListSggBySdoExceptGeom" parameterType="string" resultType="skSgg">
 		/* getListSggBySdoExceptGeom */
-		SELECT B.bjcd, SUBSTR(B.bjcd, 1, 2) AS sdo_code, SUBSTR(B.bjcd, 3, 3) AS sgg_code, B.name
-		FROM sk_sgg B, (
-			SELECT MIN(A.gid) AS gid, A.code AS bjcd, A.name
-			FROM (
-				SELECT ogc_fid as gid, SUBSTR(bjcd, 1, 5) as code, name
-				FROM sk_sgg
-				WHERE bjcd LIKE #{sdoCode} || '%'
-			) A
-			GROUP BY A.code, A.name
-		) C
-		WHERE B.ogc_fid = C.gid
-		ORDER BY C.name
+		SELECT 
+			SUBSTR(bjcd, 3, 3) AS sgg_code, name
+		FROM sk_sgg
+		WHERE bjcd LIKE #{sdoCode} || '%'
+		ORDER BY name
 	</select>
 
 	<!-- 선택한 시도의 center point를 구함 -->

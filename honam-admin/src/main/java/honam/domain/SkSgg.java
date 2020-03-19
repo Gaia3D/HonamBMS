@@ -14,7 +14,7 @@ import lombok.ToString;
 public class SkSgg {
 
 	// 시도 1, 시군구 2, 읍면동 3
-	private Integer layer_type;
+	private Integer layerType;
 	// 고유번호
 	private Long gid;
 	// PK
@@ -22,9 +22,9 @@ public class SkSgg {
 	// 법정동 코드
 	private String bjcd;
 	// 시도 코드
-	private String sdo_code;
+	private String sdoCode;
 	// 시군구 코드
-	private String sgg_code;
+	private String sggCode;
 	// 명칭
 	private String name;
 	// 구분
@@ -36,5 +36,5 @@ public class SkSgg {
 	// 기하정보
 	private String geom;
 	// 등록일
-	private String insert_date;
+	private String insertDate;
 }

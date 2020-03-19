@@ -1,32 +1,3 @@
-// 관리주체 목록 로딩
-function loadManageOrg() {
-	var defaultMngOrg = '<option value> </option>';
-	var url = "./manage";
-	$.ajax({
-	    url: url,
-	    type: "GET",
-	    dataType: "json",
-	    success : function(msg) {
-	        if(msg.result === "success") {
-	            var bridgeList = msg.bridgeList;
-	            var content = "";
-	            
-	            content += defaultMngOrg;
-	            for(var i=0, len=bridgeList.length; i < len; i++)                    
-	            {
-	                var bridge = bridgeList[i];
-	                content += '<option value=' + bridge.mng_org + '>' + bridge.mng_org + '</option>';
-	            }
-	            
-	            $('#mng_org').html(content);
-	        }
-	    },
-	    error : function(request, status, error) {
-	        console.log("code : " + request.status + "\n message : " + request.responseText + "\n error : " + error);
-	    }
-	});
-}
-
 // 해당 교량으로 이동
 function getCentroidBridge(viewer, gid, name, grade, facNum) {
 	var url = "./" + gid + "/centroid"; 
