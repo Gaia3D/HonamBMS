@@ -14,6 +14,7 @@ create table bridge_group (
 	location		 			GEOMETRY(POINT, 4326),
 	altitude					numeric(13,7),
 	duration					integer,
+	color						varchar(7),
 	description					varchar(256),
 	update_date					timestamp with time zone,
 	insert_date					timestamp with time zone			default now(),
@@ -32,6 +33,7 @@ comment on column bridge_group.available is 'true : 사용, false : 사용안함
 comment on column bridge_group.location is 'POINT(위도, 경도). 공간 검색 속도 때문에 altitude는 분리';
 comment on column bridge_group.altitude is '높이';
 comment on column bridge_group.duration is 'Map 이동시간';
+comment on column bridge_group.color is '범례 색깔';
 comment on column bridge_group.description is '설명';
 comment on column bridge_group.update_date is '수정일';
 comment on column bridge_group.insert_date is '등록일';
