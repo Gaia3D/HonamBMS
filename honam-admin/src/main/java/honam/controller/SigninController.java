@@ -127,11 +127,11 @@ public class SigninController {
 		}
 
 		// 패스워드 변경 기간이 오버 되었거나 , 6:임시 비밀번호(비밀번호 찾기, 관리자 설정에 의한 임시 비밀번호 발급 시)
-		if(userSession.getPasswordChangeTermOver() || UserStatus.TEMP_PASSWORD == UserStatus.findBy(userSession.getStatus())){
-			return "redirect:/user/modify-password";
-		}
+//		if(userSession.getPasswordChangeTermOver() || UserStatus.TEMP_PASSWORD == UserStatus.findBy(userSession.getStatus())){
+//			return "redirect:/user/modify-password";
+//		}
 		
-		return "redirect:/data/map";
+		return "redirect:/bridge/list-bridge";
 	}
 	
 	/**
