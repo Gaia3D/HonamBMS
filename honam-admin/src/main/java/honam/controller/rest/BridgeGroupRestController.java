@@ -37,10 +37,10 @@ public class BridgeGroupRestController {
 		String errorCode = null;
 		String message = null;
 		
-		List<BridgeGroup> dataGroupList = bridgeGroupService.getListDataGroup(bridgeGroup);
+		List<BridgeGroup> bridgeGroupList = bridgeGroupService.getListBridgeGroup();
 		int statusCode = HttpStatus.OK.value();
 		
-		result.put("bridgeGroup", bridgeGroup);
+		result.put("bridgeGroupList", bridgeGroupList);
 		result.put("statusCode", statusCode);
 		result.put("errorCode", errorCode);
 		result.put("message", message);

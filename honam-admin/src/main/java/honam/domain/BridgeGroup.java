@@ -18,7 +18,7 @@ import lombok.Setter;
 import lombok.ToString;
 
 /**
- * 데이터 그룹
+ * bridge 그룹
  * @author Cheon JeongDae
  *
  */
@@ -49,6 +49,9 @@ public class BridgeGroup extends Search {
 	// 사용자명
 	private String userId;
 	private String userName;
+	
+	// 목표 성능
+	private BigDecimal goalPerformance;
 	
 	// 순서
 	private Integer viewOrder;

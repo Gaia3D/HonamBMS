@@ -11,6 +11,7 @@
 	
 	<typeAliases>
 		<typeAlias type="honam.domain.Bridge" alias="bridge"/>
+		<typeAlias type="honam.domain.BridgeGroup" alias="bridgeGroup"/>
 		
 		<typeAlias type="honam.domain.Policy" alias="policy" />
 		

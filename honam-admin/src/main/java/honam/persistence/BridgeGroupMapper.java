@@ -10,22 +10,22 @@ import honam.domain.BridgeGroup;
 public interface BridgeGroupMapper {
 	
 	/**
-	 * 사용자 Data Group 총건수
-	 * @param dataGroup
+	 * 교량 Group 총건수
+	 * @param bridgeGroup
 	 * @return
 	 */
-	Long getDataGroupTotalCount(BridgeGroup dataGroup);
+	Long getBridgeGroupTotalCount();
 
 	/**
-     * 데이터 그룹 목록
+     * 교량 그룹 목록
      * @return
      */
-    List<BridgeGroup> getListDataGroup();
+    List<BridgeGroup> getListBridgeGroup();
 
     /**
-     * 데이터 정보 조회
-     * @param dataGroup
+     * 교량 정보 조회
+     * @param bridgeGroup
      * @return
      */
-    BridgeGroup getDataGroup(BridgeGroup dataGroup);
+    BridgeGroup getBridgeGroup(BridgeGroup bridgeGroup);
 }

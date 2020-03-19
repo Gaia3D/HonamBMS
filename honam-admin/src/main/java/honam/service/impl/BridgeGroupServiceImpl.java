@@ -16,33 +16,33 @@ import lombok.extern.slf4j.Slf4j;
 public class BridgeGroupServiceImpl implements BridgeGroupService {
 
 	@Autowired
-	private BridgeGroupMapper dataGroupMapper;
+	private BridgeGroupMapper bridgeGroupMapper;
 	
 	/**
-	 * Data Group 총건수
-	 * @param dataGroup
+	 * 교량 Group 총건수
+	 * @param bridgeGroup
 	 * @return
 	 */
-	public Long getDataGroupTotalCount(BridgeGroup dataGroup) {
-		return dataGroupMapper.getDataGroupTotalCount(dataGroup);
+	public Long getBridgeGroupTotalCount() {
+		return bridgeGroupMapper.getBridgeGroupTotalCount();
 	}
 	
 	/**
-     * 데이터 그룹 목록
+     * 교량 그룹 목록
      * @return
      */
 	@Transactional(readOnly = true)
-	public List<BridgeGroup> getListDataGroup(BridgeGroup dataGroup) {
-		return dataGroupMapper.getListDataGroup();
+	public List<BridgeGroup> getListBridgeGroup() {
+		return bridgeGroupMapper.getListBridgeGroup();
 	}
 
 	/**
-     * 데이터 그룹 정보 조회
+     * 교량 그룹 정보 조회
      * @param dataGroup
 	 * @return
 	 */
 	@Transactional(readOnly = true)
-	public BridgeGroup getDataGroup(BridgeGroup dataGroup) {
-		return dataGroupMapper.getDataGroup(dataGroup);
+	public BridgeGroup getBridgeGroup(BridgeGroup bridgeGroup) {
+		return bridgeGroupMapper.getBridgeGroup(bridgeGroup);
 	}
 }

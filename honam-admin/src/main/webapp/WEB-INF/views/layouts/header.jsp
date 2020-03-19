@@ -15,10 +15,10 @@
 	UserSession userSession = (UserSession) request.getSession().getAttribute(Key.USER_SESSION.name());
 	if (userSession != null && userSession.getUserId() != null && !"".equals(userSession.getUserId())) {
 %>		
-			<a href="/sign/signout" title="Sign out">Sign out</a>
+			<a href="/sign/signout" title="Sign out" style="color: white;">Sign out</a>
 <% 
 	} else { %>
-			<a href="/sign/signin">Sign in</a>
+			<a href="/sign/signin" style="color: white;">Sign in</a>
 <% 
 	} %>
 		</li>
