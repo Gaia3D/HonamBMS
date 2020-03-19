@@ -83,7 +83,7 @@ Handlebars.registerHelper('forEachStep', function(from, to, incr, block) {
 });
 
 Handlebars.registerHelper('replaceRowNumber', function(pageNo, index) {
-    return (index+1)+((pageNo-1)*0);
+    return (index+1)+((pageNo-1)*10);
 });
 
 Handlebars.registerHelper('replaceYear', function(value) {
