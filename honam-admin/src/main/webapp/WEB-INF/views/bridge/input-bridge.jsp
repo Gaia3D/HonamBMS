@@ -74,16 +74,10 @@
 	<!-- E: 교량 목록 -->
 </div>
 
-<script type="text/javascript" src="/externlib/moment-2.22.2/moment-with-locales.min.js"></script>
-<script type="text/javascript" src="/externlib/moment-2.22.2/moment.min.js"></script>
-<script type="text/javascript" src="/externlib/chartjs/Chart.min.js"></script>
-<script type="text/javascript" src="/externlib/geostats/geostats.js"></script>
-<script type="text/javascript" src="/externlib/jquery-3.4.1/jquery.js"></script>
+<script type="text/javascript" src="/externlib/jquery-3.3.1/jquery.min.js"></script>
 <script type="text/javascript" src="/externlib/jquery-ui-1.12.1/jquery-ui.min.js"></script>
-<script type="text/javascript" src="/externlib/jquery-3.4.1/fixedheadertable.js"></script>
 <script type="text/javascript" src="/externlib/ajax-cross-origin/jquery.ajax-cross-origin.min.js"></script>
 <script type="text/javascript" src="/externlib/cesium/Cesium.js"></script>
-<script type="text/javascript" src="/externlib/cesium-navigation/viewerCesiumNavigationMixin.js"></script>
 <script type="text/javascript" src="/externlib/mago3d/mago3d.js"></script>
 <script type="text/javascript" src="/externlib/mago3d/init.js"></script>
 
@@ -109,7 +103,7 @@ Cesium.Camera.DEFAULT_VIEW_RECTANGLE = rectangle;
 
 var viewer = new Cesium.Viewer('MapContainer', {imageryProvider : imageryProvider, baseLayerPicker : false,
 	animation:false, timeline:false, geocoder:false, navigationHelpButton: false, fullscreenButton:false, homeButton: false, sceneModePicker: false });
-viewer.extend(Cesium.viewerCesiumNavigationMixin, {});
+//viewer.extend(Cesium.viewerCesiumNavigationMixin, {});
 var satValueCount = null;
 
 </script>

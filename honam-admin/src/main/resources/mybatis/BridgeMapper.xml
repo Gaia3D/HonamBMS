@@ -11,7 +11,7 @@
 			SELECT MIN(ogc_fid) AS gid, name
 			FROM sk_sdo GROUP BY name
 		) B
-		WHERE A.ogc_fid = B.ogc_fid
+		WHERE A.ogc_fid = B.gid
 		ORDER BY A.name
 	</select>
 
@@ -28,7 +28,7 @@
 			) A
 			GROUP BY A.code, A.name
 		) C
-		WHERE B.ogc_fid = C.ogc_fid
+		WHERE B.ogc_fid = C.gid
 		ORDER BY C.name
 	</select>
 
