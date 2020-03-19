@@ -13,7 +13,7 @@ import lombok.extern.slf4j.Slf4j;
  *
  */
 @Slf4j
-@ControllerAdvice(basePackages = {"ndtp.controller.view"})
+@ControllerAdvice(basePackages = {"honam.controller.view"})
 public class ControllerExceptionHandler {
 	
 	@ExceptionHandler(Exception.class)

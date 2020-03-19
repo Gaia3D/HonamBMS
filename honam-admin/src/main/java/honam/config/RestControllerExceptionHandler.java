@@ -16,7 +16,7 @@ import honam.support.LogMessageSupport;
  * @author Cheon JeongDae
  *
  */
-@RestControllerAdvice(basePackages = {"ndtp.controller.rest"})
+@RestControllerAdvice(basePackages = {"honam.controller.rest"})
 public class RestControllerExceptionHandler {
 	
 	@ExceptionHandler(DataAccessException.class)
