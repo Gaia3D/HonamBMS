@@ -70,6 +70,13 @@ public interface BridgeService {
 	List<Bridge> getListBridge(Bridge bridge);
 
 	/**
+	 * 교량 그룹 교량 목록
+	 * @param bridgeGroupId
+	 * @return
+	 */
+	List<Bridge> getListBridgeByBridgeGroupId(Integer bridgeGroupId);
+	
+	/**
 	 * bridge 정보 조회
 	 * @param gid
 	 * @return

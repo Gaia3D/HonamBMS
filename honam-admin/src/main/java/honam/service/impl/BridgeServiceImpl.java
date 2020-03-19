@@ -99,6 +99,16 @@ public class BridgeServiceImpl implements BridgeService {
 	public List<Bridge> getListBridge(Bridge bridge) {
 		return bridgeMapper.getListBridge(bridge);
 	}
+	
+	/**
+	 * 교량 그룹 교량 목록
+	 * @param bridgeGroupId
+	 * @return
+	 */
+	@Transactional(readOnly=true)
+	public List<Bridge> getListBridgeByBridgeGroupId(Integer bridgeGroupId) {
+		return bridgeMapper.getListBridgeByBridgeGroupId(bridgeGroupId);
+	}
 
 	/**
 	 * bridge 정보 조회

@@ -65,6 +65,11 @@ public class BridgeGroup extends Search {
 	private BigDecimal altitude;
 	// Map 이동시간
 	private Integer duration;
+	// 시작 지역
+	private String startArea;
+	// 종료 지역
+	private String endArea;
+	
 	// 설명
 	private String description;
 	
