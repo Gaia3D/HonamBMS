@@ -64,7 +64,7 @@
 						</a>
 					</td>
 					<td class="col-name">${bridge.endAmd.substring(0,4)} </td>
-					<td class="col-name">${bridge.bridgeGrade}</td>
+					<td class="col-name">${bridge.grade}</td>
 				</tr>
 			</c:forEach>
 			</tbody>

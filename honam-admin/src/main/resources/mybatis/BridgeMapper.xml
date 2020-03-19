@@ -103,7 +103,7 @@
 	<!-- Bridge(교량) 목록 -->
 	<select id="getListBridge" parameterType="bridge" resultType="bridge">
 		/* getListBridge */
-		SELECT DISTINCT A.ogc_fid as gid, A.brg_nam, A.end_amd, A.bridge_grade
+		SELECT DISTINCT A.ogc_fid as gid, A.brg_nam, A.end_amd, A.grade
 		FROM bridge A
 		LEFT JOIN sk_sdo B ON A.fac_sido = B.name
 		LEFT JOIN sk_sgg C ON A.fac_sgg = C.name
@@ -132,7 +132,7 @@
 		/* getBridge */
 		SELECT DISTINCT ogc_fid as gid, ufid, fac_num, brg_nam, mng_org, fac_sido, fac_sgg, fac_emd, fac_ri, fac_gra, end_amd, dsn_wet,
 			brg_len, brg_hit, eff_wid, tot_wid, spa_cnt, max_len, tra_cnt, usp_rep, dpi_rep, wkb_geometry as geom,
-			gru_num, bridge_cm, bridge_lcc, bridge_grade, bridge_model
+			gru_num, bridge_cm, bridge_lcc, grade, model
 		FROM bridge
 		WHERE ogc_fid = #{gid}
 	</select>

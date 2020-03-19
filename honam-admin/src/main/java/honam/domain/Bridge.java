@@ -60,7 +60,7 @@ public class Bridge extends Search {
 	// 교량그룹 고유변호
 	private String gruNum;
 	// 3D 교량 모델 유무 및 개수
-	private Integer bridgeModel;
+	private Integer model;
 
 	// Multi Polygon
 	@Setter(AccessLevel.NONE)
@@ -71,7 +71,7 @@ public class Bridge extends Search {
 	// 교량의 내하 성능 수치
 	private Double bridgeLcc;
 	// 교량 등급
-	private String bridgeGrade;
+	private String grade;
 
 	@JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy-MM-dd HH:mm:ss", timezone="Asia/Seoul")
 	private Date updateDate;
