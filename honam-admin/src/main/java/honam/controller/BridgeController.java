@@ -195,32 +195,11 @@ public class BridgeController {
 	 * @return
 	 */
 	@RequestMapping(value = "/list-bridge")
-	public String listBridge(HttpServletRequest request, Bridge bridge, @RequestParam(defaultValue="1") String pageNo, Model model) {
-		log.info("@@ bridge = {}", bridge);
-		bridge.setListCounter(10l);
-
-		long totalCount = bridgeService.getBridgeTotalCount(bridge);
-		log.info("@@@@ totalCount = {}", totalCount);
-		Pagination pagination = new Pagination(	request.getRequestURI(),
-												getSearchParameters(PageType.LIST, request, bridge),
-												totalCount,
-												Long.valueOf(pageNo).longValue(),
-												bridge.getListCounter());
-
-		bridge.setOffset(pagination.getOffset());
-		bridge.setLimit(pagination.getPageRows());
-
-		List<Bridge> bridgeList = new ArrayList<>();
-		if(totalCount > 0l) {
-			bridgeList = bridgeService.getListBridge(bridge);
-		}
-
+	public String listBridge(HttpServletRequest request, Model model) {
 		String cesiumIonToken = propertiesConfig.getCesiumIonToken();
 
 		model.addAttribute("policy", policyService.getPolicy());
-		model.addAttribute(pagination);
-		model.addAttribute("bridge", bridge);
-		model.addAttribute("bridgeList", bridgeList);
+		model.addAttribute("bridge", new Bridge());
 		model.addAttribute("cesiumIonToken", cesiumIonToken);
 
 		return "/bridge/list-bridge";
