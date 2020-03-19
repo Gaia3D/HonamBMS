@@ -103,6 +103,7 @@
 			</div>
 		</div>
 		<div id="bridgeGroupContent" style="display: none;">
+			<%@ include file="/WEB-INF/views/bridge-group/list.jsp" %>
 		</div>
 		<div id="bridgeManageContent" style="display: none;">
 		</div>
