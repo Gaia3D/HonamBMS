@@ -112,6 +112,8 @@
 <!-- <script type="text/javascript" src="/js/MapControll.js"></script> -->
 <!-- <script type="text/javascript" src="/js/BridgeAttribute.js"></script> -->
 <script type="text/javascript">
+	var viewer = null;
+	
    	// 초기 로딩 설정
 	$(document).ready(function() {
 		var INIT_WEST = 124.67;
@@ -127,7 +129,7 @@
 			enablePickFeatures: false
 		});
 		
-	   	var viewer = new Cesium.Viewer('MapContainer', {imageryProvider : imageryProvider, baseLayerPicker : false,
+	   	viewer = new Cesium.Viewer('MapContainer', {imageryProvider : imageryProvider, baseLayerPicker : false,
 	   		animation:false, timeline:false, geocoder:false, navigationHelpButton: false, fullscreenButton:false, homeButton: false, sceneModePicker: false });
 	   	var satValueCount = null;
 	   	
