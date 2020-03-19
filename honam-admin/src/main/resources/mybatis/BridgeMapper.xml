@@ -108,6 +108,16 @@
 		) A
 	</select>
 
+	<!-- Bridge(교량) 전체 목록 -->
+	<select id="getListBridgeAll" resultType="bridge">
+		/* getListBridgeAll */
+		SELECT DISTINCT A.ogc_fid as gid, A.brg_nam, A.end_amd, A.grade
+		FROM bridge A
+		LEFT JOIN sk_sdo B ON A.fac_sido = B.name
+		LEFT JOIN sk_sgg C ON A.fac_sgg = C.name
+		ORDER BY A.brg_nam
+	</select>
+
 	<!-- Bridge(교량) 목록 -->
 	<select id="getListBridge" parameterType="bridge" resultType="bridge">
 		/* getListBridge */

@@ -17,10 +17,10 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @Service
 public class BridgeServiceImpl implements BridgeService {
-	
+
 	@Autowired
 	private BridgeMapper bridgeMapper;
-	
+
 	/**
 	 * Sdo 목록(geom 은 제외)
 	 * @return
@@ -29,7 +29,7 @@ public class BridgeServiceImpl implements BridgeService {
 	public List<SkSdo> getListSdoExceptGeom() {
 		return bridgeMapper.getListSdoExceptGeom();
 	}
-	
+
 	/**
 	 * Sgg 목록(geom 은 제외)
 	 * @param sdo_code
@@ -39,7 +39,7 @@ public class BridgeServiceImpl implements BridgeService {
 	public List<SkSgg> getListSggBySdoExceptGeom(String sdo_code) {
 		return bridgeMapper.getListSggBySdoExceptGeom(sdo_code);
 	}
-	
+
 	/**
 	 * 선택한 시도의 center point를 구함
 	 * @param skSdo
@@ -49,7 +49,7 @@ public class BridgeServiceImpl implements BridgeService {
 	public String getCentroidSdo(SkSdo skSdo) {
 		return bridgeMapper.getCentroidSdo(skSdo);
 	}
-	
+
 	/**
 	 * 선택한 시군구 center point를 구함
 	 * @param skSgg
@@ -59,7 +59,7 @@ public class BridgeServiceImpl implements BridgeService {
 	public String getCentroidSgg(SkSgg skSgg) {
 		return bridgeMapper.getCentroidSgg(skSgg);
 	}
-	
+
 	/**
 	 * 선택한 교량의 center point를 구함
 	 * @param gid
@@ -69,7 +69,7 @@ public class BridgeServiceImpl implements BridgeService {
 	public String getCentroidBridge(Integer gid) {
 		return bridgeMapper.getCentroidBridge(gid);
 	}
-	
+
 	/**
 	 * 관리주체 목록
 	 * @param bridge
@@ -79,7 +79,7 @@ public class BridgeServiceImpl implements BridgeService {
 	public List<Bridge> getListMngOrg() {
 		return bridgeMapper.getListMngOrg();
 	}
-	
+
 	/**
 	 * 총건수
 	 * @param bridge
@@ -109,7 +109,7 @@ public class BridgeServiceImpl implements BridgeService {
 	public Bridge getBridge(Integer gid) {
 		return bridgeMapper.getBridge(gid);
 	}
-	
+
 	/**
 	 * bridge 등록
 	 * @param bridge
@@ -119,7 +119,7 @@ public class BridgeServiceImpl implements BridgeService {
 	public int insertBridge(Bridge bridge) {
 		return bridgeMapper.insertBridge(bridge);
 	}
-	
+
 	/**
 	 * bridge 수정
 	 * @param bridge
@@ -129,7 +129,12 @@ public class BridgeServiceImpl implements BridgeService {
 	public int updateBridge(Bridge bridge) {
 		return bridgeMapper.updateBridge(bridge);
 	}
-	
-	
-	
+
+	@Override
+	public List<Bridge> getListBridgeAll() {
+		return bridgeMapper.getListBridgeAll();
+	}
+
+
+
 }
