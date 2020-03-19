@@ -127,6 +127,10 @@
 	}
 	
 	function gotoFlyBridge(longitude, latitude) {
-		alert("" + longitude + ", " + latitude);
+		viewer.camera.flyTo({
+		    destination : Cesium.Cartesian3.fromDegrees(longitude, latitude, 200)
+		});
+		//gotoFlyAPI(MAGO3D_INSTANCE, longitude, latitude, 100, 3);
+		//hereIamMarker(longitude, latitude, altitude);
 	}
 </script>
