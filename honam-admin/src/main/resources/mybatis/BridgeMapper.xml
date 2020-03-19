@@ -92,17 +92,17 @@
 				<if test="brgNam != null and brgNam != ''">
 				AND A.brg_nam LIKE #{brgNam} || '%'
 				</if>
-				<if test="satExists == true">
-					AND EXISTS (SELECT 1 FROM sat WHERE fac_num = A.fac_num)
+				<if test='bridgeType == "sat"'>
+				AND EXISTS (SELECT 1 FROM sat WHERE fac_num = A.fac_num)
 				</if>
-				<if test="sensorExists == true">
-					AND EXISTS (SELECT 1 FROM sensorid WHERE fac_num = A.fac_num)
+				<if test='bridgeType == "sensor"'>
+				AND EXISTS (SELECT 1 FROM sensorid WHERE fac_num = A.fac_num)
 				</if>
-				<if test="droneExists == true">
-					AND EXISTS (SELECT 1 FROM bridge_drone_file WHERE ogc_fid = A.ogc_fid)
+				<if test='bridgeType == "drone"'>
+				AND EXISTS (SELECT 1 FROM bridge_drone_file WHERE ogc_fid = A.ogc_fid)
 				</if>
-				<if test="modelExists == true">
-					AND A.model = 1
+				<if test='bridgeType == "model"'>
+				AND A.model = 1
 				</if> 
 			</where>
 		) A
@@ -143,18 +143,18 @@
 			<if test="brgNam != null and brgNam != ''">
 			AND A.brg_nam LIKE #{brgNam} || '%'
 			</if>
-			<if test="satExists == true">
-				AND EXISTS (SELECT 1 FROM sat WHERE fac_num = A.fac_num)
+			<if test='bridgeType == "sat"'>
+			AND EXISTS (SELECT 1 FROM sat WHERE fac_num = A.fac_num)
 			</if>
-			<if test="sensorExists == true">
-				AND EXISTS (SELECT 1 FROM sensorid WHERE fac_num = A.fac_num)
+			<if test='bridgeType == "sensor"'>
+			AND EXISTS (SELECT 1 FROM sensorid WHERE fac_num = A.fac_num)
 			</if>
-			<if test="droneExists == true">
-				AND EXISTS (SELECT 1 FROM bridge_drone_file WHERE ogc_fid = A.ogc_fid)
+			<if test='bridgeType == "drone"'>
+			AND EXISTS (SELECT 1 FROM bridge_drone_file WHERE ogc_fid = A.ogc_fid)
 			</if>
-			<if test="modelExists == true">
-				AND A.model = 1
-			</if>
+			<if test='bridgeType == "model"'>
+			AND A.model = 1
+			</if> 
 		</where>
 		ORDER BY A.brg_nam
 		OFFSET #{offset} LIMIT #{limit}

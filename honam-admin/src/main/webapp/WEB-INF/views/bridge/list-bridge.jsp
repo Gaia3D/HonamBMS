@@ -39,21 +39,31 @@
 				<form:form id="searchForm" modelAttribute="bridge" method="get" action="#" onsubmit="return false;">
 					<ul class="projectSearch input-group row">
 						<li class="input-set">
-							<label for="searchWord">교량명</label>
-							<form:input path="brgNam" type="search" size="25" cssClass="m" />
-						</li>
-						<li class="input-set">
 							<label>행정구역</label>
 							<form:select path="sdoCode" name="sdoCode" class="select" style="width: 97px;">
 							</form:select>
-							<form:select path="sggCode" name="sggCode" class="select" style="width: 85px;">
+							<form:select path="sggCode" name="sggCode" class="select" style="width: 94px;">
 								<option value=""> 시군구 </option>
 							</form:select>
 						</li>
 						<li class="input-set">
 							<label>관리주체</label>
-							<form:select path="mngOrg" name="mngOrg" class="select" style="width: 187px;">
+							<form:select path="mngOrg" name="mngOrg" class="select" style="width: 196px;">
 							</form:select>
+						</li>
+						<li class="input-set">
+							<label>검색대상</label>
+							<form:select path="bridgeType" name="bridgeType" class="select" style="width: 196px;">
+								<option value="">전체</option>
+								<option value="model">3D교량 모델 </option>
+								<option value="sensor">접촉식센서</option>
+								<option value="sat">위성영상</option>
+								<option value="drone">드론영상</option>
+							</form:select>
+						</li>
+						<li class="input-set">
+							<label for="searchWord">교량명</label>
+							<form:input path="brgNam" type="search" size="25" cssClass="m" />
 						</li>
 						<li class="input-set btn">
 							<button type="submit" value="search" class="point" id="search" onClick="getListBridge();">검색</button>
@@ -283,7 +293,8 @@
 				brgNam : $("#brgNam").val(),
 				sdoCode : $("#sdoCode").val(),
 				sggCode : $("#sggCode").val(),
-				mngOrg : $("#mngOrg").val()
+				mngOrg : $("#mngOrg").val(),
+				bridgeType : $("#bridgeType").val()
 		}
 		$.ajax({
 			url: '/bridges',
