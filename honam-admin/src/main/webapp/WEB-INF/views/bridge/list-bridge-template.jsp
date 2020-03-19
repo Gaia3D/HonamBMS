@@ -30,7 +30,7 @@
 				</tr>
 			{{/each}}
 		{{else}}
-			<tr><td>데이터가 없습니다.</td></tr>
+			<tr><td colspan="4" style="text-align:center;">검색된 데이터가 없습니다.</td></tr>
 		{{/if}}
 		</tbody>
 	</table>
