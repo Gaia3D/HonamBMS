@@ -9,36 +9,21 @@
 <!-- E: 프로젝트 제목, 목록가기, 닫기 -->
 
 <div class="subContents">
-	<!-- S: 교량 검색 입력 폼 -->
-	<form:form id="searchForm" modelAttribute="bridge" method="post" action="/bridge/list-bridge" onsubmit="return searchCheck();">
-		<ul class="projectSearch input-group row">
-			<li class="input-set">
-				<label for="searchWord">교량명</label>
-				<form:input path="searchValue" type="search" size="25" cssClass="m" />
-				<form:hidden path="searchWord" value="brgNam" />
-				<form:hidden path="searchOption" value="1" />
-			</li>
-			<li class="input-set">
-				<label>주소</label>
-				<form:select path="sdoCode" name="sdoCode" class="select" style="width: 97px;">
-					<option value=""> 시도 </option>
-				</form:select>
-				<form:select path="sggCode" name="sggCode" class="select" style="width: 85px;">
-					<option value=""> 시군구 </option>
-				</form:select>
-			</li>
-			<li class="input-set">
-				<label>관리주체</label>
-				<form:select path="mngOrg" name="mngOrg" class="select" style="width: 187px;">
-				</form:select>
-			</li>
-			<li class="input-set btn">
-				<button type="submit" value="search" class="point" id="search">검색</button>
-			</li>
-		</ul>
-	</form:form>
-	<!-- E: 교량 검색 입력 폼 -->
-	<!-- S: 교량 목록 -->
+	<ul class="projectSearch input-group row">
+		<li class="input-set">
+			시작 지역 : 광주시
+		</li>
+		<li class="input-set">
+			중간 지역 : 순천
+		</li>
+		<li class="input-set">
+			종료 지역 : 여수시
+		</li>
+		<li class="input-set btn">
+			<button type="submit" value="search" class="point" id="search">검색</button>
+		</li>
+	</ul>
+	
 	<div id="projectListHeader" class="count" style="margin-top: 20px; margin-bottom: 5px;">
 		전체 <em><fmt:formatNumber value="${pagination.totalCount}" type="number"/></em> 건
 		<fmt:formatNumber value="${pagination.pageNo}" type="number"/> / <fmt:formatNumber value="${pagination.lastPage }" type="number"/> 페이지
@@ -73,5 +58,4 @@
 		</table>
 		<%@ include file="/WEB-INF/views/common/pagination.jsp" %>
 	</div>
-	<!-- E: 교량 목록 -->
 </div>
