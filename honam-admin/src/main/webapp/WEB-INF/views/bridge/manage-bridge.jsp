@@ -6,7 +6,7 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width">
-	<title>교량 등록 | Honam-BMS</title>
+	<title>교량 관리 | Honam-BMS</title>
 	<link rel="shortcut icon" href="/images/favicon.ico" type="image/x-icon" />
 	<link rel="stylesheet" href="/css/${lang}/style.css">
 	<link rel="stylesheet" href="/css/${lang}/honam-bms.css">
@@ -42,22 +42,53 @@
 			<li>교량 등록</li>
 		</ul>
 	</nav>
-	<form action="">
-		<label for="brgNam">교량명</label>
-		<input type="text" id="brgNam" name="brgNam">
-		<label for="facNum">시설물번호</label>
-		<input type="text" id="facNum" name="facNum">
-		<label for="mngOrg">관리주체</label>
-		<input type="text" id="mngOrg" name="mngOrg">
-		<label for="mngOrg">주소</label>
-		<select>
-			<option>시도</option>
-		</select>
-		<select>
-			<option>시군구</option>
-		</select>
+	<div id="MapContainer" style="float:left; height:50%; margin: 0 0 20px 20px; width:calc(100% - 150px);"></div>
 
-	</form>
+	<!-- S: 교량 목록 -->
+	<div class="transferDataList">
+		<button>지도에 교량 그리기</button>
+		<button>선택 삭제</button>
+
+		<table class="list-table scope-col">
+			<col class="col-number" />
+			<col class="col-toggle" />
+			<col class="col-name" />
+			<thead>
+				<tr>
+					<th scope="col" class="col-name" style="width:5%; font-weight: bold">
+						<input type="checkbox">
+					</th>
+					<th scope="col" class="col-number">번호</th>
+					<th scope="col" class="col-toggle">교량 명</th>
+					<th scope="col" class="col-name">준공년도</th>
+					<th scope="col" class="col-name">상태</th>
+					<th scope="col" class="col-name">이동</th>
+					<th scope="col" class="col-name">수정</th>
+					<th scope="col" class="col-name">삭제</th>
+				</tr>
+			</thead>
+			<tbody id="transferDataList">
+			<c:forEach var="bridge" items="${bridgeList}" varStatus="status">
+				<tr>
+					<td class="col-name"><input type="checkbox"></td>
+					<td class="col-number">${status.index+1}</td>
+					<td class="col-toggle">
+						<a href="/bridge/detail-bridge?gid=${bridge.gid}&pageNo=${pagination.pageNo}${pagination.searchParameters}">
+							${bridge.brgNam}
+						</a>
+					</td>
+					<td class="col-name">${bridge.endAmd.substring(0,4)} </td>
+					<td class="col-name">${bridge.grade}</td>
+					<td class="col-name"><button>이동</button></td>
+					<td class="col-name"><button>수정</button></td>
+					<td class="col-name"><button>삭제</button></td>
+				</tr>
+			</c:forEach>
+			</tbody>
+		</table>
+		<%@ include file="/WEB-INF/views/common/pagination.jsp" %>
+	</div>
+	<!-- E: 교량 목록 -->
 </div>
 
 <script type="text/javascript" src="/externlib/jquery-3.3.1/jquery.min.js"></script>

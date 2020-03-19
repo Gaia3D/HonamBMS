@@ -190,41 +190,6 @@ public class BridgeController {
 	}
 
 	/**
-	 * 교량 관리
-	 * @param model
-	 * @return
-	 */
-	@RequestMapping(value = "/input-bridge")
-	public String inputBridge(HttpServletRequest request, Bridge bridge, @RequestParam(defaultValue="1") String pageNo, Model model) {
-		log.info("@@ bridge = {}", bridge);
-		bridge.setListCounter(10l);
-
-		long totalCount = bridgeService.getBridgeTotalCount(bridge);
-		log.info("@@@@ totalCount = {}", totalCount);
-		Pagination pagination = new Pagination(	request.getRequestURI(),
-												getSearchParameters(PageType.LIST, request, bridge),
-												totalCount,
-												Long.valueOf(pageNo).longValue(),
-												bridge.getListCounter());
-
-		bridge.setOffset(pagination.getOffset());
-		bridge.setLimit(pagination.getPageRows());
-
-		List<Bridge> bridgeList = new ArrayList<>();
-		if(totalCount > 0l) {
-			bridgeList = bridgeService.getListBridge(bridge);
-		}
-
-		String cesiumIonToken = propertiesConfig.getCesiumIonToken();
-
-		model.addAttribute("policy", policyService.getPolicy());
-		model.addAttribute("bridgeList", bridgeList);
-		model.addAttribute("cesiumIonToken", cesiumIonToken);
-
-		return "/bridge/input-bridge";
-	}
-
-	/**
 	 * 교량 목록
 	 * @param model
 	 * @return

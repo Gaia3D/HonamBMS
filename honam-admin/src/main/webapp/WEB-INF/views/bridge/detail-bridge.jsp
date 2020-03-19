@@ -130,9 +130,8 @@
 <script type="text/javascript" src="/externlib/moment-2.22.2/moment.min.js"></script>
 <script type="text/javascript" src="/externlib/chartjs/Chart.min.js"></script>
 <script type="text/javascript" src="/externlib/geostats/geostats.js"></script>
-<script type="text/javascript" src="/externlib/jquery-3.4.1/jquery.js"></script>
+<script type="text/javascript" src="/externlib/jquery-3.3.1/jquery.min.js"></script>
 <script type="text/javascript" src="/externlib/jquery-ui-1.12.1/jquery-ui.min.js"></script>
-<script type="text/javascript" src="/externlib/jquery-3.4.1/fixedheadertable.js"></script>
 <script type="text/javascript" src="/externlib/ajax-cross-origin/jquery.ajax-cross-origin.min.js"></script>
 <script type="text/javascript" src="/externlib/cesium/Cesium.js"></script>
 <script type="text/javascript" src="/externlib/cesium-navigation/viewerCesiumNavigationMixin.js"></script>
