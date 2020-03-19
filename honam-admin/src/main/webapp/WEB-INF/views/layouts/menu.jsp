@@ -3,7 +3,7 @@
 <div id="nav">
 	<ul>
 		<!-- <li class="menu" title="메뉴"><span>메뉴</span></li> -->
-		<li id="bridgeMenu" class="bridge" title="교량" onclick="goPage('/bridge/list-bridge');"><span>교량</span></li>
+		<li id="bridgeMenu" class="bridge on" title="교량" onclick="goPage('/bridge/list-bridge');"><span>교량</span></li>
 		<li id="bridgegroupMenu" class="schedule" title="교량그룹" onclick="goPage('/bridge-groups');"><span>교량 그룹</span></li>
 		<li id="bridgeManageMenu" class="bridge" title="교량관리" onclick="goPage('/bridge/manage-bridge');"><span>교량관리</span></li>
 		<li id="configMenu" class="setup" title="환경설정" onclick="goPage('/config/modify-policy');"><span>환경설정</span></li>

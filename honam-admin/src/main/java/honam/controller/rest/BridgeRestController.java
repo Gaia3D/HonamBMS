@@ -84,40 +84,40 @@ public class BridgeRestController {
 		return result;
 	}
 	
-	@GetMapping("/bridges")
-	public Map<String, Object> getListbridge(HttpServletRequest request, Bridge bridge, @RequestParam(defaultValue="1") String pageNo) {
-		log.info("@@ bridge = {}", bridge);
-		Map<String, Object> result = new HashMap<>();
-		String errorCode = null;
-		String message = null;
-		
-		bridge.setListCounter(10l);
-
-		long bridgeTotalCount = bridgeService.getBridgeTotalCount(bridge);
-		Pagination pagination = new Pagination(	request.getRequestURI(), getSearchParameters(PageType.LIST, request, bridge),
-				bridgeTotalCount,
-				Long.valueOf(pageNo).longValue(),
-				bridge.getListCounter());
-		
-		bridge.setOffset(pagination.getOffset());
-		bridge.setLimit(pagination.getPageRows());
-
-		List<Bridge> bridgeList = new ArrayList<>();
-		if(bridgeTotalCount > 0l) {
-			bridgeList = bridgeService.getListBridge(bridge);
-		}
-		int statusCode = HttpStatus.OK.value();	
-			
-		result.put("bridgeList", bridgeList);
-		result.put("bridgeTotalCount", bridgeTotalCount);
-		// image total count
-		result.put("pagination", pagination);
-		
-		result.put("statusCode", statusCode);
-		result.put("errorCode", errorCode);
-		result.put("message", message);
-		return result;
-	}
+//	@GetMapping("/bridges")
+//	public Map<String, Object> getListbridge(HttpServletRequest request, Bridge bridge, @RequestParam(defaultValue="1") String pageNo) {
+//		log.info("@@ bridge = {}", bridge);
+//		Map<String, Object> result = new HashMap<>();
+//		String errorCode = null;
+//		String message = null;
+//		
+//		bridge.setListCounter(10l);
+//
+//		long bridgeTotalCount = bridgeService.getBridgeTotalCount(bridge);
+//		Pagination pagination = new Pagination(	request.getRequestURI(), getSearchParameters(PageType.LIST, request, bridge),
+//				bridgeTotalCount,
+//				Long.valueOf(pageNo).longValue(),
+//				bridge.getListCounter());
+//		
+//		bridge.setOffset(pagination.getOffset());
+//		bridge.setLimit(pagination.getPageRows());
+//
+//		List<Bridge> bridgeList = new ArrayList<>();
+//		if(bridgeTotalCount > 0l) {
+//			bridgeList = bridgeService.getListBridge(bridge);
+//		}
+//		int statusCode = HttpStatus.OK.value();	
+//			
+//		result.put("bridgeList", bridgeList);
+//		result.put("bridgeTotalCount", bridgeTotalCount);
+//		// image total count
+//		result.put("pagination", pagination);
+//		
+//		result.put("statusCode", statusCode);
+//		result.put("errorCode", errorCode);
+//		result.put("message", message);
+//		return result;
+//	}
 	
 	/**
 	 * 교량 조회 by 교량 id
@@ -285,39 +285,39 @@ public class BridgeRestController {
 	 * @param skSgg
 	 * @return
 	 */
-	@GetMapping("/centroids")
-	public Map<String, Object> getCentroid(SkSgg skSgg) {
-		log.info("@@@@ SkSgg = {}", skSgg);
-
-		Map<String, Object> result = new HashMap<>();
-		String errorCode = null;
-		String message = null;
-		
-		// TODO 여기 들어 오지 않음. PathVariable 은 불칠전해서 이렇게 하고 싶음
-		String centerPoint = null;
-		if(skSgg.getLayer_type() == 1) {
-			// 시도
-			SkSdo skSdo = new SkSdo();
-			skSdo.setName(skSgg.getName());
-			skSdo.setBjcd(skSgg.getBjcd());
-			centerPoint = bridgeService.getCentroidSdo(skSdo);
-			log.info("@@@@ sdo center point {}", centerPoint);
-		} else if(skSgg.getLayer_type() == 2) {
-			// 시군구
-			centerPoint = bridgeService.getCentroidSgg(skSgg);
-			log.info("@@@@ sgg center point {}", centerPoint);
-		}
-
-		String[] location = centerPoint.substring(centerPoint.indexOf("(") + 1, centerPoint.indexOf(")")).split(" ");
-		int statusCode = HttpStatus.OK.value();
-
-		result.put("longitude", location[0]);
-		result.put("latitude", location[1]);
-		result.put("statusCode", statusCode);
-		result.put("errorCode", errorCode);
-		result.put("message", message);
-		return result;
-	}
+//	@GetMapping("/centroids")
+//	public Map<String, Object> getCentroid(SkSgg skSgg) {
+//		log.info("@@@@ SkSgg = {}", skSgg);
+//
+//		Map<String, Object> result = new HashMap<>();
+//		String errorCode = null;
+//		String message = null;
+//		
+//		// TODO 여기 들어 오지 않음. PathVariable 은 불칠전해서 이렇게 하고 싶음
+//		String centerPoint = null;
+//		if(skSgg.getLayer_type() == 1) {
+//			// 시도
+//			SkSdo skSdo = new SkSdo();
+//			skSdo.setName(skSgg.getName());
+//			skSdo.setBjcd(skSgg.getBjcd());
+//			centerPoint = bridgeService.getCentroidSdo(skSdo);
+//			log.info("@@@@ sdo center point {}", centerPoint);
+//		} else if(skSgg.getLayer_type() == 2) {
+//			// 시군구
+//			centerPoint = bridgeService.getCentroidSgg(skSgg);
+//			log.info("@@@@ sgg center point {}", centerPoint);
+//		}
+//
+//		String[] location = centerPoint.substring(centerPoint.indexOf("(") + 1, centerPoint.indexOf(")")).split(" ");
+//		int statusCode = HttpStatus.OK.value();
+//
+//		result.put("longitude", location[0]);
+//		result.put("latitude", location[1]);
+//		result.put("statusCode", statusCode);
+//		result.put("errorCode", errorCode);
+//		result.put("message", message);
+//		return result;
+//	}
 
 	/**
 	 * 선택된 교량의 center point를 구함
