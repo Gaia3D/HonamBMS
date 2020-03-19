@@ -13,7 +13,16 @@ import lombok.ToString;
 @Setter
 @ToString
 public class Bridge extends Search {
-
+	
+	/****** 조회용 ********/
+	// 위성영상 결과 존재 유무
+	private Boolean satExists;
+	// 접촉식 센서 존재 유무
+	private Boolean sensorExists;
+	// 3D 모델 존재 유무
+	private Boolean modelExists;
+	// 드론 영상 존재 유무
+	private Boolean droneExists;
 	/****** DB 데이터 화면 표시용 ********/
 	// 고유번호
 	private Integer gid;

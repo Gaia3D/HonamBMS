@@ -69,42 +69,58 @@
 	<select id="getBridgeTotalCount" parameterType="bridge" resultType="long">
 		/* getBridgeTotalCount */
 		SELECT COUNT(DISTINCT A.ogc_fid)
-		FROM bridge A
-		LEFT JOIN sk_sdo B ON A.fac_sido = B.name
-		LEFT JOIN sk_sgg C ON A.fac_sgg = C.name
-		<where>
-			<if test="searchWord != null and searchWord != '' and searchValue != null and searchValue != '' and searchOption == '0'.toString()">
-			A.${searchWord} = #{searchValue}
-			</if>
-			<if test="searchWord != null and searchWord != '' and searchValue != null and searchValue != '' and searchOption == '1'.toString()">
-			AND A.${searchWord} LIKE '%' || #{searchValue} || '%'
-			</if>
-			<if test="sdoCode != null and sdoCode != ''">
-			AND B.bjcd LIKE #{sdoCode} || '%'
-			</if>
-			<if test="sggCode != null and sggCode != ''">
-			AND C.bjcd LIKE '%' || #{sggCode} || '%'
-			</if>
-			<if test="mngOrg != null and mngOrg != ''">
-			AND A.mng_org = #{mngOrg}
-			</if>
-		</where>
+		FROM (
+			SELECT
+				A.ogc_fid,
+				A.fac_sido,
+				A.fac_sgg,
+				A.mng_org,
+				A.brg_nam
+			FROM bridge A
+			LEFT JOIN sk_sdo B ON A.fac_sido = B.name
+			LEFT JOIN sk_sgg C ON A.fac_sgg = C.name
+			<where>
+				<if test="sdoCode != null and sdoCode != ''">
+				AND B.bjcd LIKE #{sdoCode} || '%'
+				</if>
+				<if test="sggCode != null and sggCode != ''">
+				AND C.bjcd LIKE '%' || #{sggCode} || '%'
+				</if>
+				<if test="mngOrg != null and mngOrg != ''">
+				AND A.mng_org = #{mngOrg}
+				</if>
+				<if test="brgNam != null and brgNam != ''">
+				AND A.brg_nam LIKE #{brgNam} || '%'
+				</if>
+				<if test="satExists == true">
+					AND EXISTS (SELECT 1 FROM sat WHERE fac_num = A.fac_num)
+				</if>
+				<if test="sensorExists == true">
+					AND EXISTS (SELECT 1 FROM sensorid WHERE fac_num = A.fac_num)
+				</if>
+				<if test="droneExists == true">
+					AND EXISTS (SELECT 1 FROM bridge_drone_file WHERE ogc_fid = A.ogc_fid)
+				</if>
+				<if test="modelExists == true">
+					AND A.model = 1
+				</if> 
+			</where>
+		) A
 	</select>
 
 	<!-- Bridge(교량) 목록 -->
 	<select id="getListBridge" parameterType="bridge" resultType="bridge">
 		/* getListBridge */
-		SELECT DISTINCT A.ogc_fid as gid, A.brg_nam, A.end_amd, A.grade
+		SELECT 
+			DISTINCT A.ogc_fid as gid, 
+			A.brg_nam, 
+			A.end_amd, 
+			A.grade,
+			A.brg_nam
 		FROM bridge A
 		LEFT JOIN sk_sdo B ON A.fac_sido = B.name
 		LEFT JOIN sk_sgg C ON A.fac_sgg = C.name
 		<where>
-			<if test="searchWord != null and searchWord != '' and searchValue != null and searchValue != '' and searchOption == '0'.toString()">
-			A.${searchWord} = #{searchValue}
-			</if>
-			<if test="searchWord != null and searchWord != '' and searchValue != null and searchValue != '' and searchOption == '1'.toString()">
-			AND A.${searchWord} LIKE '%' || #{searchValue} || '%'
-			</if>
 			<if test="sdoCode != null and sdoCode != ''">
 			AND B.bjcd LIKE #{sdoCode} || '%'
 			</if>
@@ -113,6 +129,21 @@
 			</if>
 			<if test="mngOrg != null and mngOrg != ''">
 			AND A.mng_org = #{mngOrg}
+			</if>
+			<if test="brgNam != null and brgNam != ''">
+			AND A.brg_nam LIKE #{brgNam} || '%'
+			</if>
+			<if test="satExists == true">
+				AND EXISTS (SELECT 1 FROM sat WHERE fac_num = A.fac_num)
+			</if>
+			<if test="sensorExists == true">
+				AND EXISTS (SELECT 1 FROM sensorid WHERE fac_num = A.fac_num)
+			</if>
+			<if test="droneExists == true">
+				AND EXISTS (SELECT 1 FROM bridge_drone_file WHERE ogc_fid = A.ogc_fid)
+			</if>
+			<if test="modelExists == true">
+				AND A.model = 1
 			</if>
 		</where>
 		ORDER BY A.brg_nam

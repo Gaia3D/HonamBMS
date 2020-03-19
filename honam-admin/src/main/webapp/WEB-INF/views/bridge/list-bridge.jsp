@@ -36,13 +36,11 @@
 	
 			<div class="subContents">
 				<!-- S: 교량 검색 입력 폼 -->
-				<form:form id="searchForm" modelAttribute="bridge" method="post" action="/bridge/list-bridge" onsubmit="return false;">
+				<form:form id="searchForm" modelAttribute="bridge" method="get" action="#" onsubmit="return false;">
 					<ul class="projectSearch input-group row">
 						<li class="input-set">
 							<label for="searchWord">교량명</label>
-							<form:input path="searchValue" type="search" size="25" cssClass="m" />
-							<form:hidden path="searchWord" value="brgNam" />
-							<form:hidden path="searchOption" value="1" />
+							<form:input path="brgNam" type="search" size="25" cssClass="m" />
 						</li>
 						<li class="input-set">
 							<label>행정구역</label>
@@ -58,7 +56,7 @@
 							</form:select>
 						</li>
 						<li class="input-set btn">
-							<button type="submit" value="search" class="point" id="search">검색</button>
+							<button type="submit" value="search" class="point" id="search" onClick="getListBridge();">검색</button>
 						</li>
 					</ul>
 				</form:form>
@@ -95,6 +93,7 @@
 <script type="text/javascript" src="/externlib/handlebars-4.1.2/handlebars.js"></script>
 <script type="text/javascript" src="/js/${lang}/handlebarsHelper.js"></script>
 <script type="text/javascript" src="/js/${lang}/common.js"></script>
+<script type="text/javascript" src="/js/${lang}/message.js"></script>
 <script type="text/javascript" src="/js/Honam-bms.js"></script>
 <script type="text/javascript" src="/js/NumberFormatter.js"></script>
 <script type="text/javascript" src="/js/MouseControll.js"></script>
@@ -132,7 +131,10 @@
 	});
    	
 	$("#sdoCode").on("change", function() {
-		getListSgg($("#sdoCode").val());		
+		var sdoCode = $("#sdoCode").val();
+		if(sdoCode) {
+			getListSgg(sdoCode);		
+		}
 	});
 	
 	// 시도 목록
@@ -276,10 +278,17 @@
 	// 교량 목록 로드
 	function getListBridge(number) {
 		var pageNo = (number === undefined) ? 1 : number;
+		var parms = {
+				pageNo : pageNo,
+				brgNam : $("#brgNam").val(),
+				sdoCode : $("#sdoCode").val(),
+				sggCode : $("#sggCode").val(),
+				mngOrg : $("#mngOrg").val()
+		}
 		$.ajax({
 			url: '/bridges',
 			type: 'GET',
-			data: {pageNo : pageNo},
+			data: parms,
 			headers: {'X-Requested-With': 'XMLHttpRequest'},
 			dataType: 'json',
 			success: function(res){
