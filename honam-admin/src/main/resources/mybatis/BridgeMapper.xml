@@ -7,29 +7,29 @@
 	<select id="getListSdoExceptGeom" resultType="skSdo">
 		/* getListSdoExceptGeom */
 		SELECT A.bjcd, SUBSTR(A.bjcd, 1, 2) AS sdo_code, A.name
-		FROM sk_sdo A, ( 
-			SELECT MIN(ogc_fid) AS gid, name 
+		FROM sk_sdo A, (
+			SELECT MIN(ogc_fid) AS gid, name
 			FROM sk_sdo GROUP BY name
 		) B
 		WHERE A.ogc_fid = B.ogc_fid
 		ORDER BY A.name
 	</select>
-		
+
 	<!-- Sgg 목록(geom 은 제외) -->
 	<select id="getListSggBySdoExceptGeom" parameterType="string" resultType="skSgg">
 		/* getListSggBySdoExceptGeom */
-		SELECT B.bjcd, SUBSTR(B.bjcd, 1, 2) AS sdo_code, SUBSTR(B.bjcd, 3, 3) AS sgg_code, B.name	
+		SELECT B.bjcd, SUBSTR(B.bjcd, 1, 2) AS sdo_code, SUBSTR(B.bjcd, 3, 3) AS sgg_code, B.name
 		FROM sk_sgg B, (
-			SELECT MIN(A.gid) AS gid, A.code AS bjcd, A.name 
+			SELECT MIN(A.gid) AS gid, A.code AS bjcd, A.name
 			FROM (
-				SELECT ogc_fid as gid, SUBSTR(bjcd, 1, 5) as code, name 
-				FROM sk_sgg 
-				WHERE bjcd LIKE #{sdo_code} || '%'
+				SELECT ogc_fid as gid, SUBSTR(bjcd, 1, 5) as code, name
+				FROM sk_sgg
+				WHERE bjcd LIKE #{sdoCode} || '%'
 			) A
 			GROUP BY A.code, A.name
 		) C
 		WHERE B.ogc_fid = C.ogc_fid
-		ORDER BY C.name	
+		ORDER BY C.name
 	</select>
 
 	<!-- 선택한 시도의 center point를 구함 -->
@@ -37,25 +37,25 @@
 		/* getCentroidSdo */
 		SELECT ST_AsText(ST_Centroid(A.geom))
 		FROM (
-			SELECT wkb_geometry as geom 
-			FROM sk_sdo 
+			SELECT wkb_geometry as geom
+			FROM sk_sdo
 			WHERE bjcd = #{bjcd}
 			ORDER BY bjcd LIMIT 1
 		) A
 	</select>
-	
+
 	<!-- 선택한 시군구의 center point를 구함 -->
 	<select id="getCentroidSgg" parameterType="skSgg" resultType="string">
 		/* getCentroidSgg */
 		SELECT ST_AsText(ST_Centroid(A.geom))
 		FROM (
-			SELECT wkb_geometry as geom 
-			FROM sk_sgg 
+			SELECT wkb_geometry as geom
+			FROM sk_sgg
 			WHERE bjcd = #{bjcd}
 			ORDER BY bjcd LIMIT 1
 		) A
 	</select>
-	
+
 	<!-- 선택한 교량의 center point를 구함 -->
 	<select id="getCentroidBridge" parameterType="bridge" resultType="string">
 		/* getCentroidBridge */
@@ -64,21 +64,21 @@
 		WHERE ogc_fid = #{gid}
 		ORDER BY ogc_fid LIMIT 1
 	</select>
-	
+
 	<!-- 관리주체 목록 -->
 	<select id="getListMngOrg" resultType="bridge">
 		/* getListMngOrg */
-		SELECT DISTINCT  mng_org 
- 		FROM bridge 
- 		WHERE NOT mng_org is NULL 
-		ORDER BY mng_org 
+		SELECT DISTINCT  mng_org
+ 		FROM bridge
+ 		WHERE NOT mng_org is NULL
+		ORDER BY mng_org
 	</select>
 
     <!-- Bridge(교량) 총 건수 -->
 	<select id="getBridgeTotalCount" parameterType="bridge" resultType="long">
 		/* getBridgeTotalCount */
 		SELECT COUNT(DISTINCT A.ogc_fid)
-		FROM bridge A 
+		FROM bridge A
 		LEFT JOIN sk_sdo B ON A.fac_sido = B.name
 		LEFT JOIN sk_sgg C ON A.fac_sgg = C.name
 		<where>
@@ -94,12 +94,12 @@
 			<if test="sggCode != null and sggCode != ''">
 			AND C.bjcd LIKE '%' || #{sggCode} || '%'
 			</if>
-			<if test="mng_org != null and mng_org != ''">
-			AND A.mng_org = #{mng_org}
-			</if>		
-		</where>					
+			<if test="mngOrg != null and mngOrg != ''">
+			AND A.mng_org = #{mngOrg}
+			</if>
+		</where>
 	</select>
-	
+
 	<!-- Bridge(교량) 목록 -->
 	<select id="getListBridge" parameterType="bridge" resultType="bridge">
 		/* getListBridge */
@@ -120,33 +120,33 @@
 			<if test="sggCode != null and sggCode != ''">
 			AND C.bjcd LIKE '%' || #{sggCode} || '%'
 			</if>
-			<if test="mng_org != null and mng_org != ''">
-			AND A.mng_org = #{mng_org}
-			</if>		
+			<if test="mngOrg != null and mngOrg != ''">
+			AND A.mng_org = #{mngOrg}
+			</if>
 		</where>
 		ORDER BY A.brg_nam
 	</select>
-	
+
 	<!-- Bridge(교량) 정보 조회 -->
 	<select id="getBridge" parameterType="bridge" resultType="bridge">
 		/* getBridge */
-		SELECT DISTINCT ogc_fid as gid, ufid, fac_num, brg_nam, mng_org, fac_sido, fac_sgg, fac_emd, fac_ri, fac_gra, end_amd, dsn_wet, 
-			brg_len, brg_hit, eff_wid, tot_wid, spa_cnt, max_len, tra_cnt, usp_rep, dpi_rep, wkb_geometry as geom, 
+		SELECT DISTINCT ogc_fid as gid, ufid, fac_num, brg_nam, mng_org, fac_sido, fac_sgg, fac_emd, fac_ri, fac_gra, end_amd, dsn_wet,
+			brg_len, brg_hit, eff_wid, tot_wid, spa_cnt, max_len, tra_cnt, usp_rep, dpi_rep, wkb_geometry as geom,
 			gru_num, bridge_cm, bridge_lcc, bridge_grade, bridge_model
 		FROM bridge
-		WHERE ogc_fid = #{gid}	
+		WHERE ogc_fid = #{gid}
 	</select>
 
-	
+
 	<!-- Bridge(교량) 정보 등록 -->
 	<insert id="insertBridge" parameterType="bridge">
 		/* insetBridge */
-		
+
 	</insert>
 	<!-- Bridge(교량) 정보 수정 -->
 	<update id="updateBridge" parameterType="bridge">
 		/* updateBridge */
-		
+
 	</update>
 
 </mapper>

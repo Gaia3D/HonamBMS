@@ -20,7 +20,7 @@
 
 <div id="wrap" style="height:94.7%; width: 100%;">
 	<%@ include file="/WEB-INF/views/layouts/menu.jsp" %>
-	
+
 	<!-- S: 1depth / 프로젝트 목록 -->
 	<div id= "leftMenuArea" class="subWrap">
 		<!-- S: 프로젝트 제목, 목록가기, 닫기 -->
@@ -31,15 +31,15 @@
 			</div>
 		</div>
 		<!-- E: 프로젝트 제목, 목록가기, 닫기 -->
-		
+
 		<div class="subContents">
-			<!-- S: 교량 검색 입력 폼 -->		
+			<!-- S: 교량 검색 입력 폼 -->
 			<form:form id="searchForm" modelAttribute="bridge" method="post" action="/bridge/list-bridge" onsubmit="return searchCheck();">
 				<ul class="projectSearch input-group row">
 					<li class="input-set">
 						<label for="searchWord">교량명</label>
 						<form:input path="searchValue" type="search" size="25" cssClass="m" />
-						<form:hidden path="searchWord" value="brg_nam" />
+						<form:hidden path="searchWord" value="brgNam" />
 						<form:hidden path="searchOption" value="1" />
 					</li>
 					<li class="input-set">
@@ -49,20 +49,20 @@
 						</form:select>
 						<form:select path="sggCode" name="sggCode" class="select" style="width: 85px;">
 							<option value> 시군구 </option>
-						</form:select>					
+						</form:select>
 					</li>
 					<li class="input-set">
 						<label>관리주체</label>
-						<form:select path="mng_org" name="mng_org" class="select" style="width: 187px;">
-						</form:select>				
+						<form:select path="mngOrg" name="mngOrg" class="select" style="width: 187px;">
+						</form:select>
 					</li>
 					<li class="input-set btn">
 						<button type="submit" value="search" class="point" id="search">검색</button>
 					</li>
 				</ul>
 			</form:form>
-			<!-- E: 교량 검색 입력 폼 -->				
-			<!-- S: 교량 목록 -->	
+			<!-- E: 교량 검색 입력 폼 -->
+			<!-- S: 교량 목록 -->
 			<div id="projectListHeader" class="count" style="margin-top: 20px; margin-bottom: 5px;">
 				전체 <em><fmt:formatNumber value="${pagination.totalCount}" type="number"/></em> 건
 				<fmt:formatNumber value="${pagination.pageNo}" type="number"/> / <fmt:formatNumber value="${pagination.lastPage }" type="number"/> 페이지
@@ -81,23 +81,23 @@
 						</tr>
 					</thead>
 					<tbody id="transferDataList">
-<c:forEach var="bridge" items="${bridgeList}" varStatus="status">
+					<c:forEach var="bridge" items="${bridgeList}" varStatus="status">
 						<tr>
 							<td class="col-number">${status.index+1}</td>
 							<td class="col-toggle">
 								<a href="/bridge/detail-bridge?gid=${bridge.gid}&pageNo=${pagination.pageNo}${pagination.searchParameters}">
-									${bridge.brg_nam} 
-								</a>	
+									${bridge.brgNam}
+								</a>
 							</td>
-							<td class="col-name">${bridge.end_amd.substring(0,4)} </td>
-							<td class="col-name">${bridge.bridge_grade}</td>
+							<td class="col-name">${bridge.endAmd.substring(0,4)} </td>
+							<td class="col-name">${bridge.bridgeGrade}</td>
 						</tr>
-</c:forEach> 
+					</c:forEach>
 					</tbody>
 				</table>
-				<%@ include file="/WEB-INF/views/common/pagination.jsp" %>		
+				<%@ include file="/WEB-INF/views/common/pagination.jsp" %>
 			</div>
-			<!-- E: 교량 목록 -->		
+			<!-- E: 교량 목록 -->
 		</div>
 	</div>
 	<!-- E: 1depth / 프로젝트 목록 -->
@@ -107,7 +107,7 @@
 			<button type="button" class="divide" title="화면분할">화면분할</button>
 			<button type="button" class="fullscreen" title="전체화면">전체화면</button>
 		</div>
-			
+
 		<div class="mapInfo">
 			<span id="positionDD">127.156797°, 38.012334°</span>
 			<span><label>고도: </label><span id="positionAlt"><!--10m--></span></span>
@@ -116,7 +116,7 @@
 	<!-- E: MAPWRAP -->
 </div>
 <!-- E: wrap -->
-	
+
 <script type="text/javascript" src="/externlib/jquery-3.4.1/jquery.js"></script>
 <script type="text/javascript" src="/externlib/jquery-ui-1.12.1/jquery-ui.min.js"></script>
 <script type="text/javascript" src="/externlib/cesium/Cesium.js"></script>
@@ -129,7 +129,7 @@
 <script type="text/javascript" src="/js/MapControll.js"></script>
 <script type="text/javascript" src="/js/MouseControll.js"></script>
 <script type="text/javascript" src="/js/BridgeAttribute.js"></script>
-<script type="text/javascript">	
+<script type="text/javascript">
 	// 초기 위치 설정
 	var INIT_WEST = 124.67;
 	var INIT_SOUTH = 35.72;
@@ -138,13 +138,13 @@
 	var rectangle = Cesium.Rectangle.fromDegrees(INIT_WEST, INIT_SOUTH, INIT_EAST, INIT_NORTH);
 	Cesium.Camera.DEFAULT_VIEW_FACTOR = 0;
 	Cesium.Camera.DEFAULT_VIEW_RECTANGLE = rectangle;
-	
+
    	var viewer = new Cesium.Viewer('MapContainer', {imageryProvider : imageryProvider, baseLayerPicker : false,
    		animation:false, timeline:false, geocoder:false, navigationHelpButton: false, fullscreenButton:false, homeButton: false, sceneModePicker: false });
    	viewer.extend(Cesium.viewerCesiumNavigationMixin, {});
    	var satValueCount = null;
 
-   	
+
    	// 초기 로딩 설정
 	$(document).ready(function() {
 		$("#bridgeMenu").addClass("on");
@@ -154,18 +154,18 @@
 		loadManageOrg();
 		drawBridge();
 	});
-   	
-   	// function 	
+
+   	// function
 	function drawBridge() {
 		  <c:if test="${!empty bridgeList }">
 		  	<c:forEach var="bridge" items="${bridgeList}" varStatus="status">
-				getCentroidBridge("${bridge.gid}","${bridge.brg_nam}","${bridge.bridge_grade}")
+				getCentroidBridge("${bridge.gid}","${bridge.brgNam}","${bridge.bridgeGrade}")
 		  	</c:forEach>
 		  </c:if>
 	}
 
 	function getCentroidBridge(gid, name, grade) {
-		var url = "./" + gid + "/centroid"; 
+		var url = "./" + gid + "/centroid";
 		var cnt = null;
 
 		$.ajax({
@@ -182,11 +182,11 @@
 		        //alert(JS_MESSAGE["ajax.error.message"]);
 		        console.log("code : " + request.status + "\n message : " + request.responseText + "\n error : " + error);
 		    }
-		});		
+		});
 	}
-	
+
 	function addMarkerBillboards(bridgeName, longitude, latitude, bridgeGrade, cnt) {
-		var markerImage = null; 
+		var markerImage = null;
 		if(bridgeGrade == 'A'){
 			markerImage = '/images/${lang}/A.png';
 		} else if(bridgeGrade == 'B') {
@@ -200,11 +200,11 @@
 		} else {
 			markerImage = '/images/${lang}/X.png';
 		}
-		
+
 //		if(cnt == 1) {
 //			cameraFlyTo(longitude, latitude, 200000, 3);
 //		}
-		
+
 		viewer.entities.add({
 			name : bridgeName,
 	        position : Cesium.Cartesian3.fromDegrees(parseFloat(longitude), parseFloat(latitude), 0),
@@ -228,7 +228,7 @@
 	        }
 	    });
 	}
-		
+
 </script>
 </body>
 </html>

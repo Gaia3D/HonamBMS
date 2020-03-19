@@ -35,7 +35,7 @@ import lombok.extern.slf4j.Slf4j;
 @RequestMapping("/bridge")
 @Controller
 public class BridgeController {
-	
+
 	@Autowired
 	private BridgeService bridgeService;
 	@Autowired
@@ -46,7 +46,7 @@ public class BridgeController {
 	private SatService satService;
 	@Autowired
 	private SensorService sensorService;
-	
+
 	/**
 	 * 시도 목록
 	 * @return
@@ -63,7 +63,7 @@ public class BridgeController {
 			e.printStackTrace();
 			result = "db.exception";
 		}
-		
+
 		map.put("result", result);
 		log.info("@@@@ sdoList = {}", map.toString());
 		return map;
@@ -71,34 +71,34 @@ public class BridgeController {
 
 	/**
 	 * 시군구 목록
-	 * @param sdo_code
+	 * @param sdoCode
 	 * @return
 	 */
-	@GetMapping("/sdos/{sdo_code:[0-9]+}/sggs")
+	@GetMapping("/sdos/{sdoCode:[0-9]+}/sggs")
 	@ResponseBody
-	public Map<String, Object> getListSggBySdo(@PathVariable String sdo_code) {
+	public Map<String, Object> getListSggBySdo(@PathVariable String sdoCode) {
 		Map<String, Object> map = new HashMap<>();
 		String result = "success";
 		try {
 			// TODO 여기 들어 오지 않음. PathVariable 은 불칠전해서 이렇게 하고 싶음
-			if(sdo_code == null || "".equals(sdo_code)) {
+			if(sdoCode == null || "".equals(sdoCode)) {
 				map.put("result", "sdo.code.invalid");
 				log.info("validate error 발생: {} ", map.toString());
 				return map;
 			}
-			
-			List<SkSgg> sggList = bridgeService.getListSggBySdoExceptGeom(sdo_code);
+
+			List<SkSgg> sggList = bridgeService.getListSggBySdoExceptGeom(sdoCode);
 			map.put("sggList", sggList);
 		} catch (Exception e) {
 			e.printStackTrace();
 			result = "db.exception";
 		}
-		
+
 		map.put("result", result);
 		log.info("@@@@ sggList = {}", map.toString());
 		return map;
 	}
-	
+
 	/**
 	 * 선택 한 주소별(시도, 시군구)의 center point를 구함
 	 * @param skSgg
@@ -108,11 +108,11 @@ public class BridgeController {
 	@ResponseBody
 	public Map<String, Object> getCentroid(SkSgg skSgg) {
 		log.info("@@@@ SkSgg = {}", skSgg);
-		
+
 		Map<String, Object> map = new HashMap<>();
 		String result = "success";
 		try {
-			// TODO 여기 들어 오지 않음. PathVariable 은 불칠전해서 이렇게 하고 싶음	
+			// TODO 여기 들어 오지 않음. PathVariable 은 불칠전해서 이렇게 하고 싶음
 			String centerPoint = null;
 			if(skSgg.getLayer_type() == 1) {
 				// 시도
@@ -126,46 +126,46 @@ public class BridgeController {
 				centerPoint = bridgeService.getCentroidSgg(skSgg);
 				log.info("@@@@ sgg center point {}", centerPoint);
 			}
-			
-			String[] location = centerPoint.substring(centerPoint.indexOf("(") + 1, centerPoint.indexOf(")")).split(" "); 
+
+			String[] location = centerPoint.substring(centerPoint.indexOf("(") + 1, centerPoint.indexOf(")")).split(" ");
 			map.put("longitude", location[0]);
 			map.put("latitude", location[1]);
 		} catch (Exception e) {
 			e.printStackTrace();
 			result = "db.exception";
 		}
-		
+
 		map.put("result", result);
 		return map;
 	}
-	
+
 	/**
 	 * 선택된 교량의 center point를 구함
 	 * @param gid
 	 * @return
 	 */
 	@GetMapping("/{gid:[0-9]+}/centroid")
-	@ResponseBody 
+	@ResponseBody
 	public Map<String, Object> getCentroidBridge(@PathVariable Integer gid) {
 		log.info("@@@@ gid = {}", gid);
-		
+
 		Map<String, Object> map = new HashMap<>();
 		String result = "success";
 		try {
 			String centerPoint =  bridgeService.getCentroidBridge(gid);
-			
-			String[] location = centerPoint.substring(centerPoint.indexOf("(") + 1, centerPoint.indexOf(")")).split(" "); 
+
+			String[] location = centerPoint.substring(centerPoint.indexOf("(") + 1, centerPoint.indexOf(")")).split(" ");
 			map.put("longitude", location[0]);
 			map.put("latitude", location[1]);
 		} catch (Exception e) {
 			e.printStackTrace();
 			result = "db.exception";
 		}
-		
+
 		map.put("result", result);
 		return map;
 	}
-	
+
 	/**
 	 * 관리 주체 목록
 	 * @return
@@ -183,12 +183,47 @@ public class BridgeController {
 			e.printStackTrace();
 			result = "db.exception";
 		}
-		
+
 		map.put("result", result);
 		log.info("@@@@ bridgeList = {}", map.toString());
 		return map;
 	}
-	
+
+	/**
+	 * 교량 관리
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value = "/input-bridge")
+	public String inputBridge(HttpServletRequest request, Bridge bridge, @RequestParam(defaultValue="1") String pageNo, Model model) {
+		log.info("@@ bridge = {}", bridge);
+		bridge.setListCounter(10l);
+
+		long totalCount = bridgeService.getBridgeTotalCount(bridge);
+		log.info("@@@@ totalCount = {}", totalCount);
+		Pagination pagination = new Pagination(	request.getRequestURI(),
+												getSearchParameters(PageType.LIST, request, bridge),
+												totalCount,
+												Long.valueOf(pageNo).longValue(),
+												bridge.getListCounter());
+
+		bridge.setOffset(pagination.getOffset());
+		bridge.setLimit(pagination.getPageRows());
+
+		List<Bridge> bridgeList = new ArrayList<>();
+		if(totalCount > 0l) {
+			bridgeList = bridgeService.getListBridge(bridge);
+		}
+
+		String cesiumIonToken = propertiesConfig.getCesiumIonToken();
+
+		model.addAttribute("policy", policyService.getPolicy());
+		model.addAttribute("bridgeList", bridgeList);
+		model.addAttribute("cesiumIonToken", cesiumIonToken);
+
+		return "/bridge/input-bridge";
+	}
+
 	/**
 	 * 교량 목록
 	 * @param model
@@ -198,86 +233,86 @@ public class BridgeController {
 	public String listBridge(HttpServletRequest request, Bridge bridge, @RequestParam(defaultValue="1") String pageNo, Model model) {
 		log.info("@@ bridge = {}", bridge);
 		bridge.setListCounter(10l);
-		
+
 		long totalCount = bridgeService.getBridgeTotalCount(bridge);
 		log.info("@@@@ totalCount = {}", totalCount);
-		Pagination pagination = new Pagination(	request.getRequestURI(), 
-												getSearchParameters(PageType.LIST, request, bridge), 
-												totalCount, 
-												Long.valueOf(pageNo).longValue(), 
+		Pagination pagination = new Pagination(	request.getRequestURI(),
+												getSearchParameters(PageType.LIST, request, bridge),
+												totalCount,
+												Long.valueOf(pageNo).longValue(),
 												bridge.getListCounter());
-		
+
 		bridge.setOffset(pagination.getOffset());
 		bridge.setLimit(pagination.getPageRows());
-		
+
 		List<Bridge> bridgeList = new ArrayList<>();
 		if(totalCount > 0l) {
 			bridgeList = bridgeService.getListBridge(bridge);
-		}	
-		
+		}
+
 		String cesiumIonToken = propertiesConfig.getCesiumIonToken();
-		
+
 		model.addAttribute("policy", policyService.getPolicy());
 		model.addAttribute(pagination);
 		model.addAttribute("bridge", bridge);
 		model.addAttribute("bridgeList", bridgeList);
 		model.addAttribute("cesiumIonToken", cesiumIonToken);
-		
+
 		return "/bridge/list-bridge";
 	}
-	
+
 	@GetMapping("/bridges")
 	@ResponseBody
 	public Map<String, Object> getListbridge(HttpServletRequest request, Bridge bridge, @RequestParam(defaultValue="1") String pageNo) {
 		Map<String, Object> map = new HashMap<>();
 		String result = "success";
-		
+
 		log.info("@@ bridge = {}", bridge);
 		bridge.setListCounter(10l);
-		
+
 		long bridgeTotalCount = bridgeService.getBridgeTotalCount(bridge);
-		Pagination pagination = new Pagination(	request.getRequestURI(), getSearchParameters(PageType.LIST, request, bridge), 
-				bridgeTotalCount, 
-				Long.valueOf(pageNo).longValue(), 
+		Pagination pagination = new Pagination(	request.getRequestURI(), getSearchParameters(PageType.LIST, request, bridge),
+				bridgeTotalCount,
+				Long.valueOf(pageNo).longValue(),
 				bridge.getListCounter());
 		map.put("pagination", pagination);
-		
+
 		bridge.setOffset(pagination.getOffset());
 		bridge.setLimit(pagination.getPageRows());
-		
+
 		try {
 			List<Bridge> bridgeList = new ArrayList<>();
 			if(bridgeTotalCount > 0l) {
-				bridgeList = bridgeService.getListBridge(bridge); 
+				bridgeList = bridgeService.getListBridge(bridge);
 			}
 			map.put("bridgeList", bridgeList);
 			map.put("bridgeTotalCount", bridgeTotalCount);
-			// image total count 
+			// image total count
 		} catch(Exception e) {
 			e.printStackTrace();
 			result = "db.exception";
 		}
-		
+
 		map.put("result", result);
 		return map;
 	}
-	
+
 	@RequestMapping(value = "/detail-bridge")
 	public String detailBridge(HttpServletRequest request, @RequestParam(value="gid", required = true) Integer gid, Model model) {
 		log.info("@@ bridge_id = {}", gid);
-		
+
 		Bridge bridge = bridgeService.getBridge(gid);
 		log.info("############### Bridge = {}", bridge);
-		
+
 		String cesiumIonToken = propertiesConfig.getCesiumIonToken();
-	
+
 		model.addAttribute("policy", policyService.getPolicy());
 		model.addAttribute("bridge", bridge);
-		model.addAttribute("searchParameters", getSearchParameters(PageType.DETAIL, request, null));
+		model.addAttribute("searchParameters", getSearchParameters(PageType.DETAIL, request, bridge));
 		model.addAttribute("cesiumIonToken", cesiumIonToken);
 		return "/bridge/detail-bridge";
 	}
-	
+
 	/**
 	 * 교량 조회 by 교량 id
 	 * @param request
@@ -286,9 +321,9 @@ public class BridgeController {
 	 */
 	@GetMapping("/{gid}")
 	@ResponseBody
-	public Map<String, Object> getBridge(HttpServletRequest request, @PathVariable Integer gid) { 
+	public Map<String, Object> getBridge(HttpServletRequest request, @PathVariable Integer gid) {
 		log.info("@@@@@@@@@@ bridge id = {}", gid);
-		
+
 		Map<String, Object> map = new HashMap<>();
 		String result = "success";
 		try {
@@ -297,45 +332,45 @@ public class BridgeController {
 				map.put("result", result);
 				return map;
 			}
-			
+
 			Bridge bridge = bridgeService.getBridge(gid);
 			map.put("bridge", bridge);
-			
+
 		} catch(Exception e) {
 			e.printStackTrace();
 			result = "db.exception";
 		}
-		
-		map.put("result", result);		
+
+		map.put("result", result);
 		return map;
 	}
-	
+
 	@GetMapping("/{gid:[0-9]+}/sat/avg")
-	@ResponseBody 
+	@ResponseBody
 	public Map<String, Object> getListSatAvg(Bridge bridge, @PathVariable Integer gid) {
 		log.info("@@@@ gid = {}", gid);
-		
+
 		Map<String, Object> map = new HashMap<>();
 		String result = "success";
 		try {
-			long satAvgCount = satService.getSatAvgTotalCount(bridge.getFac_num());
-			List<Sat> satAvgList = satService.getListSatAvg(bridge.getFac_num());
+			long satAvgCount = satService.getSatAvgTotalCount(bridge.getFacNum());
+			List<Sat> satAvgList = satService.getListSatAvg(bridge.getFacNum());
 			map.put("satAvgList", satAvgList);
 			map.put("satAvgCount", satAvgCount);
 		} catch (Exception e) {
 			e.printStackTrace();
 			result = "db.exception";
 		}
-		
+
 		map.put("result", result);
 		return map;
 	}
-	
+
 	@GetMapping("/{gid:[0-9]+}/sat/value")
 	@ResponseBody
 	public Map<String, Object> getListSatValue(Sat sat, @PathVariable Integer gid) {
 		log.info("@@@@ gid = {}", gid);
-		
+
 		Map<String, Object> map = new HashMap<>();
 		String result = "success";
 		try {
@@ -344,41 +379,41 @@ public class BridgeController {
 		} catch (Exception e) {
 			e.printStackTrace();
 			result = "db.exception";
-		}	
-	
+		}
+
 		map.put("result", result);
 		return map;
 	}
-	
+
 	@GetMapping("/{gid:[0-9]+}/sensor")
 	@ResponseBody
 	public Map<String, Object> getListSensorId(Bridge bridge, @PathVariable Integer gid) {
 		log.info("@@@@ gid = {}", gid);
-		
+
 		Map<String, Object> map = new HashMap<>();
 		String result = "success";
 		try {
-			long sensorIDCount = sensorService.getSensorIDTotalCount(bridge.getFac_num());
-			List<Sensor> sensorIDList = sensorService.getListSensorID(bridge.getFac_num());
+			long sensorIDCount = sensorService.getSensorIDTotalCount(bridge.getFacNum());
+			List<Sensor> sensorIDList = sensorService.getListSensorID(bridge.getFacNum());
 			map.put("sensorIDList", sensorIDList);
 			map.put("sensorIDCount", sensorIDCount);
 		} catch (Exception e) {
 			e.printStackTrace();
-			result = "db.exception";			
+			result = "db.exception";
 		}
-		
+
 		map.put("result", result);
 		return map;
 	}
-	
+
 	@GetMapping("/{gid:[0-9]+}/sensor/{sensorType}")
 	@ResponseBody
 	public Map<String, Object> getListSensorIdBysensorType(HttpServletRequest request, Sensor sensor, @PathVariable Integer gid, @PathVariable String sensorType) {
 		log.info("@@@@ gid = {}", gid);
-				
+
 		sensor.setSensorType(sensorType);
 		log.info("@@@@ Sensor = {}", sensor);
-		
+
 		Map<String, Object> map = new HashMap<>();
 		String result = "success";
 		try {
@@ -388,11 +423,11 @@ public class BridgeController {
 			e.printStackTrace();
 			result = "db.excepiton";
 		}
-		
+
 		map.put("result", result);
 		return map;
 	}
-	
+
 	/**
 	 * 검색 조건
 	 * @param bridge
@@ -404,13 +439,13 @@ public class BridgeController {
 		if(pageType.equals(PageType.MODIFY) || pageType.equals(PageType.DETAIL)) {
 			isListPage = false;
 		}
-		
+
 		buffer.append("&");
 		buffer.append("sdoCode=" + StringUtil.getDefaultValue(isListPage ? bridge.getSdoCode() : request.getParameter("sdoCode")));
 		buffer.append("&");
 		buffer.append("sggCode=" + StringUtil.getDefaultValue(isListPage ? bridge.getSggCode() : request.getParameter("sggCode")));
 		buffer.append("&");
-		buffer.append("mng_org=" + StringUtil.getDefaultValue(isListPage ? bridge.getMng_org() : request.getParameter("mng_org")));
+		buffer.append("mngOrg=" + StringUtil.getDefaultValue(isListPage ? bridge.getMngOrg() : request.getParameter("mngOrg")));
 		return buffer.toString();
 	}
 
