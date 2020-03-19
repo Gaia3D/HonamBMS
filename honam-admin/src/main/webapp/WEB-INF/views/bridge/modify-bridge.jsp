@@ -6,7 +6,7 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width">
-	<title>교량 등록 | Honam-BMS</title>
+	<title>교량 수정 | Honam-BMS</title>
 	<link rel="shortcut icon" href="/images/favicon.ico" type="image/x-icon" />
 	<link rel="stylesheet" href="/css/${lang}/style.css">
 	<link rel="stylesheet" href="/css/${lang}/honam-bms.css">
@@ -27,14 +27,14 @@
 			</ul>
 		</nav>
 		<div class="list-wrapper">
-			<button>지도에 교량 그리기</button>
+			<button>지도에 교량 다시 그리기</button>
 			<form action="">
 				<label for="brgNam">교량명</label>
-				<input type="text" id="brgNam" name="brgNam">
+				<input type="text" id="brgNam" name="brgNam" value="${bridge.brgNam}">
 				<label for="facNum">시설물번호</label>
-				<input type="text" id="facNum" name="facNum">
+				<input type="text" id="facNum" name="facNum" value="${bridge.facNum}">
 				<label for="mngOrg">관리주체</label>
-				<input type="text" id="mngOrg" name="mngOrg">
+				<input type="text" id="mngOrg" name="mngOrg" value="${bridge.mngOrg}">
 				<label>주소</label>
 				<label for="facSido">시도</label>
 				<select id="facSido" name="facSido">
@@ -45,49 +45,52 @@
 					<option>시군구</option>
 				</select>
 				<label for="facSido">읍면동</label>
-				<input type="text" id="facEmd" name="facEmd">
+				<input type="text" id="facEmd" name="facEmd" value="${bridge.facEmd}">
 				<label for="facSido">리</label>
-				<input type="text" id="facRi" name="facRi">
+				<input type="text" id="facRi" name="facRi" value="${bridge.facRi}">
 				<label for="facGra">종별</label>
-				<input type="radio" name="facGra" value="1종">1종
-				<input type="radio" name="facGra" value="2종">2종
+				<input type="radio" name="facGra" value="1종" ${bridge.facGra eq '1종' ? 'checked' : ''}>1종
+				<input type="radio" name="facGra" value="2종" ${bridge.facGra eq '2종' ? 'checked' : ''}>2종
 				<label for="endAmd">준공년도</label>
-				<input type="text" id="endAmd" name="endAmd">
+				<input type="text" id="endAmd" name="endAmd" value="${bridge.endAmd}">
 				<label for="dsnWet">설계하중</label>
-				<input type="text" id="dsnWet" name="dsnWet">
+				<input type="text" id="dsnWet" name="dsnWet" value="${bridge.dsnWet}">
 				<label for="brgLen">연장 (m)</label>
-				<input type="text" id="brgLen" name="brgLen">
+				<input type="text" id="brgLen" name="brgLen" value="${bridge.brgLen}">
 				<label for="brgHit">교고 (m)</label>
-				<input type="text" id="brgHit" name="brgHit">
+				<input type="text" id="brgHit" name="brgHit" value="${bridge.brgHit}">
 				<label for="effWid">유효폭 (m)</label>
-				<input type="text" id="effWid" name="effWid">
+				<input type="text" id="effWid" name="effWid" value="${bridge.effWid}">
 				<label for="totWid">총폭 (m)</label>
-				<input type="text" id="totWid" name="totWid">
+				<input type="text" id="totWid" name="totWid" value="${bridge.totWid}">
 				<label for="spaCnt">경간수</label>
-				<input type="text" id="spaCnt" name="spaCnt">
+				<input type="text" id="spaCnt" name="spaCnt" value="${bridge.spaCnt}">
 				<label for="maxLen">최대경간장 (m)</label>
-				<input type="text" id="maxLen" name="maxLen">
+				<input type="text" id="maxLen" name="maxLen" value="${bridge.maxLen}">
 				<label for="traCnt">교통량</label>
-				<input type="text" id="traCnt" name="traCnt">
+				<input type="text" id="traCnt" name="traCnt" value="${bridge.traCnt}">
 				<label for="uspRep">상부 형식</label>
-				<input type="text" id="uspRep" name="uspRep">
+				<input type="text" id="uspRep" name="uspRep" value="${bridge.uspRep}">
 				<label for="dpiRep">하부 형식</label>
-				<input type="text" id="dpiRep" name="dpiRep">
+				<input type="text" id="dpiRep" name="dpiRep" value="${bridge.dpiRep}">
 				<label for="bridgeLcc">내하성능</label>
-				<input type="text" id="bridgeLcc" name="bridgeLcc">
+				<input type="text" id="bridgeLcc" name="bridgeLcc" value="${bridge.bridgeLcc}">
 				<label for="bridgeCm">유지관리 목표성능</label>
-				<input type="text" id="bridgeCm" name="bridgeCm">
+				<input type="text" id="bridgeCm" name="bridgeCm" value="${bridge.bridgeCm}">
 				<label for="grade">교량등급</label>
 				<select id="grade" name="grade">
 					<option>교량등급</option>
-					<option value="A">A</option>
-					<option value="B">B</option>
-					<option value="C">C</option>
-					<option value="D">D</option>
+					<option value="A" ${bridge.grade eq 'A' ? 'selected' : ''}>A</option>
+					<option value="B" ${bridge.grade eq 'B' ? 'selected' : ''}>B</option>
+					<option value="C" ${bridge.grade eq 'C' ? 'selected' : ''}>C</option>
+					<option value="D" ${bridge.grade eq 'D' ? 'selected' : ''}>D</option>
 				</select>
-				<label for="droneFile">드론영상</label>
+				<label for="dronFile">드론영상</label>
 				<input type="file" id="droneFile" name="droneFile">
-				<button type="submit">등록</button>
+				<table>
+
+				</table>
+				<button type="submit">수정</button>
 				<button type="button">목록</button>
 			</form>
 		</div>

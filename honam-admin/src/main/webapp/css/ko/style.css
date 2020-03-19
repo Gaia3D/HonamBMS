@@ -1,6 +1,6 @@
 @charset "utf-8";
 /* RESET CSS */
-* { margin:0; padding:0; outline:0; vertical-align:center; }
+* { margin:0; padding:0; outline:0; vertical-align:middle; }
 article, aside, details, figcaption, figure, footer, header, hgroup, menu nav, section { display:block; }
 ul, ol, dl { list-style:none; }
 img, video { max-width:100%; border:0; vertical-align:top; }
@@ -40,6 +40,12 @@ width: 50px;
 height: 100%;
 background-color: #51515b;
 z-index:1;
+}
+#nav a {
+display: inline-block;
+width: 100%;
+height: 100%;
+text-indent: -999px;
 }
 .subWrap {
 float: left;
@@ -178,7 +184,7 @@ display: inline-block;
 width: 16px;
 height: 16px;
 margin: 3px 5px 0 0;
-border-radius: 8px;	
+border-radius: 8px;
 }
 span.good {
 background-color: #00cc33;
@@ -203,7 +209,7 @@ height: 50px;
 cursor: pointer;
 background-image: url(../../images/ico.png);
 background-repeat: no-repeat;
-} 
+}
 #nav > ul li span {
 display: block;
 padding: 15px 0 0 50px;
@@ -304,10 +310,10 @@ background: url(../../images/ico.png) no-repeat -795px -393px;
 }
 .searchForm li > select {
 padding: 4px;
-} 
+}
 .searchForm li > input {
 padding: 4px;
-} 
+}
 .searchForm li * {
 vertical-align: middle;
 }
@@ -316,7 +322,7 @@ vertical-align: middle;
 .boardHeader {
 position: relative;
 margin:30px 0 10px;
-} 
+}
 .boardHeader p > span {
 color: #5c7be8;
 }
@@ -348,10 +354,10 @@ border-bottom: 1px solid #5c7be8;
 border-right: 1px dotted #9fb2f6;
 }
 div.boardList > table thead th:first-child {
-border-left: 1px solid #5c7be8;	
+border-left: 1px solid #5c7be8;
 }
 div.boardList > table thead th:last-child {
-border-right: 1px solid #5c7be8;	
+border-right: 1px solid #5c7be8;
 }
 div.boardList > table tbody tr:hover {
 cursor: pointer;
@@ -360,7 +366,7 @@ background-color: #f9f9f9;
 div.boardList > table tr td {
 padding: 10px;
 border-bottom: 1px solid #aaabb6;
-border-right: 1px dotted #d8d9df;	
+border-right: 1px dotted #d8d9df;
 font-size: 12pt;
 }
 div.boardList > table tr td:last-child {
@@ -455,7 +461,7 @@ width:250px;
 div.boardNew > table tr td {
 padding: 10px;
 border-bottom: 1px solid #aaabb6;
-font-size: 12pt;	
+font-size: 12pt;
 }
 div.boardNew > table tr td > input {
 padding: 5px;
@@ -601,26 +607,26 @@ background: url(../../images/ico.png) no-repeat -786px -250px;
 width: 70px;
 padding-left: 25px;
 font-weight: bold;
-background: url(../../images/ico.png) no-repeat -784px -299px;	
+background: url(../../images/ico.png) no-repeat -784px -299px;
 }
 .hc {
 width: 70px;
 padding-left: 25px;
 font-weight: bold;
-background: url(../../images/ico.png) no-repeat -784px -349px;	
+background: url(../../images/ico.png) no-repeat -784px -349px;
 }
 .icoJs {
 display: inline-block;
 width: 20px;
 text-indent: -999px;
-background: url(../../images/ico.png) no-repeat -784px -298px;	
+background: url(../../images/ico.png) no-repeat -784px -298px;
 }
 .icoHc {
 display: inline-block;
 width: 20px;
 text-indent: -999em;
 font-weight: bold;
-background: url(../../images/ico.png) no-repeat -784px -347px;	
+background: url(../../images/ico.png) no-repeat -784px -347px;
 }
 .projectInfo li > label.step {
 width: 20px;
@@ -706,7 +712,7 @@ text-align: center;
 .sceneListHeader > li > span {
 display: inline-block;
 margin-top: 5px;
-font-size: 12px;	
+font-size: 12px;
 }
 .sceneListHeader li * {
 vertical-align: middle;
@@ -814,7 +820,7 @@ background-position: left -255px;
 ul.listLayer li.on ul li.on {
 background-color: #fff;
 background-position: left -205px;
-} 
+}
 ul.listLayer li.on ul li > div {
 visibility: hidden;
 float: right;
@@ -855,10 +861,10 @@ ul.listLayer li.on > div.listContents {
 display: block;
 padding: 10px;
 border:1px solid #e0e0e0;
-background-color: #eaeaea; 
+background-color: #eaeaea;
 }
 ul.listLayer li.on > div.listContents .legend {
-	
+
 }
 /* ////////// 게시판 ////////// */
 /* 검색 */
@@ -1163,21 +1169,21 @@ border: none;
 background-image: url(../../images/ico.png);
 background-repeat: no-repeat;
 background-color: transparent;
-border-radius: 14px;	
+border-radius: 14px;
 background-position: 6px -393px;
-background-color: #4855b5;	
+background-color: #4855b5;
 }
 div.ctrlBtn > button.close {
 width:28px;
 height: 28px;
 border-radius: 14px;
-parent;	
+parent;
 background-position: -43px -393px;
 }
 div.ctrlBtn > button.layerClose {
 width:28px;
 height: 28px;
-border-radius: 14px;	
+border-radius: 14px;
 background-position: -43px -393px;
 }
 div.ctrlBtn > button:hover {
@@ -1189,41 +1195,41 @@ background-color: #4855b5;
 div.ctrlBtn > button.divide {
 width:32px;
 height: 32px;
-border-radius: 16px;	
+border-radius: 16px;
 border: 1px solid #ccc;
 background-position: -94px -394px;
-background-color: #fff;	
+background-color: #fff;
 }
 div.ctrlBtn > button.divide.on{
 border: 1px solid #3c49a8;
 background-position: -144px -394px;
 background-color: #4855b5;
-} 
+}
 
 div.ctrlBtn > button.fullscreen {
 width:32px;
 height: 32px;
-border-radius: 16px;	
+border-radius: 16px;
 border: 1px solid #ccc;
 background-position: -194px -394px;
-background-color: #fff;	
+background-color: #fff;
 }
 div.ctrlBtn > button.fullscreen.on {
 border: 1px solid #3c49a8;
 background-position: -245px -394px;
-background-color: #4855b5;		
+background-color: #4855b5;
 }
 div.ctrlBtn > button.connect {
 width:32px;
 height: 32px;
-border-radius: 16px;	
+border-radius: 16px;
 border: 1px solid #ccc;
 background-position: -300px -395px;
-background-color: #fff;	
+background-color: #fff;
 }
 div.ctrlBtn > button.connect.on {
 border: 1px solid #3c49a8;
-background-position: -349px -395px;	
+background-position: -349px -395px;
 background-color: #4855b5;
 }
 
@@ -1311,4 +1317,46 @@ background: url(/images/ko/pagenation_back.png) no-repeat 0 0;
 }
 .pagination .end {
 background: url(/images/ko/pagenation_end.png) no-repeat 0 0;
+}
+
+/* 정연화 추가 */
+.wrapper {
+	padding-top: 50px;
+	width: 100%;
+	height: calc(100% - 50px);
+}
+.contents-wrapper {
+	padding-top: 50px;
+	height: calc(100% - 180px);
+   	margin-left: 100px;
+   	width: calc(100% - 100px);
+}
+.manage-tab li {
+	display: inline-block;
+	padding: 10px 30px;
+	background-color: #ccc;
+	background-color: #5563cf;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.manage-tab li a {
+	color: #fff;
+    font-size: 16px;
+    font-weight: normal;
+}
+.map-wrapper {
+	position: relative;
+	display: inline-block;
+	height:100%;
+	width:calc(50% - 80px);
+	padding: 20px;
+}
+.list-wrapper {
+	position: relative;
+	display: inline-block;
+	height:100%;
+	width:calc(50% - 80px);
+	padding: 20px;
+	background-color: #fff;
 }
