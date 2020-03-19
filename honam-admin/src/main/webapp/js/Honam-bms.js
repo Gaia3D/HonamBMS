@@ -27,9 +27,10 @@ function goPage(url) {
 		}
 		
 	} else {
-		// 다른 페이지로 이동
-		location.href = url;
-		return;
+		if(url === "/bridge-groups") {
+			$("#bridgeContent").hide();
+			$("#bridgeGroupContent").show();
+		}
 	}
 }
 

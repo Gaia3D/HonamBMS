@@ -48,8 +48,8 @@ public class BridgeController {
 		model.addAttribute("policy", policyService.getPolicy());
 		model.addAttribute("bridge", new Bridge());
 		model.addAttribute("cesiumIonToken", cesiumIonToken);
+		model.addAttribute("bridgeGroupListSize", bridgeGroupList.size());
 		model.addAttribute("bridgeGroupList", bridgeGroupList);
-
 		return "/bridge/list-bridge";
 	}
 

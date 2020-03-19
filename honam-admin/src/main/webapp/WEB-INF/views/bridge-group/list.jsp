@@ -9,53 +9,124 @@
 <!-- E: 프로젝트 제목, 목록가기, 닫기 -->
 
 <div class="subContents">
-	<ul class="projectSearch input-group row">
-		<li class="input-set">
-			시작 지역 : 광주시
-		</li>
-		<li class="input-set">
-			중간 지역 : 순천
-		</li>
-		<li class="input-set">
-			종료 지역 : 여수시
-		</li>
-		<li class="input-set btn">
-			<button type="submit" value="search" class="point" id="search">검색</button>
-		</li>
-	</ul>
-	
-	<div id="projectListHeader" class="count" style="margin-top: 20px; margin-bottom: 5px;">
-		전체 <em><fmt:formatNumber value="${pagination.totalCount}" type="number"/></em> 건
-		<fmt:formatNumber value="${pagination.pageNo}" type="number"/> / <fmt:formatNumber value="${pagination.lastPage }" type="number"/> 페이지
-	</div>
-	<div class="transferDataList" style="max-height: 650px; overflow-y: auto; height:590px;">
-		<table class="list-table scope-col">
+	<table class="list-table scope-col">
 			<col class="col-number" />
 			<col class="col-toggle" />
 			<col class="col-name" />
 			<thead>
 				<tr>
-					<th scope="col" class="col-number" style="width:5%; font-weight: bold"></th>
-					<th scope="col" class="col-toggle">교량 명</th>
-					<th scope="col" class="col-name">준공년도</th>
-					<th scope="col" class="col-name">상태</th>
+					<th scope="col" class="col-toggle">구분</th>
+					<th scope="col" class="col-name">지역명</th>
 				</tr>
 			</thead>
 			<tbody id="transferDataList">
-			<c:forEach var="bridge" items="${bridgeList}" varStatus="status">
 				<tr>
-					<td class="col-number">${status.index+1}</td>
-					<td class="col-toggle">
-						<a href="/bridge/detail-bridge?gid=${bridge.gid}&pageNo=${pagination.pageNo}${pagination.searchParameters}">
-							${bridge.brgNam}
-						</a>
+					<td class="col-number">
+						<span class="legend co">G</span>
 					</td>
-					<td class="col-name">${bridge.endAmd.substring(0,4)} </td>
-					<td class="col-name">${bridge.grade}</td>
+					<td class="col-name">광주 광역시</td>
 				</tr>
-			</c:forEach>
+				<tr>
+					<td class="col-number">
+						<span class="legend pr">S</span>
+					</td>
+					<td class="col-name">전라남도 순천시</td>
+				</tr>
+				<tr>
+					<td class="col-number">
+						<span class="legend gr">Y</span>
+					</td>
+					<td class="col-name">전라남도 여수시</td>
+				</tr>
 			</tbody>
 		</table>
-		<%@ include file="/WEB-INF/views/common/pagination.jsp" %>
+	
+	<div id="projectListHeader" class="count" style="margin-top: 20px; margin-bottom: 5px;">
+		전체 교량 그룹 <em><fmt:formatNumber value="${bridgeGroupListSize}" type="number"/></em> 건
+	</div>
+	<div class="transferDataList" style="max-height: 650px; overflow-y: auto; height:590px;">
+		<table class="list-table scope-col">
+			<col class="col-name" />
+			<col class="col-number" />
+			<col class="col-name" />
+			<col class="col-number" />
+			<thead>
+				<tr>
+					<th scope="col" class="col-name">그룹명</th>
+					<th scope="col" class="col-name">경로</th>
+					<th scope="col" class="col-name">목표<br/>성능</th>
+					<th scope="col" class="col-name">보기</th>
+				</tr>
+			</thead>
+			<tbody>
+<c:forEach var="bridgeGroup" items="${bridgeGroupList}" varStatus="status">
+				<tr>
+					<td class="col-name">${bridgeGroup.bridgeGroupName}</td>
+					<td class="col-number">
+	<c:if test="${bridgeGroup.startArea eq 'gwangju'}">
+						<span class="legend co">G</span>
+	</c:if>
+	<c:if test="${bridgeGroup.startArea eq 'suncheon'}">
+						<span class="legend pr">S</span>
+	</c:if>				
+						->
+	<c:if test="${bridgeGroup.endArea eq 'suncheon'}">
+						<span class="legend pr">S</span>
+	</c:if>
+	<c:if test="${bridgeGroup.endArea eq 'yeosu'}">
+						<span class="legend gr">Y</span>
+	</c:if>				
+					</td>
+					<td class="col-number">${bridgeGroup.goalPerformance}</td>
+					<td class="col-number">
+						<span id="bridgeGroupId-${bridgeGroup.bridgeGroupId}" class="layerGroup" onclick="toggleBridgeList('${bridgeGroup.bridgeGroupId}')">ON</span></td>
+				</tr>
+				<tr id="${bridgeGroup.bridgeGroupId}-bridgeList" style="display: none;">
+				</tr>
+</c:forEach>
+			</tbody>
+		</table>
 	</div>
 </div>
+
+<%@ include file="/WEB-INF/views/bridge-group/list-bridge-template.jsp" %>
+<script type="text/javascript">
+	// 우선은 개발 하기 편해서... 여기 두고.. .나중에 옮겨야 함
+	function toggleBridgeList(bridgeGroupId) {
+		if($("#" + bridgeGroupId + "-bridgeList").css("display") == "none"){
+			$("#bridgeGroupId-" + bridgeGroupId).html("OFF");
+			$("#" + bridgeGroupId + "-bridgeList").show();
+			bridgeListByBridgeGroupId(bridgeGroupId);
+		} else {
+			$("#bridgeGroupId-" + bridgeGroupId).html("ON");
+			$("#" + bridgeGroupId + "-bridgeList").hide();
+		}
+	}
+	
+	function bridgeListByBridgeGroupId(bridgeGroupId) {
+		$.ajax({
+			url: "/bridge-groups/" + bridgeGroupId + "/bridges",
+			type: "GET",
+			headers: {'X-Requested-With': 'XMLHttpRequest'},
+			dataType: 'json',
+			success: function(msg){
+				if(msg.statusCode <= 200) {
+					var template = Handlebars.compile($("#templateBridgeGroupBridgeList").html());
+				    var htmlList = template(msg);
+				    $("#" + bridgeGroupId + "-bridgeList").html("");
+	                $("#" + bridgeGroupId + "-bridgeList").append(htmlList);
+				} else {
+					alert(JS_MESSAGE[msg.errorCode]);
+					console.log("---- " + msg.message);
+				}
+			},
+			error: function(request, status, error) {
+				alert(JS_MESSAGE["ajax.error.message"]);
+			}
+		});
+	}
+	
+	function gotoFlyBridge(longitude, latitude) {
+		alert("" + longitude + ", " + latitude);
+	}
+</script>

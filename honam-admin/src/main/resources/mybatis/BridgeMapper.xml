@@ -160,6 +160,14 @@
 		OFFSET #{offset} LIMIT #{limit}
 	</select>
 
+	<!-- 교량 그룹 교량 목록 -->
+	<select id="getListBridgeByBridgeGroupId" parameterType="int" resultType="bridge">
+		/* getListBridgeByBridgeGroupId */
+		SELECT A.*, ST_X(ST_AsText(ST_Centroid(ST_Transform(A.wkb_geometry, 4326)))) AS longitude, ST_Y(ST_AsText(ST_Centroid(ST_Transform(A.wkb_geometry, 4326)))) AS latitude
+		FROM bridge A
+		WHERE A.gru_num = #{bridgeGroupId}
+	</select>
+
 	<!-- Bridge(교량) 정보 조회 -->
 	<select id="getBridge" parameterType="bridge" resultType="bridge">
 		/* getBridge */

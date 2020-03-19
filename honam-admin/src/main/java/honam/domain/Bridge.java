@@ -1,5 +1,6 @@
 package honam.domain;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -13,6 +14,12 @@ import lombok.ToString;
 @Setter
 @ToString
 public class Bridge extends Search {
+	
+	// 위도
+	private BigDecimal latitude;
+	// 경도
+	private BigDecimal longitude;
+
 	
 	/****** 조회용 ********/
 	// 위성영상 결과 존재 유무

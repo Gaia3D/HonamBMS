@@ -10,21 +10,21 @@ insert into policy(	policy_id, password_exception_char)
 
 
 -- 교량 그룹			
-insert into bridge_group(bridge_group_id, bridge_group_key, bridge_group_name, goal_performance, color)
+insert into bridge_group(bridge_group_id, bridge_group_key, bridge_group_name, goal_performance, color, start_area, end_area)
 values
-	(1, 'group_1', '교량 그룹1', 2.78229546116609, null),
-	(2, 'group_2', '교량 그룹2', 2.6992813715769, null),
-	(3, 'group_3', '교량 그룹3', 3.28133662674884, null),
-	(4, 'group_4', '교량 그룹4', 3.43332076086383, null),
-	(5, 'group_5', '교량 그룹5', 3.26377151473872, null),
-	(6, 'group_6', '교량 그룹6', 2.22174951441254, null),
-	(7, 'group_7', '교량 그룹7', 2.04837644534476, null),
-	(8, 'group_8', '교량 그룹8', 2.24570245644927, null),
-	(9, 'group_9', '교량 그룹9', 3.39397557219178, null),
-	(10, 'group_10', '교량 그룹10', 3.88067280053547, null),
-	(11, 'group_11', '교량 그룹11', 2.59812790849841, null),
-	(12, 'group_12', '교량 그룹12', 2.35731720346683, null),
-	(13, 'group_13', '교량 그룹13', 3.97555171454476, null),
-	(14, 'group_14', '교량 그룹14', 2.83004750930777, null);
+	(1, 'group_1', '그룹1', 2.78, null, 'gwangju', 'suncheon'),
+	(2, 'group_2', '그룹2', 2.70, null, 'gwangju', 'suncheon'),
+	(3, 'group_3', '그룹3', 3.28, null, 'gwangju', 'suncheon'),
+	(4, 'group_4', '그룹4', 3.43, null, 'gwangju', 'suncheon'),
+	(5, 'group_5', '그룹5', 3.26, null, 'gwangju', 'suncheon'),
+	(6, 'group_6', '그룹6', 2.22, null, 'gwangju', 'suncheon'),
+	(7, 'group_7', '그룹7', 2.045, null, 'gwangju', 'suncheon'),
+	(8, 'group_8', '그룹8', 2.25, null, 'gwangju', 'suncheon'),
+	(9, 'group_9', '그룹9', 3.39, null, 'gwangju', 'suncheon'),
+	(10, 'group_10', '그룹10', 3.88, null, 'gwangju', 'suncheon'),
+	(11, 'group_11', '그룹11', 2.60, null, 'suncheon', 'yeosu'),
+	(12, 'group_12', '그룹12', 2.36, null, 'suncheon', 'yeosu'),
+	(13, 'group_13', '그룹13', 3.98, null, 'suncheon', 'yeosu'),
+	(14, 'group_14', '그룹14', 2.83, null, 'suncheon', 'yeosu');
 			
 commit;

@@ -72,6 +72,14 @@ public interface BridgeMapper {
 	List<Bridge> getListBridge(Bridge bridge);
 
 	/**
+	 * 교량 그룹 교량 목록
+	 * @param bridgeGroupId
+	 * @return
+	 */
+	List<Bridge> getListBridgeByBridgeGroupId(Integer bridgeGroupId);
+	
+	
+	/**
 	 * 교량 정보 조회
 	 * @param gid
 	 * @return

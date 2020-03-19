@@ -382,4 +382,55 @@ tr:hover td {
 	font-size: 1.5em;
 	line-height: 1;
 	letter-spacing: 0;
-	display: block; }	
+	display: block; }
+	
+span.legend {
+	display: inline-block;
+	width: 14px;
+	height: 14px;
+	line-height: 14px;
+	padding: 4px;
+	font-size: 13px;
+	font-weight: bold;
+	color: #fff;
+	text-align: center;
+	border-radius: 50%;
+	margin-right: 5px;
+}
+span.co {
+	background-color: cornflowerblue;
+}
+span.pu {
+	background-color: darkseagreen;
+}
+span.pr {
+	background-color: coral;
+}
+span.gr {
+	background-color: darkturquoise
+}
+
+.layerGroup {
+margin-top: -4px;
+padding: 2px 7px 2px;
+color: #fff;
+border-radius: 15px;
+border: none;
+background-color: #262b3f;
+float: right;
+width: 30px!important;
+text-align:center;
+}
+
+button.goto {
+	float: right;
+	width: 35px;
+	height: 25px;
+	margin-top: 5px;
+	text-indent: -999em;
+	border: none;
+	background-image: url(/images/ko/ico.png);
+	background-repeat: no-repeat;
+	background-position: 10px -468px;
+	background-color: transparent;
+}

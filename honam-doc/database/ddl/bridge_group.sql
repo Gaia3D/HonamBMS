@@ -7,13 +7,15 @@ create table bridge_group (
 	bridge_group_key			varchar(60)							not null,
 	bridge_group_name			varchar(100)						not null,
 	user_id						varchar(32),
-	goal_performance			numeric(17,15),
+	goal_performance			numeric(4,2),
 	available					boolean								default true,
 	view_order					integer								default 1,
 	bridge_count				integer								default 0,
 	location		 			GEOMETRY(POINT, 4326),
 	altitude					numeric(13,7),
 	duration					integer,
+	start_area					varchar(30),
+	end_area					varchar(30),
 	color						varchar(7),
 	description					varchar(256),
 	update_date					timestamp with time zone,
@@ -33,6 +35,8 @@ comment on column bridge_group.available is 'true : 사용, false : 사용안함
 comment on column bridge_group.location is 'POINT(위도, 경도). 공간 검색 속도 때문에 altitude는 분리';
 comment on column bridge_group.altitude is '높이';
 comment on column bridge_group.duration is 'Map 이동시간';
+comment on column bridge_group.start_area is '시작 지역';
+comment on column bridge_group.end_area is '종료 지역';
 comment on column bridge_group.color is '범례 색깔';
 comment on column bridge_group.description is '설명';
 comment on column bridge_group.update_date is '수정일';
