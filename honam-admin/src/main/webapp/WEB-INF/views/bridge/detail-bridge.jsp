@@ -60,7 +60,7 @@
 				${bridge.bridgeLcc}
 			</li>
 			<li title="교량등급"><label>교량등급 : </label>
-				${bridge.bridgeGrade}
+				${bridge.grade}
 			</li>
 		</ul>
 		<div class="alignCenter">
@@ -185,7 +185,7 @@
 	        });
 		satValue = viewer.entities.add(new Cesium.Entity());
 		sensorID = viewer.entities.add(new Cesium.Entity());
-		getCentroidBridge(viewer, "${bridge.gid}", "${bridge.brgNam}", "${bridge.bridgeGrade}", "${bridge.facNum}");
+		getCentroidBridge(viewer, "${bridge.gid}", "${bridge.brgNam}", "${bridge.grade}", "${bridge.facNum}");
 		MouseControll(viewer, "${bridge.gid}", "${bridge.facNum}");
 		MapControll(viewer);
 	});
@@ -194,7 +194,7 @@
 	$(document).ready(function() {
 		$("#projectMenu").addClass("on");
 		$("#bridgeInfoLayer").hide();
-		if(parseFloat("${bridge.bridgeModel}") > 0) {
+		if(parseFloat("${bridge.model}") > 0) {
 			$('#bridgeLayer ul.listLayer > li:eq(0)').toggleClass('on');
 			isVisibleModel = true;
 		}
@@ -221,7 +221,7 @@
 								"<li><label>하부 형식</label>" + "${bridge.dpiRep}" + "</li>" +
 								"<li><label>내하성능</label>" + "${bridge.bridgeLcc}" + "</li>" +
 								"<li><label>유지관리 목표성능</label>" + "${bridge.bridgeCm}" + "</li>" +
-								"<li><label>교량등급</label>" + "${bridge.bridgeGrade}" + "</li>"
+								"<li><label>교량등급</label>" + "${bridge.grade}" + "</li>"
 		$("#bridgeInfo").html(bridgeInfoHtml);
 		$("#bridgeInfoLayer").show();
 	}

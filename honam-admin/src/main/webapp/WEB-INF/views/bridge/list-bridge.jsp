@@ -90,7 +90,7 @@
 								</a>
 							</td>
 							<td class="col-name">${bridge.endAmd.substring(0,4)} </td>
-							<td class="col-name">${bridge.bridgeGrade}</td>
+							<td class="col-name">${bridge.grade}</td>
 						</tr>
 					</c:forEach>
 					</tbody>
@@ -159,7 +159,7 @@
 	function drawBridge() {
 		  <c:if test="${!empty bridgeList }">
 		  	<c:forEach var="bridge" items="${bridgeList}" varStatus="status">
-				getCentroidBridge("${bridge.gid}","${bridge.brgNam}","${bridge.bridgeGrade}")
+				getCentroidBridge("${bridge.gid}","${bridge.brgNam}","${bridge.grade}")
 		  	</c:forEach>
 		  </c:if>
 	}
@@ -185,17 +185,17 @@
 		});
 	}
 
-	function addMarkerBillboards(bridgeName, longitude, latitude, bridgeGrade, cnt) {
+	function addMarkerBillboards(bridgeName, longitude, latitude, grade, cnt) {
 		var markerImage = null;
-		if(bridgeGrade == 'A'){
+		if(grade == 'A'){
 			markerImage = '/images/${lang}/A.png';
-		} else if(bridgeGrade == 'B') {
+		} else if(grade == 'B') {
 			markerImage = '/images/${lang}/B.png';
-		} else if(bridgeGrade == 'C') {
+		} else if(grade == 'C') {
 			markerImage = '/images/${lang}/C.png';
-		} else if(bridgeGrade == 'D') {
+		} else if(grade == 'D') {
 			markerImage = '/images/${lang}/D.png';
-		} else if(bridgeGrade == 'E') {
+		} else if(grade == 'E') {
 			markerImage = '/images/${lang}/E.png';
 		} else {
 			markerImage = '/images/${lang}/X.png';
