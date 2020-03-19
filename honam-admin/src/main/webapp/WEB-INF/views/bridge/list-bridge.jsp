@@ -19,7 +19,7 @@
 <body>
 <%@ include file="/WEB-INF/views/layouts/header.jsp" %>
 
-<div id="wrap" style="height:94.7%; width: 100%;">
+<div id="wrap">
 	<%@ include file="/WEB-INF/views/layouts/menu.jsp" %>
 
 	<!-- S: 1depth / 프로젝트 목록 -->
@@ -69,7 +69,7 @@
 					전체 <em><fmt:formatNumber value="${pagination.totalCount}" type="number"/></em> 건
 					<fmt:formatNumber value="${pagination.pageNo}" type="number"/> / <fmt:formatNumber value="${pagination.lastPage }" type="number"/> 페이지
 				</div>
-				<div class="transferDataList" style="max-height: 650px; overflow-y: auto; height:590px;">
+				<div class="transferDataList">
 					<table class="list-table scope-col">
 						<col class="col-number" />
 						<col class="col-toggle" />
@@ -113,11 +113,6 @@
 	<!-- E: 1depth / 프로젝트 목록 -->
 	<!-- S: MAPWRAP -->
 	<div id="MapContainer" class="mapWrap" >
-		<div class="ctrlBtn">
-			<button type="button" class="divide" title="화면분할">화면분할</button>
-			<button type="button" class="fullscreen" title="전체화면">전체화면</button>
-		</div>
-
 		<div class="mapInfo">
 			<span id="positionDD">127.156797°, 38.012334°</span>
 			<span><label>고도: </label><span id="positionAlt"><!--10m--></span></span>
@@ -161,7 +156,8 @@
 		MouseControll(viewer,null,null);
 		MapControll(viewer);
 		loadManageOrg();
-		drawBridge();
+		getListBridge();
+// 		drawBridge();
 	});
 
    	// function
@@ -236,6 +232,25 @@
 	            height : 25 // default: undefined */
 	        }
 	    });
+	}
+	
+	function getListBridge() {
+		$.ajax({
+			url: '/bridges',
+			type: 'GET',
+			headers: {'X-Requested-With': 'XMLHttpRequest'},
+			dataType: 'json',
+			success: function(res){
+				if(res.statusCode <= 200) {
+				} else {
+					alert(JS_MESSAGE[res.errorCode]);
+					console.log("---- " + res.message);
+				}
+			},
+			error: function(request, status, error) {
+				alert(JS_MESSAGE["ajax.error.message"]);
+			}
+		});
 	}
 
 </script>

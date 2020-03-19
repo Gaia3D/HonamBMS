@@ -125,6 +125,7 @@
 			</if>
 		</where>
 		ORDER BY A.brg_nam
+		OFFSET #{offset} LIMIT #{limit}
 	</select>
 
 	<!-- Bridge(교량) 정보 조회 -->
