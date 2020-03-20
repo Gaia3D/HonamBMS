@@ -317,6 +317,12 @@
 			}
 		});
 	}
+	
+	function gotoFlyBridge(longitude, latitude) {
+		viewer.camera.flyTo({
+		    destination : Cesium.Cartesian3.fromDegrees(longitude, latitude, 200)
+		});
+	}
 </script>
 </body>
 </html>

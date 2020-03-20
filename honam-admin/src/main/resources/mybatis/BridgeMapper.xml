@@ -123,7 +123,9 @@
 			A.brg_nam, 
 			A.end_amd, 
 			A.grade,
-			A.brg_nam
+			A.brg_nam,
+			ST_X(ST_Centroid(A.wkb_geometry)) AS longitude, 
+			ST_Y(ST_Centroid(A.wkb_geometry)) AS latitude
 		FROM bridge A
 		LEFT JOIN sk_sdo B ON A.fac_sido = B.name
 		LEFT JOIN sk_sgg C ON A.fac_sgg = C.name
