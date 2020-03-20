@@ -8,20 +8,21 @@
 		<setting name="lazyLoadingEnabled" value="false" />
         <setting name="mapUnderscoreToCamelCase" value="true"/>
 	</settings>
-	
+
 	<typeAliases>
 		<typeAlias type="honam.domain.Bridge" alias="bridge"/>
 		<typeAlias type="honam.domain.BridgeGroup" alias="bridgeGroup"/>
-		
+		<typeAlias type="honam.domain.BridgeDroneFile" alias="bridgeDroneFile"/>
+
 		<typeAlias type="honam.domain.Policy" alias="policy" />
-		
+
 		<typeAlias type="honam.domain.UserInfo" alias="userInfo" />
 		<typeAlias type="honam.domain.UserSession" alias="userSession" />
-		
+
 		<typeAlias type="honam.domain.SkSdo" alias="skSdo"/>
 		<typeAlias type="honam.domain.SkSgg" alias="skSgg"/>
 		<typeAlias type="honam.domain.Sat" alias="sat"/>
 		<typeAlias type="honam.domain.Sensor" alias="sensor"/>
 	</typeAliases>
-	
+
 </configuration>

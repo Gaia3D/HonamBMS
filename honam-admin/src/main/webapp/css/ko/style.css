@@ -1359,4 +1359,42 @@ background: url(/images/ko/pagenation_end.png) no-repeat 0 0;
 	width:calc(50% - 80px);
 	padding: 20px;
 	background-color: #fff;
+	overflow-y: auto;
+}
+.form-inline {
+	width: 100%;
+	display: inline-block;
+	margin: 5px;
+}
+.form-inline > * {
+	display: inline-block;
+}
+.form-inline label {
+	width: 20%;
+	padding : 8px;
+}
+.form-inline select {
+	width: 20%;
+}
+.form-inline input {
+	padding : 5px;
+}
+.form-inline button {
+	margin-top: 15px;
+}
+.map-button-wrapper {
+	position: absolute;
+	z-index: 1;
+	top: 33px;
+    left: 33px;
+}
+button.draw {
+	padding: 10px;
+	border-radius: 5px;
+	background-color: #51515b;
+	color: #fff;
+	border: none;
+}
+button.draw.on {
+	background-color: #5c7be8;
 }

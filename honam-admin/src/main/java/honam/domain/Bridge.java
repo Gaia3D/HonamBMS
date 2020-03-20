@@ -14,13 +14,13 @@ import lombok.ToString;
 @Setter
 @ToString
 public class Bridge extends Search {
-	
+
 	// 위도
 	private BigDecimal latitude;
 	// 경도
 	private BigDecimal longitude;
 
-	
+
 	/****** 조회용 ********/
 	// 교량 검색 타입
 	private String bridgeType;
@@ -73,7 +73,6 @@ public class Bridge extends Search {
 	private Integer model;
 
 	// Multi Polygon
-	@Setter(AccessLevel.NONE)
 	private String geom;
 
 	// 교량의 유지 관리 목표 성능

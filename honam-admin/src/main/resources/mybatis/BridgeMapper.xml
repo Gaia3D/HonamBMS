@@ -6,8 +6,8 @@
 	<!-- Sdo 목록(geom 은 제외) -->
 	<select id="getListSdoExceptGeom" resultType="skSdo">
 		/* getListSdoExceptGeom */
-		SELECT 
-			SUBSTR(bjcd, 1, 2) AS sdo_code, name 
+		SELECT
+			SUBSTR(bjcd, 1, 2) AS sdo_code, name
 		FROM sk_sdo
 		WHERE bjcd IN ('2900000000', '4500000000', '4600000000')
 		ORDER BY name
@@ -16,7 +16,7 @@
 	<!-- Sgg 목록(geom 은 제외) -->
 	<select id="getListSggBySdoExceptGeom" parameterType="string" resultType="skSgg">
 		/* getListSggBySdoExceptGeom */
-		SELECT 
+		SELECT
 			SUBSTR(bjcd, 3, 3) AS sgg_code, name
 		FROM sk_sgg
 		WHERE bjcd LIKE #{sdoCode} || '%'
@@ -50,7 +50,7 @@
 	<!-- 선택한 교량의 center point를 구함 -->
 	<select id="getListCentroidBridge" resultType="bridge">
 		/* getListCentroidBridge */
-		SELECT brg_nam, grade, ST_X(ST_Centroid(wkb_geometry)) AS longitude, ST_Y(ST_Centroid(wkb_geometry)) AS latitude FROM bridge 
+		SELECT brg_nam, grade, ST_X(ST_Centroid(wkb_geometry)) AS longitude, ST_Y(ST_Centroid(wkb_geometry)) AS latitude FROM bridge
 	</select>
 
 	<!-- 관리주체 목록 -->
@@ -100,7 +100,7 @@
 				</if>
 				<if test='bridgeType == "model"'>
 				AND A.model = 1
-				</if> 
+				</if>
 			</where>
 		) A
 	</select>
@@ -118,13 +118,13 @@
 	<!-- Bridge(교량) 목록 -->
 	<select id="getListBridge" parameterType="bridge" resultType="bridge">
 		/* getListBridge */
-		SELECT 
-			DISTINCT A.ogc_fid as gid, 
-			A.brg_nam, 
-			A.end_amd, 
+		SELECT
+			DISTINCT A.ogc_fid as gid,
+			A.brg_nam,
+			A.end_amd,
 			A.grade,
 			A.brg_nam,
-			ST_X(ST_Centroid(A.wkb_geometry)) AS longitude, 
+			ST_X(ST_Centroid(A.wkb_geometry)) AS longitude,
 			ST_Y(ST_Centroid(A.wkb_geometry)) AS latitude
 		FROM bridge A
 		LEFT JOIN sk_sdo B ON A.fac_sido = B.name
@@ -153,7 +153,7 @@
 			</if>
 			<if test='bridgeType == "model"'>
 			AND A.model = 1
-			</if> 
+			</if>
 		</where>
 		ORDER BY A.brg_nam
 		OFFSET #{offset} LIMIT #{limit}
@@ -171,18 +171,37 @@
 	<select id="getBridge" parameterType="bridge" resultType="bridge">
 		/* getBridge */
 		SELECT DISTINCT ogc_fid as gid, ufid, fac_num, brg_nam, mng_org, fac_sido, fac_sgg, fac_emd, fac_ri, fac_gra, end_amd, dsn_wet,
-			brg_len, brg_hit, eff_wid, tot_wid, spa_cnt, max_len, tra_cnt, usp_rep, dpi_rep, wkb_geometry as geom,
-			gru_num, bridge_cm, bridge_lcc, grade, model
+			brg_len, brg_hit, eff_wid, tot_wid, spa_cnt, max_len, tra_cnt, usp_rep, dpi_rep, ST_AsText(wkb_geometry) as geom,
+			gru_num, bridge_cm, bridge_lcc, grade, model, ST_X(ST_Centroid(wkb_geometry)) AS longitude, ST_Y(ST_Centroid(wkb_geometry)) AS latitude
 		FROM bridge
 		WHERE ogc_fid = #{gid}
 	</select>
 
-
 	<!-- Bridge(교량) 정보 등록 -->
 	<insert id="insertBridge" parameterType="bridge">
 		/* insetBridge */
-
+		<selectKey keyProperty="gid" resultType="Integer" order="BEFORE">
+    		SELECT NEXTVAL('bridge_ogc_fid_seq')
+  		</selectKey>
+		INSERT INTO bridge(
+			ogc_fid, fac_num, brg_nam, mng_org,
+			fac_sido, fac_sgg, fac_emd, fac_ri,
+			fac_gra, end_amd, dsn_wet, brg_len, brg_hit,
+			eff_wid, tot_wid, spa_cnt, max_len,
+			tra_cnt, usp_rep, dpi_rep, gru_num,
+			bridge_cm, bridge_lcc, grade,
+			model, insert_dt, wkb_geometry
+		) VALUES (
+			#{gid}, #{facNum}, #{brgNam}, #{mngOrg},
+			#{facSido}, #{facSgg}, #{facEmd}, #{facRi},
+			#{facGra}, #{endAmd}, #{dsnWet}, #{brgLen}, #{brgHit},
+			#{effWid}, #{totWid}, #{spaCnt}, #{maxLen},
+			#{traCnt}, #{uspRep}, #{dpiRep}, #{gruNum},
+			#{bridgeCm}, #{bridgeLcc}, #{grade},
+			#{model}, #{insertDt}, ST_GeomFromText(#{geom})
+		)
 	</insert>
+
 	<!-- Bridge(교량) 정보 수정 -->
 	<update id="updateBridge" parameterType="bridge">
 		/* updateBridge */

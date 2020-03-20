@@ -27,71 +27,125 @@
 			</ul>
 		</nav>
 		<div class="list-wrapper">
-			<button>지도에 교량 그리기</button>
-			<form action="">
-				<label for="brgNam">교량명</label>
-				<input type="text" id="brgNam" name="brgNam">
-				<label for="facNum">시설물번호</label>
-				<input type="text" id="facNum" name="facNum">
-				<label for="mngOrg">관리주체</label>
-				<input type="text" id="mngOrg" name="mngOrg">
-				<label>주소</label>
-				<label for="facSido">시도</label>
-				<select id="facSido" name="facSido">
-					<option>시도</option>
-				</select>
-				<label for="facSgg">시군구</label>
-				<select id="facSgg" name="facSgg">
-					<option>시군구</option>
-				</select>
-				<label for="facSido">읍면동</label>
-				<input type="text" id="facEmd" name="facEmd">
-				<label for="facSido">리</label>
-				<input type="text" id="facRi" name="facRi">
-				<label for="facGra">종별</label>
-				<input type="radio" name="facGra" value="1종">1종
-				<input type="radio" name="facGra" value="2종">2종
-				<label for="endAmd">준공년도</label>
-				<input type="text" id="endAmd" name="endAmd">
-				<label for="dsnWet">설계하중</label>
-				<input type="text" id="dsnWet" name="dsnWet">
-				<label for="brgLen">연장 (m)</label>
-				<input type="text" id="brgLen" name="brgLen">
-				<label for="brgHit">교고 (m)</label>
-				<input type="text" id="brgHit" name="brgHit">
-				<label for="effWid">유효폭 (m)</label>
-				<input type="text" id="effWid" name="effWid">
-				<label for="totWid">총폭 (m)</label>
-				<input type="text" id="totWid" name="totWid">
-				<label for="spaCnt">경간수</label>
-				<input type="text" id="spaCnt" name="spaCnt">
-				<label for="maxLen">최대경간장 (m)</label>
-				<input type="text" id="maxLen" name="maxLen">
-				<label for="traCnt">교통량</label>
-				<input type="text" id="traCnt" name="traCnt">
-				<label for="uspRep">상부 형식</label>
-				<input type="text" id="uspRep" name="uspRep">
-				<label for="dpiRep">하부 형식</label>
-				<input type="text" id="dpiRep" name="dpiRep">
-				<label for="bridgeLcc">내하성능</label>
-				<input type="text" id="bridgeLcc" name="bridgeLcc">
-				<label for="bridgeCm">유지관리 목표성능</label>
-				<input type="text" id="bridgeCm" name="bridgeCm">
-				<label for="grade">교량등급</label>
-				<select id="grade" name="grade">
-					<option>교량등급</option>
-					<option value="A">A</option>
-					<option value="B">B</option>
-					<option value="C">C</option>
-					<option value="D">D</option>
-				</select>
-				<label for="droneFile">드론영상</label>
-				<input type="file" id="droneFile" name="droneFile">
-				<button type="submit">등록</button>
-				<button type="button">목록</button>
+			<form id="insertBridgeForm">
+				<input type="hidden" id="geom" name="geom">
+
+				<div class="form-inline">
+					<label for="brgNam">* 교량명</label>
+					<input type="text" id="brgNam" name="brgNam">
+					<label for="facNum">* 시설물번호</label>
+					<input type="text" id="facNum" name="facNum">
+				</div>
+
+				<div class="form-inline">
+					<label for="mngOrg">관리주체</label>
+					<input type="text" id="mngOrg" name="mngOrg">
+				</div>
+
+				<div class="form-inline">
+					<label>주소</label>
+				</div>
+				<div class="form-inline">
+					<label for="sdoCode">* 시도</label>
+					<select id="sdoCode" name="facSido"></select>
+					<label for="sggCode">* 시군구</label>
+					<select id="sggCode" name="facSgg"></select>
+				</div>
+
+				<div class="form-inline">
+					<label for="facSido">읍면동</label>
+					<input type="text" id="facEmd" name="facEmd">
+					<label for="facSido">리</label>
+					<input type="text" id="facRi" name="facRi">
+				</div>
+
+				<div class="form-inline">
+					<label for="facGra">종별</label>
+					<input type="radio" id="facGra1" name="facGra" value="1종" checked="checked">
+					<label for="facGra1">1종</label>
+					<input type="radio" id="facGra2" name="facGra" value="2종">
+					<label for="facGra2">2종</label>
+				</div>
+
+				<div class="form-inline">
+					<label for="endAmd">준공년도</label>
+					<input type="text" id="endAmd" name="endAmd">
+					<label for="dsnWet">설계하중</label>
+					<input type="text" id="dsnWet" name="dsnWet">
+				</div>
+
+				<div class="form-inline">
+					<label for="brgLen">연장 (m)</label>
+					<input type="text" id="brgLen" name="brgLen">
+					<label for="brgHit">교고 (m)</label>
+					<input type="text" id="brgHit" name="brgHit">
+				</div>
+
+				<div class="form-inline">
+					<label for="effWid">유효폭 (m)</label>
+					<input type="text" id="effWid" name="effWid">
+					<label for="totWid">총폭 (m)</label>
+					<input type="text" id="totWid" name="totWid">
+				</div>
+
+				<div class="form-inline">
+					<label for="spaCnt">경간수</label>
+					<input type="text" id="spaCnt" name="spaCnt">
+					<label for="maxLen">최대경간장 (m)</label>
+					<input type="text" id="maxLen" name="maxLen">
+				</div>
+
+				<div class="form-inline">
+					<label for="traCnt">교통량</label>
+					<input type="text" id="traCnt" name="traCnt">
+				</div>
+
+				<div class="form-inline">
+					<label for="uspRep">상부 형식</label>
+					<input type="text" id="uspRep" name="uspRep">
+					<label for="dpiRep">하부 형식</label>
+					<input type="text" id="dpiRep" name="dpiRep">
+				</div>
+
+				<div class="form-inline">
+					<label for="bridgeLcc">내하성능</label>
+					<input type="text" id="bridgeLcc" name="bridgeLcc">
+					<label for="bridgeCm">유지관리 목표성능</label>
+					<input type="text" id="bridgeCm" name="bridgeCm">
+				</div>
+
+				<div class="form-inline">
+					<label for="grade">교량등급</label>
+					<select id="grade" name="grade">
+						<option>교량등급</option>
+						<option value="A">A</option>
+						<option value="B">B</option>
+						<option value="C">C</option>
+						<option value="D">D</option>
+					</select>
+				</div>
+
+				<div class="form-inline">
+					<label for="files">드론영상</label>
+				</div>
+
+				<div class="form-inline">
+  					<input type="file" id="files" name="files" multiple>
+				</div>
+
+				<div class="form-inline">
+					<button type="button" id="insertBridge" class="point" title="등록">등록</button>
+					<button type="button" id="goBridgeList" class="point" title="목록">목록</button>
+				</div>
 			</form>
 		</div>
-		<div id="MapContainer" class="map-wrapper"></div>
+
+		<div id="MapContainer" class="map-wrapper">
+			<div class="map-button-wrapper">
+				<button id="drawBridge" class="draw">그리기</button>
+			</div>
+		</div>
+
 	</div>
 </div>
 
@@ -111,6 +165,7 @@
 <script type="text/javascript" src="/js/MouseControll.js"></script>
 <script type="text/javascript" src="/js/SatAnalysisResult.js"></script>
 <script type="text/javascript" src="/js/SensorData.js"></script>
+<script type="text/javascript" src="/js/GeometryDrawer.js"></script>
 
 <script type="text/javascript">
 //초기 위치 설정
@@ -129,87 +184,135 @@ var imageryProvider = new Cesium.ArcGisMapServerImageryProvider({
 
 var viewer = new Cesium.Viewer('MapContainer', {imageryProvider : imageryProvider, baseLayerPicker : false,
 	animation:false, timeline:false, geocoder:false, navigationHelpButton: false, fullscreenButton:false, homeButton: false, sceneModePicker: false });
+viewer.scene.globe.depthTestAgainstTerrain = true;
 //viewer.extend(Cesium.viewerCesiumNavigationMixin, {});
 var satValueCount = null;
-
+var drawer = null;
 //초기 로딩 설정
 $(document).ready(function() {
+
 	$("#bridgeManageMenu").addClass("on");
-	drawBridge();
+	getListSdo();
+
+	$('#drawBridge').click(function() {
+		$(this).toggleClass("on");
+		if (drawer != null) {
+			if (drawer.active) {
+				drawer.active = false;
+			} else {
+				drawer.active = true;
+			}
+		} else {
+			drawer = new CesiumPolygonDrawer(viewer);
+			drawer.active = true;
+			drawer.drawing = true;
+		}
+	});
+
+	$("#sdoCode").on("change", function() {
+		var sdoCode = $("#sdoCode").val();
+		if(sdoCode) {
+			getListSgg(sdoCode);
+		}
+	});
+
+	$('#insertBridge').click(function() {
+		if (!validation()) return false;
+		var form = $('#insertBridgeForm')[0];
+		var formData = new FormData(form);
+		$.ajax({
+			url: '/bridges/input-bridge',
+			type: 'POST',
+			headers: {"X-Requested-With": "XMLHttpRequest"},
+			data: formData,
+			processData: false,
+			contentType: false,
+			dataType: 'json',
+			success: function(res) {
+				if(res.statusCode <= 200) {
+					console.log("---- " + res);
+				} else {
+					alert(JS_MESSAGE[res.errorCode]);
+					console.log("---- " + res.message);
+				}
+			},
+			error: function(request, status, error) {
+				alert(JS_MESSAGE["ajax.error.message"]);
+			}
+		});
+	});
+
+	$('#goBridgeList').click(function() {
+		location.href = '/bridge/manage-bridge';
+	});
+
 });
 
-	// function
-function drawBridge() {
-	  <c:if test="${!empty bridgeList }">
-	  	<c:forEach var="bridge" items="${bridgeList}" varStatus="status">
-			getCentroidBridge("${bridge.gid}","${bridge.brgNam}","${bridge.grade}")
-	  	</c:forEach>
-	  </c:if>
-}
-
-function getCentroidBridge(gid, name, grade) {
-	var url = "./" + gid + "/centroid";
-	var cnt = null;
-
+// 시도 목록
+function getListSdo() {
 	$.ajax({
-	    url: url,
-	    type: "GET",
-	    dataType: "json",
-	    success : function(msg) {
-	        if(msg.result === "success") {
-	      	  cnt++;
-	      	  addMarkerBillboards(name, msg.longitude,  msg.latitude, grade, cnt);
-	        }
-	    },
-	    error : function(request, status, error) {
-	        //alert(JS_MESSAGE["ajax.error.message"]);
-	        console.log("code : " + request.status + "\n message : " + request.responseText + "\n error : " + error);
-	    }
-	});
+        url: "/bridges/sdos",
+        type: "GET",
+        dataType: "json",
+        success : function(res) {
+        	if(res.statusCode <= 200) {
+                var sdoList = res.sdoList;
+                var content = "<option value=''> 시도 </option>";
+                for(var i=0, len=sdoList.length; i < len; i++) {
+                    var sdo = sdoList[i];
+                	content += '<option value=' + sdo.sdoCode + '>' + sdo.name + '</option>';
+                }
+                $('#sdoCode').html(content);
+        	} else {
+				alert(JS_MESSAGE[res.errorCode]);
+				console.log("---- " + res.message);
+			}
+        },
+        error: function(request, status, error) {
+			alert(JS_MESSAGE["ajax.error.message"]);
+		}
+    });
 }
 
-function addMarkerBillboards(bridgeName, longitude, latitude, grade, cnt) {
-	var markerImage = null;
-	if(grade == 'A'){
-		markerImage = '/images/${lang}/A.png';
-	} else if(grade == 'B') {
-		markerImage = '/images/${lang}/B.png';
-	} else if(grade == 'C') {
-		markerImage = '/images/${lang}/C.png';
-	} else if(grade == 'D') {
-		markerImage = '/images/${lang}/D.png';
-	} else if(grade == 'E') {
-		markerImage = '/images/${lang}/E.png';
-	} else {
-		markerImage = '/images/${lang}/X.png';
-	}
-
-//	if(cnt == 1) {
-//		cameraFlyTo(longitude, latitude, 200000, 3);
-//	}
-
-	viewer.entities.add({
-		name : bridgeName,
-        position : Cesium.Cartesian3.fromDegrees(parseFloat(longitude), parseFloat(latitude), 0),
-        billboard : {
-            image : markerImage,
-            width : 35, // default: undefined/
-            height : 35, // default: undefined
-            disableDepthTestDistance : Number.POSITIVE_INFINITY
-            /* image : '../images/Cesium_Logo_overlay.png', // default: undefined
-            show : true, // default
-            pixelOffset : new Cesium.Cartesian2(0, -50), // default: (0, 0)
-            eyeOffset : new Cesium.Cartesian3(0.0, 0.0, 0.0), // default
-            horizontalOrigin : Cesium.HorizontalOrigin.CENTER, // default
-            verticalOrigin : Cesium.VerticalOrigin.BOTTOM, // default: CENTER
-            scale : 2.0, // default: 1.0
-            color : Cesium.Color.LIME, // default: WHITE
-            rotation : Cesium.Math.PI_OVER_FOUR, // default: 0.0
-            alignedAxis : Cesium.Cartesian3.ZERO, // default
-            width : 100, // default: undefined
-            height : 25 // default: undefined */
-        }
+// 시도에 해당하는 시군구 목록
+function getListSgg(bjcd) {
+	$.ajax({
+        url: "/bridges/sdos/" + bjcd + "/sggs",
+        type: "GET",
+        dataType: "json",
+        success : function(res) {
+        	if(res.statusCode <= 200) {
+                var sggList = res.sggList;
+                $('#sggCode').empty()
+                var content = "<option value=''> 시군구 </option>";
+                for(var i=0, len=sggList.length; i < len; i++) {
+                    var sgg = sggList[i];
+                	content += '<option value=' + sgg.sggCode + '>' + sgg.name + '</option>';
+                }
+                $('#sggCode').html(content);
+        	} else {
+				alert(JS_MESSAGE[res.errorCode]);
+				console.log("---- " + res.message);
+			}
+        },
+        error: function(request, status, error) {
+			alert(JS_MESSAGE["ajax.error.message"]);
+		}
     });
+}
+
+// 입력폼 유효성 검사
+function validation() {
+	var wktFlag = false;
+	if (drawer != null && drawer.getPositionWKT()) {
+		wktFlag = true;
+		$('input[name="geom"]').val(drawer.getPositionWKT());
+	}
+	if (!wktFlag) {
+		alert('교량 영역을 그려주세요!');
+		return false;
+	}
+	return true;
 }
 
 </script>

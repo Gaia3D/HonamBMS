@@ -27,56 +27,96 @@
 			</ul>
 		</nav>
 		<div class="list-wrapper">
-			<button>지도에 교량 다시 그리기</button>
-			<form action="">
-				<label for="brgNam">교량명</label>
-				<input type="text" id="brgNam" name="brgNam" value="${bridge.brgNam}">
-				<label for="facNum">시설물번호</label>
-				<input type="text" id="facNum" name="facNum" value="${bridge.facNum}">
-				<label for="mngOrg">관리주체</label>
-				<input type="text" id="mngOrg" name="mngOrg" value="${bridge.mngOrg}">
-				<label>주소</label>
-				<label for="facSido">시도</label>
-				<select id="facSido" name="facSido">
-					<option>시도</option>
-				</select>
-				<label for="facSgg">시군구</label>
-				<select id="facSgg" name="facSgg">
-					<option>시군구</option>
-				</select>
-				<label for="facSido">읍면동</label>
-				<input type="text" id="facEmd" name="facEmd" value="${bridge.facEmd}">
-				<label for="facSido">리</label>
-				<input type="text" id="facRi" name="facRi" value="${bridge.facRi}">
-				<label for="facGra">종별</label>
-				<input type="radio" name="facGra" value="1종" ${bridge.facGra eq '1종' ? 'checked' : ''}>1종
-				<input type="radio" name="facGra" value="2종" ${bridge.facGra eq '2종' ? 'checked' : ''}>2종
-				<label for="endAmd">준공년도</label>
-				<input type="text" id="endAmd" name="endAmd" value="${bridge.endAmd}">
-				<label for="dsnWet">설계하중</label>
-				<input type="text" id="dsnWet" name="dsnWet" value="${bridge.dsnWet}">
+			<form id="updateBridgeForm">
+				<input type="hidden" id="geom" name="geom" value="${bridge.geom}">
+				<input type="hidden" id="latitude" name="latitude" value="${bridge.latitude}">
+				<input type="hidden" id="longitude" name="longitude" value="${bridge.longitude}">
+
+				<div class="form-inline">
+					<label for="brgNam">교량명</label>
+					<input type="text" id="brgNam" name="brgNam" value="${bridge.brgNam}">
+					<label for="facNum">시설물번호</label>
+					<input type="text" id="facNum" name="facNum" value="${bridge.facNum}">
+				</div>
+
+				<div class="form-inline">
+					<label for="mngOrg">관리주체</label>
+					<input type="text" id="mngOrg" name="mngOrg" value="${bridge.mngOrg}">
+				</div>
+
+				<div class="form-inline">
+					<label>주소</label>
+				</div>
+				<div class="form-inline">
+					<label for="sdoCode">* 시도</label>
+					<select id="sdoCode" name="facSido"></select>
+					<label for="sggCode">* 시군구</label>
+					<select id="sggCode" name="facSgg"></select>
+				</div>
+
+				<div class="form-inline">
+					<label for="facSido">읍면동</label>
+					<input type="text" id="facEmd" name="facEmd" value="${bridge.facEmd}">
+					<label for="facSido">리</label>
+					<input type="text" id="facRi" name="facRi" value="${bridge.facRi}">
+				</div>
+
+				<div class="form-inline">
+					<label for="facGra">종별</label>
+					<input type="radio" name="facGra" value="1종" ${bridge.facGra eq '1종' ? 'checked' : ''}>
+					<label for="facGra1">1종</label>
+					<input type="radio" name="facGra" value="2종" ${bridge.facGra eq '2종' ? 'checked' : ''}>
+					<label for="facGra2">2종</label>
+				</div>
+
+				<div class="form-inline">
+					<label for="endAmd">준공년도</label>
+					<input type="text" id="endAmd" name="endAmd" value="${bridge.endAmd}">
+					<label for="dsnWet">설계하중</label>
+					<input type="text" id="dsnWet" name="dsnWet" value="${bridge.dsnWet}">
+				</div>
+
+				<div class="form-inline">
 				<label for="brgLen">연장 (m)</label>
 				<input type="text" id="brgLen" name="brgLen" value="${bridge.brgLen}">
 				<label for="brgHit">교고 (m)</label>
 				<input type="text" id="brgHit" name="brgHit" value="${bridge.brgHit}">
+				</div>
+
+				<div class="form-inline">
 				<label for="effWid">유효폭 (m)</label>
 				<input type="text" id="effWid" name="effWid" value="${bridge.effWid}">
 				<label for="totWid">총폭 (m)</label>
 				<input type="text" id="totWid" name="totWid" value="${bridge.totWid}">
+				</div>
+
+				<div class="form-inline">
 				<label for="spaCnt">경간수</label>
 				<input type="text" id="spaCnt" name="spaCnt" value="${bridge.spaCnt}">
 				<label for="maxLen">최대경간장 (m)</label>
 				<input type="text" id="maxLen" name="maxLen" value="${bridge.maxLen}">
+				</div>
+
+				<div class="form-inline">
 				<label for="traCnt">교통량</label>
 				<input type="text" id="traCnt" name="traCnt" value="${bridge.traCnt}">
+				</div>
+
+				<div class="form-inline">
 				<label for="uspRep">상부 형식</label>
 				<input type="text" id="uspRep" name="uspRep" value="${bridge.uspRep}">
 				<label for="dpiRep">하부 형식</label>
 				<input type="text" id="dpiRep" name="dpiRep" value="${bridge.dpiRep}">
+				</div>
+
+				<div class="form-inline">
 				<label for="bridgeLcc">내하성능</label>
 				<input type="text" id="bridgeLcc" name="bridgeLcc" value="${bridge.bridgeLcc}">
 				<label for="bridgeCm">유지관리 목표성능</label>
 				<input type="text" id="bridgeCm" name="bridgeCm" value="${bridge.bridgeCm}">
+				</div>
+
+				<div class="form-inline">
 				<label for="grade">교량등급</label>
 				<select id="grade" name="grade">
 					<option>교량등급</option>
@@ -85,16 +125,29 @@
 					<option value="C" ${bridge.grade eq 'C' ? 'selected' : ''}>C</option>
 					<option value="D" ${bridge.grade eq 'D' ? 'selected' : ''}>D</option>
 				</select>
-				<label for="dronFile">드론영상</label>
-				<input type="file" id="droneFile" name="droneFile">
-				<table>
+				</div>
 
-				</table>
-				<button type="submit">수정</button>
-				<button type="button">목록</button>
+				<div class="form-inline">
+					<label for="dronFile">드론영상</label><input type="file" id="files" name="files" multiple>
+					<button type="button">전체삭제</button>
+				</div>
+				<ul>
+					<li>1.png<button type="button">삭제</button></li>
+					<li>2.png<button type="button">삭제</button></li>
+					<li>3.png<button type="button">삭제</button></li>
+				</ul>
+
+				<div class="form-inline">
+					<button type="button" id="updateBridge" class="point" title="수정">수정</button>
+					<button type="button" id="goBridgeList" class="point" title="목록">목록</button>
+				</div>
 			</form>
 		</div>
-		<div id="MapContainer" class="map-wrapper"></div>
+		<div id="MapContainer" class="map-wrapper">
+			<div class="map-button-wrapper">
+				<button id="drawBridge" class="draw">다시 그리기</button>
+			</div>
+		</div>
 	</div>
 </div>
 

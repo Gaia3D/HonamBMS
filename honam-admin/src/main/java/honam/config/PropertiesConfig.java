@@ -18,30 +18,30 @@ public class PropertiesConfig {
     private boolean callRemoteEnable;
     private String serverIp;
     private String restAuthKey;
-    
+
     // http, https
     private String restTemplateMode;
-    
+
     /**
      * mock(로컬), rest(블럭 물류 모니터링 시스템을 REST API 로 호출), db(인사 DB를 이용)
      * rest는 종속이라서 하고 싶지 않지만 SSO 같은게 문제가 생기면 해야 할지도
      */
     //private String loginType;
     //private String restLoginUrl;
-    
+
     //private String outputDir;
     //private String logBaseDir;
     //private String logBaseName;
-    
-    //private String uploadDir;
-    
+
+    private String uploadDir;
+
     //private String gdalCmdPath;
-    
+
     //private String mapDefaultLayer;
-    
+
 	// cesium ion token
 	private String cesiumIonToken;
-	
+
 	// F4D 파일이 변환되는 Root 경로 이자, mago3DJS 에서 요청되는 파일의 Root 경로. ServletConfig 에서 매핑
     private String dataServiceDir;
 }
