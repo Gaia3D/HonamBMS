@@ -23,7 +23,7 @@
 				<tr>
 					<td class="col-number">{{#replaceRowNumber ../pagination.pageNo @index}}{{/replaceRowNumber}}</td>
 					<td class="col-toggle">
-						<a href="#" onClick="gotoFlyBridge({{longitude}}, {{latitude}})">{{brgNam}}</a>
+						<a href="#" onClick="getBridgeInfo({{gid}}, {{longitude}}, {{latitude}})">{{brgNam}}</a>
 					</td>
 					<td class="col-name">{{#replaceYear endAmd}}{{/replaceYear}}</td>
 					<td class="col-name">{{grade}}</td>
