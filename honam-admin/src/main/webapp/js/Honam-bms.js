@@ -30,6 +30,7 @@ function goPage(url) {
 		if(url === "/bridge-groups") {
 			$("#bridgeContent").hide();
 			$("#bridgeGroupContent").show();
+			initBridgeGroupLayer();
 		}
 	}
 }

@@ -117,6 +117,14 @@
 <!-- <script type="text/javascript" src="/js/BridgeAttribute.js"></script> -->
 <script type="text/javascript">
 	var viewer = null;
+	//TODO: policy 개발 후 변경 
+	var HONAMBMS = HONAMBMS || {
+		policy : {
+			geoserverDataUrl : "http://localhost:8080/geoserver/",
+			geoserverDataWorkspace : "honambms",
+			geoserverDataStore : "honambms"
+		},
+	};
 	
    	// 초기 로딩 설정
 	$(document).ready(function() {
@@ -142,9 +150,9 @@
 	   	getListManageOrg();
 		getListBridge();
 		getListCentroidBridge();
+		initBridgeLayer();
 // 		DistrictControll(viewer);
 // 		MapControll(viewer);
-// 		drawBridge();
 	});
    	
 	$("#sdoCode").on("change", function() {
@@ -367,6 +375,57 @@
 	function viewBridgeList() {
 		$("#bridgeContent").show();
 		$("#bridgeDetailContent").hide();
+	}
+	
+	function initBridgeLayer() {
+		var imageryLayers = viewer.imageryLayers;
+		if(imageryLayers.length > 0) {
+			// 기본 provider, bridge를 제외하고 모두 삭제
+			while(imageryLayers.length > 2) {
+				imageryLayers.remove(imageryLayers.get(2));
+			}
+		}
+		var geoserverDataUrl = HONAMBMS.policy.geoserverDataUrl;
+		var geoserverDataWorkspace = HONAMBMS.policy.geoserverDataWorkspace;
+		var provider = new Cesium.WebMapServiceImageryProvider({
+	        url : geoserverDataUrl + "/wms",
+	        layers : [geoserverDataWorkspace + ':'+ "bridge"],
+	        minimumLevel:2,
+	        maximumLevel : 20,
+	        parameters : {
+	            service : 'WMS'
+	            ,version : '1.1.1'
+	            ,request : 'GetMap'
+	            ,transparent : 'true'
+	            ,format : 'image/png'
+	            ,time : 'P2Y/PRESENT'
+	        },
+	        enablePickFeatures : false
+	    });
+		
+		viewer.imageryLayers.addImageryProvider(provider);
+	}
+	
+	function initBridgeGroupLayer() {
+		var geoserverDataUrl = HONAMBMS.policy.geoserverDataUrl;
+		var geoserverDataWorkspace = HONAMBMS.policy.geoserverDataWorkspace;
+		var provider = new Cesium.WebMapServiceImageryProvider({
+	        url : geoserverDataUrl + "/wms",
+	        layers : [geoserverDataWorkspace + ':'+ "bridge_group_layer"],
+	        minimumLevel:2,
+	        maximumLevel : 20,
+	        parameters : {
+	            service : 'WMS'
+	            ,version : '1.1.1'
+	            ,request : 'GetMap'
+	            ,transparent : 'true'
+	            ,format : 'image/png'
+	            ,time : 'P2Y/PRESENT'
+	        },
+	        enablePickFeatures : false
+	    });
+		
+		viewer.imageryLayers.addImageryProvider(provider);
 	}
 </script>
 </body>
