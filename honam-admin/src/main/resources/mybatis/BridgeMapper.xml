@@ -172,11 +172,10 @@
 		/* getBridge */
 		SELECT DISTINCT ogc_fid as gid, ufid, fac_num, brg_nam, mng_org, fac_sido, fac_sgg, fac_emd, fac_ri, fac_gra, end_amd, dsn_wet,
 			brg_len, brg_hit, eff_wid, tot_wid, spa_cnt, max_len, tra_cnt, usp_rep, dpi_rep, ST_AsText(wkb_geometry) as geom,
-			gru_num, bridge_cm, bridge_lcc, grade, model
+			gru_num, bridge_cm, bridge_lcc, grade, model, ST_X(ST_Centroid(wkb_geometry)) AS longitude, ST_Y(ST_Centroid(wkb_geometry)) AS latitude
 		FROM bridge
 		WHERE ogc_fid = #{gid}
 	</select>
-
 
 	<!-- Bridge(교량) 정보 등록 -->
 	<insert id="insertBridge" parameterType="bridge">
