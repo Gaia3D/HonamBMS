@@ -170,7 +170,7 @@
 	        dataType: "json",
 	        success : function(msg) {
 	        	if(msg.statusCode <= 200) {
-	                var sdoList = res.sdoList;
+	                var sdoList = msg.sdoList;
 	                var content = "<option value=''> 시도 </option>";
 	                for(var i=0, len=sdoList.length; i < len; i++) {
 	                    var sdo = sdoList[i];
@@ -202,7 +202,7 @@
 	        dataType: "json",
 	        success : function(msg) {
 	        	if(msg.statusCode <= 200) {
-	                var sggList = res.sggList;
+	                var sggList = msg.sggList;
 	                $('#sggCode').empty()
 	                var content = "<option value=''> 시군구 </option>";
 	                for(var i=0, len=sggList.length; i < len; i++) {
