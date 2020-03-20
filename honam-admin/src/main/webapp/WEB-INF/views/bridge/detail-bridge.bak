@@ -121,7 +121,6 @@
 		<span id="positionDD">127.156797°, 38.012334°</span>
 		<span><label>고도: </label><span id="positionAlt"><!--10m--></span></span>
 	</div>
-	<%@ include file="/WEB-INF/views/bridge/bridgeInfo.jsp" %>
 	<!-- E: MAPWRAP -->
 </div>
 <!-- E: wrap -->
@@ -201,7 +200,8 @@
 
 
 	// 교량 상세정보 보기
-	function viewBridgeInfo() {
+	function viewBridgeInfo(bridge) {
+		debugger;
 		var bridgeInfoHtml = "<li><label>교량명</label>" + "${bridge.brgNam}" + "</li>" +
 								"<li><label>시설물 번호</label>" + "${bridge.facNum}" + "</li>" +
 								"<li><label>관리주체</label>" + "${bridge.mngOrg}" + "</li>" +

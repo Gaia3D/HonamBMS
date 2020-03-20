@@ -77,6 +77,10 @@
 				<!-- E: 교량 목록 -->
 			</div>
 		</div>
+		<div id ="bridgeDetailContent" style="display:none;">
+			<div id="BridgeDetailInfoArea"></div>
+			<%@ include file="/WEB-INF/views/bridge/detail-bridge-template.jsp" %>
+		</div>
 		<div id="bridgeGroupContent" style="display: none;">
 			<%@ include file="/WEB-INF/views/bridge-group/list.jsp" %>
 		</div>
@@ -318,10 +322,51 @@
 		});
 	}
 	
+	function getBridgeInfo(gid, longitude, latitude) {
+		$.ajax({
+	        url: "/bridges/" + gid,
+	        type: "GET",
+	        dataType: "json",
+	        success : function(res) {
+	        	if(res.statusCode <= 200) {
+	        		var template = Handlebars.compile($("#templateBridgeDetail").html());
+					var htmlList = template(res.bridge);
+					$("#BridgeDetailInfoArea").html("");
+					$("#BridgeDetailInfoArea").append(htmlList);
+	        		gotoFlyBridge(longitude, latitude);
+	        		viewBridgeInfo();
+	        	} else {
+					alert(JS_MESSAGE[res.errorCode]);
+					console.log("---- " + res.message);
+				}
+	        },
+	        error: function(request, status, error) {
+				alert(JS_MESSAGE["ajax.error.message"]);
+			}
+	    });
+	}
+	
 	function gotoFlyBridge(longitude, latitude) {
 		viewer.camera.flyTo({
 		    destination : Cesium.Cartesian3.fromDegrees(longitude, latitude, 200)
 		});
+	}
+	
+	function viewBridgeDetailInfo() {
+		$("#bridgeInfoLayer").show();
+	}
+	function closeBridgeDetailInfo() {
+		$("#bridgeInfoLayer").hide();
+	}
+	
+	function viewBridgeInfo() {
+		$("#bridgeContent").hide();
+		$("#bridgeDetailContent").show();
+	}
+	
+	function viewBridgeList() {
+		$("#bridgeContent").show();
+		$("#bridgeDetailContent").hide();
 	}
 </script>
 </body>
