@@ -353,5 +353,46 @@ function locationValidation(longitude, latitude, altitude) {
 		alert("경도 유효범위 : -180 ~ 180\n위도 유효범위 : -90 ~ 90 \n높이 유효범위 : 300000 입니다.");
 		return false;
 	}
-	
+}
+
+/**
+ * wkt 좌표 추출 ,계속 보완해야함, 리턴 타입을 뭐로하는게 좋을지..
+ * @param {string} wkt wkt string
+ * @param {string} wkt  wkttype
+ * @param altitude
+ * @returns
+ */
+function wktToCoordinates(wkt, type) {
+	switch(type) {
+		case 'POINT' : {
+			var removePrefix = wkt.replace(/\bpoint\b\s*\(/i, "");
+			var removeSuffix = removePrefix.replace(/\s*\)\s*$/, "");
+			var coordinates = removeSuffix.match(/[+-]?\d*(\.?\d+)/g);
+			return coordinates;
+		}
+		case 'MULTIPOLYGON' : {
+			var removePrefix = wkt.replace(/\bmultipolygon\b\s*\(\(/i, "");
+			var removeSuffix = removePrefix.replace(/\s*\)\)\s*$/, "");
+			
+			var changeDelimeter = removeSuffix.replace(/\)(.*?)\(/g,')#(');
+			var coordinatesArray = changeDelimeter.split('#');
+			var polygons = [];
+			for(var i=0,len=coordinatesArray.length;i<len;i++) {
+				var coordinates = coordinatesArray[i];
+				coordinates = coordinates.match(/[+-]?\d*(\.?\d+)/g);
+				
+				var polygon = [];
+				for(var i=0,len=coordinates.length;i<len;i=i+2) {
+					var x = parseFloat(coordinates[i]);
+					var y = parseFloat(coordinates[i+1]);
+					
+					polygon.push([x,y]);
+				}
+				
+				polygons.push(polygon);
+			}
+			
+			return polygons;
+		}
+	}
 }

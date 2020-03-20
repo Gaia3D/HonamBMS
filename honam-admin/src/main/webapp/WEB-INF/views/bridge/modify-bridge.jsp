@@ -191,9 +191,39 @@ var satValueCount = null;
 //초기 로딩 설정
 $(document).ready(function() {
 	$("#bridgeManageMenu").addClass("on");
-	drawBridge();
+
+	
+	drawOrginalBridge();
 });
 
+
+function drawOrginalBridge() {
+	var orgGeom = $('#geom').val();
+	var polygons = wktToCoordinates(orgGeom, 'MULTIPOLYGON');
+	for(var i=0,len=polygons.length;i<len;i++) {
+		var polygon = polygons[i];
+		var cartesians = [];
+		for(var j=0,coordCnt=polygon.length;j<coordCnt;j++) {
+			var coordArr = polygon[j];
+			cartesians.push(Cesium.Cartesian3.fromDegrees(coordArr[0], coordArr[1], 0));
+		}
+		
+		var entity = viewer.entities.add({
+            name : 'original' + i,
+            polygon: {
+                hierarchy: cartesians,
+                material: new Cesium.ColorMaterialProperty(Cesium.Color.BLUE.withAlpha(0.8))
+            }
+        });
+	}
+
+	var flyLat = parseFloat($('#latitude').val());
+	var flyLon = parseFloat($('#longitude').val()); 
+
+	viewer.camera.flyTo({
+		destination : Cesium.Cartesian3.fromDegrees(flyLon, flyLat, 500)
+	})
+}
 	// function
 function drawBridge() {
 	  <c:if test="${!empty bridgeList }">
