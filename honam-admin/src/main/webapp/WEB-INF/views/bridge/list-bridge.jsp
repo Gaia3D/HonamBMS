@@ -264,18 +264,15 @@
 		            scaleByDistance : new Cesium.NearFarScalar(10000, 1.5, 1000000, 0.0)
 		        },
 		        label : {
-		            fillColor : {
-		                rgba : [0, 0, 0, 255]
-		            },
-		            font : "12pt Lucida Console",
+		        	fillColor : Cesium.Color.fromCssColorString('#242424'),
+		            font : "12pt",
 		            scaleByDistance : new Cesium.NearFarScalar(25000, 1.0, 50000, 0.0),
 		            pixelOffset : new Cesium.Cartesian2(5, 30),
-		            style: "FILL",
+		            style: Cesium.LabelStyle.FILL,
+		            outlineWidth: 1,
 		            text : bridge.brgNam,
 		            showBackground : true,
-		            backgroundColor : {
-		                rgba : [112, 89, 57, 200]
-		            }
+		            backgroundColor : Cesium.Color.fromCssColorString('#EDEDED')
 		        }
 		    });
 		}
