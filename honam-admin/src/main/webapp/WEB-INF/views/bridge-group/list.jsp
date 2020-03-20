@@ -93,14 +93,24 @@
 <script type="text/javascript">
 	// 우선은 개발 하기 편해서... 여기 두고.. .나중에 옮겨야 함
 	function toggleBridgeList(bridgeGroupId) {
+		var imageryLayers = viewer.imageryLayers;
+		if(imageryLayers.length > 0) {
+			// 기본 provider, bridge를 제외하고 모두 삭제
+			while(imageryLayers.length > 3) {
+				imageryLayers.remove(imageryLayers.get(3));
+			}
+		}
 		if($("#" + bridgeGroupId + "-bridgeList").css("display") == "none"){
 			$("#bridgeGroupId-" + bridgeGroupId).html("OFF");
 			$("#" + bridgeGroupId + "-bridgeList").show();
 			bridgeListByBridgeGroupId(bridgeGroupId);
+			bridgeGroupFocus(bridgeGroupId);
 		} else {
 			$("#bridgeGroupId-" + bridgeGroupId).html("ON");
 			$("#" + bridgeGroupId + "-bridgeList").hide();
 		}
+		
+		
 	}
 	
 	function bridgeListByBridgeGroupId(bridgeGroupId) {
@@ -132,5 +142,29 @@
 		});
 		//gotoFlyAPI(MAGO3D_INSTANCE, longitude, latitude, 100, 3);
 		//hereIamMarker(longitude, latitude, altitude);
+	}
+	
+	// 선택한 그룹 하이라이트
+	function bridgeGroupFocus(groupId) {
+		var geoserverDataUrl = HONAMBMS.policy.geoserverDataUrl;
+		var geoserverDataWorkspace = HONAMBMS.policy.geoserverDataWorkspace;
+		var provider = new Cesium.WebMapServiceImageryProvider({
+	        url : geoserverDataUrl + "/wms",
+	        layers : [geoserverDataWorkspace + ':'+ "bridge_group_focus"],
+	        minimumLevel:2,
+	        maximumLevel : 20,
+	        parameters : {
+	            service : 'WMS'
+	            ,version : '1.1.1'
+	            ,request : 'GetMap'
+	            ,transparent : 'true'
+	            ,format : 'image/png'
+	            ,time : 'P2Y/PRESENT'
+	            ,viewparams : "groupId:"+groupId
+	        },
+	        enablePickFeatures : false
+	    });
+		
+		viewer.imageryLayers.addImageryProvider(provider);
 	}
 </script>
