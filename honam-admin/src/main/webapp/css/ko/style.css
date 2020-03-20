@@ -1326,8 +1326,8 @@ background: url(/images/ko/pagenation_end.png) no-repeat 0 0;
 	height: calc(100% - 50px);
 }
 .contents-wrapper {
-	padding-top: 50px;
-	height: calc(100% - 180px);
+	padding-top: 25px;
+	height: calc(100% - 135px);
    	margin-left: 100px;
    	width: calc(100% - 100px);
 }
@@ -1361,6 +1361,30 @@ background: url(/images/ko/pagenation_end.png) no-repeat 0 0;
 	background-color: #fff;
 	overflow-y: auto;
 }
+.form-group {
+	margin-bottom: 10px;
+}
+.form-group h3 {
+	cursor: pointer;
+	padding: 7px;
+	background-color: #fff;
+	border: 1px solid #2196f3;
+}
+.form-group h3.on {
+	background-color: #2196f3;
+	color: #fff;
+}
+.form-group h3 > span.collapse-icon {
+	width: 15px;
+	float: right;
+    text-indent: -999em;
+	background-image: url(/images/temp/ico.png);
+    background-repeat: no-repeat;
+     background-position: 0 -745px;
+}
+.form-group h3.on > span.collapse-icon {
+    background-position: 0 -695px;
+}
 .form-inline {
 	width: 100%;
 	display: inline-block;
@@ -1371,7 +1395,7 @@ background: url(/images/ko/pagenation_end.png) no-repeat 0 0;
 }
 .form-inline label {
 	width: 20%;
-	padding : 8px;
+	padding : 5px;
 }
 .form-inline select {
 	width: 20%;
@@ -1380,7 +1404,7 @@ background: url(/images/ko/pagenation_end.png) no-repeat 0 0;
 	padding : 5px;
 }
 .form-inline button {
-	margin-top: 15px;
+
 }
 .map-button-wrapper {
 	position: absolute;

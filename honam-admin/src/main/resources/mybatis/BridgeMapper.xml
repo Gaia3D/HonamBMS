@@ -198,7 +198,7 @@
 			#{effWid}, #{totWid}, #{spaCnt}, #{maxLen},
 			#{traCnt}, #{uspRep}, #{dpiRep}, #{gruNum},
 			#{bridgeCm}, #{bridgeLcc}, #{grade},
-			#{model}, #{insertDt}, ST_GeomFromText(#{geom})
+			0, now(), ST_GeomFromText(#{geom}, 4326)
 		)
 	</insert>
 

@@ -7,8 +7,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import honam.domain.Bridge;
+import honam.domain.BridgeDroneFile;
 import honam.domain.SkSdo;
 import honam.domain.SkSgg;
+import honam.service.BridgeDroneFileService;
 import honam.service.BridgeService;
 import honam.persistence.BridgeMapper;
 import lombok.extern.slf4j.Slf4j;
@@ -20,6 +22,9 @@ public class BridgeServiceImpl implements BridgeService {
 
 	@Autowired
 	private BridgeMapper bridgeMapper;
+
+	@Autowired
+	private BridgeDroneFileService bridgeDroneFileService;
 
 	/**
 	 * Sdo 목록(geom 은 제외)
@@ -99,7 +104,7 @@ public class BridgeServiceImpl implements BridgeService {
 	public List<Bridge> getListBridge(Bridge bridge) {
 		return bridgeMapper.getListBridge(bridge);
 	}
-	
+
 	/**
 	 * 교량 그룹 교량 목록
 	 * @param bridgeGroupId
@@ -128,6 +133,24 @@ public class BridgeServiceImpl implements BridgeService {
 	@Transactional
 	public int insertBridge(Bridge bridge) {
 		return bridgeMapper.insertBridge(bridge);
+	}
+
+	/**
+	 * bridge, dronefile 등록
+	 * @param bridge
+	 * @return
+	 */
+	@Transactional
+	public int insertBridge(Bridge bridge, List<BridgeDroneFile> files) {
+		int result = bridgeMapper.insertBridge(bridge);
+		int gid = bridge.getGid();
+		if (result > 0) {
+			for (BridgeDroneFile file : files) {
+				file.setOgcFid(gid);
+			}
+			result = bridgeDroneFileService.insertBridgeDroneFile(files);
+		}
+		return result;
 	}
 
 	/**
