@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="honam.persistence.BridgeDroneFileMapper">
+
+	<!-- 교량 드론 파일 등록 -->
+	<insert id="insertBridgeDroneFile" parameterType="bridgeDroneFile">
+		/* insertBridgeDroneFile */
+		<selectKey keyProperty="uploadDroneFileId" resultType="Integer" order="BEFORE">
+    		SELECT NEXTVAL('bridge_drone_file_seq')
+  		</selectKey>
+		INSERT INTO bridge_drone_file(
+			upload_drone_file_id, ogc_fid, user_id,
+			file_name, file_real_name, file_path, file_sub_path, file_size,
+			file_ext, error_message
+		) VALUES (
+			#{uploadDroneFileId}, #{ogcFid}, #{userId},
+			#{fileName}, #{fileRealName}, #{filePath}, #{fileSubPath}, #{fileSize},
+			#{fileExt}, #{errorMessage}
+		)
+	</insert>
+
+	<!-- 교량 드론 파일 목록 조회 -->
+	<select id="getBridgeDroneFile" parameterType="bridgeDroneFile" resultType="bridgeDroneFile">
+		/* getBridgeDroneFile */
+		SELECT *
+		FROM bridge_drone_file
+		WHERE ogc_fid = #{gid}
+	    ORDER BY upload_drone_file_id
+	</select>
+
+	<!-- 교량 드론 파일 수정 -->
+	<update id="updateBridgeDroneFile" parameterType="bridgeDroneFile">
+		/* updateBridgeDroneFile */
+		UPDATE bridge_drone_file
+		<set>
+			<if test="fileName != null and fileName != ''">
+				file_name = #{fileName},
+			</if>
+			<if test="fileRealName != null and fileRealName != ''">
+				file_real_name = #{fileRealName},
+			</if>
+			<if test="filePath != null and filePath != ''">
+				file_path = #{filePath},
+			</if>
+			<if test="fileSubPath != null and fileSubPath != ''">
+				file_sub_path = #{fileSubPath},
+			</if>
+		</set>
+		WHERE upload_drone_file_id = #{uploadDroneFileId}
+	</update>
+
+	<!-- 교량 드론 파일 삭제 -->
+	<delete id="deleteBridgeDroneFile" parameterType="bridgeDroneFile">
+		/* deleteBridgeDroneFile */
+		DELETE FROM bridge_drone_file
+		WHERE upload_drone_file_id = #{uploadDroneFileId}
+		<if test="userId != null and userId != ''">
+			AND user_id = #{userId}
+		</if>
+	</delete>
+
+</mapper>
