@@ -66,8 +66,8 @@ public class BridgeServiceImpl implements BridgeService {
 	 * @return
 	 */
 	@Transactional(readOnly=true)
-	public String getCentroidBridge(Integer gid) {
-		return bridgeMapper.getCentroidBridge(gid);
+	public List<Bridge> getListCentroidBridge() {
+		return bridgeMapper.getListCentroidBridge();
 	}
 
 	/**

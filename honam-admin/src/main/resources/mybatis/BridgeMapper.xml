@@ -48,12 +48,9 @@
 	</select>
 
 	<!-- 선택한 교량의 center point를 구함 -->
-	<select id="getCentroidBridge" parameterType="bridge" resultType="string">
-		/* getCentroidBridge */
-		SELECT ST_AsText(ST_Centroid(A.wkb_geometry))
-		FROM bridge A
-		WHERE ogc_fid = #{gid}
-		ORDER BY ogc_fid LIMIT 1
+	<select id="getListCentroidBridge" resultType="bridge">
+		/* getListCentroidBridge */
+		SELECT brg_nam, grade, ST_X(ST_Centroid(wkb_geometry)) AS longitude, ST_Y(ST_Centroid(wkb_geometry)) AS latitude FROM bridge 
 	</select>
 
 	<!-- 관리주체 목록 -->

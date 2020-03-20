@@ -137,6 +137,7 @@
 		getListSdo();
 	   	getListManageOrg();
 		getListBridge();
+		getListCentroidBridge();
 // 		DistrictControll(viewer);
 // 		MapControll(viewer);
 // 		drawBridge();
@@ -152,7 +153,7 @@
 	// 시도 목록
 	function getListSdo() {
 		$.ajax({
-	        url: "../bridges/sdos",
+	        url: "/bridges/sdos",
 	        type: "GET",
 	        dataType: "json",
 	        success : function(res) {
@@ -178,7 +179,7 @@
 	// 시도에 해당하는 시군구 목록
 	function getListSgg(bjcd) {
 		$.ajax({
-	        url: "../bridges/sdos/" + bjcd + "/sggs",
+	        url: "/bridges/sdos/" + bjcd + "/sggs",
 	        type: "GET",
 	        dataType: "json",
 	        success : function(res) {
@@ -204,7 +205,7 @@
 	
 	// 관리주체 목록 로딩
 	function getListManageOrg() {
-		var url = "../bridges/manage";
+		var url = "/bridges/manage";
 		$.ajax({
 		    url: url,
 		    type: "GET",
@@ -229,62 +230,55 @@
 		});
 	}
 
-   	// function
-	function drawBridge() {
-		  <c:if test="${!empty bridgeList }">
-		  	<c:forEach var="bridge" items="${bridgeList}" varStatus="status">
-				getCentroidBridge("${bridge.gid}","${bridge.brgNam}","${bridge.grade}")
-		  	</c:forEach>
-		  </c:if>
-	}
-
-	function getCentroidBridge(gid, name, grade) {
-		var url = "./" + gid + "/centroid";
-		var cnt = null;
-
+	function getListCentroidBridge() {
 		$.ajax({
-		    url: url,
+		    url: "/bridges/centroids",
 		    type: "GET",
 		    dataType: "json",
-		    success : function(msg) {
-		        if(msg.result === "success") {
-		      	  cnt++;
-		      	  addMarkerBillboards(name, msg.longitude,  msg.latitude, grade, cnt);
-		        }
+		    success : function(res) {
+		    	if(res.statusCode <= 200) {
+		      	  addMarkerBillboards(res.bridgeList);
+		    	} else {
+					alert(JS_MESSAGE[res.errorCode]);
+					console.log("---- " + res.message);
+				}
 		    },
-		    error : function(request, status, error) {
-		        //alert(JS_MESSAGE["ajax.error.message"]);
-		        console.log("code : " + request.status + "\n message : " + request.responseText + "\n error : " + error);
-		    }
+		    error: function(request, status, error) {
+				alert(JS_MESSAGE["ajax.error.message"]);
+			}
 		});
 	}
 
-	function addMarkerBillboards(bridgeName, longitude, latitude, grade, cnt) {
-		var markerImage = null;
-		if(grade == 'A'){
-			markerImage = '/images/${lang}/A.png';
-		} else if(grade == 'B') {
-			markerImage = '/images/${lang}/B.png';
-		} else if(grade == 'C') {
-			markerImage = '/images/${lang}/C.png';
-		} else if(grade == 'D') {
-			markerImage = '/images/${lang}/D.png';
-		} else if(grade == 'E') {
-			markerImage = '/images/${lang}/E.png';
-		} else {
-			markerImage = '/images/${lang}/X.png';
+	function addMarkerBillboards(bridgeList) {
+		for(var i=0; i< bridgeList.length;i++) {
+			var bridge = bridgeList[i];
+			var markerImage = "/images/${lang}/"+bridge.grade+".png";
+			viewer.entities.add({
+				name : bridge.brgNam,
+		        position : Cesium.Cartesian3.fromDegrees(parseFloat(bridge.longitude), parseFloat(bridge.latitude), 0),
+		        billboard : {
+		            image : markerImage,
+		            width : 35, 
+		            height : 35, 
+		            disableDepthTestDistance : Number.POSITIVE_INFINITY,
+		            scaleByDistance : new Cesium.NearFarScalar(10000, 1.5, 1000000, 0.0)
+		        },
+		        label : {
+		            fillColor : {
+		                rgba : [0, 0, 0, 255]
+		            },
+		            font : "12pt Lucida Console",
+		            scaleByDistance : new Cesium.NearFarScalar(25000, 1.0, 50000, 0.0),
+		            pixelOffset : new Cesium.Cartesian2(5, 30),
+		            style: "FILL",
+		            text : bridge.brgNam,
+		            showBackground : true,
+		            backgroundColor : {
+		                rgba : [112, 89, 57, 200]
+		            }
+		        }
+		    });
 		}
-
-		viewer.entities.add({
-			name : bridgeName,
-	        position : Cesium.Cartesian3.fromDegrees(parseFloat(longitude), parseFloat(latitude), 0),
-	        billboard : {
-	            image : markerImage,
-	            width : 35, 
-	            height : 35, 
-	            disableDepthTestDistance : Number.POSITIVE_INFINITY
-	        }
-	    });
 	}
 	
 	// 교량 목록 로드
