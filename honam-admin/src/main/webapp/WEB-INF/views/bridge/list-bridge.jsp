@@ -112,6 +112,8 @@
 <!-- <script type="text/javascript" src="/js/MapControll.js"></script> -->
 <!-- <script type="text/javascript" src="/js/BridgeAttribute.js"></script> -->
 <script type="text/javascript">
+	var viewer = null;
+	
    	// 초기 로딩 설정
 	$(document).ready(function() {
 		var INIT_WEST = 124.67;
