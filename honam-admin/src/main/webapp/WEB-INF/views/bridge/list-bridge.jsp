@@ -105,6 +105,8 @@
 <script type="text/javascript" src="/externlib/jquery-ui-1.12.1/jquery-ui.min.js"></script>
 <script type="text/javascript" src="/externlib/cesium/Cesium.js"></script>
 <script type="text/javascript" src="/externlib/handlebars-4.1.2/handlebars.js"></script>
+<script type="text/javascript" src="/js/mago3d.js"></script>
+<script type="text/javascript" src="/js/mago3d_lx.js"></script>
 <script type="text/javascript" src="/js/${lang}/handlebarsHelper.js"></script>
 <script type="text/javascript" src="/js/${lang}/common.js"></script>
 <script type="text/javascript" src="/js/${lang}/message.js"></script>
@@ -120,21 +122,17 @@
 	//TODO: policy 개발 후 변경 
 	var HONAMBMS = HONAMBMS || {
 		policy : {
-			geoserverDataUrl : "http://localhost:8080/geoserver/",
+			geoserverDataUrl : "http://localhost:8082/geoserver/",
 			geoserverDataWorkspace : "honambms",
-			geoserverDataStore : "honambms"
+			geoserverDataStore : "honambms",
+			basicGlobe : 'cesium',
+			cesiumIonToken : '${cesiumIonToken}'
 		},
 	};
 	
    	// 초기 로딩 설정
 	$(document).ready(function() {
-		var INIT_WEST = 124.67;
-		var INIT_SOUTH = 35.72;
-		var INIT_EAST = 128.46;
-		var INIT_NORTH = 33.77;
-		var rectangle = Cesium.Rectangle.fromDegrees(INIT_WEST, INIT_SOUTH, INIT_EAST, INIT_NORTH);
-		Cesium.Camera.DEFAULT_VIEW_FACTOR = 0;
-		Cesium.Camera.DEFAULT_VIEW_RECTANGLE = rectangle;
+		/* 
 		
 		var imageryProvider = new Cesium.ArcGisMapServerImageryProvider({
 			url: 'https://services.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer',
@@ -142,15 +140,10 @@
 		});
 		
 	   	viewer = new Cesium.Viewer('MapContainer', {imageryProvider : imageryProvider, baseLayerPicker : false,
-	   		animation:false, timeline:false, geocoder:false, navigationHelpButton: false, fullscreenButton:false, homeButton: false, sceneModePicker: false });
-	   	var satValueCount = null;
+	   		animation:false, timeline:false, geocoder:false, navigationHelpButton: false, fullscreenButton:false, homeButton: false, sceneModePicker: false }); */
+
+   		magoStart();
 	   	
-	   	MouseControll(viewer,null,null);
-		getListSdo();
-	   	getListManageOrg();
-		getListBridge();
-		getListCentroidBridge();
-		initBridgeLayer();
 // 		DistrictControll(viewer);
 // 		MapControll(viewer);
 	});
@@ -161,6 +154,44 @@
 			getListSgg(sdoCode);		
 		}
 	});
+
+	function magoStart() {
+		var INIT_WEST = 124.67;
+		var INIT_SOUTH = 35.72;
+		var INIT_EAST = 128.46;
+		var INIT_NORTH = 33.77;
+		var rectangle = Cesium.Rectangle.fromDegrees(INIT_WEST, INIT_SOUTH, INIT_EAST, INIT_NORTH);
+		Cesium.Camera.DEFAULT_VIEW_FACTOR = 0;
+		Cesium.Camera.DEFAULT_VIEW_RECTANGLE = rectangle;
+		
+		var geoPolicyJson = HONAMBMS.policy;
+
+		var cesiumViewerOption = {};
+		cesiumViewerOption.infoBox = false;
+		cesiumViewerOption.navigationHelpButton = false;
+		cesiumViewerOption.selectionIndicator = false;
+		cesiumViewerOption.homeButton = false;
+		cesiumViewerOption.fullscreenButton = false;
+		cesiumViewerOption.geocoder = false;
+		cesiumViewerOption.baseLayerPicker = false;
+		cesiumViewerOption.sceneModePicker = false;
+
+		MAGO3D_INSTANCE = new Mago3D.Mago3d('MapContainer', geoPolicyJson, {loadend : magoLoadEnd}, cesiumViewerOption);
+	}
+
+	function magoLoadEnd(e) {
+		var magoInstance = e;
+		viewer = magoInstance.getViewer();
+		//
+		var satValueCount = null;
+	   	
+	   	MouseControll(viewer,null,null);
+		getListSdo();
+	   	getListManageOrg();
+		getListBridge();
+		getListCentroidBridge();
+		initBridgeLayer();
+	}
 	
 	// 시도 목록
 	function getListSdo() {
