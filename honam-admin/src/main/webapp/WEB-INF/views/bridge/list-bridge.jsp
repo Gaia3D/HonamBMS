@@ -168,8 +168,8 @@
 	        url: "/bridges/sdos",
 	        type: "GET",
 	        dataType: "json",
-	        success : function(res) {
-	        	if(res.statusCode <= 200) {
+	        success : function(msg) {
+	        	if(msg.statusCode <= 200) {
 	                var sdoList = res.sdoList;
 	                var content = "<option value=''> 시도 </option>";
 	                for(var i=0, len=sdoList.length; i < len; i++) {
@@ -178,8 +178,14 @@
 	                }
 	                $('#sdoCode').html(content);
 	        	} else {
-					alert(JS_MESSAGE[res.errorCode]);
-					console.log("---- " + res.message);
+	        		if(msg.errorCode === "user.session.empty") {
+	        			//alert(JS_MESSAGE[msg.errorCode]);
+	        			location.href = "/sign/signin";
+	        			return;
+	        		} else {
+	        			alert(JS_MESSAGE[msg.errorCode]);
+						console.log("---- " + msg.message);	        			
+	        		}
 				}
 	        },
 	        error: function(request, status, error) {
@@ -194,8 +200,8 @@
 	        url: "/bridges/sdos/" + bjcd + "/sggs",
 	        type: "GET",
 	        dataType: "json",
-	        success : function(res) {
-	        	if(res.statusCode <= 200) {
+	        success : function(msg) {
+	        	if(msg.statusCode <= 200) {
 	                var sggList = res.sggList;
 	                $('#sggCode').empty()
 	                var content = "<option value=''> 시군구 </option>";
@@ -205,8 +211,14 @@
 	                }
 	                $('#sggCode').html(content);
 	        	} else {
-					alert(JS_MESSAGE[res.errorCode]);
-					console.log("---- " + res.message);
+	        		if(msg.errorCode === "user.session.empty") {
+	        			//alert(JS_MESSAGE[msg.errorCode]);
+	        			location.href = "/sign/signin";
+	        			return;
+	        		} else {
+	        			alert(JS_MESSAGE[msg.errorCode]);
+						console.log("---- " + msg.message);	        			
+	        		}
 				}
 	        },
 	        error: function(request, status, error) {
