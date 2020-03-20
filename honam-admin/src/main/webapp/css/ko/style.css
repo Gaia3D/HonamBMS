@@ -782,13 +782,15 @@ margin-bottom: 5px;
 cursor: pointer;
 }
 ul.listLayer li > p {
-padding: 10px 10px 10px 35px;
+padding: 10px 10px 10px 15px;
 font-weight: bold;
 border:1px solid #2196f3;
+/*
 background-image: url(../../images/ico2.png), url(../../images/ico2.png);
 background-repeat: no-repeat, no-repeat;
 background-position: left -255px,right -255px;
 background-color: #fff;
+*/
 }
 ul.listLayer li > p > span {
 font-weight: normal;
@@ -799,9 +801,11 @@ display: none;
 ul.listLayer li.on > p {
 color: #fff;
 background-color: #2196f3bd;
+/*
 background-image: url(../../images/ico2.png), url(../../images/ico2.png);
 background-repeat: no-repeat, no-repeat;
 background-position: left -205px, right -210px;
+*/
 }
 ul.listLayer li.on > ul {
 overflow-x: hidden;

@@ -411,15 +411,15 @@ span.gr {
 }
 
 .layerGroup {
-margin-top: -4px;
-padding: 2px 7px 2px;
-color: #fff;
-border-radius: 15px;
-border: none;
-background-color: #262b3f;
-float: right;
-width: 30px!important;
-text-align:center;
+	margin-top: -4px;
+	padding: 2px 7px 2px;
+	color: #fff;
+	border-radius: 15px;
+	border: none;
+	background-color: #262b3f;
+	float: right;
+	width: 30px!important;
+	text-align:center;
 }
 
 button.goto {
@@ -433,4 +433,19 @@ button.goto {
 	background-repeat: no-repeat;
 	background-position: 10px -468px;
 	background-color: transparent;
+}
+
+
+button.textBtnSub {
+	padding: 6px;
+	border-radius: 3px;
+	color: #333;
+	font-size: 14px;
+	border: 1px solid #555;
+	background-color: #fff;
+}
+button.textBtnSub:hover {
+	color: #fff;
+	border: 1px solid #555;
+	background-color: #555;
 }

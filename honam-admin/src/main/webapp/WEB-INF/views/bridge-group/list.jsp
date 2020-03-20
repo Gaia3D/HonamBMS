@@ -19,7 +19,7 @@
 					<th scope="col" class="col-name">지역명</th>
 				</tr>
 			</thead>
-			<tbody id="transferDataList">
+			<tbody>
 				<tr>
 					<td class="col-number">
 						<span class="legend co">G</span>
