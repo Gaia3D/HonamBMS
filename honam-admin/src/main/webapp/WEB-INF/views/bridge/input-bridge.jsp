@@ -29,108 +29,106 @@
 		<div class="list-wrapper">
 			<form id="insertBridgeForm">
 				<input type="hidden" id="geom" name="geom">
+				<input type="hidden" id="facSido" name="facSido">
+				<input type="hidden" id="facSgg" name="facSgg">
 
-				<div class="form-inline">
-					<label for="brgNam">* 교량명</label>
-					<input type="text" id="brgNam" name="brgNam">
-					<label for="facNum">* 시설물번호</label>
-					<input type="text" id="facNum" name="facNum">
+				<div class="form-group">
+					<h3 class="on">교량 정보<span class="collapse-icon">icon</span></h3>
+					<div class="form-inline">
+						<label for="brgNam">* 교량명</label>
+						<input type="text" id="brgNam" name="brgNam">
+						<label for="facNum">* 시설물번호</label>
+						<input type="text" id="facNum" name="facNum">
+					</div>
+					<div class="form-inline">
+						<label for="mngOrg">관리주체</label>
+						<input type="text" id="mngOrg" name="mngOrg">
+					</div>
 				</div>
 
-				<div class="form-inline">
-					<label for="mngOrg">관리주체</label>
-					<input type="text" id="mngOrg" name="mngOrg">
+				<div class="form-group">
+					<h3 class="on">주소<span class="collapse-icon">icon</span></h3>
+					<div class="form-inline">
+						<label for="sdoCode">* 시도</label>
+						<select id="sdoCode"></select>
+						<label for="sggCode">* 시군구</label>
+						<select id="sggCode"></select>
+					</div>
+					<div class="form-inline">
+						<label for="facSido">읍면동</label>
+						<input type="text" id="facEmd" name="facEmd">
+						<label for="facSido">리</label>
+						<input type="text" id="facRi" name="facRi">
+					</div>
 				</div>
 
-				<div class="form-inline">
-					<label>주소</label>
-				</div>
-				<div class="form-inline">
-					<label for="sdoCode">* 시도</label>
-					<select id="sdoCode" name="facSido"></select>
-					<label for="sggCode">* 시군구</label>
-					<select id="sggCode" name="facSgg"></select>
-				</div>
-
-				<div class="form-inline">
-					<label for="facSido">읍면동</label>
-					<input type="text" id="facEmd" name="facEmd">
-					<label for="facSido">리</label>
-					<input type="text" id="facRi" name="facRi">
-				</div>
-
-				<div class="form-inline">
-					<label for="facGra">종별</label>
-					<input type="radio" id="facGra1" name="facGra" value="1종" checked="checked">
-					<label for="facGra1">1종</label>
-					<input type="radio" id="facGra2" name="facGra" value="2종">
-					<label for="facGra2">2종</label>
-				</div>
-
-				<div class="form-inline">
-					<label for="endAmd">준공년도</label>
-					<input type="text" id="endAmd" name="endAmd">
-					<label for="dsnWet">설계하중</label>
-					<input type="text" id="dsnWet" name="dsnWet">
-				</div>
-
-				<div class="form-inline">
-					<label for="brgLen">연장 (m)</label>
-					<input type="text" id="brgLen" name="brgLen">
-					<label for="brgHit">교고 (m)</label>
-					<input type="text" id="brgHit" name="brgHit">
-				</div>
-
-				<div class="form-inline">
-					<label for="effWid">유효폭 (m)</label>
-					<input type="text" id="effWid" name="effWid">
-					<label for="totWid">총폭 (m)</label>
-					<input type="text" id="totWid" name="totWid">
-				</div>
-
-				<div class="form-inline">
-					<label for="spaCnt">경간수</label>
-					<input type="text" id="spaCnt" name="spaCnt">
-					<label for="maxLen">최대경간장 (m)</label>
-					<input type="text" id="maxLen" name="maxLen">
-				</div>
-
-				<div class="form-inline">
-					<label for="traCnt">교통량</label>
-					<input type="text" id="traCnt" name="traCnt">
-				</div>
-
-				<div class="form-inline">
-					<label for="uspRep">상부 형식</label>
-					<input type="text" id="uspRep" name="uspRep">
-					<label for="dpiRep">하부 형식</label>
-					<input type="text" id="dpiRep" name="dpiRep">
+				<div class="form-group">
+					<h3 class="on">상세 정보<span class="collapse-icon">icon</span></h3>
+					<div class="form-inline">
+						<label for="facGra">종별</label>
+						<input type="radio" id="facGra1" name="facGra" value="1종" checked="checked">
+						<label for="facGra1">1종</label>
+						<input type="radio" id="facGra2" name="facGra" value="2종">
+						<label for="facGra2">2종</label>
+					</div>
+					<div class="form-inline">
+						<label for="endAmd">준공년도</label>
+						<input type="text" id="endAmd" name="endAmd">
+						<label for="dsnWet">설계하중</label>
+						<input type="text" id="dsnWet" name="dsnWet">
+					</div>
+					<div class="form-inline">
+						<label for="brgLen">연장 (m)</label>
+						<input type="text" id="brgLen" name="brgLen">
+						<label for="brgHit">교고 (m)</label>
+						<input type="text" id="brgHit" name="brgHit">
+					</div>
+					<div class="form-inline">
+						<label for="effWid">유효폭 (m)</label>
+						<input type="text" id="effWid" name="effWid">
+						<label for="totWid">총폭 (m)</label>
+						<input type="text" id="totWid" name="totWid">
+					</div>
+					<div class="form-inline">
+						<label for="spaCnt">경간수</label>
+						<input type="text" id="spaCnt" name="spaCnt">
+						<label for="maxLen">최대경간장 (m)</label>
+						<input type="text" id="maxLen" name="maxLen">
+					</div>
+					<div class="form-inline">
+						<label for="traCnt">교통량</label>
+						<input type="text" id="traCnt" name="traCnt">
+					</div>
+					<div class="form-inline">
+						<label for="uspRep">상부 형식</label>
+						<input type="text" id="uspRep" name="uspRep">
+						<label for="dpiRep">하부 형식</label>
+						<input type="text" id="dpiRep" name="dpiRep">
+					</div>
+					<div class="form-inline">
+						<label for="bridgeLcc">내하성능</label>
+						<input type="text" id="bridgeLcc" name="bridgeLcc">
+						<label for="bridgeCm">유지관리 목표성능</label>
+						<input type="text" id="bridgeCm" name="bridgeCm">
+					</div>
+					<div class="form-inline">
+						<label for="grade">교량등급</label>
+						<select id="grade" name="grade">
+							<option value="">교량등급</option>
+							<option value="A">A</option>
+							<option value="B">B</option>
+							<option value="C">C</option>
+							<option value="D">D</option>
+						</select>
+					</div>
 				</div>
 
-				<div class="form-inline">
-					<label for="bridgeLcc">내하성능</label>
-					<input type="text" id="bridgeLcc" name="bridgeLcc">
-					<label for="bridgeCm">유지관리 목표성능</label>
-					<input type="text" id="bridgeCm" name="bridgeCm">
-				</div>
-
-				<div class="form-inline">
-					<label for="grade">교량등급</label>
-					<select id="grade" name="grade">
-						<option>교량등급</option>
-						<option value="A">A</option>
-						<option value="B">B</option>
-						<option value="C">C</option>
-						<option value="D">D</option>
-					</select>
-				</div>
-
-				<div class="form-inline">
-					<label for="files">드론영상</label>
-				</div>
-
-				<div class="form-inline">
-  					<input type="file" id="files" name="files" multiple>
+				<div class="form-group">
+					<h3 class="on">드론영상<span class="collapse-icon">icon</span></h3>
+					<div class="form-inline">
+						<label for="files">선택된 파일 : </label>
+	  					<input type="file" id="files" name="files" multiple>
+					</div>
 				</div>
 
 				<div class="form-inline">
@@ -209,6 +207,11 @@ $(document).ready(function() {
 		}
 	});
 
+	$('.form-group h3').click(function() {
+		$(this).toggleClass('on');
+		$(this).siblings().toggle();
+	});
+
 	$("#sdoCode").on("change", function() {
 		var sdoCode = $("#sdoCode").val();
 		if(sdoCode) {
@@ -230,7 +233,7 @@ $(document).ready(function() {
 			dataType: 'json',
 			success: function(res) {
 				if(res.statusCode <= 200) {
-					console.log("---- " + res);
+					alert("교량을 성공적으로 등록 하였습니다.");
 				} else {
 					alert(JS_MESSAGE[res.errorCode]);
 					console.log("---- " + res.message);
@@ -303,15 +306,39 @@ function getListSgg(bjcd) {
 
 // 입력폼 유효성 검사
 function validation() {
+
+	// 교량 그리기
 	var wktFlag = false;
-	if (drawer != null && drawer.getPositionWKT()) {
-		wktFlag = true;
-		$('input[name="geom"]').val(drawer.getPositionWKT());
+	if (drawer != null) {
+		try {
+			$('input[name="geom"]').val(drawer.getPositionWKT());
+			wktFlag = true;
+		} catch (e) {
+			alert('교량 영역을 그려주세요!');
+			return false;
+		}
 	}
 	if (!wktFlag) {
 		alert('교량 영역을 그려주세요!');
 		return false;
 	}
+
+	// 시도/시군구 선택
+	if ($('#sdoCode').val()) {
+		var facSido = $('#sdoCode option:selected').text();
+		$('input[name="facSido"]').val(facSido);
+	} else {
+		alert('시도를 선택해주세요!');
+		return false;
+	}
+	if ($('#sggCode').val()) {
+		var facSido = $('#sggCode option:selected').text();
+		$('input[name="facSgg"]').val(facSido);
+	} else {
+		alert('시군구를 선택해주세요!');
+		return false;
+	}
+
 	return true;
 }
 

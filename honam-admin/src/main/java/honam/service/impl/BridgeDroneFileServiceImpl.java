@@ -20,8 +20,11 @@ public class BridgeDroneFileServiceImpl implements BridgeDroneFileService {
 
 	@Override
 	public int insertBridgeDroneFile(List<BridgeDroneFile> files) {
-		// TODO Auto-generated method stub
-		return 0;
+		int result = 0;
+		for (BridgeDroneFile file : files) {
+			result += bridgeDroneFileMapper.insertBridgeDroneFile(file);
+		}
+		return result;
 	}
 
 	@Override

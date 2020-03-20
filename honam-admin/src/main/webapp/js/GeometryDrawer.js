@@ -19,7 +19,7 @@ CesiumPolygonDrawer.prototype.getPositionWKT = function() {
     var positions = this.drawedEntity.polygon.hierarchy.getValue().positions;
     var firstLon;
     var firstLat;
-    var wkt = 'POLYGON ((';
+    var wkt = 'MULTIPOLYGON (((';
     for(var i=0,len=positions.length;i<len;i++) {
         if(i>0) {
             wkt += ',';
@@ -42,7 +42,7 @@ CesiumPolygonDrawer.prototype.getPositionWKT = function() {
     wkt += firstLon;
     wkt += ' ';
     wkt += firstLat;
-    wkt += '))';
+    wkt += ')))';
 
     return wkt;
 }

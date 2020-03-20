@@ -3,6 +3,7 @@ package honam.service;
 import java.util.List;
 
 import honam.domain.Bridge;
+import honam.domain.BridgeDroneFile;
 import honam.domain.SkSdo;
 import honam.domain.SkSgg;
 
@@ -75,7 +76,7 @@ public interface BridgeService {
 	 * @return
 	 */
 	List<Bridge> getListBridgeByBridgeGroupId(Integer bridgeGroupId);
-	
+
 	/**
 	 * bridge 정보 조회
 	 * @param gid
@@ -89,6 +90,13 @@ public interface BridgeService {
 	 * @return
 	 */
 	int insertBridge(Bridge bridge);
+
+	/**
+	 * bridge dronefile 등록
+	 * @param bridge
+	 * @return
+	 */
+	int insertBridge(Bridge bridge, List<BridgeDroneFile> files);
 
 	/**
 	 * bridge 수정

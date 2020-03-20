@@ -57,6 +57,7 @@ public class BridgeManageController {
 
 	/**
 	 * 교량 등록
+	 * @param request
 	 * @param model
 	 * @return
 	 */
@@ -67,6 +68,8 @@ public class BridgeManageController {
 
 	/**
 	 * 교량 수정
+	 * @param request
+	 * @param gid
 	 * @param model
 	 * @return
 	 */
