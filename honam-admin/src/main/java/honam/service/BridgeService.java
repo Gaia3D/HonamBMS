@@ -40,7 +40,7 @@ public interface BridgeService {
 	 * @param gid
 	 * @return
 	 */
-	String getCentroidBridge(Integer gid);
+	List<Bridge> getListCentroidBridge();
 
 	/**
 	 * 관리주체 목록

@@ -324,20 +324,17 @@ public class BridgeRestController {
 	 * @param gid
 	 * @return
 	 */
-	@GetMapping("/{gid:[0-9]+}/centroid")
-	public Map<String, Object> getCentroidBridge(@PathVariable Integer gid) {
-		log.info("@@@@ gid = {}", gid);
+	@GetMapping("/centroids")
+	public Map<String, Object> getCentroidBridge() {
 
 		Map<String, Object> result = new HashMap<>();
 		String errorCode = null;
 		String message = null;
 		
-		String centerPoint =  bridgeService.getCentroidBridge(gid);
-		String[] location = centerPoint.substring(centerPoint.indexOf("(") + 1, centerPoint.indexOf(")")).split(" ");
+		List<Bridge> bridgeList =  bridgeService.getListCentroidBridge();
 		int statusCode = HttpStatus.OK.value();
-
-		result.put("longitude", location[0]);
-		result.put("latitude", location[1]);
+		
+		result.put("bridgeList", bridgeList);
 		result.put("statusCode", statusCode);
 		result.put("errorCode", errorCode);
 		result.put("message", message);

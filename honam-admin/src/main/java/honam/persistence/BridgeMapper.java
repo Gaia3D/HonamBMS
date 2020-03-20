@@ -43,7 +43,7 @@ public interface BridgeMapper {
 	 * @param gid
 	 * @return
 	 */
-	String getCentroidBridge(Integer gid);
+	List<Bridge> getListCentroidBridge();
 
 	/**
 	 * 관리주체 목록
