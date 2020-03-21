@@ -78,10 +78,16 @@
 			<div id="3dmodels" class="listContents">
 				<ul class="bridgeSubInfoGroup">
 					<li>
-						<label for="rlosOffset">Sensor Type</label><br/>
-						<input type="radio" name="sensor" value="ACC" /> ACC (가속도계)<br/>
-						<input type="radio" name="sensor" value="STR" /> STR (변형률계)<br/>
-						<input type="radio" name="sensor" value="STR" /> TMP (온도계)
+						<div style="width:20px;height:20px;position:fixed;background-color:red"></div>
+						<lable style="margin-left:30px;">ACC(가속도계)</label>
+					</li>
+					<li>
+						<div style="width:20px;height:20px;position:fixed;background-color:green"></div>
+						<lable style="margin-left:30px;">STR (변형률계)</label>
+					</li>
+					<li>
+						<div style="width:20px;height:20px;position:fixed;background-color:blue"></div>
+						<lable style="margin-left:30px;">TMP (온도계)</label>
 					</li>
 				</ul>
 			</div>

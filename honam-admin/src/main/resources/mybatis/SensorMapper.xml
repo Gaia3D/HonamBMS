@@ -7,9 +7,18 @@
 	<select id="getListSensorID" parameterType="string" resultType="sensor">
 		/* getListSensorID */
 		SELECT DISTINCT ON(A.wkb_geometry) 
-		A.ogc_fid as gid, sensorid, ST_AsText(A.geom) AS location, A.z AS alt, A.condition, A.time, A.meanvalue, A.maxvalue
+				A.ogc_fid as gid, 
+				A.sensorid,
+				substr(A.sensorid,1,3) as sensor_type,
+				ST_X(ST_Centroid(A.wkb_geometry)) AS lon_wgs,
+				ST_Y(ST_Centroid(A.wkb_geometry)) AS lat_wgs, 
+				A.z AS alt, 
+				A.condition,
+				A.time,
+				A.meanvalue,
+				A.maxvalue
 		FROM sensorid A
-		WHERE A.fac_num = #{fac_num}
+		WHERE A.fac_num = #{facNum}
 	</select>
 	
 	<!-- sensorId 건수  -->

@@ -397,6 +397,7 @@
 					$("#BridgeDetailInfoArea").append(htmlList);
 	        		gotoFlyBridge(longitude, latitude);
 	        		viewBridgeInfo();
+	        		addSensorData(msg.sensorList);
 	        	} else {
 					alert(JS_MESSAGE[msg.errorCode]);
 					console.log("---- " + msg.message);
@@ -458,6 +459,35 @@
 	    });
 		
 		viewer.imageryLayers.addImageryProvider(provider);
+	}
+	
+	function addSensorData(sensorList) {
+		if(sensorList.length === 0) return;
+		var viewer = MAGO3D_INSTANCE.getViewer();
+		for(var i=0; i< sensorList.length;i++) {
+			var sensorType = sensorList[i].sensorType;
+			var x = sensorList[i].lonWgs;
+			var y = sensorList[i].latWgs;
+			var z = sensorList[i].z;
+			var color;
+			if(sensorType === "ACC") {
+				color = Cesium.Color.RED;
+			} else if(sensorType === "STR") {
+				color = Cesium.Color.GREEN;
+			} else {
+				color = Cesium.Color.BLUE;
+			}
+			viewer.entities.add({
+				position : Cesium.Cartesian3.fromDegrees(x, y, z),
+				point : new Cesium.PointGraphics({
+					pixelSize : 10,
+					heightReference : Cesium.HeightReference.CLAMP_TO_GROUND,
+					color : color,
+					outlineColor : Cesium.Color.WHITE,
+					outlineWidth : 2
+				})
+			});			
+		}
 	}
 	
 	function initBridgeGroupLayer() {
