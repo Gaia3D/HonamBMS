@@ -59,7 +59,107 @@ background-color: #fff;
 padding-left: 391px;
 height:100%;
 }
-
+.ctrlWrap {
+position: absolute;
+top: 55px;
+right: 3px;
+}
+.ctrlWrap div {
+display: inline-block;
+color: #fff;
+border-radius: 25px;
+background-color: #252535;
+}
+.ctrlWrap div > button {
+border: none;
+border-radius: 25px;
+background-color: transparent;
+background-image: url(/images/ko/toolbar.png);
+background-repeat: no-repeat;
+width: 50px;
+height: 50px;
+text-indent: -999em;
+}
+.ctrlWrap div button:hover {
+background-color: #333446;
+}
+.ctrlWrap div > button.reset {
+background-position: 15px 0;
+}
+.ctrlWrap div > button.zoomall {
+background-position: -35px 0;
+}
+.ctrlWrap div > button.zoomin {
+background-position: -85px 0;
+}
+.ctrlWrap div > button.zoomout {
+background-position: -135px 0;
+}
+.ctrlWrap div > button.distance {
+background-position: -185px 0;
+}
+.ctrlWrap div > button.distance.on {
+background-position: -185px -50px;
+background-color: #fff600;
+}
+.ctrlWrap div > button.area {
+background-position: -242px 0;
+}
+.ctrlWrap div > button.area.on {
+background-position: -242px -50px;
+background-color: #fff600;
+}
+.ctrlWrap div > button.rotateReset {
+background-position: -285px 0;
+}
+.ctrlWrap div > button.rotateReset.on {
+background-color: #fff600;
+background-position: -285px -50px;
+}
+.ctrlWrap div > button.rotateLeft {
+background-position: -340px 0;
+}
+.ctrlWrap div > button.rotateRight {
+background-position: -390px 0;
+}
+.ctrlWrap div > button.print {
+background-position: -151px -52px;
+}
+.ctrlWrap div > button.print.on {
+background-position: -151px -102px;
+background-color: #fff600;
+}
+.ctrlWrap div > button.save {
+background-position: -351px -52px;
+}
+.ctrlWrap div > button.save.on {
+background-position: -351px -102px;
+background-color: #fff600;
+}
+.ctrlWrap div > button.magoSet {
+background-position: -85px -52px;
+}
+.ctrlWrap div > button.magoSet.on {
+background-position: -85px -102px;
+background-color: #fff600;
+}
+.ctrlWrap div > button.cameraLeft {
+background-position: -195px -100px;
+}
+.ctrlWrap div > button.cameraRight {
+background-position: -240px -100px;
+}
+.ctrlWrap div > input {
+width: 30px;
+/* margin-top: 3px; */
+padding: 8px;
+font-size: 17px;
+color: #fff;
+text-align: center;
+border: none;
+border-bottom: 2px solid #fff;
+background-color: transparent;
+}
 #viewWrap {
 float: left;
 position: relative;
