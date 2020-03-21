@@ -98,6 +98,7 @@
 		</div>
 	</div>
 	<!-- E: MAPWRAP -->
+	<%@ include file="/WEB-INF/views/layouts/toolbar.jsp" %>
 </div>
 <!-- E: wrap -->
 
@@ -113,9 +114,9 @@
 <script type="text/javascript" src="/js/Honam-bms.js"></script>
 <script type="text/javascript" src="/js/NumberFormatter.js"></script>
 <script type="text/javascript" src="/js/MouseControll.js"></script>
+<script type="text/javascript" src="/js/MapControll.js"></script>
 <!-- <script type="text/javascript" src="/js/Geospatial.js"></script> -->
 <!-- <script type="text/javascript" src="/js/DistrictControll.js"></script> -->
-<!-- <script type="text/javascript" src="/js/MapControll.js"></script> -->
 <!-- <script type="text/javascript" src="/js/BridgeAttribute.js"></script> -->
 <script type="text/javascript">
 	var viewer = null;
@@ -182,10 +183,12 @@
 	function magoLoadEnd(e) {
 		var magoInstance = e;
 		viewer = magoInstance.getViewer();
+		viewer.baseLayerPicker.destroy();
 		//
 		var satValueCount = null;
 	   	
 	   	MouseControll(viewer,null,null);
+	   	MapControll(viewer);
 		getListSdo();
 	   	getListManageOrg();
 		getListBridge();
