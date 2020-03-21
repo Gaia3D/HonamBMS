@@ -655,3 +655,11 @@ function goMagoAPIGuide(url) {
 	return false;
 }
 
+//로딩 시작
+function startLoading() {
+	$('#loadingWrap').show();
+}
+//로딩 중지
+function stopLoading() {
+	$('#loadingWrap').hide();
+}
