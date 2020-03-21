@@ -389,17 +389,17 @@
 	        url: "/bridges/" + gid,
 	        type: "GET",
 	        dataType: "json",
-	        success : function(res) {
-	        	if(res.statusCode <= 200) {
+	        success : function(msg) {
+	        	if(msg.statusCode <= 200) {
 	        		var template = Handlebars.compile($("#templateBridgeDetail").html());
-					var htmlList = template(res.bridge);
+					var htmlList = template(msg.bridge);
 					$("#BridgeDetailInfoArea").html("");
 					$("#BridgeDetailInfoArea").append(htmlList);
 	        		gotoFlyBridge(longitude, latitude);
 	        		viewBridgeInfo();
 	        	} else {
-					alert(JS_MESSAGE[res.errorCode]);
-					console.log("---- " + res.message);
+					alert(JS_MESSAGE[msg.errorCode]);
+					console.log("---- " + msg.message);
 				}
 	        },
 	        error: function(request, status, error) {

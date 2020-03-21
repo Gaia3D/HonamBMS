@@ -23,6 +23,7 @@ import honam.domain.Sensor;
 import honam.domain.SkSdo;
 import honam.domain.SkSgg;
 import honam.service.BridgeService;
+import honam.service.DataService;
 import honam.service.SatService;
 import honam.service.SensorService;
 import honam.utils.StringUtil;
@@ -35,6 +36,8 @@ public class BridgeRestController {
 
 	@Autowired
 	private BridgeService bridgeService;
+	@Autowired
+	private DataService dataService;
 	@Autowired
 	private SatService satService;
 	@Autowired

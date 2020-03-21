@@ -15,49 +15,59 @@
 		<col class="col-toggle" />
 		<thead>
 		<tr>
-			<th colspan="4" scope="col" class="col-toggle">
+			<th colspan="4" scope="col" style="background:#D3D3D3";>
 				<b>{{brgNam}}</b> [ <a href ="#" onclick="viewBridgeDetailInfo();">자세히</a> ]
 			</th>
 		</tr>
 		</thead>
 		<tbody>
 			<tr>
-				<td class="col-number">관리주체</td>
+				<td class="col-number" style="background:#efefef";>관리주체</td>
 				<td class="col-name">{{mngOrg}}</td>
-				<td class="col-number">종별</td>
+				<td class="col-number" style="background:#efefef";>종별</td>
 				<td class="col-name">{{facGra}}</td>
 			</tr>
 			<tr>
-				<td class="col-number">준공년도</td>
+				<td class="col-number" style="background:#efefef";>준공년도</td>
 				<td class="col-name">{{#replaceYear endAmd}}{{/replaceYear}}</td>
-				<td class="col-number">연장(m)</td>
+				<td class="col-number" style="background:#efefef";>연장(m)</td>
 				<td class="col-name">{{brgLen}}</td>
 			</tr>
 			<tr>
-				<td class="col-number">폭(m)</td>
+				<td class="col-number" style="background:#efefef";>폭(m)</td>
 				<td class="col-name">{{totWid}}</td>
-				<td class="col-number">목표성능</td>
+				<td class="col-number" style="background:#efefef";>목표성능</td>
 				<td class="col-name">{{bridgeCm}}</td>
 			</tr>
 			<tr>
-				<td class="col-number">내하성능</td>
+				<td class="col-number" style="background:#efefef";>내하성능</td>
 				<td class="col-name">{{bridgeLcc}}</td>
-				<td class="col-number">교량등급</td>
+				<td class="col-number" style="background:#efefef";>교량등급</td>
 				<td class="col-name">{{grade}}</td>
 			</tr>
 			<tr>
-				<td class="col-number">주소</td>
+				<td class="col-number" style="background:#eeeeee";>주소</td>
 				<td colspan="3" class="col-name">{{facSido}} {{facSgg}} {{facEmd}} {{facRi}}</td>
+			</tr>
+			<tr>
+				<td class="col-number" style="background:#eeeeee";>
+					<labe for="model-view">3D 모델</label>
+				</td>
+				<td colspan="3" class="col-name">
+{{#greaterThan dataId 0}}
+					<input type="radio" id="dataVisibleTrue" name="dataVisible" value="true">
+					<label for="dataVisibleTrue">표시</label>&nbsp;&nbsp;&nbsp;&nbsp;
+					<input type="radio" id="dataVisibleFalse" name="dataVisible" value="false">
+					<label for="dataVisibleFalse">비표시</label>
+{{else}}
+					없음
+{{/greaterThan}}
+				</td>
 			</tr>
 		</tbody>
 	</table>
 
 	<ul class="listDrop" style="margin-top: 20px;">
-		<li class="on">
-			<p>3차원 교량 모델<span class="collapse-icon">icon</span></p>
-			<div id="3dmodels" class="listContents">
-			</div>
-		</li>
 		<li class="on">
 			<p>위성 영상 결과<span class="collapse-icon">icon</span></p>
 			<div id="3dmodels" class="listContents">

@@ -5,7 +5,6 @@ import java.util.Date;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
-import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -25,6 +24,13 @@ public class Bridge extends Search {
 	// 교량 검색 타입
 	private String bridgeType;
 	/****** DB 데이터 화면 표시용 ********/
+	
+	// 고유번호
+	private Long dataId;
+	
+	// TODO gid는 삭제해야 함
+	// 고유번호
+	private Integer ogcFid;
 	// 고유번호
 	private Integer gid;
 	// UFID (고유식별번호)
