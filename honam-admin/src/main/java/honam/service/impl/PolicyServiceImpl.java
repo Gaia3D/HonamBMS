@@ -22,54 +22,12 @@ public class PolicyServiceImpl implements PolicyService {
     public Policy getPolicy() {
         return policyMapper.getPolicy();
     }
-
-    /**
-    * Geoserver 정책 수정
-    * @param policy
-    * @return
-    */
-    @Transactional
-    public int updateGeoserver(Policy policy) {
-        return policyMapper.updateGeoserver(policy);
-    }
-
-    /**
-    * LayerMap 정책 수정
-    * @param policy
-    * @return
-    */
-    @Transactional
-    public int updateLayer(Policy policy) {
-        return policyMapper.updateLayer(policy);
-    }
     
     /**
-    * 보안 정책 수정
-    * @param policy
-    * @return
-    */
-    @Transactional
-    public int updateSecurity(Policy policy) {
-        return policyMapper.updateSecurity(policy);
-    }
-
-    /**
-    * 컨텐츠 정책 수정
-    * @param policy
-    * @return
-    */
-    @Transactional
-    public int updateContents(Policy policy) {
-        return policyMapper.updateContents(policy);
-    }
-
-    /**
-    * 파일 업로드 정책 수정
-    * @param policy
-    * @return
-    */
-    @Transactional
-    public int updateFileUpload(Policy policy) {
-        return policyMapper.updateFileUpload(policy);
+     * 운영정책 수정
+     */
+    @Transactional(readOnly=true)
+    public int updatePolicy(Policy policy) {
+    	return policyMapper.updatePolicy(policy);
     }
 }
