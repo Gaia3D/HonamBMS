@@ -34,13 +34,14 @@ insert into data_group (
 values (
 	1, '기본', 'basic', 'infra/basic/', 'admin', 'public', 'admin',
 	1, 0, 1, 1, 0, true, true,
-	'{"isPhysical": false}'
+	TO_JSON('{"isPhysical": false}'::json)
 );
 
 insert into data_info (
-	data_id, data_group_id, data_key, data_name, data_type, location, altitude)
-values (
-	1, 1, 'data_key', '데이터명', 'ifc', '', ''
-);	
+	data_id, data_group_id, data_key, data_name, data_type, metainfo, location, altitude)
+values 
+	(1, 1, 'YS-0009', '덕양교', 'obj', TO_JSON('{"isPhysical": true}'::json), ST_GeomFromText('POINT(127.6353538849569 34.79933057924463)', 4326), 30),
+	(2, 1, 'GW-0043', '마동IC', '3ds', TO_JSON('{"isPhysical": true}'::json), ST_GeomFromText('POINT(127.7038865346081 34.93031897893139)', 4326), 25)
+;	
 	
 commit;

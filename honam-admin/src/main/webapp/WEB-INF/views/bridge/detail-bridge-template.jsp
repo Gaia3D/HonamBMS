@@ -55,9 +55,9 @@
 				</td>
 				<td colspan="3" class="col-name">
 {{#greaterThan dataId 0}}
-					<input type="radio" id="dataVisibleTrue" name="dataVisible" value="true">
+					<input type="radio" id="dataVisibleTrue" name="dataVisible" value="true" onclick="show3DData('{{dataGroupId}}', '{{facNum}}', 'true');" checked="checked" />
 					<label for="dataVisibleTrue">표시</label>&nbsp;&nbsp;&nbsp;&nbsp;
-					<input type="radio" id="dataVisibleFalse" name="dataVisible" value="false">
+					<input type="radio" id="dataVisibleFalse" name="dataVisible" value="false" onclick="show3DData('{{dataGroupId}}', '{{facNum}}', 'false');" />
 					<label for="dataVisibleFalse">비표시</label>
 {{else}}
 					없음
@@ -69,7 +69,7 @@
 
 	<ul class="listDrop" style="margin-top: 20px;">
 		<li class="on">
-			<p>위성 영상 결과<span class="collapse-icon">icon</span></p>
+			<p>위성 영상 지표 변이 분석 결과<span class="collapse-icon">icon</span></p>
 			<div id="3dmodels" class="listContents">
 			</div>
 		</li>

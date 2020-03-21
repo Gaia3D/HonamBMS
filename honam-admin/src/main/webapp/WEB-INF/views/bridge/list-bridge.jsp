@@ -125,7 +125,8 @@
 <!-- <script type="text/javascript" src="/js/BridgeAttribute.js"></script> -->
 <script type="text/javascript">
 	var viewer = null;
-	//TODO: policy 개발 후 변경
+	var MAGO3D_INSTANCE;
+	//TODO: policy 개발 후 변경 
 	var HONAMBMS = HONAMBMS || {
 		policy : ${policy}
 	};
@@ -590,6 +591,26 @@
 				});
 			}
 		}
+	}
+	
+	function show3DData(dataGroupId, dataKey, value) {
+		var option = false;
+		if(value === "true") {
+			option = true;
+		}
+		dataGroupId = parseInt(dataGroupId);
+		//var nodeMap = MAGO3D_INSTANCE.getMagoManager().hierarchyManager.getNodesMap(dataGroupId);
+		
+		//isExistDataAPI(MAGO3D_INSTANCE, dataGroupId, dataKey);
+		//isDataReadyToRender(MAGO3D_INSTANCE, dataGroupId, dataKey);
+		
+		if (!isExistDataAPI(MAGO3D_INSTANCE, dataGroupId, dataKey)) {
+			alert('아직 로드되지 않은 데이터입니다.\n이동 후 다시 시도해 주시기 바랍니다.');
+			return;
+		}
+
+		var optionObject = { isVisible : option };
+		setNodeAttributeAPI(MAGO3D_INSTANCE, dataGroupId, dataKey, optionObject);
 	}
 </script>
 </body>
