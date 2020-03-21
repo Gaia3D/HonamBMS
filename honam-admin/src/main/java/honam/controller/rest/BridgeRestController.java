@@ -144,9 +144,11 @@ public class BridgeRestController {
 		}
 
 		Bridge bridge = bridgeService.getBridge(gid);
+		List<Sensor> sensorList = sensorService.getListSensorID(bridge.getFacNum());
 		int statusCode = HttpStatus.OK.value();
 
 		result.put("bridge", bridge);
+		result.put("sensorList", sensorList);
 		result.put("statusCode", statusCode);
 		result.put("errorCode", errorCode);
 		result.put("message", message);

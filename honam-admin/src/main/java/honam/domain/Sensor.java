@@ -17,7 +17,7 @@ public class Sensor {
 	// 고유 번호
 	private Integer gid;	
 	// 시섧물 번호
-	private String fac_num;
+	private String facNum;
 	// sensor Type
 	private String sensorType;
 	// sensor id
@@ -27,9 +27,9 @@ public class Sensor {
 	// y (TM좌표)
 	private Double lon;
 	// x (WGS84 좌표)
-	private Double lat_wgs;
+	private Double latWgs;
 	// y (WGS84좌표)
-	private Double lon_wgs;
+	private Double lonWgs;
 	// z (altitude)
 	private Double alt;
 	// Point
