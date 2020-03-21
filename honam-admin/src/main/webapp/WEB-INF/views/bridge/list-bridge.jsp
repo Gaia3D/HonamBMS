@@ -163,9 +163,8 @@
 		var rectangle = Cesium.Rectangle.fromDegrees(INIT_WEST, INIT_SOUTH, INIT_EAST, INIT_NORTH);
 		Cesium.Camera.DEFAULT_VIEW_FACTOR = 0;
 		Cesium.Camera.DEFAULT_VIEW_RECTANGLE = rectangle;
-		
 		var geoPolicyJson = HONAMBMS.policy;
-
+	
 		var cesiumViewerOption = {};
 		cesiumViewerOption.infoBox = false;
 		cesiumViewerOption.navigationHelpButton = false;
@@ -175,6 +174,10 @@
 		cesiumViewerOption.geocoder = false;
 		cesiumViewerOption.baseLayerPicker = false;
 		cesiumViewerOption.sceneModePicker = false;
+		cesiumViewerOption.terrainProvider = new Cesium.EllipsoidTerrainProvider();
+		cesiumViewerOption.imageryProvider = new Cesium.ArcGisMapServerImageryProvider({
+		    url : 'https://services.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer'
+		});
 
 		MAGO3D_INSTANCE = new Mago3D.Mago3d('MapContainer', geoPolicyJson, {loadend : magoLoadEnd}, cesiumViewerOption);
 	}
@@ -182,7 +185,10 @@
 	function magoLoadEnd(e) {
 		var magoInstance = e;
 		viewer = magoInstance.getViewer();
-		viewer.baseLayerPicker.destroy();
+		if(viewer.baseLayerPicker) {
+			viewer.baseLayerPicker.destroy();
+		}
+		
 		//
 		var satValueCount = null;
 	   	
