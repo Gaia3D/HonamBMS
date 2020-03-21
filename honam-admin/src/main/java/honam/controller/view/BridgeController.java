@@ -29,21 +29,39 @@ public class BridgeController {
 	private PolicyService policyService;
 	@Autowired
 	private ObjectMapper objectMapper;
-	
+
 	/**
 	 * 교량 목록
 	 * @param model
 	 * @return
-	 * @throws JsonProcessingException 
+	 * @throws JsonProcessingException
 	 */
 	@RequestMapping(value = "/list-bridge")
 	public String listBridge(HttpServletRequest request, Model model) throws JsonProcessingException {
 		List<BridgeGroup> bridgeGroupList = bridgeGroupService.getListBridgeGroup();
-		
+
 		model.addAttribute("policy", objectMapper.writeValueAsString(policyService.getPolicy()));
 		model.addAttribute("bridge", new Bridge());
 		model.addAttribute("bridgeGroupListSize", bridgeGroupList.size());
 		model.addAttribute("bridgeGroupList", bridgeGroupList);
+		return "/bridge/list-bridge";
+	}
+
+	/**
+	 * 교량 그룹 목록
+	 * @param model
+	 * @return
+	 * @throws JsonProcessingException
+	 */
+	@RequestMapping(value = "/bridge-groups")
+	public String listBridgeGroup(HttpServletRequest request, Model model) throws JsonProcessingException {
+		List<BridgeGroup> bridgeGroupList = bridgeGroupService.getListBridgeGroup();
+
+		model.addAttribute("policy", objectMapper.writeValueAsString(policyService.getPolicy()));
+		model.addAttribute("bridge", new Bridge());
+		model.addAttribute("bridgeGroupListSize", bridgeGroupList.size());
+		model.addAttribute("bridgeGroupList", bridgeGroupList);
+		model.addAttribute("group", true);
 		return "/bridge/list-bridge";
 	}
 }

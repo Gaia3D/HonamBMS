@@ -196,8 +196,7 @@ var drawer = new CesiumPolygonDrawer(viewer);
 
 //초기 로딩 설정
 $(document).ready(function() {
-
-	$("#bridgeManageMenu").addClass("on");
+	initMenu("#bridgeManageMenu");
 	getListSdo();
 
 	$('#expandAll').click(function() {

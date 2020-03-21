@@ -3,7 +3,7 @@ drop table if exists policy cascade;
 -- 운영정책
 create table policy(
 	policy_id								integer,
-	
+
 	user_id_min_length						integer				default 5,
 	user_fail_signin_count					integer				default 3,
 	user_fail_lock_release					varchar(3)			default '30',
@@ -13,7 +13,7 @@ create table policy(
 	user_update_check						char(1)				default '0',
 	user_delete_check						char(1)				default '0',
 	user_delete_type						char(1)				default '0',
-	
+
 	password_change_term 					varchar(3)			default '30',
 	password_min_length						integer				default 8,
 	password_max_length						integer				default 32,
@@ -25,7 +25,7 @@ create table policy(
 	password_create_type					char(1)				default '0',
 	password_create_char					varchar(32)			default '!@#',
 	password_exception_char					varchar(10)			default '<>&',
-	
+
 	security_session_timeout_yn				char(1)				default 'N',
 	security_session_timeout				varchar(4)			default '30',
 	security_user_ip_check_yn				char(1)				default 'N',
@@ -35,7 +35,7 @@ create table policy(
 	security_dynamic_block_yn				char(1)				default 'N',
 	security_api_result_secure_yn			char(1)				default 'N',
 	security_masking_yn						char(1)				default 'Y',
-	
+
 	content_cache_version					integer				default 1,
 	content_main_widget_count				integer				default 6,
 	content_main_widget_interval			integer				default 65,
@@ -46,13 +46,13 @@ create table policy(
 	content_user_group_root					varchar(60)			default 'NDTP',
 	content_layer_group_root				varchar(60)			default 'NDTP',
 	content_data_group_root					varchar(60)			default 'NDTP',
-	
+
 	user_upload_type						varchar(256)		default '3ds,obj,dae,collada,ifc,las,gml,citygml,indoorgml,jpg,jpeg,gif,png,bmp,dds,zip,mtl,max',
 	user_converter_type						varchar(256)		default '3ds,obj,dae,collada,ifc,las,gml,citygml,indoorgml',
 	user_upload_max_filesize				integer				default 10000,
 	user_upload_max_count					integer				default 500,
 	shape_upload_type						varchar(256)		default 'cpg,dbf,idx,sbn,sbx,shp,shx,prj,qpj,zip',
-	
+
 	basic_globe											varchar(20)			default 'cesium',
 	geoserver_enable									boolean				default true,
 	geoserver_wms_version								varchar(5)         	default '1.1.1',
@@ -61,7 +61,7 @@ create table policy(
 	geoserver_data_store								varchar(60)			default 'honambms',
 	geoserver_user										varchar(256),
 	geoserver_password									varchar(256),
-	
+
 	geoserver_imageprovider_enable						boolean				default false,
 	geoserver_imageprovider_url							varchar(256),
 	geoserver_imageprovider_layer_name					varchar(60),
@@ -77,7 +77,7 @@ create table policy(
 	geoserver_terrainprovider_parameters_width			integer				default 256,
 	geoserver_terrainprovider_parameters_height			integer				default 256,
 	geoserver_terrainprovider_parameters_format			varchar(30),
-	
+
 	init_camera_enable									boolean				default true,
 	init_latitude										varchar(30)			default '34.948590',
 	init_longitude										varchar(30)			default '126.420914',
@@ -96,7 +96,7 @@ create table policy(
 	ssao_radius											numeric(8,2)		default 0.15,
 	cull_face_enable									boolean				default false,
 	time_line_enable									boolean				default false,
-	
+
 	max_partitions_lod0 								integer				default 4,
 	max_partitions_lod1 								integer				default 2,
 	max_partitions_lod2_or_less 						integer				default 1,
@@ -111,15 +111,14 @@ create table policy(
 	min_point_size_for_pc								numeric(4,1)		default 3.0,
 	pendent_point_size_for_pc							numeric(4,1)		default 60.0,
 	memory_management									boolean				default false,
-	
+
 	layer_source_coordinate								varchar(50)			default 'EPSG:4326',
 	layer_target_coordinate								varchar(50)			default 'EPSG:4326',
-	
-	basic_globe											varchar(20)			default 'cesium',
+
 	cesium_ion_token									varchar(256),
-	
+
 	insert_date											timestamp with time zone	default now(),
-	constraint policy_pk primary key (policy_id)	
+	constraint policy_pk primary key (policy_id)
 );
 
 comment on table policy is '운영정책';

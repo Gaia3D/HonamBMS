@@ -182,6 +182,10 @@ CesiumPolygonDrawer.prototype.setHandler = function() {
         that.drawing = false;
         that.complete();
     }, Cesium.ScreenSpaceEventType.RIGHT_CLICK);
+    handler.setInputAction(function (event) {
+        that.drawing = false;
+        that.complete();
+    }, Cesium.ScreenSpaceEventType.LEFT_DOUBLE_CLICK);
 
     function screenToCartesianAdjustHeight(viewer, screenCoord, height) {
         var cartesian = cesiumScreenToCartesian(viewer,screenCoord.x,screenCoord.y);
