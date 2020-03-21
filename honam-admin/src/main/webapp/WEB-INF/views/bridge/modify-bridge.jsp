@@ -184,7 +184,7 @@ var imageryProvider = new Cesium.ArcGisMapServerImageryProvider({
 	enablePickFeatures: false
 });
 
-var viewer = new Cesium.Viewer('MapContainer', {imageryProvider : imageryProvider, baseLayerPicker : false,
+var viewer = new Cesium.Viewer('MapContainer', {imageryProvider : imageryProvider, baseLayerPicker : false,selectionIndicator : false,infoBox:false,
 	animation:false, timeline:false, geocoder:false, navigationHelpButton: false, fullscreenButton:false, homeButton: false, sceneModePicker: false });
 viewer.scene.globe.depthTestAgainstTerrain = true;
 //viewer.extend(Cesium.viewerCesiumNavigationMixin, {});
@@ -194,7 +194,6 @@ var satValueCount = null;
 //초기 로딩 설정
 $(document).ready(function() {
 	$("#bridgeManageMenu").addClass("on");
-	
 	
 	drawOrginalBridge();
 
@@ -207,7 +206,6 @@ $(document).ready(function() {
 			$(this).removeClass('on');
 			drawer.active = false;
 		}
-		
 	});
 });
 
@@ -218,18 +216,39 @@ function drawOrginalBridge() {
 	for(var i=0,len=polygons.length;i<len;i++) {
 		var polygon = polygons[i];
 		var cartesians = [];
+		var centerx =0;
+		var centery =0;
+		var centerz =0; 
 		for(var j=0,coordCnt=polygon.length;j<coordCnt;j++) {
 			var coordArr = polygon[j];
-			cartesians.push(Cesium.Cartesian3.fromDegrees(coordArr[0], coordArr[1], 0));
+			var cart = Cesium.Cartesian3.fromDegrees(coordArr[0], coordArr[1], 0);
+			centerx += cart.x;
+			centery += cart.y;
+			centerz += cart.z;
+			cartesians.push(cart);
 		}
-		
+		var center = new Cesium.Cartesian3(centerx/coordCnt,centery/coordCnt,centerz/coordCnt);
 		var entity = viewer.entities.add({
             name : 'original' + i,
+            position : center,
             polygon: {
                 hierarchy: cartesians,
-                material: new Cesium.ColorMaterialProperty(Cesium.Color.BLUE.withAlpha(0.8))
-            }
+                material: new Cesium.ColorMaterialProperty(Cesium.Color.BLUE.withAlpha(0.4))
+            },
+            label : {
+	        	fillColor : Cesium.Color.fromCssColorString('#242424'),
+	            font : "12pt",
+	            scaleByDistance : new Cesium.NearFarScalar(5000, 1.0, 25000, 0.0),
+	            pixelOffset : new Cesium.Cartesian2(0, 30),
+	            style: Cesium.LabelStyle.FILL,
+	            outlineWidth: 1,
+	            text : $('#brgNam').val(),
+	            showBackground : true,
+	            backgroundColor : Cesium.Color.fromCssColorString('#EDEDED'),
+	            heightReference : Cesium.HeightReference.CLAMP_TO_GROUND
+	        }
         });
+		drawer.drawedEntity = entity;
 	}
 
 	var flyLat = parseFloat($('#latitude').val());

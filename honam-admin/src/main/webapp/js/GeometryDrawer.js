@@ -52,12 +52,37 @@ CesiumPolygonDrawer.prototype.getPositionWKT = function() {
 CesiumPolygonDrawer.prototype.complete = function() {
     var auxEntity = this.auxEntity;
     if(auxEntity && auxEntity.name === 'polygon') {
+    	var positions = auxEntity.polygon.hierarchy.getValue().positions;
+    	var centerx =0;
+		var centery =0;
+		var centerz =0; 
+		
+		for(var j=0,positionCnt=positions.length;j<positionCnt;j++) {
+			var position = positions[j];
+			centerx += position.x;
+			centery += position.y;
+			centerz += position.z;
+		}
+		var center = new Cesium.Cartesian3(centerx/positionCnt,centery/positionCnt,centerz/positionCnt);
         var entity = viewer.entities.add({
             name : 'created',
+            position : center,
             polygon: {
-                hierarchy: auxEntity.polygon.hierarchy.getValue().positions,
+                hierarchy: positions,
                 material: new Cesium.ColorMaterialProperty(Cesium.Color.BLUE.withAlpha(0.3))
-            }
+            },
+            label : {
+	        	fillColor : Cesium.Color.fromCssColorString('#242424'),
+	            font : "12pt",
+	            scaleByDistance : new Cesium.NearFarScalar(5000, 1.0, 25000, 0.0),
+	            pixelOffset : new Cesium.Cartesian2(0, 30),
+	            style: Cesium.LabelStyle.FILL,
+	            outlineWidth: 1,
+	            text : '생성된 교량',
+	            showBackground : true,
+	            backgroundColor : Cesium.Color.fromCssColorString('#EDEDED'),
+	            heightReference : Cesium.HeightReference.CLAMP_TO_GROUND
+	        }
         });
         if(this.drawedEntity) {
             this.viewer.entities.removeById(this.drawedEntity.id);
@@ -83,8 +108,6 @@ CesiumPolygonDrawer.prototype.callbackPositionFunc = function() {
         return new Cesium.PolygonHierarchy(points);
     }
 }
-
-
 
 CesiumPolygonDrawer.prototype.setHandler = function() {
     var that = this;
@@ -116,7 +139,7 @@ CesiumPolygonDrawer.prototype.setHandler = function() {
                     name : 'polygon',
                     polygon: {
                         hierarchy: that.callbackPositions,
-                        material: new Cesium.ColorMaterialProperty(Cesium.Color.YELLOW.withAlpha(0.1))
+                        material: new Cesium.ColorMaterialProperty(Cesium.Color.YELLOW.withAlpha(0.4))
                     }
                 });
             }
@@ -146,6 +169,7 @@ CesiumPolygonDrawer.prototype.setHandler = function() {
                     name : 'line',
                     polyline: {
                         positions: that.callbackPositions,
+                        width:2.5,
                         material: new Cesium.ColorMaterialProperty(Cesium.Color.YELLOW),
                         clampToGround : true
                     }
