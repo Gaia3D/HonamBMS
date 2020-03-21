@@ -18,7 +18,11 @@
 
 <body>
 <%@ include file="/WEB-INF/views/layouts/header.jsp" %>
-
+<div id="loadingWrap">
+	<div class="loading">
+		<span class="spinner"></span>
+	</div>
+</div>
 <div id="wrap">
 	<%@ include file="/WEB-INF/views/layouts/menu.jsp" %>
 
@@ -106,6 +110,7 @@
 <script type="text/javascript" src="/externlib/jquery-ui-1.12.1/jquery-ui.min.js"></script>
 <script type="text/javascript" src="/externlib/cesium/Cesium.js"></script>
 <script type="text/javascript" src="/externlib/handlebars-4.1.2/handlebars.js"></script>
+<script type="text/javascript" src="/externlib/moment-2.22.2/moment-with-locales.min.js"></script>
 <script type="text/javascript" src="/js/mago3d.js"></script>
 <script type="text/javascript" src="/js/mago3d_lx.js"></script>
 <script type="text/javascript" src="/js/${lang}/handlebarsHelper.js"></script>
