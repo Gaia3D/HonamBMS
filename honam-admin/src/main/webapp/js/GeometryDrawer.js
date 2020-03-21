@@ -75,7 +75,9 @@ CesiumPolygonDrawer.prototype.init = function() {
 }
 CesiumPolygonDrawer.prototype.callbackPositionFunc = function() {
     var points = this.activeShapePoints;
-    if(points.length < 3) {
+    if(points.length === 1) {
+    	return points[0];
+    } else if(points.length < 3) {
         return points;
     } else {
         return new Cesium.PolygonHierarchy(points);
@@ -93,16 +95,17 @@ CesiumPolygonDrawer.prototype.setHandler = function() {
             return;
         }
 
-        var drawPosition = screenToCartesianAdjustHeight(event.position, 50);
+        var drawPosition = screenToCartesianAdjustHeight(viewer, event.position, 50);
         that.activeShapePoints.push(drawPosition);
         if(that.activeShapePoints.length === 1) {
             that.drawing = true;
             that.auxEntity = viewer.entities.add({
-                position : drawPosition,
+                position : that.callbackPositions,
                 name : 'point',
                 point: {
                     pixelSize : 5,
-                    color : Cesium.Color.YELLOW
+                    color : Cesium.Color.YELLOW,
+                    heightReference : Cesium.HeightReference.CLAMP_TO_GROUND
                 }
             });
         } else if(that.activeShapePoints.length > 2) {
@@ -129,7 +132,7 @@ CesiumPolygonDrawer.prototype.setHandler = function() {
         }
 
         if(that.activeShapePoints.length > 0) {
-            var drawPosition = screenToCartesianAdjustHeight(event.endPosition, 50);
+            var drawPosition = screenToCartesianAdjustHeight(viewer, event.endPosition, 50);
             if(that.activeShapePoints.length === 1) {
                 that.activeShapePoints.push(drawPosition);
             } else if(that.activeShapePoints.length > 1) {
@@ -143,7 +146,8 @@ CesiumPolygonDrawer.prototype.setHandler = function() {
                     name : 'line',
                     polyline: {
                         positions: that.callbackPositions,
-                        material: new Cesium.ColorMaterialProperty(Cesium.Color.YELLOW)
+                        material: new Cesium.ColorMaterialProperty(Cesium.Color.YELLOW),
+                        clampToGround : true
                     }
                 });
             }
@@ -155,8 +159,8 @@ CesiumPolygonDrawer.prototype.setHandler = function() {
         that.complete();
     }, Cesium.ScreenSpaceEventType.RIGHT_CLICK);
 
-    function screenToCartesianAdjustHeight(screenCoord, height) {
-        var cartesian = screenToCartesian(screenCoord);
+    function screenToCartesianAdjustHeight(viewer, screenCoord, height) {
+        var cartesian = cesiumScreenToCartesian(viewer,screenCoord.x,screenCoord.y);
         var cartographic = Cesium.Cartographic.fromCartesian(cartesian);
         return Cesium.Cartesian3.fromDegrees(Cesium.Math.toDegrees(cartographic.longitude), Cesium.Math.toDegrees(cartographic.latitude), height);
     }

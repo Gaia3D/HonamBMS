@@ -167,6 +167,7 @@
 <script type="text/javascript" src="/js/MouseControll.js"></script>
 <script type="text/javascript" src="/js/SatAnalysisResult.js"></script>
 <script type="text/javascript" src="/js/SensorData.js"></script>
+<script type="text/javascript" src="/js/GeometryDrawer.js"></script>
 
 <script type="text/javascript">
 //초기 위치 설정
@@ -185,15 +186,29 @@ var imageryProvider = new Cesium.ArcGisMapServerImageryProvider({
 
 var viewer = new Cesium.Viewer('MapContainer', {imageryProvider : imageryProvider, baseLayerPicker : false,
 	animation:false, timeline:false, geocoder:false, navigationHelpButton: false, fullscreenButton:false, homeButton: false, sceneModePicker: false });
+viewer.scene.globe.depthTestAgainstTerrain = true;
 //viewer.extend(Cesium.viewerCesiumNavigationMixin, {});
+var drawer = new CesiumPolygonDrawer(viewer);
 var satValueCount = null;
 
 //초기 로딩 설정
 $(document).ready(function() {
 	$("#bridgeManageMenu").addClass("on");
-
+	
 	
 	drawOrginalBridge();
+
+	$('#drawBridge').click(function() {
+		var active = $(this).hasClass('on');
+		if(!active) {
+			$(this).addClass('on');
+			drawer.active = true;
+		}else {
+			$(this).removeClass('on');
+			drawer.active = false;
+		}
+		
+	});
 });
 
 

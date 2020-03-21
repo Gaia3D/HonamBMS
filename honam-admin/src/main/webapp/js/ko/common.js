@@ -396,3 +396,13 @@ function wktToCoordinates(wkt, type) {
 		}
 	}
 }
+
+function cesiumScreenToCartesian(viewer, pixelX, pixelY) {
+	var cesiumScene = viewer.scene; 
+	var cesiumGlobe = cesiumScene.globe;
+	var cesiumCamera = cesiumScene.camera;
+	var windowCoordinates = new Cesium.Cartesian2(pixelX, pixelY);
+	var ray = cesiumCamera.getPickRay(windowCoordinates);
+	var intersection = cesiumGlobe.pick(ray, cesiumScene);
+	return intersection;
+}
