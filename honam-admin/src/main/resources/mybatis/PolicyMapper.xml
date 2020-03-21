@@ -9,66 +9,33 @@
         SELECT * FROM policy
     </select>
 
-    <!-- Geoserver 정책 수정 -->
-    <update id="updateGeoserver" parameterType="policy">
-        /* updateGeoserver */
+    <!-- 운영 정책 수정 -->
+    <update id="updatePolicy" parameterType="policy">
+        /* updatePolicy */
         UPDATE policy
-        SET geoserver_enable = #{geoserverEnable},
-            geoserver_wms_version = #{geoserverWmsVersion},
-            geoserver_data_url = #{geoserverDataUrl},
-            geoserver_data_workspace = #{geoserverDataWorkspace},
-            geoserver_data_store = #{geoserverDataStore},
-            geoserver_user = #{geoserverUser},
-            geoserver_password = #{geoserverPassword}
-        WHERE policy_id = #{policyId}
-    </update>
-
-    <!-- 지도 레이어 정책 수정 -->
-    <update id="updateLayer" parameterType="policy">
-        /* updateLayer */
-        UPDATE policy
-        SET layer_source_coordinate = #{layerSourceCoordinate},
-            layer_target_coordinate = #{layerTargetCoordinate},
-            layer_init_aerial = #{layerInitAerial},
-            layer_init_drone = #{layerInitDrone},
-            layer_init_map_center = #{layerInitMapCenter},
-            layer_init_map_extent = #{layerInitMapExtent},
-            layer_init_map_extent_bonsa = #{layerInitMapExtentBonsa},
-            layer_init_map_extent_onsan = #{layerInitMapExtentOnsan},
-            layer_init_map_extent_yongyeon = #{layerInitMapExtentYongyeon},
-            layer_init_map_extent_mohwa = #{layerInitMapExtentMohwa}
-        WHERE policy_id = #{policyId}
-    </update>
-    
-    <!-- 보안 정책 수정 -->
-    <update id="updateSecurity" parameterType="policy">
-        /* updateSecurity */
-        UPDATE policy
-        SET security_session_timeout_yn = #{securitySessionTimeoutYn},
-            security_session_timeout = #{securitySessionTimeout},
-            security_user_ip_check_yn = #{securityUserIpCheckYn},
-            security_session_hijacking = #{securitySessionHijacking},
-            mobile_workplace_check_yn = #{mobileWorkplaceCheckYn}
-        WHERE policy_id = #{policyId}
-    </update>
-
-    <!-- 컨텐츠 정책 수정 -->
-    <update id="updateContents" parameterType="policy">
-        /* updateContents */
-        UPDATE policy
-        SET content_cache_version = #{contentCacheVersion},
-            content_layer_group_root = #{contentLayerGroupRoot}
-        WHERE policy_id = #{policyId}
-    </update>
-
-    <!-- 파일 업로드 정책 수정 -->
-    <update id="updateFileUpload" parameterType="policy">
-        /* updateFileUpload */
-        UPDATE policy
-        SET user_upload_type = #{userUploadType},
-            user_upload_max_filesize = #{userUploadMaxFilesize},
-            user_upload_max_count = #{userUploadMaxCount}
-        WHERE policy_id = #{policyId}
+		SET content_cache_version = #{contentCacheVersion},
+			geoserver_enable = #{geoserverEnable},
+			geoserver_data_url = #{geoserverDataUrl},
+			geoserver_data_workspace = #{geoserverDataWorkspace},
+			geoserver_data_store = #{geoserverDataStore},
+			geoserver_user = #{geoserverUser},
+			geoserver_password = #{geoserverPassword},
+			geoserver_imageprovider_enable = #{geoserverImageproviderEnable},
+			geoserver_imageprovider_url = #{geoserverImageproviderUrl},
+			geoserver_imageprovider_layer_name = #{geoserverImageproviderLayerName},
+			geoserver_imageprovider_style_name = #{geoserverImageproviderStyleName},
+			geoserver_imageprovider_parameters_width = #{geoserverImageproviderParametersWidth},
+			geoserver_imageprovider_parameters_height = #{geoserverImageproviderParametersHeight},
+			geoserver_imageprovider_parameters_format = #{geoserverImageproviderParametersFormat},
+			geoserver_terrainprovider_enable = #{geoserverTerrainproviderEnable},
+			geoserver_terrainprovider_url = #{geoserverTerrainproviderUrl},
+			geoserver_terrainprovider_layer_name = #{geoserverTerrainproviderLayerName},
+			geoserver_terrainprovider_style_name = #{geoserverTerrainproviderStyleName},
+			geoserver_terrainprovider_parameters_width = #{geoserverTerrainproviderParametersWidth},
+			geoserver_terrainprovider_parameters_height = #{geoserverTerrainproviderParametersHeight},
+			geoserver_terrainprovider_parameters_format = #{geoserverTerrainproviderParametersFormat},
+			geoserver_wms_version = #{geoserverWmsVersion}
+		WHERE policy_id = #{policyId}
     </update>
 
 </mapper>
