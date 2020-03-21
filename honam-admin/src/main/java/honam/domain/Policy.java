@@ -141,6 +141,71 @@ public class Policy {
  	// 1회, 최대 업로딩 파일 수. 기본값 500개
  	private Integer userUploadMaxCount;	
  	
+ 	
+ 	// javascript library. 기본 cesium 
+ 	private String basicGlobe;
+ 	// ceisum ion token
+ 	private String cesiumIonToken;
+ 	// geoserver 사용유무. Y : 사용(기본값), N : 미사용
+ 	private Boolean geoserverEnable;
+ 	// geoserver wms 버전. 기본 1.1.1
+ 	private String geoserverWmsVersion;
+ 	// geoserver 데이터 URL
+ 	private String geoserverDataUrl;
+ 	// geoserver 데이터 작업공간
+ 	private String geoserverDataWorkspace;
+ 	// geoserver 데이터 저장소
+ 	private String geoserverDataStore;
+ 	// geoserver 계정
+ 	private String geoserverUser;
+ 	// geoserver 비밀번호
+ 	private String geoserverPassword;
+ 	
+ 	// geoserver imageprovider 사용 유무. 기본 false
+ 	private Boolean geoserverImageproviderEnable;
+ 	// geoserver imageprovider 요청 URL
+ 	private String geoserverImageproviderUrl;
+ 	// geoserver imageprovider 로 사용할 레이어명
+ 	private String geoserverImageproviderLayerName;
+ 	// geoserver imageprovider 에 사용할 스타일명
+ 	private String geoserverImageproviderStyleName;
+ 	// geoserver 레이어 이미지 가로크기
+ 	private Integer geoserverImageproviderParametersWidth;
+ 	// geoserver 레이어 이미지 세로크기
+ 	private Integer geoserverImageproviderParametersHeight;
+ 	// geoserver 레이어 포맷형식
+ 	private String geoserverImageproviderParametersFormat;
+
+ 	// geoserver terrainprovider 사용 유무. 기본 false
+ 	private Boolean geoserverTerrainproviderEnable;
+ 	// geoserver terrainprovider 요청 URL
+ 	private String geoserverTerrainproviderUrl;
+ 	// geoserver terrainprovider 로 사용할 레이어명
+ 	private String geoserverTerrainproviderLayerName;
+ 	// geoserver terrainprovider 에 사용할 스타일명
+ 	private String geoserverTerrainproviderStyleName;
+ 	// geoserver 레이어 이미지 가로크기
+ 	private Integer geoserverTerrainproviderParametersWidth;
+ 	// geoserver 레이어 이미지 세로크기
+ 	private Integer geoserverTerrainproviderParametersHeight;
+ 	// geoserver 레이어 포맷형식
+ 	private String geoserverTerrainproviderParametersFormat;
+ 	
+ 	// 초기 카메라 이동 유무. 기본 true
+  	private Boolean initCameraEnable;
+  	// 초기 카메라 이동 위도
+  	private String initLatitude;
+  	// 초기 카메라 이동 경도
+  	private String initLongitude;
+  	// 초기 카메라 이동 높이
+  	private String initAltitude;
+  	// 초기 카메라 이동 시간. 초 단위
+  	private Integer initDuration;
+  	// 기본 Terrain
+  	private String initDefaultTerrain;
+  	// field of view. 기본값 0(1.8 적용)
+  	private Float initDefaultFov;
+ 	
  	// 등록일
  	@DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
 	private Timestamp insertDate;

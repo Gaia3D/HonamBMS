@@ -56,9 +56,9 @@ create table policy(
 	
 	geoserver_enable									boolean				default true,
 	geoserver_wms_version								varchar(5)         	default '1.1.1',
-	geoserver_data_url									varchar(256),
-	geoserver_data_workspace							varchar(60),
-	geoserver_data_store								varchar(60),
+	geoserver_data_url									varchar(256)		default 'http://localhost:8080/geoserver',
+	geoserver_data_workspace							varchar(60)			default 'honambms',
+	geoserver_data_store								varchar(60)			default 'honambms',
 	geoserver_user										varchar(256),
 	geoserver_password									varchar(256),
 	
@@ -79,9 +79,9 @@ create table policy(
 	geoserver_terrainprovider_parameters_format			varchar(30),
 	
 	init_camera_enable									boolean				default true,
-	init_latitude										varchar(30)			default '37.521168',
-	init_longitude										varchar(30)			default '126.924185',
-	init_altitude										varchar(30)			default '3000.0',
+	init_latitude										varchar(30)			default '34.948590',
+	init_longitude										varchar(30)			default '126.420914',
+	init_altitude										varchar(30)			default '150000.0',
 	init_duration										integer				default 3,
 	init_default_terrain								varchar(64),
 	init_default_fov									numeric(3,2)		default 0,
@@ -114,6 +114,9 @@ create table policy(
 	
 	layer_source_coordinate								varchar(50)			default 'EPSG:4326',
 	layer_target_coordinate								varchar(50)			default 'EPSG:4326',
+	
+	basic_globe											varchar(20)			default 'cesium',
+	cesium_ion_token									varchar(256),
 	
 	insert_date											timestamp with time zone	default now(),
 	constraint policy_pk primary key (policy_id)	
@@ -229,5 +232,8 @@ comment on column policy.memory_management is 'GPU Memory Pool 사용유무. 기
 
 comment on column policy.layer_source_coordinate is 'Layer 원본 좌표계';
 comment on column policy.layer_target_coordinate is 'Layer 좌표계 정의';
+
+comment on column policy.basic_globe is 'javascript library 3D globe. 기본 cesium';
+comment on column policy.cesium_ion_token is 'Cesium ion token 발급. 기본 mago3D';
 
 comment on column policy.insert_date is '등록일';

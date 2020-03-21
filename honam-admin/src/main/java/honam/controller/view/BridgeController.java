@@ -9,7 +9,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import honam.config.PropertiesConfig;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import honam.domain.Bridge;
 import honam.domain.BridgeGroup;
 import honam.service.BridgeGroupService;
@@ -21,69 +23,27 @@ import lombok.extern.slf4j.Slf4j;
 @Controller
 public class BridgeController {
 
-//	@Autowired
-//	private BridgeService bridgeService;
 	@Autowired
 	private BridgeGroupService bridgeGroupService;
 	@Autowired
-	private PropertiesConfig propertiesConfig;
-	@Autowired
 	private PolicyService policyService;
+	@Autowired
+	private ObjectMapper objectMapper;
 	
 	/**
 	 * 교량 목록
 	 * @param model
 	 * @return
+	 * @throws JsonProcessingException 
 	 */
 	@RequestMapping(value = "/list-bridge")
-	public String listBridge(HttpServletRequest request, Model model) {
-		String cesiumIonToken = propertiesConfig.getCesiumIonToken();
-		
+	public String listBridge(HttpServletRequest request, Model model) throws JsonProcessingException {
 		List<BridgeGroup> bridgeGroupList = bridgeGroupService.getListBridgeGroup();
-
-		model.addAttribute("policy", policyService.getPolicy());
+		
+		model.addAttribute("policy", objectMapper.writeValueAsString(policyService.getPolicy()));
 		model.addAttribute("bridge", new Bridge());
-		model.addAttribute("cesiumIonToken", cesiumIonToken);
 		model.addAttribute("bridgeGroupListSize", bridgeGroupList.size());
 		model.addAttribute("bridgeGroupList", bridgeGroupList);
 		return "/bridge/list-bridge";
 	}
-
-//	@RequestMapping(value = "/detail-bridge")
-//	public String detailBridge(HttpServletRequest request, @RequestParam(value="gid", required = true) Integer gid, Model model) {
-//		log.info("@@ bridge_id = {}", gid);
-//
-//		Bridge bridge = bridgeService.getBridge(gid);
-//		log.info("############### Bridge = {}", bridge);
-//
-//		String cesiumIonToken = propertiesConfig.getCesiumIonToken();
-//
-//		model.addAttribute("policy", policyService.getPolicy());
-//		model.addAttribute("bridge", bridge);
-//		model.addAttribute("searchParameters", getSearchParameters(PageType.DETAIL, request, bridge));
-//		model.addAttribute("cesiumIonToken", cesiumIonToken);
-//		return "/bridge/detail-bridge";
-//	}
-//	
-//	/**
-//	 * 검색 조건
-//	 * @param bridge
-//	 * @return
-//	 */
-//	private String getSearchParameters(PageType pageType, HttpServletRequest request, Bridge bridge) {
-//		StringBuffer buffer = new StringBuffer(bridge.getParameters());
-//		boolean isListPage = true;
-//		if(pageType.equals(PageType.MODIFY) || pageType.equals(PageType.DETAIL)) {
-//			isListPage = false;
-//		}
-//
-//		buffer.append("&");
-//		buffer.append("sdoCode=" + StringUtil.getDefaultValue(isListPage ? bridge.getSdoCode() : request.getParameter("sdoCode")));
-//		buffer.append("&");
-//		buffer.append("sggCode=" + StringUtil.getDefaultValue(isListPage ? bridge.getSggCode() : request.getParameter("sggCode")));
-//		buffer.append("&");
-//		buffer.append("mngOrg=" + StringUtil.getDefaultValue(isListPage ? bridge.getMngOrg() : request.getParameter("mngOrg")));
-//		return buffer.toString();
-//	}
-
 }

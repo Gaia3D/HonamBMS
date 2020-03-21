@@ -122,13 +122,7 @@
 	var viewer = null;
 	//TODO: policy 개발 후 변경 
 	var HONAMBMS = HONAMBMS || {
-		policy : {
-			geoserverDataUrl : "http://localhost:8082/geoserver/",
-			geoserverDataWorkspace : "honambms",
-			geoserverDataStore : "honambms",
-			basicGlobe : 'cesium',
-			cesiumIonToken : '${cesiumIonToken}'
-		},
+		policy : ${policy}
 	};
 	
    	// 초기 로딩 설정
