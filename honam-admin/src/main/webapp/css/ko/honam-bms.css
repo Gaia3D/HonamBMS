@@ -449,3 +449,206 @@ button.textBtnSub:hover {
 	border: 1px solid #555;
 	background-color: #555;
 }
+
+
+/* 교량 상세 페이지  */
+/* LIST DROP  / 검색결과 */
+ul.listDrop > li {
+margin-bottom: 3px;
+cursor: pointer;
+}
+ul.listDrop li > p {
+padding: 8px;
+font-weight: bold;
+border:1px solid #e0e0e0;
+/* border-bottom: 3px solid #eaeaea; */
+background-image: url(/images/ko/ico2.png);
+background-repeat: no-repeat;
+background-position: 320px -738px;
+background-color: #fff;
+}
+ul.listDrop li > p > span {
+font-weight: normal;
+}
+ul.listDrop li > ul {
+display: none;
+}
+ul.listDrop li.on > p {
+color: #fff;
+border-bottom: 3px solid #eaeaea;
+background-color: #287be4;
+background-image: url(/images/ko/ico2.png);
+background-repeat: no-repeat;
+background-position: 320px -688px;
+}
+ul.listDrop li p span {
+display: inline-block;
+margin-left: 10px;
+}
+ul.listDrop li.on > ul {
+overflow-x: hidden;
+overflow-y: auto;
+display: block;
+background-color: #fff;
+min-height: 420px;
+border: 1px solid #e0e0e0;
+}
+ul.listDrop li.on > ul li {
+padding: 10px;
+}
+ul.listDrop li.on ul li > span {
+display: block;
+}
+ul.listDrop li.on ul li > span.title {
+text-decoration: underline;
+}
+ul.listDrop li.on > ul > li:hover {
+background-color: #dbf1ff;
+}
+/* LIST DROP  / 분석 */
+ul.listDrop li > div.listContents {
+display: none;
+}
+ul.listDrop li.on > div.listContents {
+display: block;
+padding: 10px;
+border:1px solid #e0e0e0;
+background-color: #fff;
+}
+/* LIST DROP  / 분석 */
+ul.listDrop li > div.listContents {
+display: none;
+}
+ul.listDrop li.on > div.listContents {
+display: block;
+padding: 10px;
+border:1px solid #e0e0e0;
+background-color: #fff;
+}
+
+ul.listDrop li > p {
+	background: none;
+	background-color: #fff;
+}
+ul.listDrop li.on > p {
+	background: none;
+	background-color: #287be4;
+	border: none;
+    border-bottom: 3px solid #eaeaea;
+}
+ul.listDrop li > p > span.collapse-icon {
+	width: 15px;
+	float: right;
+    text-indent: -999em;
+	background-image: url(/images/ko/ico2.png);
+    background-repeat: no-repeat;
+    background-position: 0 -745px;
+}
+ul.listDrop li.on > p > span.collapse-icon {
+    background-position: 0 -695px;
+}
+
+/*  CONTENTS / 분석 */
+.bridgeSubInfoGroup {
+/* margin: 10px 0;
+padding-left: 10px;
+padding-right: 10px; */
+cursor: pointer;
+}
+.bridgeSubInfoGroup.on {
+background-position: -755px -555px;
+}
+.bridgeSubInfoGroup.plus {
+background-position: -386px -555px;
+}
+.bridgeSubInfoGroup li {
+position: relative;
+padding: 5px 0;
+}
+.bridgeSubInfoGroup li label {
+display: inline-block;
+width: 120px;
+/* width: 35%; */
+padding: 3px 0;
+}
+.bridgeSubInfoGroup li input {
+width: 124px;
+/* width: 62%; */
+padding: 3px 0;
+border: none;
+border-bottom: 1px solid #e0e0e0;
+}
+.bridgeSubInfoGroup li input.withBtn {
+width: 100px;
+}
+
+.bridgeSubInfoGroup li span.coordText {
+padding-left: 123px;
+}
+.bridgeSubInfoGroup li button.coordBtn {
+margin-left: 30px;
+border: 0;
+text-decoration: underline;
+}
+.bridgeSubInfoGroup li input:hover {
+border-bottom: 1px solid #477cdb;
+}
+.bridgeSubInfoGroup li.btns {
+padding-top: 25px;
+text-align: right;
+}
+.bridgeSubInfoGroup li select {
+width: 124px;
+padding: 3px 0;
+border: none;
+border: 1px solid #e0e0e0;
+}
+.bridgeSubInfoGroup li select:hover {
+border: 1px solid #477cdb;
+}
+
+.bridgeSubInfoGroup .profileInfo {
+	display: none;
+}
+.bridgeSubInfoGroup .profileInfo .legend {
+}
+
+.bridgeSubInfoGroup .routeInfo {
+	margin-top: 20px;
+	border-top: 2px solid #e0e0e0;
+	display: none;
+}
+.bridgeSubInfoGroup .routeResult .cover {
+	padding: 10px 0 15px;
+	text-align: left;
+	border-bottom: 1px solid #e0e0e0;
+}
+.bridgeSubInfoGroup .routeResult .time {
+	font-size: 24px;
+	color: #2196F3;
+}
+.bridgeSubInfoGroup .routeResult .length {
+	font-size: 20px;
+	color: #fe6c59;
+}
+.bridgeSubInfoGroup .routeList .r_row {
+	display: flex;
+	border-bottom: 1px solid #e0e0e0;
+	padding-top: 10px;
+	padding-bottom: 10px;
+}
+.bridgeSubInfoGroup .routeList .r_row .num {
+	width: 20px;
+	border: 1px solid;
+	border-radius: 18px;
+	padding: 6px;
+	margin-left: 10px;
+	margin-right: 16px;
+	text-align: center;
+}
+.bridgeSubInfoGroup .routeList .r_row .name {
+	line-height: 33px;
+}
+.bridgeSubInfoGroup .routeList .r_row.on {
+	background-color: #eee;
+}

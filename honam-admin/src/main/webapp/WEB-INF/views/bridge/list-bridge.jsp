@@ -163,9 +163,8 @@
 		var rectangle = Cesium.Rectangle.fromDegrees(INIT_WEST, INIT_SOUTH, INIT_EAST, INIT_NORTH);
 		Cesium.Camera.DEFAULT_VIEW_FACTOR = 0;
 		Cesium.Camera.DEFAULT_VIEW_RECTANGLE = rectangle;
-		
 		var geoPolicyJson = HONAMBMS.policy;
-
+	
 		var cesiumViewerOption = {};
 		cesiumViewerOption.infoBox = false;
 		cesiumViewerOption.navigationHelpButton = false;
@@ -175,6 +174,10 @@
 		cesiumViewerOption.geocoder = false;
 		cesiumViewerOption.baseLayerPicker = false;
 		cesiumViewerOption.sceneModePicker = false;
+		cesiumViewerOption.terrainProvider = new Cesium.EllipsoidTerrainProvider();
+		cesiumViewerOption.imageryProvider = new Cesium.ArcGisMapServerImageryProvider({
+		    url : 'https://services.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer'
+		});
 
 		MAGO3D_INSTANCE = new Mago3D.Mago3d('MapContainer', geoPolicyJson, {loadend : magoLoadEnd}, cesiumViewerOption);
 	}
@@ -182,12 +185,18 @@
 	function magoLoadEnd(e) {
 		var magoInstance = e;
 		viewer = magoInstance.getViewer();
-		viewer.baseLayerPicker.destroy();
+		if(viewer.baseLayerPicker) {
+			viewer.baseLayerPicker.destroy();
+		}
+		
 		//
 		var satValueCount = null;
 	   	
 	   	MouseControll(viewer,null,null);
 	   	MapControll(viewer);
+	   	
+	   	dataGroupList();
+	   	
 		getListSdo();
 	   	getListManageOrg();
 		getListBridge();
@@ -471,6 +480,79 @@
 	    });
 		
 		viewer.imageryLayers.addImageryProvider(provider);
+	}
+	
+	//데이터 그룹 목록
+	function dataGroupList() {
+		let dataGroupMap = new Map();
+		$.ajax({
+			url: "/data-groups/all",
+			type: "GET",
+			headers: {"X-Requested-With": "XMLHttpRequest"},
+			dataType: "json",
+			success: function(msg){
+				if(msg.statusCode <= 200) {
+					var dataGroupList = msg.dataGroupList;
+					if(dataGroupList !== null && dataGroupList !== undefined) {
+						var noneTilingDataGroupList = dataGroupList.filter(function(dataGroup){
+							dataGroupMap.set(dataGroup.dataGroupId, dataGroup.dataGroupName);
+							return !dataGroup.tiling;
+						});
+						
+						HONAMBMS.dataGroup = dataGroupMap;
+						
+						dataList(noneTilingDataGroupList);
+					}
+				} else {
+					alert(JS_MESSAGE[msg.errorCode]);
+				}
+			},
+			error:function(request,status,error){
+				alert(JS_MESSAGE["ajax.error.message"]);
+			}
+		});
+	}
+	
+	// 데이터 정보 목록
+	function dataList(dataGroupArray) {
+		var dataArray = new Array();
+		var dataGroupArrayLength = dataGroupArray.length;
+		for(var i=0; i<dataGroupArrayLength; i++) {
+			var dataGroup = dataGroupArray[i];
+			if(!dataGroup.tiling) {
+				var f4dController = MAGO3D_INSTANCE.getF4dController();
+				$.ajax({
+					url: "/datas/" + dataGroup.dataGroupId + "/list",
+					type: "GET",
+					headers: {"X-Requested-With": "XMLHttpRequest"},
+					dataType: "json",
+					success: function(msg){
+						if(msg.statusCode <= 200) {
+							var dataInfoList = msg.dataInfoList;
+							if(dataInfoList != null && dataInfoList.length > 0) {
+								var dataInfoFirst = dataInfoList[0];
+								var dataInfoGroupId = dataInfoFirst.dataGroupId;
+								var group;
+								for(var j in dataGroupArray) {
+									if(dataGroupArray[j].dataGroupId === dataInfoGroupId) {
+										group = dataGroupArray[j];
+										break;
+									}
+								}
+
+								group.datas = dataInfoList;
+								f4dController.addF4dGroup(group);
+							}
+						} else {
+							alert(JS_MESSAGE[msg.errorCode]);
+						}
+					},
+					error:function(request,status,error){
+						alert(JS_MESSAGE["ajax.error.message"]);
+					}
+				});
+			}
+		}
 	}
 </script>
 </body>
