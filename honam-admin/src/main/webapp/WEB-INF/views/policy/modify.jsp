@@ -404,7 +404,12 @@
 <script type="text/javascript" src="/externlib/ajax-cross-origin/jquery.ajax-cross-origin.min.js"></script>
 <script type="text/javascript" src="/js/${lang}/common.js"></script>
 <script type="text/javascript" src="/js/${lang}/message.js"></script>
+<script type="text/javascript" src="/js/Honam-bms.js"></script>
 <script type="text/javascript">
+//초기 로딩 설정
+$(document).ready(function() {
+	initMenu("#configMenu");
+});
 var updatePolicyFlag = true;
 function updatePolicy() {
     if(updatePolicyFlag) {

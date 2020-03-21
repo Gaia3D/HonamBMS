@@ -195,7 +195,7 @@ var isSggInit = false;
 
 //초기 로딩 설정
 $(document).ready(function() {
-	$("#bridgeManageMenu").addClass("on");
+	initMenu("#bridgeManageMenu");
 	getListSdo();
 	drawOrginalBridge();
 

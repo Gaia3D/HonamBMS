@@ -40,7 +40,7 @@
 				</tr>
 			</tbody>
 		</table>
-	
+
 	<div id="projectListHeader" class="count" style="margin-top: 20px; margin-bottom: 5px;">
 		전체 교량 그룹 <em><fmt:formatNumber value="${bridgeGroupListSize}" type="number"/></em> 건
 	</div>
@@ -68,14 +68,14 @@
 	</c:if>
 	<c:if test="${bridgeGroup.startArea eq 'suncheon'}">
 						<span class="legend pr">S</span>
-	</c:if>				
+	</c:if>
 						->
 	<c:if test="${bridgeGroup.endArea eq 'suncheon'}">
 						<span class="legend pr">S</span>
 	</c:if>
 	<c:if test="${bridgeGroup.endArea eq 'yeosu'}">
 						<span class="legend gr">Y</span>
-	</c:if>				
+	</c:if>
 					</td>
 					<td class="col-number">${bridgeGroup.goalPerformance}</td>
 					<td class="col-number">
@@ -91,6 +91,7 @@
 
 <%@ include file="/WEB-INF/views/bridge-group/list-bridge-template.jsp" %>
 <script type="text/javascript">
+
 	// 우선은 개발 하기 편해서... 여기 두고.. .나중에 옮겨야 함
 	function toggleBridgeList(bridgeGroupId) {
 		var imageryLayers = viewer.imageryLayers;
@@ -109,10 +110,10 @@
 			$("#bridgeGroupId-" + bridgeGroupId).html("ON");
 			$("#" + bridgeGroupId + "-bridgeList").hide();
 		}
-		
-		
+
+
 	}
-	
+
 	function bridgeListByBridgeGroupId(bridgeGroupId) {
 		$.ajax({
 			url: "/bridge-groups/" + bridgeGroupId + "/bridges",
@@ -135,7 +136,7 @@
 			}
 		});
 	}
-	
+
 	function gotoFlyBridge(longitude, latitude) {
 		viewer.camera.flyTo({
 		    destination : Cesium.Cartesian3.fromDegrees(longitude, latitude, 200)
@@ -143,7 +144,7 @@
 		//gotoFlyAPI(MAGO3D_INSTANCE, longitude, latitude, 100, 3);
 		//hereIamMarker(longitude, latitude, altitude);
 	}
-	
+
 	// 선택한 그룹 하이라이트
 	function bridgeGroupFocus(groupId) {
 		var geoserverDataUrl = HONAMBMS.policy.geoserverDataUrl;
@@ -164,7 +165,7 @@
 	        },
 	        enablePickFeatures : false
 	    });
-		
+
 		viewer.imageryLayers.addImageryProvider(provider);
 	}
 </script>

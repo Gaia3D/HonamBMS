@@ -106,7 +106,7 @@ var satValueCount = null;
 
 //초기 로딩 설정
 $(document).ready(function() {
-	$("#bridgeManageMenu").addClass("on");
+	initMenu("#bridgeManageMenu");
 	$("#selectAll").click(function() {
 	    $("input[type=checkbox]").prop("checked", $(this).prop("checked"));
 	});

@@ -37,7 +37,7 @@
 				</div>
 			</div>
 			<!-- E: 프로젝트 제목, 목록가기, 닫기 -->
-	
+
 			<div class="subContents">
 				<!-- S: 교량 검색 입력 폼 -->
 				<form:form id="searchForm" modelAttribute="bridge" method="get" action="#" onsubmit="return false;">
@@ -77,7 +77,7 @@
 				<!-- E: 교량 검색 입력 폼 -->
 				<!-- S: 교량 목록 -->
 				<div id="bridgeListTable"></div>
-				<%@ include file="/WEB-INF/views/bridge/list-bridge-template.jsp" %>	
+				<%@ include file="/WEB-INF/views/bridge/list-bridge-template.jsp" %>
 				<!-- E: 교량 목록 -->
 			</div>
 		</div>
@@ -125,33 +125,40 @@
 <!-- <script type="text/javascript" src="/js/BridgeAttribute.js"></script> -->
 <script type="text/javascript">
 	var viewer = null;
-	//TODO: policy 개발 후 변경 
+	//TODO: policy 개발 후 변경
 	var HONAMBMS = HONAMBMS || {
 		policy : ${policy}
 	};
-	
+
    	// 초기 로딩 설정
 	$(document).ready(function() {
-		/* 
-		
+		initMenu("#bridgeMenu");
+		if ('${group}') {
+			$("#bridgeContent").hide();
+			$("#bridgeGroupContent").show();
+			initMenu("#bridgegroupMenu");
+			initBridgeGroupLayer();
+		}
+		/*
+
 		var imageryProvider = new Cesium.ArcGisMapServerImageryProvider({
 			url: 'https://services.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer',
 			enablePickFeatures: false
 		});
-		
+
 	   	viewer = new Cesium.Viewer('MapContainer', {imageryProvider : imageryProvider, baseLayerPicker : false,
 	   		animation:false, timeline:false, geocoder:false, navigationHelpButton: false, fullscreenButton:false, homeButton: false, sceneModePicker: false }); */
 
    		magoStart();
-	   	
+
 // 		DistrictControll(viewer);
 // 		MapControll(viewer);
 	});
-   	
+
 	$("#sdoCode").on("change", function() {
 		var sdoCode = $("#sdoCode").val();
 		if(sdoCode) {
-			getListSgg(sdoCode);		
+			getListSgg(sdoCode);
 		}
 	});
 
@@ -164,7 +171,7 @@
 		Cesium.Camera.DEFAULT_VIEW_FACTOR = 0;
 		Cesium.Camera.DEFAULT_VIEW_RECTANGLE = rectangle;
 		var geoPolicyJson = HONAMBMS.policy;
-	
+
 		var cesiumViewerOption = {};
 		cesiumViewerOption.infoBox = false;
 		cesiumViewerOption.navigationHelpButton = false;
@@ -188,22 +195,22 @@
 		if(viewer.baseLayerPicker) {
 			viewer.baseLayerPicker.destroy();
 		}
-		
+
 		//
 		var satValueCount = null;
-	   	
+
 	   	MouseControll(viewer,null,null);
 	   	MapControll(viewer);
-	   	
+
 	   	dataGroupList();
-	   	
+
 		getListSdo();
 	   	getListManageOrg();
 		getListBridge();
 		getListCentroidBridge();
 		initBridgeLayer();
 	}
-	
+
 	// 시도 목록
 	function getListSdo() {
 		$.ajax({
@@ -226,7 +233,7 @@
 	        			return;
 	        		} else {
 	        			alert(JS_MESSAGE[msg.errorCode]);
-						console.log("---- " + msg.message);	        			
+						console.log("---- " + msg.message);
 	        		}
 				}
 	        },
@@ -235,7 +242,7 @@
 			}
 	    });
 	}
-	
+
 	// 시도에 해당하는 시군구 목록
 	function getListSgg(bjcd) {
 		$.ajax({
@@ -259,7 +266,7 @@
 	        			return;
 	        		} else {
 	        			alert(JS_MESSAGE[msg.errorCode]);
-						console.log("---- " + msg.message);	        			
+						console.log("---- " + msg.message);
 	        		}
 				}
 	        },
@@ -268,7 +275,7 @@
 			}
 	    });
 	}
-	
+
 	// 관리주체 목록 로딩
 	function getListManageOrg() {
 		var url = "/bridges/manage";
@@ -324,8 +331,8 @@
 		        position : Cesium.Cartesian3.fromDegrees(parseFloat(bridge.longitude), parseFloat(bridge.latitude), 0),
 		        billboard : {
 		            image : markerImage,
-		            width : 35, 
-		            height : 35, 
+		            width : 35,
+		            height : 35,
 		            disableDepthTestDistance : Number.POSITIVE_INFINITY,
 		            scaleByDistance : new Cesium.NearFarScalar(10000, 1.5, 1000000, 0.0)
 		        },
@@ -343,7 +350,7 @@
 		    });
 		}
 	}
-	
+
 	// 교량 목록 로드
 	function getListBridge(number) {
 		var pageNo = (number === undefined) ? 1 : number;
@@ -383,7 +390,7 @@
 			}
 		});
 	}
-	
+
 	function getBridgeInfo(gid, longitude, latitude) {
 		$.ajax({
 	        url: "/bridges/" + gid,
@@ -407,30 +414,30 @@
 			}
 	    });
 	}
-	
+
 	function gotoFlyBridge(longitude, latitude) {
 		viewer.camera.flyTo({
 		    destination : Cesium.Cartesian3.fromDegrees(longitude, latitude, 200)
 		});
 	}
-	
+
 	function viewBridgeDetailInfo() {
 		$("#bridgeInfoLayer").show();
 	}
 	function closeBridgeDetailInfo() {
 		$("#bridgeInfoLayer").hide();
 	}
-	
+
 	function viewBridgeInfo() {
 		$("#bridgeContent").hide();
 		$("#bridgeDetailContent").show();
 	}
-	
+
 	function viewBridgeList() {
 		$("#bridgeContent").show();
 		$("#bridgeDetailContent").hide();
 	}
-	
+
 	function initBridgeLayer() {
 		var imageryLayers = viewer.imageryLayers;
 		if(imageryLayers.length > 0) {
@@ -456,10 +463,10 @@
 	        },
 	        enablePickFeatures : false
 	    });
-		
+
 		viewer.imageryLayers.addImageryProvider(provider);
 	}
-	
+
 	function initBridgeGroupLayer() {
 		var geoserverDataUrl = HONAMBMS.policy.geoserverDataUrl;
 		var geoserverDataWorkspace = HONAMBMS.policy.geoserverDataWorkspace;
@@ -478,10 +485,10 @@
 	        },
 	        enablePickFeatures : false
 	    });
-		
+
 		viewer.imageryLayers.addImageryProvider(provider);
 	}
-	
+
 	//데이터 그룹 목록
 	function dataGroupList() {
 		let dataGroupMap = new Map();
@@ -498,9 +505,9 @@
 							dataGroupMap.set(dataGroup.dataGroupId, dataGroup.dataGroupName);
 							return !dataGroup.tiling;
 						});
-						
+
 						HONAMBMS.dataGroup = dataGroupMap;
-						
+
 						dataList(noneTilingDataGroupList);
 					}
 				} else {
@@ -512,7 +519,7 @@
 			}
 		});
 	}
-	
+
 	// 데이터 정보 목록
 	function dataList(dataGroupArray) {
 		var dataArray = new Array();
