@@ -133,13 +133,6 @@
 
    	// 초기 로딩 설정
 	$(document).ready(function() {
-		initMenu("#bridgeMenu");
-		if ('${group}') {
-			$("#bridgeContent").hide();
-			$("#bridgeGroupContent").show();
-			initMenu("#bridgegroupMenu");
-			initBridgeGroupLayer();
-		}
 		/*
 
 		var imageryProvider = new Cesium.ArcGisMapServerImageryProvider({
@@ -210,6 +203,14 @@
 		getListBridge();
 		getListCentroidBridge();
 		initBridgeLayer();
+
+		initMenu("#bridgeMenu");
+		if (${group}) {
+			$("#bridgeContent").hide();
+			$("#bridgeGroupContent").show();
+			initMenu("#bridgegroupMenu");
+			initBridgeGroupLayer();
+		}
 	}
 
 	// 시도 목록
@@ -468,7 +469,7 @@
 
 		viewer.imageryLayers.addImageryProvider(provider);
 	}
-	
+
 	function addSensorData(sensorList) {
 		if(sensorList.length === 0) return;
 		var viewer = MAGO3D_INSTANCE.getViewer();
@@ -494,10 +495,10 @@
 					outlineColor : Cesium.Color.WHITE,
 					outlineWidth : 2
 				})
-			});			
+			});
 		}
 	}
-	
+
 	function initBridgeGroupLayer() {
 		var geoserverDataUrl = HONAMBMS.policy.geoserverDataUrl;
 		var geoserverDataWorkspace = HONAMBMS.policy.geoserverDataWorkspace;

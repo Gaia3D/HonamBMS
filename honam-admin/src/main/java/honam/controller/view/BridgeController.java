@@ -44,6 +44,7 @@ public class BridgeController {
 		model.addAttribute("bridge", new Bridge());
 		model.addAttribute("bridgeGroupListSize", bridgeGroupList.size());
 		model.addAttribute("bridgeGroupList", bridgeGroupList);
+		model.addAttribute("group", false);
 		return "/bridge/list-bridge";
 	}
 
