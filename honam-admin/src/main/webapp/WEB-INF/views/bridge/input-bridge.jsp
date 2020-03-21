@@ -20,13 +20,20 @@
 <div class="wrapper">
 	<%@ include file="/WEB-INF/views/layouts/menu.jsp" %>
 	<div class="contents-wrapper">
-		<nav class="manage-tab">
+		<!-- <nav class="manage-tab">
 			<ul>
 				<li><a href="/bridge/manage-bridge">교량 관리</a></li>
 				<li><a href="/bridge/input-bridge">교량 등록</a></li>
 			</ul>
-		</nav>
+		</nav> -->
 		<div class="list-wrapper">
+			<div class="boardHeader" style="margin-top:0;">
+				<h2>교량 등록</h2>
+				<div class="button-wrapper-right">
+					<button id="expandAll" class="basic">모두 펼치기</button>
+					<button id="closedAll" class="basic">모두 접기</button>
+				</div>
+			</div>
 			<form id="insertBridgeForm">
 				<input type="hidden" id="geom" name="geom">
 				<input type="hidden" id="facSido" name="facSido">
@@ -185,25 +192,30 @@ var viewer = new Cesium.Viewer('MapContainer', {imageryProvider : imageryProvide
 viewer.scene.globe.depthTestAgainstTerrain = true;
 //viewer.extend(Cesium.viewerCesiumNavigationMixin, {});
 var satValueCount = null;
-var drawer = null;
+var drawer = new CesiumPolygonDrawer(viewer);
+
 //초기 로딩 설정
 $(document).ready(function() {
 
 	$("#bridgeManageMenu").addClass("on");
 	getListSdo();
 
+	$('#expandAll').click(function() {
+		$('.form-group h3:not(.on)').click();
+	});
+
+	$('#closedAll').click(function() {
+		$('.form-group h3.on').click();
+	});
+
 	$('#drawBridge').click(function() {
-		$(this).toggleClass("on");
-		if (drawer != null) {
-			if (drawer.active) {
-				drawer.active = false;
-			} else {
-				drawer.active = true;
-			}
-		} else {
-			drawer = new CesiumPolygonDrawer(viewer);
+		var active = $(this).hasClass('on');
+		if(!active) {
+			$(this).addClass('on');
 			drawer.active = true;
-			drawer.drawing = true;
+		} else {
+			$(this).removeClass('on');
+			drawer.active = false;
 		}
 	});
 
@@ -224,7 +236,7 @@ $(document).ready(function() {
 		var form = $('#insertBridgeForm')[0];
 		var formData = new FormData(form);
 		$.ajax({
-			url: '/bridges/input-bridge',
+			url: '/bridges',
 			type: 'POST',
 			headers: {"X-Requested-With": "XMLHttpRequest"},
 			data: formData,

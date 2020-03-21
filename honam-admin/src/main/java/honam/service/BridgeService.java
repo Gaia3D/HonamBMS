@@ -105,4 +105,18 @@ public interface BridgeService {
 	 */
 	int updateBridge(Bridge bridge);
 
+	/**
+	 * bridge 삭제
+	 * @param bridge
+	 * @return
+	 */
+	int deleteBridge(Integer gid);
+
+	/**
+	 * bridge 선택 삭제
+	 * @param bridge
+	 * @return
+	 */
+	int deleteBridge(Integer[] gid);
+
 }

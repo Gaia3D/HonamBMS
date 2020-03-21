@@ -77,8 +77,8 @@ public interface BridgeMapper {
 	 * @return
 	 */
 	List<Bridge> getListBridgeByBridgeGroupId(Integer bridgeGroupId);
-	
-	
+
+
 	/**
 	 * 교량 정보 조회
 	 * @param gid
@@ -100,4 +100,10 @@ public interface BridgeMapper {
 	 */
 	int updateBridge(Bridge bridge);
 
+	/**
+	 * bridge 삭제
+	 * @param bridge
+	 * @return
+	 */
+	int deleteBridge(Integer gid);
 }

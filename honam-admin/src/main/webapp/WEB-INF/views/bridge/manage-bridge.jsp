@@ -20,42 +20,50 @@
 <div class="wrapper">
 	<%@ include file="/WEB-INF/views/layouts/menu.jsp" %>
 	<div class="contents-wrapper">
-		<nav class="manage-tab">
+		<!-- <nav class="manage-tab">
 			<ul>
 				<li><a href="/bridge/manage-bridge">교량 관리</a></li>
 				<li><a href="/bridge/input-bridge">교량 등록</a></li>
 			</ul>
-		</nav>
-
+		</nav> -->
 		<!-- S: 교량 목록 -->
 		<div class="list-wrapper">
-			<button>선택 삭제</button>
-			<button>전체 삭제</button>
-			<table class="list-table scope-col">
-				<col class="col-number" />
-				<col class="col-toggle" />
-				<col class="col-name" />
-				<thead>
-					<tr>
-						<th scope="col" class="col-name" style="width:5%; font-weight: bold">
-							<input type="checkbox">
-						</th>
-						<th scope="col" class="col-number">번호</th>
-						<th scope="col" class="col-toggle">교량 명</th>
-						<th scope="col" class="col-name">준공년도</th>
-						<th scope="col" class="col-name">상태</th>
-						<th scope="col" class="col-name">이동</th>
-						<th scope="col" class="col-name">수정</th>
-						<th scope="col" class="col-name">삭제</th>
-					</tr>
-				</thead>
-				<tbody id="transferDataList"></tbody>
-			</table>
+			<div class="boardHeader" style="margin:0;">
+				<h2>교량 관리</h2>
+				<div class="button-wrapper-right">
+					<button class="point" onclick="location.href='/bridge/input-bridge'">교량 등록</button>
+					<button id="deleteSelected" class="basic">선택 삭제</button>
+				</div>
+			</div>
+			<div class="boardList">
+				<table>
+					<col class="col-number" />
+					<col class="col-toggle" />
+					<col class="col-name" />
+					<thead>
+						<tr>
+							<th scope="col" class="col-name" style="width:5%; font-weight: bold">
+								<input type="checkbox" id="selectAll">
+							</th>
+							<th scope="col" class="col-number">번호</th>
+							<th scope="col" class="col-toggle">교량 명</th>
+							<th scope="col" class="col-name">준공년도</th>
+							<th scope="col" class="col-name">상태</th>
+							<!-- <th scope="col" class="col-name">드론영상</th> -->
+							<th scope="col" class="col-name">이동</th>
+							<th scope="col" class="col-name">삭제</th>
+						</tr>
+					</thead>
+					<tbody id="transferDataList"></tbody>
+				</table>
+			</div>
 			<ul class="pagination"></ul>
 			<%@ include file="/WEB-INF/views/common/pagination.jsp" %>
 		</div>
 		<!-- E: 교량 목록 -->
+		<!-- S: 지도 화면 -->
 		<div id="MapContainer" class="map-wrapper"></div>
+		<!-- E: 지도 화면 -->
 	</div>
 </div>
 
@@ -98,85 +106,152 @@ var satValueCount = null;
 
 //초기 로딩 설정
 $(document).ready(function() {
-
 	$("#bridgeManageMenu").addClass("on");
-
+	$("#selectAll").click(function() {
+	    $("input[type=checkbox]").prop("checked", $(this).prop("checked"));
+	});
+	$("#deleteSelected").click(function() {
+		if (confirm('선택된 교량을 정말로 삭제하시겠습니까?')) {
+			var gids = new Array();
+			$("input[type=checkbox]:checked").each(function() {
+				var gid = $(this).data('id');
+				if (gid) {
+					gids.push(gid);
+				}
+			});
+			if (gids.length > 0) {
+				removeBridges(gids);
+			} else {
+				alert('선택된 교량이 없습니다.');
+			}
+		}
+	});
 	getListBridge();
-	drawBridge();
-
 });
 
-function drawBridge() {
-	  <c:if test="${!empty bridgeList }">
-	  	<c:forEach var="bridge" items="${bridgeList}" varStatus="status">
-			getCentroidBridge("${bridge.gid}","${bridge.brgNam}","${bridge.grade}")
-	  	</c:forEach>
-	  </c:if>
+function addMarkerBillboards(bridgeList) {
+	viewer.entities.removeAll();
+	for(var i=0; i< bridgeList.length;i++) {
+		var bridge = bridgeList[i];
+		var markerImage = "/images/${lang}/"+bridge.grade+".png";
+		viewer.entities.add({
+			name : bridge.brgNam,
+	        position : Cesium.Cartesian3.fromDegrees(parseFloat(bridge.longitude), parseFloat(bridge.latitude), 0),
+	        billboard : {
+	            image : markerImage,
+	            width : 35,
+	            height : 35,
+	            disableDepthTestDistance : Number.POSITIVE_INFINITY,
+	            scaleByDistance : new Cesium.NearFarScalar(10000, 1.5, 1000000, 0.0)
+	        },
+	        label : {
+	        	fillColor : Cesium.Color.fromCssColorString('#242424'),
+	            font : "12pt",
+	            scaleByDistance : new Cesium.NearFarScalar(25000, 1.0, 50000, 0.0),
+	            pixelOffset : new Cesium.Cartesian2(5, 30),
+	            style: Cesium.LabelStyle.FILL,
+	            outlineWidth: 1,
+	            text : bridge.brgNam,
+	            showBackground : true,
+	            backgroundColor : Cesium.Color.fromCssColorString('#EDEDED')
+	        }
+	    });
+	}
 }
 
-function getCentroidBridge(gid, name, grade) {
-	var url = "/bridges/" + gid + "/centroid";
-	var cnt = null;
+function gotoFlyBridge(longitude, latitude) {
+	viewer.camera.flyTo({
+	    destination : Cesium.Cartesian3.fromDegrees(longitude, latitude, 200)
+	});
+}
 
+function addBridgesTable(bridges, pagination, pageNo) {
+	var html = '';
+	for (var i = 0; i < bridges.length; i++) {
+		var bridge = bridges[i];
+		html += '<tr>';
+		html += '<td class="col-name"><input type="checkbox" data-id="' + bridge.gid + '"></td>';
+		var number = pagination.offset + (i + 1);
+		html += '<td class="col-number">' + number + '</td>';
+		html += '<td class="col-toggle ellipsis" style="max-width:100px;"><a href="/bridge/modify-bridge/' + bridge.gid + '">' + bridge.brgNam + '</a></td>';
+		var endAmd = '';
+		if (bridge.endAmd) {
+			endAmd = bridge.endAmd.substring(0,4);
+		}
+		html += '<td class="col-name">' + endAmd + '</td>';
+		html += '<td class="col-name">' + bridge.grade + '</td>';
+		/* html += '<td class="col-name"><a href="/bridge/modify-bridge-layer/' + bridge.gid + '">수정</a></td>'; */
+		html += '<td class="col-name"><button class="intd" onclick="gotoFlyBridge(' + bridge.longitude + ', ' + bridge.latitude + ')">이동</button></td>';
+		html += '<td class="col-name"><button class="intd deleteBridge" data-id="' + bridge.gid + '" data-page="' + pageNo + '">삭제</button></td>';
+		html += '</tr>';
+	}
+	$('#transferDataList').html(html);
+}
+
+function addBridgesPaging(pagination, pageNo) {
+	var html = '<li class="ico first" onClick="getListBridge(' + pagination.firstPage + ')"></li>';
+	if (pagination.existPrePage) {
+		html += '<li class="ico forward" onClick="getListBridge(' + pagination.prePageNo + ')"></li>';
+	}
+	for (var i = pagination.startPage; i < pagination.endPage + 1; i++) {
+		if (pageNo == i) {
+			html += '<li class="on"><a href="#">' + i + '</a></li>';
+		} else {
+			html += '<li onClick="getListBridge(' + i + ')"><a href="#">' + i + '</a></li>';
+		}
+	}
+	if (pagination.existNextPage) {
+		html += '<li class="ico back" onClick="getListBridge(' + pagination.nextPageNo + ')"></li>';
+	}
+	html += '<li class="ico end" onClick="getListBridge(' + pagination.lastPage + ')"></li>';
+	$('.pagination').html(html);
+}
+
+function removeBridge(gid, pageNo) {
 	$.ajax({
-	    url: url,
-	    type: "GET",
+	    url: '/bridges/' + gid,
+	    type: "DELETE",
+		headers: {'X-Requested-With': 'XMLHttpRequest'},
 	    dataType: "json",
-	    success : function(msg) {
-	        if(msg.result === "success") {
-	      	  cnt++;
-	      	  addMarkerBillboards(name, msg.longitude,  msg.latitude, grade, cnt);
-	        }
+	    success : function(res) {
+	    	if(res.statusCode <= 200) {
+				alert("교량을 성공적으로 삭제 하였습니다.");
+				getListBridge(pageNo);
+			} else {
+				alert(JS_MESSAGE[res.errorCode]);
+				console.log("---- " + res.message);
+			}
 	    },
 	    error : function(request, status, error) {
-	        //alert(JS_MESSAGE["ajax.error.message"]);
-	        console.log("code : " + request.status + "\n message : " + request.responseText + "\n error : " + error);
+	    	alert(JS_MESSAGE["ajax.error.message"]);
 	    }
 	});
 }
 
-function addMarkerBillboards(bridgeName, longitude, latitude, grade, cnt) {
-	var markerImage = null;
-	if(grade == 'A'){
-		markerImage = '/images/${lang}/A.png';
-	} else if(grade == 'B') {
-		markerImage = '/images/${lang}/B.png';
-	} else if(grade == 'C') {
-		markerImage = '/images/${lang}/C.png';
-	} else if(grade == 'D') {
-		markerImage = '/images/${lang}/D.png';
-	} else if(grade == 'E') {
-		markerImage = '/images/${lang}/E.png';
-	} else {
-		markerImage = '/images/${lang}/X.png';
-	}
-
-//	if(cnt == 1) {
-//		cameraFlyTo(longitude, latitude, 200000, 3);
-//	}
-
-	viewer.entities.add({
-		name : bridgeName,
-        position : Cesium.Cartesian3.fromDegrees(parseFloat(longitude), parseFloat(latitude), 0),
-        billboard : {
-            image : markerImage,
-            width : 35, // default: undefined/
-            height : 35, // default: undefined
-            disableDepthTestDistance : Number.POSITIVE_INFINITY
-            /* image : '../images/Cesium_Logo_overlay.png', // default: undefined
-            show : true, // default
-            pixelOffset : new Cesium.Cartesian2(0, -50), // default: (0, 0)
-            eyeOffset : new Cesium.Cartesian3(0.0, 0.0, 0.0), // default
-            horizontalOrigin : Cesium.HorizontalOrigin.CENTER, // default
-            verticalOrigin : Cesium.VerticalOrigin.BOTTOM, // default: CENTER
-            scale : 2.0, // default: 1.0
-            color : Cesium.Color.LIME, // default: WHITE
-            rotation : Cesium.Math.PI_OVER_FOUR, // default: 0.0
-            alignedAxis : Cesium.Cartesian3.ZERO, // default
-            width : 100, // default: undefined
-            height : 25 // default: undefined */
-        }
-    });
+function removeBridges(gids) {
+	var formData = new FormData();
+	formData.append('gids', gids);
+	$.ajax({
+	    url: '/bridges',
+	    type: "DELETE",
+	    data : formData,
+	    processData: false,
+		contentType: false,
+		headers: {'X-Requested-With': 'XMLHttpRequest'},
+	    dataType: "json",
+	    success : function(res) {
+	    	if(res.statusCode <= 200) {
+				alert("선택된 교량을 성공적으로 삭제 하였습니다.");
+				getListBridge();
+			} else {
+				alert(JS_MESSAGE[res.errorCode]);
+				console.log("---- " + res.message);
+			}
+	    },
+	    error : function(request, status, error) {
+	    	alert(JS_MESSAGE["ajax.error.message"]);
+	    }
+	});
 }
 
 function getListBridge(number) {
@@ -184,65 +259,35 @@ function getListBridge(number) {
 	$.ajax({
 	    url: '/bridges',
 	    type: "GET",
-	    data: {pageNo : pageNo},
+	    data: { 'pageNo' : pageNo},
 		headers: {'X-Requested-With': 'XMLHttpRequest'},
 	    dataType: "json",
 	    success : function(res) {
 	    	if(res.statusCode <= 200) {
 	    		var bridges = res.bridgeList;
 	    		var pagination = res.pagination;
-
-	    		var html = '';
-	    		for (var i = 0; i < bridges.length; i++) {
-	    			var bridge = bridges[i];
-	    			html += '<tr>';
-		    		html += '<td class="col-name"><input type="checkbox"></td>';
-		    		var number = pagination.offset + (i + 1);
-		    		html += '<td class="col-number">' + number + '</td>';
-		    		html += '<td class="col-toggle"><a href="/bridge/modify-bridge/' + bridge.gid + '">' + bridge.brgNam + '</a></td>';
-		    		if (bridge.endAmd) {
-		    			var endAmd = bridge.endAmd.substring(0,4);
-		    		}
-		    		html += '<td class="col-name">' + endAmd + '</td>';
-					html += '<td class="col-name">' + bridge.grade + '</td>';
-					html += '<td class="col-name"><button id="goBridge">이동</button></td>';
-					html += '<td class="col-name"><a href="/bridge/modify-bridge/' + bridge.gid + '">수정</a></td>';
-					html += '<td class="col-name"><button class="deleteBridge" data-id="' + bridge.gid + '" data-page="' + pageNo + '">삭제</button></td>';
-		    		html += '</tr>';
-	    		}
-		    	$('#transferDataList').html(html);
-
-
-		    	var html = '<li class="ico first" onClick="getListBridge(' + pagination.firstPage + ')"></li>';
-		    	if (pagination.existPrePage) {
-		    		html += '<li class="ico forward" onClick="getListBridge(' + pagination.prePageNo + ')"></li>';
-		    	}
-		    	for (var i = pagination.startPage; i < pagination.endPage + 1; i++) {
-					if (pageNo == i) {
-						html += '<li class="on"><a href="#">' + i + '</a></li>';
-					} else {
-						html += '<li onClick="getListBridge(' + i + ')"><a href="#">' + i + '</a></li>';
-					}
-		    	}
-		    	if (pagination.existNextPage) {
-		    		html += '<li class="ico back" onClick="getListBridge(' + pagination.nextPageNo + ')"></li>';
-		    	}
-		    	html += '<li class="ico end" onClick="getListBridge(' + pagination.lastPage + ')"></li>';
-		    	$('.pagination').html(html);
-
-		    	$('.deleteBridge').click(function() {
-		    		var gid = $(this).data('id');
-
-		    		// 성공하면!
-		    		var pageNo = $(this).data('page');
-		    		getListBridge(pageNo);
-
+	    		addMarkerBillboards(bridges);
+	    		addBridgesTable(bridges, pagination, pageNo);
+	    		addBridgesPaging(pagination, pageNo);
+		    	$("input[type=checkbox]").click(function() {
+		    	    if (!$(this).prop("checked")) {
+		    	        $("#selectAll").prop("checked", false);
+		    	    }
 		    	});
-
-	    	}
+		    	$('.deleteBridge').click(function() {
+		    		if (confirm('교량을 정말로 삭제하시겠습니까?')) {
+		    			var gid = $(this).data('id');
+			    		var pageNo = $(this).data('page');
+			    		removeBridge(gid, pageNo);
+		    		}
+		    	});
+	    	} else {
+				//alert(JS_MESSAGE[res.errorCode]);
+				console.log("---- " + res.message);
+			}
 	    },
 	    error : function(request, status, error) {
-	        console.log("code : " + request.status + "\n message : " + request.responseText + "\n error : " + error);
+	    	alert(JS_MESSAGE["ajax.error.message"]);
 	    }
 	});
 }

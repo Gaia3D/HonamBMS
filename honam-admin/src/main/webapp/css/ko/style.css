@@ -472,7 +472,9 @@ font-size: 12pt;
 div.boardList > table tr td:last-child {
 border-right: none;
 }
-
+div.boardList > table tr td a {
+text-decoration: underline;
+}
 
 
 /*  버튼 / 정렬 */
@@ -1431,19 +1433,28 @@ background: url(/images/ko/pagenation_end.png) no-repeat 0 0;
    	margin-left: 100px;
    	width: calc(100% - 100px);
 }
+.contents-wrapper h2 {
+	line-height: 30px;
+}
 .manage-tab li {
 	display: inline-block;
 	padding: 10px 30px;
-	background-color: #ccc;
 	background-color: #5563cf;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
 }
+.manage-tab li.on {
+	background-color: #fff;
+}
 .manage-tab li a {
-	color: #fff;
     font-size: 16px;
     font-weight: normal;
+    cursor: pointer;
+    color: #fff;
+}
+.manage-tab li.on a {
+	color: #000;
 }
 .map-wrapper {
 	position: relative;
@@ -1451,6 +1462,7 @@ background: url(/images/ko/pagenation_end.png) no-repeat 0 0;
 	height:100%;
 	width:calc(50% - 80px);
 	padding: 20px;
+	background-color: #fff;
 }
 .list-wrapper {
 	position: relative;
@@ -1522,6 +1534,29 @@ button.draw {
 button.draw.on {
 	background-color: #5c7be8;
 }
+button.down {
+padding: 3px 7px;
+font-size: 11px;
+color: #fff;
+border: 1px solid #ff6347;
+border-radius: 5px;
+background-color: #ff6347;
+}
+button.down:hover {
+color: #ff6347;
+border: 1px solid #ff6347;
+background-color: #fff;
+}
+.button-wrapper-right {
+	margin-bottom: 10px;
+	text-align: right;
+}
+.ellipsis {
+overflow:hidden;
+white-space: nowrap;
+text-overflow: ellipsis;
+}
+
 /* 로딩 스타일 */
 #loadingWrap{
 position: fixed;

@@ -168,6 +168,24 @@ public class BridgeServiceImpl implements BridgeService {
 		return bridgeMapper.getListBridgeAll();
 	}
 
+	/**
+	 * bridge 삭제
+	 */
+	@Transactional
+	public int deleteBridge(Integer gid) {
+		return bridgeMapper.deleteBridge(gid);
+	}
 
+	/**
+	 * bridge 선택 삭제
+	 */
+	@Transactional
+	public int deleteBridge(Integer[] gids) {
+		int result = 0;
+		for (Integer gid : gids) {
+			result += bridgeMapper.deleteBridge(gid);
+		}
+		return result;
+	}
 
 }

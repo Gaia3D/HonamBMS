@@ -19,6 +19,7 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -53,7 +54,7 @@ public class BridgeManageRestController {
 	 * @param model
 	 * @return
 	 */
-	@PostMapping(value = "/input-bridge")
+	@PostMapping
 	public Map<String, Object> inputBridge(HttpServletRequest request, Model model, Bridge bridge, @RequestParam("files") MultipartFile[] files) {
 		log.info("@@@@@@@ bridge = {}", bridge.toString());
 		Map<String, Object> result = new HashMap<>();
@@ -144,6 +145,34 @@ public class BridgeManageRestController {
 		return result;
 	}
 
+	/**
+	 * 교량 수정
+	 * @param request
+	 * @param gid
+	 * @return
+	 */
+	@PostMapping(value = "/{gid:[0-9]+}")
+	public Map<String, Object> updateBridge(HttpServletRequest request, @PathVariable Integer gid, Bridge bridge) {
+		log.info("@@@@@@@ gid = {}", gid);
+		Map<String, Object> result = new HashMap<>();
+		String errorCode = null;
+		String message = null;
+
+		bridgeService.updateBridge(bridge);
+
+		int statusCode = HttpStatus.OK.value();
+		result.put("statusCode", statusCode);
+		result.put("errorCode", errorCode);
+		result.put("message", message);
+		return result;
+	}
+
+	/**
+	 * 교량 삭제
+	 * @param request
+	 * @param gid
+	 * @return
+	 */
 	@DeleteMapping(value = "/{gid:[0-9]+}")
 	public Map<String, Object> deleteBridge(HttpServletRequest request, @PathVariable Integer gid) {
 		log.info("@@@@@@@ gid = {}", gid);
@@ -152,7 +181,30 @@ public class BridgeManageRestController {
 		String message = null;
 
 		// TODO 관련 레이어 삭제 필요
+		bridgeService.deleteBridge(gid);
 
+		int statusCode = HttpStatus.OK.value();
+		result.put("statusCode", statusCode);
+		result.put("errorCode", errorCode);
+		result.put("message", message);
+		return result;
+	}
+
+	/**
+	 * 교량 선택 삭제
+	 * @param request
+	 * @param gid
+	 * @return
+	 */
+	@DeleteMapping
+	public Map<String, Object> deleteBridges(HttpServletRequest request, @RequestParam("gids") Integer[] gids) {
+
+		Map<String, Object> result = new HashMap<>();
+		String errorCode = null;
+		String message = null;
+
+		// TODO 관련 레이어 삭제 필요
+		bridgeService.deleteBridge(gids);
 
 		int statusCode = HttpStatus.OK.value();
 		result.put("statusCode", statusCode);

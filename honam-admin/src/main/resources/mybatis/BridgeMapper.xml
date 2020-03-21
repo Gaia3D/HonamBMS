@@ -205,7 +205,89 @@
 	<!-- Bridge(교량) 정보 수정 -->
 	<update id="updateBridge" parameterType="bridge">
 		/* updateBridge */
+		UPDATE bridge
+		<set>
+			<if test="facNum != null and facNum != ''">
+				fac_num = #{facNum},
+			</if>
+			<if test="brgNam != null and brgNam != ''">
+				brg_nam = #{brgNam},
+			</if>
+			<if test="mngOrg != null and mngOrg != ''">
+				mng_org = #{mngOrg},
+			</if>
+			<if test="facSido != null and facSido != ''">
+				fac_sido = #{facSido},
+			</if>
+			<if test="facSgg != null and facSgg != ''">
+				fac_sgg = #{facSgg},
+			</if>
+			<if test="facEmd != null and facEmd != ''">
+				fac_emd = #{facEmd},
+			</if>
+			<if test="facRi != null and facRi != ''">
+				fac_ri = #{facRi},
+			</if>
+			<if test="facGra != null and facGra != ''">
+				fac_gra = #{facGra},
+			</if>
+			<if test="endAmd != null and endAmd != ''">
+				end_amd = #{endAmd},
+			</if>
+			<if test="dsnWet != null and dsnWet != ''">
+				dsn_wet = #{dsnWet},
+			</if>
+			<if test="brgLen != null and brgLen > 0">
+				brg_len = #{brgLen},
+			</if>
+			<if test="brgHit != null and brgHit > 0">
+				brg_hit = #{brgHit},
+			</if>
+			<if test="effWid != null and effWid > 0">
+				eff_wid = #{effWid},
+			</if>
+			<if test="totWid != null and totWid > 0">
+				tot_wid = #{totWid},
+			</if>
+			<if test="spaCnt != null and spaCnt > 0">
+				spa_cnt = #{spaCnt},
+			</if>
+			<if test="maxLen != null and maxLen > 0">
+				max_len = #{maxLen},
+			</if>
+			<if test="traCnt != null and traCnt != ''">
+				tra_cnt = #{traCnt},
+			</if>
+			<if test="uspRep != null and uspRep != ''">
+				usp_rep = #{uspRep},
+			</if>
+			<if test="dpiRep != null and dpiRep != ''">
+				dpi_rep = #{dpiRep},
+			</if>
+			<if test="gruNum != null and gruNum != ''">
+				gru_num = #{gruNum},
+			</if>
+			<if test="bridgeCm != null and bridgeCm > 0">
+				bridge_cm = #{bridgeCm},
+			</if>
+			<if test="bridgeLcc != null and bridgeLcc > 0">
+				bridge_lcc = #{bridgeLcc},
+			</if>
+			<if test="grade != null and grade != ''">
+				grade = #{grade},
+			</if>
+			<if test="geom != null and geom != ''">
+				wkb_geometry = ST_GeomFromText(#{geom}, 4326),
+			</if>
+			update_dt = now()
+		</set>
+		WHERE ogc_fid = #{gid}
+	</update>
 
+	<!-- Bridge(교량) 정보 삭제 -->
+	<update id="deleteBridge" parameterType="Integer">
+		/* deleteBridge */
+		DELETE FROM bridge WHERE ogc_fid = #{gid}
 	</update>
 
 </mapper>
