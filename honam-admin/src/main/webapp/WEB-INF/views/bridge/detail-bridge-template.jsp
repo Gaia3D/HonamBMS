@@ -67,15 +67,64 @@
 		</tbody>
 	</table>
 
-	<ul class="listDrop" style="margin-top: 20px;">
-		<li class="on">
-			<p>위성 영상 지표 변이 분석 결과<span class="collapse-icon">icon</span></p>
-			<div id="3dmodels" class="listContents">
+	<ul id="bridgeSubContents" class="listDrop" style="margin-top: 20px;">
+		<li>
+			<p onclick="showSat();">위성 영상 지표 변이 분석 결과<span class="collapse-icon">icon</span></p>
+			<div id="satInfo" class="listContents">
+				<ul class="bridgeSubInfoGroup">
+					<li>
+						변위 평균 값 : 
+						<input type="radio" id="satVisibleTrue" name="satVisible" value="true" onclick="showSat('{{facNum}}', 'true');" />
+						<label for="satVisibleTrue">표시</label>&nbsp;&nbsp;&nbsp;&nbsp;
+						<input type="radio" id="satVisibleFalse" name="satVisible" value="false" onclick="showSat('{{facNum}}', 'false');" checked="checked" />
+						<label for="satVisibleFalse">비표시</label>
+					</li>
+					<li>
+						<div style="width:20px;height:20px;position:fixed;background-color:#FF0000"></div>
+						<lable style="margin-left:30px;">4 이상</label>
+					</li>
+					<li>
+						<div style="width:20px;height:20px;position:fixed;background-color:#FF4500"></div>
+						<lable style="margin-left:30px;">3 ~ 4</label>
+					</li>
+					<li>
+						<div style="width:20px;height:20px;position:fixed;background-color:#FF8C00"></div>
+						<lable style="margin-left:30px;">2 ~ 3</label>
+					</li>
+					<li>
+						<div style="width:20px;height:20px;position:fixed;background-color:#FFFF00"></div>
+						<lable style="margin-left:30px;">1 ~ 2</label>
+					</li>
+					<li>
+						<div style="width:20px;height:20px;position:fixed;background-color:#00FF00"></div>
+						<lable style="margin-left:30px;">0 ~ 1</label>
+					</li>
+					<li>
+						<div style="width:20px;height:20px;position:fixed;background-color:#00FF7F"></div>
+						<lable style="margin-left:30px;">-1 ~ 0</label>
+					</li>
+					<li>
+						<div style="width:20px;height:20px;position:fixed;background-color:#00FFFF"></div>
+						<lable style="margin-left:30px;">-2 ~ -1</label>
+					</li>
+					<li>
+						<div style="width:20px;height:20px;position:fixed;background-color:#00BFFF"></div>
+						<lable style="margin-left:30px;">-3 ~ -2</label>
+					</li>
+					<li>
+						<div style="width:20px;height:20px;position:fixed;background-color:#0000FF"></div>
+						<lable style="margin-left:30px;">-4 ~ -3</label>
+					</li>
+					<li>
+						<div style="width:20px;height:20px;position:fixed;background-color:#00008B"></div>
+						<lable style="margin-left:30px;">-4 이하</label>
+					</li>
+				</ul>
 			</div>
 		</li>
 		<li class="on">
 			<p>접촉식 센서<span class="collapse-icon">icon</span></p>
-			<div id="3dmodels" class="listContents">
+			<div id="sensorInfo" class="listContents">
 				<ul class="bridgeSubInfoGroup">
 					<li>
 						<div style="width:20px;height:20px;position:fixed;background-color:red"></div>
@@ -94,7 +143,7 @@
 		</li>
 		<li class="on">
 			<p>드론 영상<span class="collapse-icon">icon</span></p>
-			<div id="3dmodels" class="listContents">
+			<div id="droneInfo" class="listContents">
 				<ul class="bridgeSubInfoGroup">
 					<li>
 						Time, 드론 영상 리스트

@@ -613,6 +613,14 @@
 		var optionObject = { isVisible : option };
 		setNodeAttributeAPI(MAGO3D_INSTANCE, dataGroupId, dataKey, optionObject);
 	}
+	
+	function showSat() {
+		if($("#satInfo").css("display") == "none") {
+			$("#satInfo").show();
+		} else {
+			$("#satInfo").hide();
+		}
+	}
 </script>
 </body>
 </html>
