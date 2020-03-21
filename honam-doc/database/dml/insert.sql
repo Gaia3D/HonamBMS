@@ -27,4 +27,20 @@ values
 	(13, 'group_13', '그룹13', 3.98, null, 'suncheon', 'yeosu'),
 	(14, 'group_14', '그룹14', 2.83, null, 'suncheon', 'yeosu');
 			
+insert into data_group (
+	data_group_id, data_group_name, data_group_key, data_group_path, data_group_target, sharing, user_id, 
+	ancestor, parent, depth, view_order, children, basic, available,  
+	metainfo)
+values (
+	1, '기본', 'basic', 'infra/basic/', 'admin', 'public', 'admin',
+	1, 0, 1, 1, 0, true, true,
+	'{"isPhysical": false}'
+);
+
+insert into data_info (
+	data_id, data_group_id, data_key, data_name, data_type, location, altitude)
+values (
+	1, 1, 'data_key', '데이터명', 'ifc', '', ''
+);	
+	
 commit;

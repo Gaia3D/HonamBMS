@@ -10,6 +10,9 @@
 	</settings>
 
 	<typeAliases>
+		<typeAlias type="honam.domain.DataGroup" alias="dataGroup" />
+		<typeAlias type="honam.domain.DataInfo" alias="dataInfo" />
+	
 		<typeAlias type="honam.domain.Bridge" alias="bridge"/>
 		<typeAlias type="honam.domain.BridgeGroup" alias="bridgeGroup"/>
 		<typeAlias type="honam.domain.BridgeDroneFile" alias="bridgeDroneFile"/>
