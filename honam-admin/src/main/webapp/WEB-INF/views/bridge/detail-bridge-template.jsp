@@ -52,6 +52,42 @@
 		</tbody>
 	</table>
 
+	<ul class="listDrop" style="margin-top: 20px;">
+		<li class="on">
+			<p>3차원 교량 모델<span class="collapse-icon">icon</span></p>
+			<div id="3dmodels" class="listContents">
+			</div>
+		</li>
+		<li class="on">
+			<p>위성 영상 결과<span class="collapse-icon">icon</span></p>
+			<div id="3dmodels" class="listContents">
+			</div>
+		</li>
+		<li class="on">
+			<p>접촉식 센서<span class="collapse-icon">icon</span></p>
+			<div id="3dmodels" class="listContents">
+				<ul class="bridgeSubInfoGroup">
+					<li>
+						<label for="rlosOffset">Sensor Type</label><br/>
+						<input type="radio" name="sensor" value="ACC" /> ACC (가속도계)<br/>
+						<input type="radio" name="sensor" value="STR" /> STR (변형률계)<br/>
+						<input type="radio" name="sensor" value="STR" /> TMP (온도계)
+					</li>
+				</ul>
+			</div>
+		</li>
+		<li class="on">
+			<p>드론 영상<span class="collapse-icon">icon</span></p>
+			<div id="3dmodels" class="listContents">
+				<ul class="bridgeSubInfoGroup">
+					<li>
+						Time, 드론 영상 리스트
+					</li>
+				</ul>
+			</div>
+		</li>
+	</ul>
+
 	<div id="bridgeInfoLayer" class="layer" style="top:100px; right:100px; z-index:1; display: none; width: 360px; ">
 		<div class="layerHeader">
 			<h2>교량 상세정보</h2>
@@ -135,53 +171,6 @@
 			<li>
 				<label>교량등급</label>
 				{{grade}}
-			</li>
-		</ul>
-	</div>
-
-	<div id="bridgeLayer">
-		<h3 style="margin: 18px 0px 5px 10px ;">Layers</h3>
-		<ul class="listLayer yScroll" style="height: 450px;">
-			<li id="3dModel">
-				<p>
-					<span style="display: inline-block; width: 160px;">3차원 교량 모델</span>  
-					<button class="textBtnSub" onClick="turnOnAllLayer(); return false;">표시</button>
-					<button class="textBtnSub" onClick="turnOnAllLayer(); return false;">펼치기</button>				
-				</p>
-			</li>
-			<li id="satImageAnalysis" >
-				<p>
-					<span style="display: inline-block; width: 160px;">위성 영상 결과</span>  
-					<button class="textBtnSub" onClick="turnOnAllLayer(); return false;">표시</button>
-					<button class="textBtnSub" onClick="turnOnAllLayer(); return false;">펼치기</button>				
-				</p>
-				<div class="listContents">
-					<div class="legend"></div>
-				</div>
-			</li>
-			<li id="sensor"  >
-				<p>
-					<span style="display: inline-block; width: 160px;">접촉식 센서</span>  
-					<button class="textBtnSub" onClick="turnOnAllLayer(); return false;">표시</button>
-					<button class="textBtnSub" onClick="turnOnAllLayer(); return false;">펼치기</button>				
-				</p>	
-				<div class="listContents">
-					<h3>Sensor Type</h3> <hr>
-					<input type="radio" name="sensor" value="ACC" /> ACC (가속도계) <br>
-					<input type="radio" name="sensor" value="STR" /> STR (변형률계) <br>
-					<input type="radio" name="sensor" value="TMP" /> TMP (온도계) <br><br>
-					<div class="legend"></div>
-				</div>
-			</li>
-			<li id="droneImage" >
-				<p>
-					<span style="display: inline-block; width: 160px;">드론 영상</span>  
-					<button class="textBtnSub" onClick="turnOnAllLayer(); return false;">표시</button>
-					<button class="textBtnSub" onClick="turnOnAllLayer(); return false;">펼치기</button>				
-				</p>	
-				<div class="listContents">
-					Time, 드론 영상 리스트
-				</div>
 			</li>
 		</ul>
 	</div>
