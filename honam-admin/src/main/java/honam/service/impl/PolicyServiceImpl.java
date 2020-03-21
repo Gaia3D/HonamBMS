@@ -26,7 +26,7 @@ public class PolicyServiceImpl implements PolicyService {
     /**
      * 운영정책 수정
      */
-    @Transactional(readOnly=true)
+    @Transactional
     public int updatePolicy(Policy policy) {
     	return policyMapper.updatePolicy(policy);
     }
