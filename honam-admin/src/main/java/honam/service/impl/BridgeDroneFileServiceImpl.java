@@ -28,9 +28,13 @@ public class BridgeDroneFileServiceImpl implements BridgeDroneFileService {
 	}
 
 	@Override
+	public Long getBridgeDroneFileTotalCount() {
+		return bridgeDroneFileMapper.getBridgeDroneFileTotalCount();
+	}
+
+	@Override
 	public List<BridgeDroneFile> getBridgeDroneFile(BridgeDroneFile file) {
-		// TODO Auto-generated method stub
-		return null;
+		return bridgeDroneFileMapper.getBridgeDroneFile(file);
 	}
 
 	@Override
@@ -56,5 +60,6 @@ public class BridgeDroneFileServiceImpl implements BridgeDroneFileService {
 		// TODO Auto-generated method stub
 		return 0;
 	}
+
 
 }

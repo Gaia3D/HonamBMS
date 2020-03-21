@@ -12,18 +12,27 @@
 		INSERT INTO bridge_drone_file(
 			upload_drone_file_id, ogc_fid, user_id,
 			file_name, file_real_name, file_path, file_sub_path, file_size,
-			file_ext, error_message
+			file_ext, error_message, create_date, location, altitude
 		) VALUES (
 			#{uploadDroneFileId}, #{ogcFid}, #{userId},
 			#{fileName}, #{fileRealName}, #{filePath}, #{fileSubPath}, #{fileSize},
-			#{fileExt}, #{errorMessage}
+			#{fileExt}, #{errorMessage}, #{createDate}, ST_GeomFromText(#{location}, 4326), #{altitude}
 		)
 	</insert>
+
+	<!-- 교량 드론 파일 목록 건수 -->
+	<select id="getBridgeDroneFileTotalCount">
+		/* getBridgeDroneFileTotalCount */
+		SELECT COUNT(upload_drone_file_id)
+		FROM bridge_drone_file
+		WHERE ogc_fid = #{gid}
+	    ORDER BY upload_drone_file_id
+	</select>
 
 	<!-- 교량 드론 파일 목록 조회 -->
 	<select id="getBridgeDroneFile" parameterType="bridgeDroneFile" resultType="bridgeDroneFile">
 		/* getBridgeDroneFile */
-		SELECT *
+		SELECT *, ST_X(A.location) AS longitude, ST_Y(A.location) AS latitude
 		FROM bridge_drone_file
 		WHERE ogc_fid = #{gid}
 	    ORDER BY upload_drone_file_id
