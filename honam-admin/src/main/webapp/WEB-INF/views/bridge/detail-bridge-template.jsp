@@ -279,10 +279,5 @@
 			</li>
 		</ul>
 	</div>
-
-	<!-- 위성 영상 관련 분석결과영역 -->
-	<div class="analysisGraphic">
-		<canvas id="analysisGraphic"></canvas>
-	</div>
 </div>
 </script>

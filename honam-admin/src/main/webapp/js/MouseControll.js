@@ -28,9 +28,11 @@ function MouseControll() {
         			$("#selectEntityList").append("<li data-sensorid="+sensorid +">sensorID : " + sensorid + "</li>");
         		} else if(pick[i].id._name === "Mean velocity (mm/yr)") {
         			businessType = "SAT";
-        			// pick[i].id._id
+        			$(".analysisGraphic").show();
         			var location = pick[i].id._id.split(",");
-        			getListSatValue(BRIDGE_GID, BRIDGE_FAC_NUM, location[0], location[1]);
+        			var averageValue = pick[i].id.description;
+        			getListSatValue(BRIDGE_GID, BRIDGE_FAC_NUM, averageValue, location[0], location[1]);
+        			break;
         		} else if(pick[i].id._name.toLowerCase().startsWith('drone')) {
         			//드론 엔티티 클릭 시 
         			businessType = "DRONE";

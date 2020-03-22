@@ -60,13 +60,9 @@ public class SatRestController {
 		String message = null;
 		
 		List<Sat> satValueList = satService.getListSatValueByLonLat(sat);
-		
-		log.info("--------------- satValueList = {}", satValueList);
-		
 		int statusCode = HttpStatus.OK.value();
 
 		result.put("satValueList", satValueList);
-		
 		result.put("statusCode", statusCode);
 		result.put("errorCode", errorCode);
 		result.put("message", message);

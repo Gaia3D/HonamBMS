@@ -1,4 +1,4 @@
-function getListSatValue(gid, facNum, lon, lat) {	
+function getListSatValue(gid, facNum, averageValue, lon, lat) {	
 	var arrSatValue = new Array();
 	
 	var info = "facNum=" + facNum + "&lon=" + lon + "&lat=" + lat;
@@ -16,7 +16,7 @@ function getListSatValue(gid, facNum, lon, lat) {
 					var satDisplacement = satValueList[i];
 					arrSatValue.push([satDisplacement.acquireDate, satDisplacement.value]);
 	       		}
-	       		createSatValueGraph(arrSatValue);
+	       		createSatValueGraph(averageValue, lon, lat, arrSatValue);
 			} else {
 				alert(JS_MESSAGE[msg.errorCode]);
 			}
@@ -33,11 +33,7 @@ function viewBridgeSatAvg(lon, lat, avg) {
 			parent : satValue,
 			id : lon + ',' + lat ,
 			name : 'Mean velocity (mm/yr)',
-		    description  : '<table class="cesium-infoBox-defaultTable"><tbody>' +
-	        '<tr><th>Longitude</th><td>' + lon + '</td></tr>' +
-	        '<tr><th>Latitude</th><td>' +  lat + '</td></tr>' +
-	        '<tr><th>value</th><td>' +  avg + '</td></tr>' +
-	        '</tbody></table>',
+		    description  : avg ,
 			position : Cesium.Cartesian3.fromDegrees(lon, lat, 25),
 			ellipsoid : {
 					radii : new Cesium.Cartesian3(1.3, 1.3, 1.3),
@@ -49,11 +45,7 @@ function viewBridgeSatAvg(lon, lat, avg) {
 			parent : satValue,
 			id : lon + ',' + lat ,
 			name : 'Mean velocity (mm/yr)',
-		    description  : '<table class="cesium-infoBox-defaultTable"><tbody>' +
-	        '<tr><th>Longitude</th><td>' + lon + '</td></tr>' +
-	        '<tr><th>Latitude</th><td>' +  lat + '</td></tr>' +
-	        '<tr><th>value</th><td>' +  avg + '</td></tr>' +
-	        '</tbody></table>',
+			description  : avg ,
 			position : Cesium.Cartesian3.fromDegrees(lon, lat, 25),
 			ellipsoid : {
 					radii : new Cesium.Cartesian3(1.3, 1.3, 1.3),
@@ -65,11 +57,7 @@ function viewBridgeSatAvg(lon, lat, avg) {
 			parent : satValue,
 			id : lon + ',' + lat ,
 			name : 'Mean velocity (mm/yr)',
-		    description  : '<table class="cesium-infoBox-defaultTable"><tbody>' +
-	        '<tr><th>Longitude</th><td>' + lon + '</td></tr>' +
-	        '<tr><th>Latitude</th><td>' +  lat + '</td></tr>' +
-	        '<tr><th>value</th><td>' +  avg + '</td></tr>' +
-	        '</tbody></table>',
+			description  : avg ,
 			position : Cesium.Cartesian3.fromDegrees(lon, lat, 25),
 			ellipsoid : {
 					radii : new Cesium.Cartesian3(1.3, 1.3, 1.3),
@@ -81,11 +69,7 @@ function viewBridgeSatAvg(lon, lat, avg) {
 			parent : satValue,
 			id : lon + ',' + lat ,
 			name : 'Mean velocity (mm/yr)',
-		    description  : '<table class="cesium-infoBox-defaultTable"><tbody>' +
-	        '<tr><th>Longitude</th><td>' + lon + '</td></tr>' +
-	        '<tr><th>Latitude</th><td>' +  lat + '</td></tr>' +
-	        '<tr><th>value</th><td>' +  avg + '</td></tr>' +
-	        '</tbody></table>',
+			description  : avg ,
 			position : Cesium.Cartesian3.fromDegrees(lon, lat, 25),
 			ellipsoid : {
 					radii : new Cesium.Cartesian3(1.3, 1.3, 1.3),
@@ -97,11 +81,7 @@ function viewBridgeSatAvg(lon, lat, avg) {
 			parent : satValue,
 			id : lon + ',' + lat ,
 			name : 'Mean velocity (mm/yr)',
-		    description  : '<table class="cesium-infoBox-defaultTable"><tbody>' +
-	        '<tr><th>Longitude</th><td>' + lon + '</td></tr>' +
-	        '<tr><th>Latitude</th><td>' +  lat + '</td></tr>' +
-	        '<tr><th>value</th><td>' +  avg + '</td></tr>' +
-	        '</tbody></table>',
+			description  : avg ,
 			position : Cesium.Cartesian3.fromDegrees(lon, lat, 25),
 			ellipsoid : {
 					radii : new Cesium.Cartesian3(1.3, 1.3, 1.3),
@@ -113,11 +93,7 @@ function viewBridgeSatAvg(lon, lat, avg) {
 			parent : satValue,
 			id : lon + ',' + lat ,
 			name : 'Mean velocity (mm/yr)',
-		    description  : '<table class="cesium-infoBox-defaultTable"><tbody>' +
-	        '<tr><th>Longitude</th><td>' + lon + '</td></tr>' +
-	        '<tr><th>Latitude</th><td>' +  lat + '</td></tr>' +
-	        '<tr><th>value</th><td>' +  avg + '</td></tr>' +
-	        '</tbody></table>',
+			description  : avg ,
 			position : Cesium.Cartesian3.fromDegrees(lon, lat, 25),
 			ellipsoid : {
 					radii : new Cesium.Cartesian3(1.3, 1.3, 1.3),
@@ -129,11 +105,7 @@ function viewBridgeSatAvg(lon, lat, avg) {
 			parent : satValue,
 			id : lon + ',' + lat ,
 			name : 'Mean velocity (mm/yr)',
-		    description  : '<table class="cesium-infoBox-defaultTable"><tbody>' +
-	        '<tr><th>Longitude</th><td>' + lon + '</td></tr>' +
-	        '<tr><th>Latitude</th><td>' +  lat + '</td></tr>' +
-	        '<tr><th>value</th><td>' +  avg + '</td></tr>' +
-	        '</tbody></table>',	    
+			description  : avg ,
 			position : Cesium.Cartesian3.fromDegrees(lon,lat, 25),
 			ellipsoid : {
 					radii : new Cesium.Cartesian3(1.3, 1.3, 1.3),
@@ -145,11 +117,7 @@ function viewBridgeSatAvg(lon, lat, avg) {
 			parent : satValue,
 			id : lon + ',' + lat ,
 			name : 'Mean velocity (mm/yr)',
-		    description  : '<table class="cesium-infoBox-defaultTable"><tbody>' +
-	        '<tr><th>Longitude</th><td>' + lon + '</td></tr>' +
-	        '<tr><th>Latitude</th><td>' +  lat + '</td></tr>' +
-	        '<tr><th>value</th><td>' +  avg + '</td></tr>' +
-	        '</tbody></table>',	    
+			description  : avg ,
 			position : Cesium.Cartesian3.fromDegrees(lon,lat, 25),
 			ellipsoid : {
 					radii : new Cesium.Cartesian3(1.3, 1.3, 1.3),
@@ -161,11 +129,7 @@ function viewBridgeSatAvg(lon, lat, avg) {
 			parent : satValue,
 			id : lon + ',' + lat ,
 			name : 'Mean velocity (mm/yr)',
-		    description  : '<table class="cesium-infoBox-defaultTable"><tbody>' +
-	        '<tr><th>Longitude</th><td>' + lon + '</td></tr>' +
-	        '<tr><th>Latitude</th><td>' +  lat + '</td></tr>' +
-	        '<tr><th>value</th><td>' +  avg + '</td></tr>' +
-	        '</tbody></table>',
+			description  : avg ,
 			position : Cesium.Cartesian3.fromDegrees(lon, lat, 25),
 			ellipsoid : {
 					radii : new Cesium.Cartesian3(1.3, 1.3, 1.3),
@@ -177,11 +141,7 @@ function viewBridgeSatAvg(lon, lat, avg) {
 		parent : satValue,
 		id : lon + ',' + lat ,
 		name : 'Mean velocity (mm/yr)',
-	    description  : '<table class="cesium-infoBox-defaultTable"><tbody>' +
-        '<tr><th>Longitude</th><td>' + lon + '</td></tr>' +
-        '<tr><th>Latitude</th><td>' +  lat + '</td></tr>' +
-        '<tr><th>value</th><td>' +  avg + '</td></tr>' +
-        '</tbody></table>',
+		description  : avg ,
 		position : Cesium.Cartesian3.fromDegrees(lon, lat, 25),
 		ellipsoid : {
 				radii : new Cesium.Cartesian3(1.3, 1.3, 1.3),
@@ -215,15 +175,17 @@ function parse(str) {
 }
 
 var satValueChart = null;
-function createSatValueGraph(data) {
+function createSatValueGraph(averageValue, longitude, latitude, data) {
 	var date= [];
 	var displacement = [];
 	var value = [];
 	var label = [];
+	var title = "Mean velocity : " + averageValue + ", 경도 : " + longitude + ", 위도 : " + latitude;
 	
 	for (i = 0; i < data.length-1; i++) {
 		date.push(parse(String(data[i][0])));
-		label.push(moment.utc(date[i]).format('YYYY/MM/DD'));
+		var acquireDate = (data[i][0]).toString();
+		label.push(acquireDate.substring(0, 4) + "/" + acquireDate.substring(4, 6) + "/" + acquireDate.substring(6,8));
 		value.push({x: date[i], y: data[i][1]});
 		displacement.push(data[i][1]);
 	}
@@ -253,6 +215,10 @@ function createSatValueGraph(data) {
 	        }]
 	    },
 	    options: {
+	    	title: {
+	            display: true,
+	            text: title
+	        },	
 			responsive: true,
 			maintainAspectRatio: false,
 			legend: {

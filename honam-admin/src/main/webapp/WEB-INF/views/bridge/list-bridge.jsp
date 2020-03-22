@@ -94,6 +94,12 @@
 		</div>
 	</div>
 	<!-- E: 1depth / 프로젝트 목록 -->
+	
+	<!-- S: 화면하단 분석결과영역 -->
+	<div class="analysisGraphic">
+		<canvas id="analysisGraphic"></canvas>
+	</div>
+	
 	<!-- S: MAPWRAP -->
 	<div id="MapContainer" class="mapWrap" >
 		<div class="mapInfo">
@@ -733,6 +739,7 @@
 			//satValue = null;
 			
 			satValue.show = !satValue.show;
+			$(".analysisGraphic").hide();
 		}
 	}
 </script>
