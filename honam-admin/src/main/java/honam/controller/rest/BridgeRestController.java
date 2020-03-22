@@ -310,7 +310,24 @@ public class BridgeRestController {
 		result.put("message", message);
 		return result;
 	}
+	
+	@GetMapping("/sensor/{sensorid}")
+	public Map<String, Object> getListSensorData(HttpServletRequest request, @PathVariable String sensorid) {
 
+		Map<String, Object> result = new HashMap<>();
+		String errorCode = null;
+		String message = null;
+		
+		List<Sensor> sensorDataList = sensorService.getListSensorData(sensorid);
+		int statusCode = HttpStatus.OK.value();
+
+		result.put("sensorDataList", sensorDataList);
+		result.put("statusCode", statusCode);
+		result.put("errorCode", errorCode);
+		result.put("message", message);
+		return result;
+	}
+	
 	/**
 	 * 시도 목록
 	 * @return
