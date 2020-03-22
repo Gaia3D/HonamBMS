@@ -48,23 +48,23 @@ public class BridgeRestController {
 	private SensorService sensorService;
 	@Autowired
 	private BridgeDroneFileService bridgeDroneFileService;
-	
+
 	private static final long PAGE_ROWS = 10l;
 	private static final long PAGE_LIST = 5l;
-	
+
 	/**
 	 * 교량 목록 정보
-	 * @param 
+	 * @param
 	 * @return
 	 */
 	@GetMapping
 	public Map<String, Object> list(HttpServletRequest request, Bridge bridge, @RequestParam(defaultValue="1") String pageNo) {
 		log.info("@@@@@ bridge = {}", bridge);
-		
+
 		Map<String, Object> result = new HashMap<>();
 		String errorCode = null;
 		String message = null;
-		
+
 		long totalCount = bridgeService.getBridgeTotalCount(bridge);
 		log.info("@@@@ totalCount = {}", totalCount);
 		Pagination pagination = new Pagination(	request.getRequestURI(),
@@ -82,9 +82,9 @@ public class BridgeRestController {
 		if(totalCount > 0l) {
 			bridgeList = bridgeService.getListBridge(bridge);
 		}
-		
+
 		int statusCode = HttpStatus.OK.value();
-		
+
 		result.put("bridgeList", bridgeList);
 		result.put("pagination", pagination);
 		result.put("statusCode", statusCode);
@@ -92,14 +92,14 @@ public class BridgeRestController {
 		result.put("message", message);
 		return result;
 	}
-	
+
 //	@GetMapping("/bridges")
 //	public Map<String, Object> getListbridge(HttpServletRequest request, Bridge bridge, @RequestParam(defaultValue="1") String pageNo) {
 //		log.info("@@ bridge = {}", bridge);
 //		Map<String, Object> result = new HashMap<>();
 //		String errorCode = null;
 //		String message = null;
-//		
+//
 //		bridge.setListCounter(10l);
 //
 //		long bridgeTotalCount = bridgeService.getBridgeTotalCount(bridge);
@@ -107,7 +107,7 @@ public class BridgeRestController {
 //				bridgeTotalCount,
 //				Long.valueOf(pageNo).longValue(),
 //				bridge.getListCounter());
-//		
+//
 //		bridge.setOffset(pagination.getOffset());
 //		bridge.setLimit(pagination.getPageRows());
 //
@@ -115,19 +115,50 @@ public class BridgeRestController {
 //		if(bridgeTotalCount > 0l) {
 //			bridgeList = bridgeService.getListBridge(bridge);
 //		}
-//		int statusCode = HttpStatus.OK.value();	
-//			
+//		int statusCode = HttpStatus.OK.value();
+//
 //		result.put("bridgeList", bridgeList);
 //		result.put("bridgeTotalCount", bridgeTotalCount);
 //		// image total count
 //		result.put("pagination", pagination);
-//		
+//
 //		result.put("statusCode", statusCode);
 //		result.put("errorCode", errorCode);
 //		result.put("message", message);
 //		return result;
 //	}
-	
+
+
+	@GetMapping("/dronfile/{gid:[0-9]+}")
+	public Map<String, Object> getBridgeDronFileList(HttpServletRequest request, @PathVariable Integer gid, BridgeDroneFile bridgeDronFile) {
+		log.info("@@@@@@@@@@ bridge date = {}", bridgeDronFile.getCreateDate());
+
+		Map<String, Object> result = new HashMap<>();
+		String errorCode = null;
+		String message = null;
+
+		Long bridgeDroneFileTotalCount = bridgeDroneFileService.getBridgeDroneFileTotalCount(bridgeDronFile);
+		StringBuffer bdfBuffer = new StringBuffer(bridgeDronFile.getParameters());
+		String stringParameters =  bdfBuffer.toString();
+		Pagination pagination = new Pagination(	request.getRequestURI(),
+												stringParameters,
+												bridgeDroneFileTotalCount,
+												Long.valueOf(1).longValue(),
+												PAGE_ROWS,
+												PAGE_LIST
+												);
+		List<BridgeDroneFile> bridgeDroneFileList = bridgeDroneFileService.getBridgeDroneFile(bridgeDronFile);
+
+		int statusCode = HttpStatus.OK.value();
+		result.put("pagination", pagination);
+		result.put("bdfList", bridgeDroneFileList);
+		result.put("statusCode", statusCode);
+		result.put("errorCode", errorCode);
+		result.put("message", message);
+
+		return result;
+	}
+
 	/**
 	 * 교량 조회 by 교량 id
 	 * @param request
@@ -141,7 +172,7 @@ public class BridgeRestController {
 		Map<String, Object> result = new HashMap<>();
 		String errorCode = null;
 		String message = null;
-		
+
 		if(gid == null || gid.intValue() <= 0) {
 			result.put("statusCode", HttpStatus.BAD_REQUEST.value());
 			result.put("errorCode", "bridge.id.require");
@@ -151,19 +182,19 @@ public class BridgeRestController {
 
 		Bridge bridge = bridgeService.getBridge(gid);
 		List<Sensor> sensorList = sensorService.getListSensorID(bridge.getFacNum());
-		
+
 		BridgeDroneFile bridgeDronFile = new BridgeDroneFile();
 		bridgeDronFile.setOgcFid(gid);
-		
-		List<BridgeDroneFile> bridgeDroneFileList = null;
-		List<BridgeDroneFile> bridgeDroneFileListAll = null;
+
+		List<BridgeDroneFile> bridgeDroneFileList = new ArrayList<>();
+		List<BridgeDroneFile> bridgeDroneFileListAll = new ArrayList<>();
 		Long bridgeDroneFileTotalCount = 0l;
 		List<Date> createDateList = bridgeDroneFileService.getBridgeDroneFileCreateDateList(bridgeDronFile);
 		if(createDateList.size() > 0) {
 			Date firstCreateDate = createDateList.get(0);
 			bridgeDronFile.setCreateDate(firstCreateDate);
 			bridgeDroneFileTotalCount = bridgeDroneFileService.getBridgeDroneFileTotalCount(bridgeDronFile);
-			
+
 			log.info("@@@@ totalCount = {}", bridgeDroneFileTotalCount);
 			StringBuffer bdfBuffer = new StringBuffer(bridgeDronFile.getParameters());
 			String stringParameters =  bdfBuffer.toString();
@@ -177,23 +208,61 @@ public class BridgeRestController {
 
 			bridgeDronFile.setOffset(pagination.getOffset());
 			bridgeDronFile.setLimit(pagination.getPageRows());
-			
+
 			bridgeDroneFileList = bridgeDroneFileService.getBridgeDroneFile(bridgeDronFile);
 			bridgeDroneFileListAll = bridgeDroneFileService.getBridgeDroneFileAll(bridgeDronFile);
+			result.put("pagination", pagination);
+			result.put("bdfList", bridgeDroneFileList);
+			result.put("bdfListAll", bridgeDroneFileListAll);
+
+			List<String> strCreateDateList = new ArrayList<>();
+			for(Date createDate : createDateList) {
+				strCreateDateList.add(DateUtils.formatDate(createDate, "YYYY-MM-dd"));
+			}
+			result.put("bdfCreateDateList", strCreateDateList);
 		}
-		List<String> strCreateDateList = new ArrayList<>();
-		for(Date createDate : createDateList) {
-			strCreateDateList.add(DateUtils.formatDate(createDate, "YYYY-MM-dd"));
-		}
+
 		int statusCode = HttpStatus.OK.value();
 		result.put("bridge", bridge);
 		result.put("sensorList", sensorList);
-		
-		result.put("bdfCreateDateList", strCreateDateList);
-		result.put("bdfTotalCount", bridgeDroneFileTotalCount);
-		result.put("bdfList", bridgeDroneFileList);
-		result.put("bdfListAll", bridgeDroneFileListAll);
-		
+		result.put("statusCode", statusCode);
+		result.put("errorCode", errorCode);
+		result.put("message", message);
+		return result;
+	}
+
+	@GetMapping("/{gid:[0-9]+}/sat/avg")
+	public Map<String, Object> getListSatAvg(Bridge bridge, @PathVariable Integer gid) {
+		log.info("@@@@ gid = {}", gid);
+
+		Map<String, Object> result = new HashMap<>();
+		String errorCode = null;
+		String message = null;
+
+		long satAvgCount = satService.getSatAvgTotalCount(bridge.getFacNum());
+		List<Sat> satAvgList = satService.getListSatAvg(bridge.getFacNum());
+		int statusCode = HttpStatus.OK.value();
+
+		result.put("satAvgList", satAvgList);
+		result.put("satAvgCount", satAvgCount);
+		result.put("statusCode", statusCode);
+		result.put("errorCode", errorCode);
+		result.put("message", message);
+		return result;
+	}
+
+	@GetMapping("/{gid:[0-9]+}/sat/value")
+	public Map<String, Object> getListSatValue(Sat sat, @PathVariable Integer gid) {
+		log.info("@@@@ gid = {}", gid);
+
+		Map<String, Object> result = new HashMap<>();
+		String errorCode = null;
+		String message = null;
+
+		List<Sat> satValueList = satService.getListSatValueByLonLat(sat);
+		int statusCode = HttpStatus.OK.value();
+
+		result.put("satValueList", satValueList);
 		result.put("statusCode", statusCode);
 		result.put("errorCode", errorCode);
 		result.put("message", message);
@@ -207,10 +276,10 @@ public class BridgeRestController {
 		Map<String, Object> result = new HashMap<>();
 		String errorCode = null;
 		String message = null;
-		
+
 		long sensorIDCount = sensorService.getSensorIDTotalCount(bridge.getFacNum());
 		List<Sensor> sensorIDList = sensorService.getListSensorID(bridge.getFacNum());
-			
+
 		int statusCode = HttpStatus.OK.value();
 
 		result.put("sensorIDList", sensorIDList);
@@ -228,7 +297,7 @@ public class BridgeRestController {
 		Map<String, Object> result = new HashMap<>();
 		String errorCode = null;
 		String message = null;
-		
+
 		sensor.setSensorType(sensorType);
 		log.info("@@@@ Sensor = {}", sensor);
 
@@ -241,7 +310,7 @@ public class BridgeRestController {
 		result.put("message", message);
 		return result;
 	}
-	
+
 	/**
 	 * 시도 목록
 	 * @return
@@ -251,7 +320,7 @@ public class BridgeRestController {
 		Map<String, Object> result = new HashMap<>();
 		String errorCode = null;
 		String message = null;
-		
+
 		List<SkSdo> sdoList = bridgeService.getListSdoExceptGeom();
 		int statusCode = HttpStatus.OK.value();
 
@@ -272,7 +341,7 @@ public class BridgeRestController {
 		Map<String, Object> result = new HashMap<>();
 		String errorCode = null;
 		String message = null;
-		
+
 		// TODO 여기 들어 오지 않음. PathVariable 은 불칠전해서 이렇게 하고 싶음
 		if(sdoCode == null || "".equals(sdoCode)) {
 			log.info("@@@@@ message = {}", "sdo.code.invalid");
@@ -304,7 +373,7 @@ public class BridgeRestController {
 //		Map<String, Object> result = new HashMap<>();
 //		String errorCode = null;
 //		String message = null;
-//		
+//
 //		// TODO 여기 들어 오지 않음. PathVariable 은 불칠전해서 이렇게 하고 싶음
 //		String centerPoint = null;
 //		if(skSgg.getLayer_type() == 1) {
@@ -342,10 +411,10 @@ public class BridgeRestController {
 		Map<String, Object> result = new HashMap<>();
 		String errorCode = null;
 		String message = null;
-		
+
 		List<Bridge> bridgeList =  bridgeService.getListCentroidBridge();
 		int statusCode = HttpStatus.OK.value();
-		
+
 		result.put("bridgeList", bridgeList);
 		result.put("statusCode", statusCode);
 		result.put("errorCode", errorCode);
@@ -362,7 +431,7 @@ public class BridgeRestController {
 		Map<String, Object> result = new HashMap<>();
 		String errorCode = null;
 		String message = null;
-		
+
 		List<Bridge> bridgeList = bridgeService.getListMngOrg();
 		int statusCode = HttpStatus.OK.value();
 
@@ -372,7 +441,7 @@ public class BridgeRestController {
 		result.put("message", message);
 		return result;
 	}
-	
+
 	/**
 	 * 검색 조건
 	 * @param bridge

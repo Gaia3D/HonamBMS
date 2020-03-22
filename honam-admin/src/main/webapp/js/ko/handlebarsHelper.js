@@ -93,4 +93,6 @@ Handlebars.registerHelper('replaceYear', function(value) {
 		return null;
 	}
 });
-
+Handlebars.registerHelper('formatDate', function(date) {
+    return date.substring(0,9);
+});

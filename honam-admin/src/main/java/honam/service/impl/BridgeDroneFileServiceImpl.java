@@ -1,11 +1,14 @@
 package honam.service.impl;
 
+import java.io.File;
 import java.util.Date;
 import java.util.List;
+import java.util.regex.Matcher;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import honam.config.PropertiesConfig;
 import honam.domain.BridgeDroneFile;
 import honam.persistence.BridgeDroneFileMapper;
 import honam.service.BridgeDroneFileService;
@@ -18,6 +21,9 @@ public class BridgeDroneFileServiceImpl implements BridgeDroneFileService {
 
 	@Autowired
 	private BridgeDroneFileMapper bridgeDroneFileMapper;
+
+	@Autowired
+	private PropertiesConfig propertiesConfig;
 
 	@Override
 	public int insertBridgeDroneFile(List<BridgeDroneFile> files) {
@@ -33,15 +39,27 @@ public class BridgeDroneFileServiceImpl implements BridgeDroneFileService {
 		return bridgeDroneFileMapper.getBridgeDroneFileTotalCount(file);
 	}
 
+	private List<BridgeDroneFile> replacePath(List<BridgeDroneFile> fileList) {
+		for (BridgeDroneFile droneFile : fileList) {
+			String filePath = droneFile.getFilePath().replace(propertiesConfig.getUploadDir(), "");
+			filePath = filePath.replaceAll(Matcher.quoteReplacement(File.separator), "/");
+			droneFile.setFilePath(filePath);
+		}
+		return fileList;
+	}
+
 	@Override
 	public List<BridgeDroneFile> getBridgeDroneFile(BridgeDroneFile file) {
-		return bridgeDroneFileMapper.getBridgeDroneFile(file);
+		List<BridgeDroneFile> fileList = bridgeDroneFileMapper.getBridgeDroneFile(file);
+		return replacePath(fileList);
 	}
+
 	@Override
 	public List<BridgeDroneFile> getBridgeDroneFileAll(BridgeDroneFile file) {
-		return bridgeDroneFileMapper.getBridgeDroneFileAll(file);
+		List<BridgeDroneFile> fileList = bridgeDroneFileMapper.getBridgeDroneFileAll(file);
+		return replacePath(fileList);
 	}
-	
+
 	@Override
 	public List<Date> getBridgeDroneFileCreateDateList(BridgeDroneFile file) {
 		return bridgeDroneFileMapper.getBridgeDroneFileCreateDateList(file);

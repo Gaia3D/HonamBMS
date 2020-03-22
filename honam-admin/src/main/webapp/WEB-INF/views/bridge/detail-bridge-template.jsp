@@ -145,15 +145,48 @@
 			<div id="droneInfo" class="listContents">
 				<ul class="bridgeSubInfoGroup">
 					<li>
-{{#greaterThan bdfTotalCount 0}}
+{{#if bdfCreateDateList}}
 						<select id="droneCreateDateList">
 						{{#each bdfCreateDateList}}
 							<option value="{{this}}">{{this}}</option>
 						{{/each}}
 						</select>
+
+<div class="count" style="margin-top: 20px; margin-bottom: 5px;">
+	전체 <em>{{pagination.totalCount}}</em> 건
+	{{pagination.pageNo}} / {{pagination.lastPage}} 페이지
+</div>
+<div class="transferDataList">
+	<table class="list-table scope-col">
+		<col class="col-number" />
+		<col class="col-toggle" />
+		<col class="col-name" />
+		<thead>
+			<tr>
+				<th scope="col" class="col-number">번호</th>
+				<th scope="col" class="col-toggle">파일명</th>
+				<th scope="col" class="col-name">영상보기</th>
+			</tr>
+		</thead>
+		<tbody id="transferDataList">
+		{{#if bdfList}}
+			{{#each bdfList}}
+				<tr>
+					<td class="col-number">{{#replaceRowNumber ../pagination.pageNo @index}}{{/replaceRowNumber}}</td>
+					<td class="col-toggle">{{fileName}}</td>
+					<td class="col-name"><a href="#" onClick="">보기</a></td>
+				</tr>
+			{{/each}}
+		{{else}}
+			<tr><td colspan="4" style="text-align:center;">검색된 데이터가 없습니다.</td></tr>
+		{{/if}}
+		</tbody>
+	</table>
+</div>
+
 {{else}}
 						검색된 드론 영상이 없습니다.
-{{/greaterThan}}
+{{/if}}
 					</li>
 				</ul>
 			</div>
