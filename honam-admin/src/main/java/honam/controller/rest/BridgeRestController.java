@@ -133,7 +133,12 @@ public class BridgeRestController {
 
 	@GetMapping("/dronfile/{gid:[0-9]+}")
 	public Map<String, Object> getBridgeDronFileList(HttpServletRequest request, @PathVariable Integer gid, @RequestParam(defaultValue="1") String pageNo, String createDate) {
-		log.info("@@@@@@@@@@ bridge date = {}", createDate);
+		log.info("@@@@@@@@@@ createDate = {}", createDate);
+
+		Map<String, Object> result = new HashMap<>();
+		String errorCode = null;
+		String message = null;
+
 		SimpleDateFormat transFormat = new SimpleDateFormat("yyyy-MM-dd");
 		Date date = null;
 		try {
@@ -143,11 +148,17 @@ public class BridgeRestController {
 		}
 
 		BridgeDroneFile bridgeDronFile = new BridgeDroneFile();
-		bridgeDronFile.setCreateDate(date);
+		bridgeDronFile.setOgcFid(gid);
 
-		Map<String, Object> result = new HashMap<>();
-		String errorCode = null;
-		String message = null;
+		List<Date> createDateList = bridgeDroneFileService.getBridgeDroneFileCreateDateList(bridgeDronFile);
+		List<String> strCreateDateList = new ArrayList<>();
+		for(Date cdate : createDateList) {
+			String to = transFormat.format(cdate);
+			strCreateDateList.add(to);
+		}
+		result.put("bdfCreateDateList", strCreateDateList);
+
+		bridgeDronFile.setCreateDate(date);
 
 		Long bridgeDroneFileTotalCount = bridgeDroneFileService.getBridgeDroneFileTotalCount(bridgeDronFile);
 		StringBuffer bdfBuffer = new StringBuffer(bridgeDronFile.getParameters());
@@ -159,6 +170,9 @@ public class BridgeRestController {
 												PAGE_ROWS,
 												PAGE_LIST
 												);
+		bridgeDronFile.setOffset(pagination.getOffset());
+		bridgeDronFile.setLimit(pagination.getPageRows());
+
 		List<BridgeDroneFile> bridgeDroneFileList = bridgeDroneFileService.getBridgeDroneFile(bridgeDronFile);
 
 		int statusCode = HttpStatus.OK.value();
@@ -229,9 +243,9 @@ public class BridgeRestController {
 
 			List<String> strCreateDateList = new ArrayList<>();
 			for(Date createDate : createDateList) {
-				System.out.println(createDate);
-				System.out.println(DateUtils.formatDate(createDate, "YYYY-MM-dd"));
-				strCreateDateList.add(DateUtils.formatDate(createDate, "YYYY-MM-dd"));
+				SimpleDateFormat transFormat = new SimpleDateFormat("yyyy-MM-dd");
+				String to = transFormat.format(createDate);
+				strCreateDateList.add(to);
 			}
 			result.put("bdfCreateDateList", strCreateDateList);
 		}
