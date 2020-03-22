@@ -1586,3 +1586,19 @@ animation: spinning 0.8s infinite linear;
 100% {
 	transform: rotate(360deg);
 }
+}
+
+#entityPopup ul {
+color: white;
+text-align: center;
+background-color: #333446;
+border-radius: 10px;
+}
+#entityPopup ul > li {
+padding: 13px 15px 15px 15px;
+border-radius: 10px;
+cursor: pointer;
+}
+#entityPopup ul > li:hover {
+background-color: #0073e2;
+}

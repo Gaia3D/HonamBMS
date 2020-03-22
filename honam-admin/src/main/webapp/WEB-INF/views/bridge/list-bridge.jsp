@@ -105,6 +105,10 @@
 	<%@ include file="/WEB-INF/views/layouts/toolbar.jsp" %>
 </div>
 <!-- E: wrap -->
+<div id="entityPopup" style="display: none;position:absolute;">
+    <ul id="selectEntityList">
+    </ul>
+</div>
 
 <script type="text/javascript" src="/externlib/jquery-3.3.1/jquery.min.js"></script>
 <script type="text/javascript" src="/externlib/jquery-ui-1.12.1/jquery-ui.min.js"></script>
@@ -120,6 +124,7 @@
 <script type="text/javascript" src="/js/NumberFormatter.js"></script>
 <script type="text/javascript" src="/js/MouseControll.js"></script>
 <script type="text/javascript" src="/js/MapControll.js"></script>
+<script type="text/javascript" src="/js/SensorData.js"></script>
 <!-- <script type="text/javascript" src="/js/Geospatial.js"></script> -->
 <!-- <script type="text/javascript" src="/js/DistrictControll.js"></script> -->
 <!-- <script type="text/javascript" src="/js/BridgeAttribute.js"></script> -->
@@ -476,6 +481,7 @@
 			var x = sensorList[i].lonWgs;
 			var y = sensorList[i].latWgs;
 			var z = sensorList[i].z;
+			var sensorid = sensorList[i].sensorid;
 			var color;
 			if(sensorType === "ACC") {
 				color = Cesium.Color.RED;
@@ -485,6 +491,8 @@
 				color = Cesium.Color.BLUE;
 			}
 			viewer.entities.add({
+				id : sensorid,
+				name : "SENSOR",
 				position : Cesium.Cartesian3.fromDegrees(x, y, z),
 				point : new Cesium.PointGraphics({
 					pixelSize : 10,

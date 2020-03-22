@@ -14,28 +14,31 @@ function MouseControll(viewer, gid, facNum) {
             showClickPosition(pickPosition);
         }      
     }, Cesium.ScreenSpaceEventType.MOUSE_MOVE);
-  
+    
     handler.setInputAction(function (movement) {
-    	var pick = scene.pick(movement.position);
+    	var pick = scene.drillPick(movement.position);
         if (Cesium.defined(pick)) {
-		   	var featureId = pick.id._id;
-		   	var featurename = pick.id._name;
-	     	var jbSplit = featureId.split(',');
-	     	featurePosition.lon = jbSplit[0];
-	     	featurePosition.lat = jbSplit[1];
-	     	if(satValueCount > 0) {
-		        getListSatValue(gid, facNum, featurePosition.lon, featurePosition.lat);    		
-				$('.analysisGraphic').css('display','block');
-	     	}
-        	if(sensorIDCount > 0) {
-        		getSensorMonitoringData(gid, facNum, featurename);
-//        		$('.analysisGraphic').css('display','block');
+        	$("#selectEntityList").empty();
+        	for(var i=0; i < pick.length; i++) {
+        		if(pick[i].id._name === "SENSOR") {
+        			var sensorid = pick[i].id._id;
+        			$("#selectEntityList").append("<li data-sensorid="+sensorid +"+>sensorID : " + sensorid + "</li>");
+        		}
         	}
-	    } else {
-	    	$('.analysisGraphic').css('display','none');
-	    	
-		}
-        
+        	var x;
+        	// 좌측메뉴가 display일 경우 그 만큼 x값을 더해준다.  
+        	if($("#leftMenuArea").css("display") === "block") {
+        		x = movement.position.x + 390;
+        	} else {
+        		x = movement.position.x
+        	}
+        	$("#entityPopup").css("left", x + 'px');
+        	$("#entityPopup").css("top", movement.position.y + 'px');
+        	$("#entityPopup").show();
+        	$("#selectEntityList").one("click", 'li', function(){
+                handlerSensorPopup(this);
+            });
+        }
     }, Cesium.ScreenSpaceEventType.LEFT_CLICK);
     
 }
