@@ -16,38 +16,38 @@
 		<thead>
 		<tr>
 			<th colspan="4" scope="col" style="background:#D3D3D3";>
-				<b>{{brgNam}}</b> [ <a href ="#" onclick="viewBridgeDetailInfo();">자세히</a> ]
+				<b>{{bridge.brgNam}}</b> [ <a href ="#" onclick="viewBridgeDetailInfo();">자세히</a> ]
 			</th>
 		</tr>
 		</thead>
 		<tbody>
 			<tr>
 				<td class="col-number" style="background:#efefef";>관리주체</td>
-				<td class="col-name">{{mngOrg}}</td>
+				<td class="col-name">{{bridge.mngOrg}}</td>
 				<td class="col-number" style="background:#efefef";>종별</td>
-				<td class="col-name">{{facGra}}</td>
+				<td class="col-name">{{bridge.facGra}}</td>
 			</tr>
 			<tr>
 				<td class="col-number" style="background:#efefef";>준공년도</td>
-				<td class="col-name">{{#replaceYear endAmd}}{{/replaceYear}}</td>
+				<td class="col-name">{{#replaceYear bridge.endAmd}}{{/replaceYear}}</td>
 				<td class="col-number" style="background:#efefef";>연장(m)</td>
-				<td class="col-name">{{brgLen}}</td>
+				<td class="col-name">{{bridge.brgLen}}</td>
 			</tr>
 			<tr>
 				<td class="col-number" style="background:#efefef";>폭(m)</td>
-				<td class="col-name">{{totWid}}</td>
+				<td class="col-name">{{bridge.totWid}}</td>
 				<td class="col-number" style="background:#efefef";>목표성능</td>
-				<td class="col-name">{{bridgeCm}}</td>
+				<td class="col-name">{{bridge.bridgeCm}}</td>
 			</tr>
 			<tr>
 				<td class="col-number" style="background:#efefef";>내하성능</td>
-				<td class="col-name">{{bridgeLcc}}</td>
+				<td class="col-name">{{bridge.bridgeLcc}}</td>
 				<td class="col-number" style="background:#efefef";>교량등급</td>
-				<td class="col-name">{{grade}}</td>
+				<td class="col-name">{{bridge.grade}}</td>
 			</tr>
 			<tr>
 				<td class="col-number" style="background:#eeeeee";>주소</td>
-				<td colspan="3" class="col-name">{{facSido}} {{facSgg}} {{facEmd}} {{facRi}}</td>
+				<td colspan="3" class="col-name">{{bridge.facSido}} {{bridge.facSgg}} {{bridge.facEmd}} {{bridge.facRi}}</td>
 			</tr>
 		</tbody>
 	</table>
@@ -58,12 +58,12 @@
 			<div id="dataInfo" class="listContents">
 				<ul class="bridgeSubInfoGroup">
 					<li>
-{{#greaterThan dataId 0}}
+{{#greaterThan bridge.dataId 0}}
 						<input type="radio" id="dataVisibleTrue" name="dataVisible" value="true" 
-							onclick="show3DData('{{dataGroupId}}', '{{facNum}}', 'true');" checked="checked" style="width : 50px;" />
+							onclick="show3DData('{{bridge.dataGroupId}}', '{{bridge.facNum}}', 'true');" checked="checked" style="width : 50px;" />
 						<label for="dataVisibleTrue" style="width : 50px;">표시</label>
 						<input type="radio" id="dataVisibleFalse" name="dataVisible" value="false" 
-							onclick="show3DData('{{dataGroupId}}', '{{facNum}}', 'false');"  style="width : 50px;" />
+							onclick="show3DData('{{bridge.dataGroupId}}', '{{bridge.facNum}}', 'false');"  style="width : 50px;" />
 						<label for="dataVisibleFalse" style="width : 50px;">비표시</label>
 {{else}}
 					없음
@@ -78,10 +78,10 @@
 				<ul class="bridgeSubInfoGroup">
 					<li>
 						<input type="radio" id="satVisibleTrue" name="satVisible" value="true" 
-							onclick="showSat('{{facNum}}', 'true');" style="width : 50px;" />
+							onclick="showSat('{{bridge.facNum}}', 'true');" style="width : 50px;" />
 						<label for="satVisibleTrue" style="width : 50px;">표시</label>
 						<input type="radio" id="satVisibleFalse" name="satVisible" value="false" 
-							onclick="showSat('{{facNum}}', 'false');" checked="checked" style="width : 50px;" />
+							onclick="showSat('{{bridge.facNum}}', 'false');" checked="checked" style="width : 50px;" />
 						<label for="satVisibleFalse" style="width : 50px;">비표시</label>
 					</li>
 					<li>
@@ -145,7 +145,15 @@
 			<div id="droneInfo" class="listContents">
 				<ul class="bridgeSubInfoGroup">
 					<li>
-						Time, 드론 영상 리스트
+{{#greaterThan bdfTotalCount 0}}
+						<select id="droneCreateDateList">
+						{{#each bdfCreateDateList}}
+							<option value="{{this}}">{{this}}</option>
+						{{/each}}
+						</select>
+{{else}}
+						검색된 드론 영상이 없습니다.
+{{/greaterThan}}
 					</li>
 				</ul>
 			</div>
@@ -162,79 +170,79 @@
 		<ul id="bridgeInfo" class="layerContents">
 			<li>
 				<label>교량명</label>
-				{{brgNam}}
+				{{bridge.brgNam}}
 			</li>
 			<li>
 				<label>시설물 번호</label>
-				{{facNum}}
+				{{bridge.facNum}}
 			</li>
 			<li>
 				<label>관리주체</label>
-				{{mngOrg}}
+				{{bridge.mngOrg}}
 			</li>
 			<li>
 				<label>주소</label>
-				{{facSido}} {{facSgg}} {{facEmd}} {{facRi}}
+				{{bridge.facSido}} {{bridge.facSgg}} {{bridge.facEmd}} {{bridge.facRi}}
 			</li>
 			<li>
 				<label>종별</label>
-				{{facGra}}
+				{{bridge.facGra}}
 			</li>
 			<li>
 				<label>준공년도</label>
-				{{#replaceYear endAmd}}{{/replaceYear}}
+				{{#replaceYear bridge.endAmd}}{{/replaceYear}}
 			</li>
 			<li>
 				<label>설계하중</label>
-				{{dsnWet}}
+				{{bridge.dsnWet}}
 			</li>
 			<li>
 				<label>연장 (m)</label>
-				{{brgLen}}
+				{{bridge.brgLen}}
 			</li>
 			<li>
 				<label>교고 (m)</label>
-				{{brgHit}}
+				{{bridge.brgHit}}
 			</li>
 			<li>
 				<label>유효폭 (m)</label>
-				{{effWid}}
+				{{bridge.effWid}}
 			</li>
 			<li>
 				<label>총폭 (m)</label>
-				{{totWid}}
+				{{bridge.totWid}}
 			</li>
 			<li>
 				<label>경간수</label>
-				{{spaCnt}}
+				{{bridge.spaCnt}}
 			</li>
 			<li>
 				<label>최대경간장 (m)</label>
-				{{maxLen}}
+				{{bridge.maxLen}}
 			</li>
 			<li>
 				<label>교통량</label>
-				{{traCnt}}
+				{{bridge.traCnt}}
 			</li>
 			<li>
 				<label>상부 형식</label>
-				{{uspRep}}
+				{{bridge.uspRep}}
 			</li>
 			<li>
 				<label>하부 형식</label>
-				{{dpiRep}}
+				{{bridge.dpiRep}}
 			</li>
 			<li>
 				<label>내하성능</label>
-				{{bridgeLcc}}
+				{{bridge.bridgeLcc}}
 			</li>
 			<li>
 				<label>유지관리 목표성능</label>
-				{{bridgeCm}}
+				{{bridge.bridgeCm}}
 			</li>
 			<li>
 				<label>교량등급</label>
-				{{grade}}
+				{{bridge.grade}}
 			</li>
 		</ul>
 	</div>

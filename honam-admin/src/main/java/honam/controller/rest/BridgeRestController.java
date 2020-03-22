@@ -1,12 +1,14 @@
 package honam.controller.rest;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.http.client.utils.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,12 +18,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import honam.domain.Bridge;
+import honam.domain.BridgeDroneFile;
 import honam.domain.PageType;
 import honam.domain.Pagination;
 import honam.domain.Sat;
 import honam.domain.Sensor;
 import honam.domain.SkSdo;
 import honam.domain.SkSgg;
+import honam.service.BridgeDroneFileService;
 import honam.service.BridgeService;
 import honam.service.DataService;
 import honam.service.SatService;
@@ -42,6 +46,8 @@ public class BridgeRestController {
 	private SatService satService;
 	@Autowired
 	private SensorService sensorService;
+	@Autowired
+	private BridgeDroneFileService bridgeDroneFileService;
 	
 	private static final long PAGE_ROWS = 10l;
 	private static final long PAGE_LIST = 5l;
@@ -145,10 +151,49 @@ public class BridgeRestController {
 
 		Bridge bridge = bridgeService.getBridge(gid);
 		List<Sensor> sensorList = sensorService.getListSensorID(bridge.getFacNum());
-		int statusCode = HttpStatus.OK.value();
+		
+		BridgeDroneFile bridgeDronFile = new BridgeDroneFile();
+		bridgeDronFile.setOgcFid(gid);
+		
+		List<BridgeDroneFile> bridgeDroneFileList = null;
+		List<BridgeDroneFile> bridgeDroneFileListAll = null;
+		Long bridgeDroneFileTotalCount = 0l;
+		List<Date> createDateList = bridgeDroneFileService.getBridgeDroneFileCreateDateList(bridgeDronFile);
+		if(createDateList.size() > 0) {
+			Date firstCreateDate = createDateList.get(0);
+			bridgeDronFile.setCreateDate(firstCreateDate);
+			bridgeDroneFileTotalCount = bridgeDroneFileService.getBridgeDroneFileTotalCount(bridgeDronFile);
+			
+			log.info("@@@@ totalCount = {}", bridgeDroneFileTotalCount);
+			StringBuffer bdfBuffer = new StringBuffer(bridgeDronFile.getParameters());
+			String stringParameters =  bdfBuffer.toString();
+			Pagination pagination = new Pagination(	request.getRequestURI(),
+													stringParameters,
+													bridgeDroneFileTotalCount,
+													Long.valueOf(1).longValue(),
+													PAGE_ROWS,
+													PAGE_LIST
+													);
 
+			bridgeDronFile.setOffset(pagination.getOffset());
+			bridgeDronFile.setLimit(pagination.getPageRows());
+			
+			bridgeDroneFileList = bridgeDroneFileService.getBridgeDroneFile(bridgeDronFile);
+			bridgeDroneFileListAll = bridgeDroneFileService.getBridgeDroneFileAll(bridgeDronFile);
+		}
+		List<String> strCreateDateList = new ArrayList<>();
+		for(Date createDate : createDateList) {
+			strCreateDateList.add(DateUtils.formatDate(createDate, "YYYY-MM-dd"));
+		}
+		int statusCode = HttpStatus.OK.value();
 		result.put("bridge", bridge);
 		result.put("sensorList", sensorList);
+		
+		result.put("bdfCreateDateList", strCreateDateList);
+		result.put("bdfTotalCount", bridgeDroneFileTotalCount);
+		result.put("bdfList", bridgeDroneFileList);
+		result.put("bdfListAll", bridgeDroneFileListAll);
+		
 		result.put("statusCode", statusCode);
 		result.put("errorCode", errorCode);
 		result.put("message", message);

@@ -142,7 +142,10 @@ public class Policy {
  	// 1회, 최대 업로딩 파일 수. 기본값 500개
  	private Integer userUploadMaxCount;	
  	
- 	
+ 	// 인터넷 사용 가능 유무
+ 	private boolean online;
+ 	// 터레인 url
+ 	private String terrainUrl;
  	// javascript library. 기본 cesium 
  	private String basicGlobe;
  	// ceisum ion token

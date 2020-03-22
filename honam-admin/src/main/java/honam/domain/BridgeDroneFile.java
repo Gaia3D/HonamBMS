@@ -12,7 +12,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class BridgeDroneFile {
+public class BridgeDroneFile extends Search {
 
 	/****** 화면 표시용 *******/
 	// 위도

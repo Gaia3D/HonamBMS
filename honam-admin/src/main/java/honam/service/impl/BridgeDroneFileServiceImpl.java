@@ -1,5 +1,6 @@
 package honam.service.impl;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,13 +29,22 @@ public class BridgeDroneFileServiceImpl implements BridgeDroneFileService {
 	}
 
 	@Override
-	public Long getBridgeDroneFileTotalCount() {
-		return bridgeDroneFileMapper.getBridgeDroneFileTotalCount();
+	public Long getBridgeDroneFileTotalCount(BridgeDroneFile file) {
+		return bridgeDroneFileMapper.getBridgeDroneFileTotalCount(file);
 	}
 
 	@Override
 	public List<BridgeDroneFile> getBridgeDroneFile(BridgeDroneFile file) {
 		return bridgeDroneFileMapper.getBridgeDroneFile(file);
+	}
+	@Override
+	public List<BridgeDroneFile> getBridgeDroneFileAll(BridgeDroneFile file) {
+		return bridgeDroneFileMapper.getBridgeDroneFileAll(file);
+	}
+	
+	@Override
+	public List<Date> getBridgeDroneFileCreateDateList(BridgeDroneFile file) {
+		return bridgeDroneFileMapper.getBridgeDroneFileCreateDateList(file);
 	}
 
 	@Override
