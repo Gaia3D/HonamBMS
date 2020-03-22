@@ -8,6 +8,7 @@ public interface BridgeDroneFileService {
 
 	public int insertBridgeDroneFile(List<BridgeDroneFile> files);
 
+	public Long getBridgeDroneFileTotalCount();
 	public List<BridgeDroneFile> getBridgeDroneFile(BridgeDroneFile file);
 
 	public int updateBridgeDroneFiles(List<BridgeDroneFile> files);

@@ -1,5 +1,6 @@
 package honam.domain;
 
+import java.math.BigDecimal;
 import java.sql.Timestamp;
 
 import javax.validation.constraints.NotNull;
@@ -205,7 +206,61 @@ public class Policy {
   	private String initDefaultTerrain;
   	// field of view. 기본값 0(1.8 적용)
   	private Float initDefaultFov;
+  	
+  	// LOD0. 기본값 15M
+  	private String lod0;
+  	// LOD1. 기본값 60M
+  	private String lod1;
+  	// LOD2. 기본값 900M
+  	private String lod2;
+  	// LOD3. 기본값 200M
+  	private String lod3;
+  	// LOD3. 기본값 1000M
+  	private String lod4;
+  	// LOD3. 기본값 50000M
+  	private String lod5;
  	
+ // 그림자 반경
+   	private Float ssaoRadius;
+   	// cullFace 사용유무. 기본 false
+   	private Boolean cullFaceEnable;
+   	// timeLine 사용유무. 기본 false
+   	private Boolean timeLineEnable;
+   	
+   	// LOD0일시 PointCloud 데이터 파티션 개수. 기본값 4
+   	private Integer maxPartitionsLod0;
+ 	// LOD1일시 PointCloud 데이터 파티션 개수. 기본값 2
+   	private Integer maxPartitionsLod1;
+ 	// LOD2 이상 일시 PointCloud 데이터 파티션 개수. 기본값 1
+   	private Integer maxPartitionsLod2OrLess;
+ 	// 카메라와의 거리가 10미터 미만일때, PointCloud 점의 갯수의 비율의 분모, 기본값 10
+   	private Integer maxRatioPointsDist0m;
+ 	// 카메라와의 거리가 100미터 미만일때, PointCloud 점의 갯수의 비율의 분모, 기본값 120
+   	private Integer maxRatioPointsDist100m;
+   	// 카메라와의 거리가 200미터 미만일때, PointCloud 점의 갯수의 비율의 분모, 기본값 240
+   	private Integer maxRatioPointsDist200m;
+   	// 카메라와의 거리가 400미터 미만일때, PointCloud 점의 갯수의 비율의 분모, 기본값 480
+   	private Integer maxRatioPointsDist400m;
+   	// 카메라와의 거리가 800미터 미만일때, PointCloud 점의 갯수의 비율의 분모, 기본값 960
+   	private Integer maxRatioPointsDist800m;
+   	// 카메라와의 거리가 1600미터 미만일때, PointCloud 점의 갯수의 비율의 분모, 기본값 1920
+   	private Integer maxRatioPointsDist1600m;
+   	// 카메라와의 거리가 1600미터 이상일때, PointCloud 점의 갯수의 비율의 분모, 기본값 3840
+   	private Integer maxRatioPointsDistOver1600m;
+   	// PointCloud 점의 최대 크기. 기본값 40.0
+   	private BigDecimal maxPointSizeForPc;
+   	// PointCloud 점의 최소 크기. 기본값 3.0
+   	private BigDecimal minPointSizeForPc;
+   	// PointCloud 점의 크기 보정치. 높아질수록 점이 커짐. 기본값 60.0
+   	private BigDecimal pendentPointSizeForPc;
+   	// GPU Memory Pool 사용유무. 기본값 false
+   	private Boolean memoryManagement;
+   	
+   	// 레이어 원본 좌표계
+   	private String layerSourceCoordinate;
+   	// 레이어 좌표계 정의
+   	private String layerTargetCoordinate;
+  	
  	// 등록일
  	@DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
 	private Timestamp insertDate;

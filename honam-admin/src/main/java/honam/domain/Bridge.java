@@ -27,6 +27,7 @@ public class Bridge extends Search {
 	
 	// 고유번호
 	private Long dataId;
+	private Integer dataGroupId;
 	
 	// TODO gid는 삭제해야 함
 	// 고유번호

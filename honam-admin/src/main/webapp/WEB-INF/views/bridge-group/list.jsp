@@ -44,7 +44,7 @@
 	<div id="projectListHeader" class="count" style="margin-top: 20px; margin-bottom: 5px;">
 		전체 교량 그룹 <em><fmt:formatNumber value="${bridgeGroupListSize}" type="number"/></em> 건
 	</div>
-	<div class="transferDataList" style="max-height: 650px; overflow-y: auto; height:calc(100vh - 369px);">
+	<div class="transferDataList">
 		<table class="list-table scope-col">
 			<col class="col-name" />
 			<col class="col-number" />
