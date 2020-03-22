@@ -229,6 +229,8 @@ public class BridgeRestController {
 
 			List<String> strCreateDateList = new ArrayList<>();
 			for(Date createDate : createDateList) {
+				System.out.println(createDate);
+				System.out.println(DateUtils.formatDate(createDate, "YYYY-MM-dd"));
 				strCreateDateList.add(DateUtils.formatDate(createDate, "YYYY-MM-dd"));
 			}
 			result.put("bdfCreateDateList", strCreateDateList);

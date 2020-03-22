@@ -10,6 +10,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import honam.config.PropertiesConfig;
 import honam.domain.Bridge;
 import honam.service.BridgeDroneFileService;
@@ -41,15 +44,16 @@ public class BridgeManageController {
 
 	@Autowired
 	private BridgeDroneFileService bridgeDroneFileService;
-
+	@Autowired
+	private ObjectMapper objectMapper;
 	/**
 	 * 교량 관리
 	 * @param model
 	 * @return
 	 */
 	@GetMapping(value = "/manage-bridge")
-	public String manageBridge(HttpServletRequest request, Bridge bridge, @RequestParam(defaultValue="1") String pageNo, Model model) {
-		model.addAttribute("policy", policyService.getPolicy());
+	public String manageBridge(HttpServletRequest request, Bridge bridge, @RequestParam(defaultValue="1") String pageNo, Model model) throws JsonProcessingException {
+		model.addAttribute("policy", objectMapper.writeValueAsString(policyService.getPolicy()));
 		//model.addAttribute("bridgeList", bridgeService.getListBridgeAll());
 		model.addAttribute("cesiumIonToken", propertiesConfig.getCesiumIonToken());
 		return "/bridge/manage-bridge";
@@ -62,7 +66,8 @@ public class BridgeManageController {
 	 * @return
 	 */
 	@GetMapping(value = "/input-bridge")
-	public String inputBridge(HttpServletRequest request, Model model) {
+	public String inputBridge(HttpServletRequest request, Model model) throws JsonProcessingException {
+		model.addAttribute("policy", objectMapper.writeValueAsString(policyService.getPolicy()));
 		return "/bridge/input-bridge";
 	}
 
@@ -74,9 +79,10 @@ public class BridgeManageController {
 	 * @return
 	 */
 	@GetMapping(value = "/modify-bridge/{gid:[0-9]+}")
-	public String modifyBridge(HttpServletRequest request, @PathVariable Integer gid, Model model) {
+	public String modifyBridge(HttpServletRequest request, @PathVariable Integer gid, Model model) throws JsonProcessingException {
 		Bridge bridge = bridgeService.getBridge(gid);
 		model.addAttribute("bridge", bridge);
+		model.addAttribute("policy", objectMapper.writeValueAsString(policyService.getPolicy()));
 		return "/bridge/modify-bridge";
 	}
 

@@ -155,10 +155,10 @@
 <script type="text/javascript" src="/externlib/jquery-ui-1.12.1/jquery-ui.min.js"></script>
 <script type="text/javascript" src="/externlib/ajax-cross-origin/jquery.ajax-cross-origin.min.js"></script>
 <script type="text/javascript" src="/externlib/cesium/Cesium.js"></script>
-<script type="text/javascript" src="/externlib/mago3d/mago3d.js"></script>
-<script type="text/javascript" src="/externlib/mago3d/init.js"></script>
-
+<script type="text/javascript" src="/js/mago3d.js"></script>
+<script type="text/javascript" src="/js/mago3d_lx.js"></script>
 <script type="text/javascript" src="/js/${lang}/common.js"></script>
+<script type="text/javascript" src="/js/${lang}/message.js"></script>
 <script type="text/javascript" src="/js/Honam-bms.js"></script>
 <script type="text/javascript" src="/js/Geospatial.js"></script>
 <script type="text/javascript" src="/js/NumberFormatter.js"></script>
@@ -170,31 +170,58 @@
 <script type="text/javascript" src="/js/GeometryDrawer.js"></script>
 
 <script type="text/javascript">
-//초기 위치 설정
-var INIT_WEST = 124.67;
-var INIT_SOUTH = 35.72;
-var INIT_EAST = 128.46;
-var INIT_NORTH = 33.77;
-var rectangle = Cesium.Rectangle.fromDegrees(INIT_WEST, INIT_SOUTH, INIT_EAST, INIT_NORTH);
-Cesium.Camera.DEFAULT_VIEW_FACTOR = 0;
-Cesium.Camera.DEFAULT_VIEW_RECTANGLE = rectangle;
+var viewer = null;
+var MAGO3D_INSTANCE;
+//TODO: policy 개발 후 변경
+var HONAMBMS = HONAMBMS || {
+	policy : ${policy}
+};
 
-var imageryProvider = new Cesium.ArcGisMapServerImageryProvider({
-	url: 'https://services.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer',
-	enablePickFeatures: false
-});
-
-var viewer = new Cesium.Viewer('MapContainer', {imageryProvider : imageryProvider, baseLayerPicker : false,selectionIndicator : false,infoBox:false,
-	animation:false, timeline:false, geocoder:false, navigationHelpButton: false, fullscreenButton:false, homeButton: false, sceneModePicker: false });
-viewer.scene.globe.depthTestAgainstTerrain = true;
-//viewer.extend(Cesium.viewerCesiumNavigationMixin, {});
-var drawer = new CesiumPolygonDrawer(viewer);
+var satValueCount = null;
+var drawer;
 var satValueCount = null;
 var isSdoInit = false;
 var isSggInit = false;
 
 //초기 로딩 설정
 $(document).ready(function() {
+	magoStart();
+});
+function magoStart() {
+	var INIT_WEST = 124.67;
+	var INIT_SOUTH = 35.72;
+	var INIT_EAST = 128.46;
+	var INIT_NORTH = 33.77;
+	var rectangle = Cesium.Rectangle.fromDegrees(INIT_WEST, INIT_SOUTH, INIT_EAST, INIT_NORTH);
+	Cesium.Camera.DEFAULT_VIEW_FACTOR = 0;
+	Cesium.Camera.DEFAULT_VIEW_RECTANGLE = rectangle;
+	var geoPolicyJson = HONAMBMS.policy;
+
+	var cesiumViewerOption = {};
+	cesiumViewerOption.infoBox = false;
+	cesiumViewerOption.navigationHelpButton = false;
+	cesiumViewerOption.selectionIndicator = false;
+	cesiumViewerOption.homeButton = false;
+	cesiumViewerOption.fullscreenButton = false;
+	cesiumViewerOption.geocoder = false;
+	cesiumViewerOption.baseLayerPicker = false;
+	cesiumViewerOption.sceneModePicker = false;
+	cesiumViewerOption.terrainProvider = (geoPolicyJson.terrainUrl && geoPolicyJson.terrainUrl.length > 0) ? 
+			new Cesium.CesiumTerrainProvider({url : geoPolicyJson.terrainUrl}) : new Cesium.EllipsoidTerrainProvider();
+	cesiumViewerOption.imageryProvider = new Cesium.ArcGisMapServerImageryProvider({
+	    url : 'https://services.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer'
+	});
+
+	MAGO3D_INSTANCE = new Mago3D.Mago3d('MapContainer', geoPolicyJson, {loadend : magoLoadEnd}, cesiumViewerOption);
+}
+
+function magoLoadEnd(e) {
+	var magoInstance = e;
+	viewer = magoInstance.getViewer();
+	drawer = new CesiumPolygonDrawer(viewer);
+	if(viewer.baseLayerPicker) {
+		viewer.baseLayerPicker.destroy();
+	}
 	initMenu("#bridgeManageMenu");
 	getListSdo();
 	drawOrginalBridge();
@@ -259,7 +286,7 @@ $(document).ready(function() {
 	$('#goBridgeList').click(function() {
 		location.href = '/bridge/manage-bridge';
 	});
-});
+}
 
 function drawOrginalBridge() {
 	var orgGeom = $('#geom').val();
