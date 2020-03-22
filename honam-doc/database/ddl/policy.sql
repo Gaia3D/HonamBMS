@@ -53,6 +53,8 @@ create table policy(
 	user_upload_max_count					integer				default 500,
 	shape_upload_type						varchar(256)		default 'cpg,dbf,idx,sbn,sbx,shp,shx,prj,qpj,zip',
 
+	online												boolean				default true,
+	terrain_url											varchar(256),
 	basic_globe											varchar(20)			default 'cesium',
 	geoserver_enable									boolean				default true,
 	geoserver_wms_version								varchar(5)         	default '1.1.1',
