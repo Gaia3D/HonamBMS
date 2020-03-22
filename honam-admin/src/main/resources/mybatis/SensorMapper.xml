@@ -48,5 +48,11 @@
 		WHERE A.fac_num = #{fac_num}
 		AND A.sensorid LIKE '%' || #{sensorType} || '%'	
 	</select>
+	
+	<select id="getListSensorData" parameterType="string" resultType="sensor">
+		/* getListSensorData */
+		SELECT * from sensor_data where sensorid=#{value}	
+	</select>
+	
 		
 </mapper>

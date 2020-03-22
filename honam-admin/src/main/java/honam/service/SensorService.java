@@ -27,5 +27,12 @@ public interface SensorService {
 	 * SensorType별 SensorID 목록
 	 * @return
 	 */
-	List<Sensor> getListSensorIDBySensorType(Sensor sensor);	
+	List<Sensor> getListSensorIDBySensorType(Sensor sensor);
+	
+	/**
+	 * sensordata 목록 
+	 * @param sensorid
+	 * @return
+	 */
+	List<Sensor> getListSensorData(String sensorid);
 }

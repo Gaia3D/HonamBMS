@@ -30,4 +30,11 @@ public interface SensorMapper {
 	 * @return
 	 */
 	List<Sensor> getListSensorIDBySensorType(Sensor sensor);	
+	
+	/**
+	 * sensordata 목록 
+	 * @param sensorid
+	 * @return
+	 */
+	List<Sensor> getListSensorData(String sensorid);
 }

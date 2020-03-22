@@ -25,7 +25,7 @@ function MouseControll() {
         		if(pick[i].id._name === "SENSOR") {
         			businessType = "SENSOR";
         			var sensorid = pick[i].id._id;
-        			$("#selectEntityList").append("<li data-sensorid="+sensorid +"+>sensorID : " + sensorid + "</li>");
+        			$("#selectEntityList").append("<li data-sensorid="+sensorid +">sensorID : " + sensorid + "</li>");
         		} else if(pick[i].id._name === "Mean velocity (mm/yr)") {
         			businessType = "SAT";
         			// pick[i].id._id
