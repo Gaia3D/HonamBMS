@@ -406,7 +406,7 @@
 	        success : function(msg) {
 	        	if(msg.statusCode <= 200) {
 	        		var template = Handlebars.compile($("#templateBridgeDetail").html());
-					var htmlList = template(msg.bridge);
+					var htmlList = template(msg);
 					$("#BridgeDetailInfoArea").html("");
 					$("#BridgeDetailInfoArea").append(htmlList);
 	        		gotoFlyBridge(longitude, latitude);
