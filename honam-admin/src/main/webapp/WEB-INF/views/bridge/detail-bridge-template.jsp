@@ -49,27 +49,31 @@
 				<td class="col-number" style="background:#eeeeee";>주소</td>
 				<td colspan="3" class="col-name">{{facSido}} {{facSgg}} {{facEmd}} {{facRi}}</td>
 			</tr>
-			<tr>
-				<td class="col-number" style="background:#eeeeee";>
-					<labe for="model-view">3D 모델</label>
-				</td>
-				<td colspan="3" class="col-name">
-{{#greaterThan dataId 0}}
-					<input type="radio" id="dataVisibleTrue" name="dataVisible" value="true" onclick="show3DData('{{dataGroupId}}', '{{facNum}}', 'true');" checked="checked" />
-					<label for="dataVisibleTrue">표시</label>&nbsp;&nbsp;&nbsp;&nbsp;
-					<input type="radio" id="dataVisibleFalse" name="dataVisible" value="false" onclick="show3DData('{{dataGroupId}}', '{{facNum}}', 'false');" />
-					<label for="dataVisibleFalse">비표시</label>
-{{else}}
-					없음
-{{/greaterThan}}
-				</td>
-			</tr>
 		</tbody>
 	</table>
 
 	<ul id="bridgeSubContents" class="listDrop" style="margin-top: 20px;">
-		<li>
-			<p onclick="showSat();">위성 영상 지표 변이 분석 결과<span class="collapse-icon">icon</span></p>
+		<li id="dataContent">
+			<p onclick="toggleSubContent('data', 'dataInfo');">교량 3차원 모델<span class="collapse-icon">icon</span></p>
+			<div id="dataInfo" class="listContents">
+				<ul class="bridgeSubInfoGroup">
+					<li>
+{{#greaterThan dataId 0}}
+						<input type="radio" id="dataVisibleTrue" name="dataVisible" value="true" 
+							onclick="show3DData('{{dataGroupId}}', '{{facNum}}', 'true');" checked="checked" style="width : 50px;" />
+						<label for="dataVisibleTrue" style="width : 50px;">표시</label>
+						<input type="radio" id="dataVisibleFalse" name="dataVisible" value="false" 
+							onclick="show3DData('{{dataGroupId}}', '{{facNum}}', 'false');"  style="width : 50px;" />
+						<label for="dataVisibleFalse" style="width : 50px;">비표시</label>
+{{else}}
+					없음
+{{/greaterThan}}
+					</li>
+				</ul>
+			</div>
+		</li>
+		<li id="satContent" style="margin-top: 10px;">
+			<p onclick="toggleSubContent('sat', 'satInfo');">위성 영상 지표 변이 분석 결과<span class="collapse-icon">icon</span></p>
 			<div id="satInfo" class="listContents">
 				<ul class="bridgeSubInfoGroup">
 					<li>
@@ -122,8 +126,8 @@
 				</ul>
 			</div>
 		</li>
-		<li class="on">
-			<p>접촉식 센서<span class="collapse-icon">icon</span></p>
+		<li id="sensorContent" style="margin-top: 10px;">
+			<p onclick="toggleSubContent('sensor', 'sensorInfo');">접촉식 센서<span class="collapse-icon">icon</span></p>
 			<div id="sensorInfo" class="listContents">
 				<ul class="bridgeSubInfoGroup">
 					<li>
@@ -141,8 +145,8 @@
 				</ul>
 			</div>
 		</li>
-		<li class="on">
-			<p>드론 영상<span class="collapse-icon">icon</span></p>
+		<li  id="droneContent" style="margin-top: 10px;">
+			<p onclick="toggleSubContent('drone', 'droneInfo');">드론 영상<span class="collapse-icon">icon</span></p>
 			<div id="droneInfo" class="listContents">
 				<ul class="bridgeSubInfoGroup">
 					<li>

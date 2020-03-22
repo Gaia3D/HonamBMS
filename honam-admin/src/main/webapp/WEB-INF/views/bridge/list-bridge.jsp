@@ -602,6 +602,26 @@
 		}
 	}
 	
+	function toggleSubContent(type, contentId) {
+		if($("#" + contentId).css("display") == "none") {
+			$("#" + contentId).show();
+		} else {
+			$("#" + contentId).hide();
+		}	
+		
+		// 부가적인 처리가 필요한 경우
+		if(type === "data") {
+			$("#dataContent").toggleClass("on");
+		} else if(type === "sat") {
+			$("#satContent").toggleClass("on");	
+		} else if(type === "sensor") {
+			$("#sensorContent").toggleClass("on");
+		} else if(type === "drone") {
+			$("#droneContent").toggleClass("on");
+		}
+	}
+	
+	// 교량 상세 페이지에서 3D 데이터 표시/비표시 라디오 버튼 클릭시
 	function show3DData(dataGroupId, dataKey, value) {
 		var option = false;
 		if(value === "true") {
@@ -620,14 +640,6 @@
 
 		var optionObject = { isVisible : option };
 		setNodeAttributeAPI(MAGO3D_INSTANCE, dataGroupId, dataKey, optionObject);
-	}
-	
-	function showSat() {
-		if($("#satInfo").css("display") == "none") {
-			$("#satInfo").show();
-		} else {
-			$("#satInfo").hide();
-		}
 	}
 </script>
 </body>
