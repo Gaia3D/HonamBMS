@@ -73,55 +73,50 @@
 			</div>
 		</li>
 		<li id="satContent" style="margin-top: 10px;">
-			<p onclick="toggleSubContent('sat', 'satInfo');">위성 영상 지표 변이 분석 결과<span class="collapse-icon">icon</span></p>
+			<p onclick="toggleSubContent('sat', 'satInfo');">위성 영상 지표 변이 분석 결과(평균값)<span class="collapse-icon">icon</span></p>
 			<div id="satInfo" class="listContents">
 				<ul class="bridgeSubInfoGroup">
 					<li>
-						변위 평균 값 : 
-						<input type="radio" id="satVisibleTrue" name="satVisible" value="true" onclick="showSat('{{facNum}}', 'true');" />
-						<label for="satVisibleTrue">표시</label>&nbsp;&nbsp;&nbsp;&nbsp;
-						<input type="radio" id="satVisibleFalse" name="satVisible" value="false" onclick="showSat('{{facNum}}', 'false');" checked="checked" />
-						<label for="satVisibleFalse">비표시</label>
+						<input type="radio" id="satVisibleTrue" name="satVisible" value="true" 
+							onclick="showSat('{{facNum}}', 'true');" style="width : 50px;" />
+						<label for="satVisibleTrue" style="width : 50px;">표시</label>
+						<input type="radio" id="satVisibleFalse" name="satVisible" value="false" 
+							onclick="showSat('{{facNum}}', 'false');" checked="checked" style="width : 50px;" />
+						<label for="satVisibleFalse" style="width : 50px;">비표시</label>
 					</li>
 					<li>
-						<div style="width:20px;height:20px;position:fixed;background-color:#FF0000"></div>
-						<lable style="margin-left:30px;">4 이상</label>
-					</li>
-					<li>
-						<div style="width:20px;height:20px;position:fixed;background-color:#FF4500"></div>
-						<lable style="margin-left:30px;">3 ~ 4</label>
-					</li>
-					<li>
-						<div style="width:20px;height:20px;position:fixed;background-color:#FF8C00"></div>
-						<lable style="margin-left:30px;">2 ~ 3</label>
-					</li>
-					<li>
-						<div style="width:20px;height:20px;position:fixed;background-color:#FFFF00"></div>
-						<lable style="margin-left:30px;">1 ~ 2</label>
-					</li>
-					<li>
-						<div style="width:20px;height:20px;position:fixed;background-color:#00FF00"></div>
-						<lable style="margin-left:30px;">0 ~ 1</label>
-					</li>
-					<li>
-						<div style="width:20px;height:20px;position:fixed;background-color:#00FF7F"></div>
-						<lable style="margin-left:30px;">-1 ~ 0</label>
-					</li>
-					<li>
-						<div style="width:20px;height:20px;position:fixed;background-color:#00FFFF"></div>
-						<lable style="margin-left:30px;">-2 ~ -1</label>
-					</li>
-					<li>
-						<div style="width:20px;height:20px;position:fixed;background-color:#00BFFF"></div>
-						<lable style="margin-left:30px;">-3 ~ -2</label>
-					</li>
-					<li>
-						<div style="width:20px;height:20px;position:fixed;background-color:#0000FF"></div>
-						<lable style="margin-left:30px;">-4 ~ -3</label>
-					</li>
-					<li>
-						<div style="width:20px;height:20px;position:fixed;background-color:#00008B"></div>
-						<lable style="margin-left:30px;">-4 이하</label>
+						<table>
+							<tr>
+								<td style="width:20px;height:20px;position:fixed;background-color:#FF0000"></td>
+								<td style="width: 100px;">4 이상</td>
+								<td style="width:20px;height:20px;position:fixed;background-color:#FF4500"></td>
+								<td style="width: 100px;">3 ~ 4</td>
+							</tr>
+							<tr>
+								<td style="width:20px;height:20px;position:fixed;background-color:#FF8C00"></td>
+								<td style="width: 100px;">2 ~ 3</td>
+								<td style="width:20px;height:20px;position:fixed;background-color:#FFFF00"></td>
+								<td style="width: 100px;">1 ~ 2</td>
+							</tr>
+							<tr>
+								<td style="width:20px;height:20px;position:fixed;background-color:#00FF00"></td>
+								<td style="width: 100px;">0 ~ 1</td>
+								<td style="width:20px;height:20px;position:fixed;background-color:#00FF7F"></td>
+								<td style="width: 100px;">-1 ~ 0</td>
+							</tr>
+							<tr>
+								<td style="width:20px;height:20px;position:fixed;background-color:#00FFFF"></td>
+								<td style="width: 100px;">-2 ~ -1</td>
+								<td style="width:20px;height:20px;position:fixed;background-color:#00BFFF"></td>
+								<td style="width: 100px;">-3 ~ -2</td>
+							</tr>
+							<tr>
+								<td style="width:20px;height:20px;position:fixed;background-color:#0000FF"></td>
+								<td style="width: 100px;">-4 ~ -3</td>
+								<td style="width:20px;height:20px;position:fixed;background-color:#00008B"></td>
+								<td style="width: 100px;">-4 이하</td>
+							</tr>
+						</table>
 					</li>
 				</ul>
 			</div>
