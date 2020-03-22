@@ -188,9 +188,8 @@
 		cesiumViewerOption.baseLayerPicker = false;
 		cesiumViewerOption.sceneModePicker = false;
 		//cesiumViewerOption.terrainProvider = new Cesium.EllipsoidTerrainProvider();
-		cesiumViewerOption.terrainProvider = new Cesium.CesiumTerrainProvider({
-			url : 'http://168.131.227.76:9090/tilesets/korea/'
-		});
+		cesiumViewerOption.terrainProvider = geoPolicyJson.online ? 
+				new Cesium.CesiumTerrainProvider({url : 'http://168.131.227.76:9090/tilesets/korea/'}) : new Cesium.EllipsoidTerrainProvider();
 		cesiumViewerOption.imageryProvider = new Cesium.ArcGisMapServerImageryProvider({
 		    url : 'https://services.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer'
 		});
@@ -549,7 +548,8 @@
 					color : Cesium.Color.BROWN,
 					outlineColor : Cesium.Color.WHITE,
 					outlineWidth : 2
-				})
+				}),
+				properties : new Cesium.PropertyBag(drone)
 			});
 			
 		}

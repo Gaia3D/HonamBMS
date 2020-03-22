@@ -53,7 +53,7 @@ public class ServletConfig implements WebMvcConfigurer {
 		
 		registry.addInterceptor(securityInterceptor)
 				.addPathPatterns("/**")
-				.excludePathPatterns("/login/**", "/css/**", "/externlib/**", "/images/**", "/js/**", "/bridge/**");
+				.excludePathPatterns("/login/**", "/css/**", "/externlib/**", "/images/**", "/js/**", "/bridge/**", "/upload/**");
     }
 	
 	@Bean
@@ -114,6 +114,7 @@ public class ServletConfig implements WebMvcConfigurer {
 		registry.addResourceHandler("/externlib/**").addResourceLocations("/externlib/");
 		registry.addResourceHandler("/images/**").addResourceLocations("/images/");
 		registry.addResourceHandler("/js/**").addResourceLocations("/js/");
+		registry.addResourceHandler("/upload/**").addResourceLocations("file:" + propertiesConfig.getUploadDir());
 		
 	//	registry.addResourceHandler("/webjars/**").addResourceLocations("classpath:/META-INF/resources/webjars/");
 	}

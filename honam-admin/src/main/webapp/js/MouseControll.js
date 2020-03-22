@@ -31,6 +31,14 @@ function MouseControll() {
         			// pick[i].id._id
         			var location = pick[i].id._id.split(",");
         			getListSatValue(BRIDGE_GID, BRIDGE_FAC_NUM, location[0], location[1]);
+        		} else if(pick[i].id._name.toLowerCase().startsWith('drone')) {
+        			//드론 엔티티 클릭 시 
+        			businessType = "DRONE";
+        			var properties = pick[i].id.properties;
+        			var filePath = properties.filePath.getValue();
+        			var fileName = properties.fileName.getValue();
+        			popup('http://localhost/upload/' + filePath + '/' + fileName, fileName,500,500,'yes');
+        			
         		}
         	}
         	
