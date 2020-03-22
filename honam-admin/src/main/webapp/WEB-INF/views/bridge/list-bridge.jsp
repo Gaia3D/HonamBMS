@@ -115,6 +115,7 @@
 <script type="text/javascript" src="/externlib/cesium/Cesium.js"></script>
 <script type="text/javascript" src="/externlib/handlebars-4.1.2/handlebars.js"></script>
 <script type="text/javascript" src="/externlib/moment-2.22.2/moment-with-locales.min.js"></script>
+<script type="text/javascript" src="/externlib/chartjs/Chart.min.js"></script>
 <script type="text/javascript" src="/js/mago3d.js"></script>
 <script type="text/javascript" src="/js/mago3d_lx.js"></script>
 <script type="text/javascript" src="/js/${lang}/handlebarsHelper.js"></script>
@@ -124,6 +125,7 @@
 <script type="text/javascript" src="/js/NumberFormatter.js"></script>
 <script type="text/javascript" src="/js/MouseControll.js"></script>
 <script type="text/javascript" src="/js/MapControll.js"></script>
+<script type="text/javascript" src="/js/SatAnalysisResult.js"></script>
 <script type="text/javascript" src="/js/SensorData.js"></script>
 <!-- <script type="text/javascript" src="/js/Geospatial.js"></script> -->
 <!-- <script type="text/javascript" src="/js/DistrictControll.js"></script> -->
@@ -135,6 +137,11 @@
 	var HONAMBMS = HONAMBMS || {
 		policy : ${policy}
 	};
+	
+	// 위성 영상 처리 관련 변수
+	var satValue = null;
+	var BRIDGE_GID = null;
+	var BRIDGE_FAC_NUM = null;
 
    	// 초기 로딩 설정
 	$(document).ready(function() {
@@ -198,7 +205,7 @@
 		//
 		var satValueCount = null;
 
-	   	MouseControll(viewer,null,null);
+	   	MouseControll();
 	   	MapControll(viewer);
 
 	   	dataGroupList();
@@ -405,6 +412,8 @@
 	        dataType: "json",
 	        success : function(msg) {
 	        	if(msg.statusCode <= 200) {
+	        		BRIDGE_GID = msg.bridge.gid;
+	        		BRIDGE_FAC_NUM = msg.bridge.facNum;
 	        		var template = Handlebars.compile($("#templateBridgeDetail").html());
 					var htmlList = template(msg);
 					$("#BridgeDetailInfoArea").html("");
@@ -640,6 +649,52 @@
 
 		var optionObject = { isVisible : option };
 		setNodeAttributeAPI(MAGO3D_INSTANCE, dataGroupId, dataKey, optionObject);
+	}
+	
+	function showSat(gid, facNum, value) {
+		var option = false;
+		if(value === "true") {
+			option = true;
+		}
+		
+		if(option) {
+			if(satValue == null) {
+				satValue = viewer.entities.add(new Cesium.Entity());
+				var arrSatValue = new Array(); 
+		   		$.ajax({
+					url: "/sats/" + facNum + "/average",
+					type: "GET",
+					headers: {"X-Requested-With": "XMLHttpRequest"},
+					dataType: "json",
+					success: function(msg){
+						if(msg.statusCode <= 200) {
+				       		var satAvgList = msg.satAvgList;
+				       		var len = satAvgList.length;
+				       		for(var i=0; i < len; i++) {
+			                	var satPoint = satAvgList[i];
+			                	viewBridgeSatAvg(satPoint.lon, satPoint.lat, satPoint.displacement);
+			                	arrSatValue.push(satPoint.displacement);
+			                }
+						} else {
+							alert(JS_MESSAGE[msg.errorCode]);
+						}
+					},
+					error:function(request,status,error){
+						alert(JS_MESSAGE["ajax.error.message"]);
+					}
+				});
+			} else {
+				satValue.show = !satValue.show;
+			}
+		} else {
+			//var aa = viewer.entities.values.filter(function(i){return i.name === 'Mean velocity (mm/yr)'});
+			//for(var i in aa){var a =aa[i];viewer.entities.removeById(a.id)}
+			
+			//viewer.entities.remove(satValue);
+			//satValue = null;
+			
+			satValue.show = !satValue.show;
+		}
 	}
 </script>
 </body>

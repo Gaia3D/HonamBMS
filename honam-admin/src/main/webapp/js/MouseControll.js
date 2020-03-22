@@ -1,12 +1,14 @@
-function MouseControll(viewer, gid, facNum) {
-	var scene = viewer.scene;
-    var pickPosition = { lat: null, lon: null, alt: null };
+function MouseControll() {
+	// 위성영상(SAT), 센서(SENSOR), 드론(DRONE)
+	var businessType = null;
+	
+	var pickPosition = { lat: null, lon: null, alt: null };
     var featurePosition = { lat: null, lon: null, alt: null };
   
     var handler = new Cesium.ScreenSpaceEventHandler(viewer.canvas);
     handler.setInputAction(function (event) {
         var newPosition = viewer.scene.pickPosition(event.endPosition);
-        if (scene.pickPositionSupported && Cesium.defined(newPosition)) {
+        if (viewer.scene.pickPositionSupported && Cesium.defined(newPosition)) {
             var cartographic = Cesium.Cartographic.fromCartesian(newPosition);
             pickPosition.lon = Cesium.Math.toDegrees(cartographic.longitude);
             pickPosition.lat = Cesium.Math.toDegrees(cartographic.latitude);
@@ -16,31 +18,39 @@ function MouseControll(viewer, gid, facNum) {
     }, Cesium.ScreenSpaceEventType.MOUSE_MOVE);
     
     handler.setInputAction(function (movement) {
-    	var pick = scene.drillPick(movement.position);
+    	var pick = viewer.scene.drillPick(movement.position);
         if (Cesium.defined(pick)) {
         	$("#selectEntityList").empty();
         	for(var i=0; i < pick.length; i++) {
         		if(pick[i].id._name === "SENSOR") {
+        			businessType = "SENSOR";
         			var sensorid = pick[i].id._id;
         			$("#selectEntityList").append("<li data-sensorid="+sensorid +"+>sensorID : " + sensorid + "</li>");
+        		} else if(pick[i].id._name === "Mean velocity (mm/yr)") {
+        			businessType = "SAT";
+        			// pick[i].id._id
+        			var location = pick[i].id._id.split(",");
+        			getListSatValue(BRIDGE_GID, BRIDGE_FAC_NUM, location[0], location[1]);
         		}
         	}
-        	var x;
-        	// 좌측메뉴가 display일 경우 그 만큼 x값을 더해준다.  
-        	if($("#leftMenuArea").css("display") === "block") {
-        		x = movement.position.x + 390;
-        	} else {
-        		x = movement.position.x
+        	
+        	if(businessType === "SENSOR") {
+	        	var x;
+	        	// 좌측메뉴가 display일 경우 그 만큼 x값을 더해준다.  
+	        	if($("#leftMenuArea").css("display") === "block") {
+	        		x = movement.position.x + 390;
+	        	} else {
+	        		x = movement.position.x
+	        	}
+	        	$("#entityPopup").css("left", x + 'px');
+	        	$("#entityPopup").css("top", movement.position.y + 'px');
+	        	$("#entityPopup").show();
+	        	$("#selectEntityList").one("click", 'li', function(){
+	                handlerSensorPopup(this);
+	            });
         	}
-        	$("#entityPopup").css("left", x + 'px');
-        	$("#entityPopup").css("top", movement.position.y + 'px');
-        	$("#entityPopup").show();
-        	$("#selectEntityList").one("click", 'li', function(){
-                handlerSensorPopup(this);
-            });
         }
-    }, Cesium.ScreenSpaceEventType.LEFT_CLICK);
-    
+    }, Cesium.ScreenSpaceEventType.LEFT_CLICK);   
 }
 
 // display current mouse position

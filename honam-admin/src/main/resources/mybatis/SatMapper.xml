@@ -6,28 +6,28 @@
 	<!-- 년간 변위율(평균값) 목록  -->
 	<select id="getListSatAvg" parameterType="string" resultType="sat">
 		/* getListSatAvg */
-		SELECT A.lon, A.lat , AVG(A.value) AS displacement
-		FROM sat A
-		WHERE A.fac_num = #{fac_num}
-		GROUP BY A.lon, A.lat;
+		SELECT lon, lat , AVG(value) AS displacement
+		FROM sat
+		WHERE fac_num = #{facNum}
+		GROUP BY lon, lat
 	</select>
 	
 	<!-- 선택된 지점의 날짜별 변위값 목록  -->
 	<select id="getListSatValueByLonLat" parameterType="sat" resultType="sat">
 		/* getListSatValueByLonLat */
-		SELECT A.acquire_date, A.value
-		FROM sat A
-		WHERE A.fac_num = #{fac_num}
-		AND A.lon = #{lon}
-		AND A.lat = #{lat};
+		SELECT acquire_dt AS accuire_date, value
+		FROM sat
+		WHERE fac_num = #{facNum}
+		AND lon = #{lon}
+		AND lat = #{lat}
 	</select>
 	
 	<!-- 년간 변위율(평균값) 건수  -->
 	<select id="getSatAvgTotalCount" parameterType="string" resultType="long">
 		/* getSatAvgTotalCount */
-		SELECT COUNT(A.id)
-		FROM sat A
-		WHERE A.fac_num = #{fac_num}		
+		SELECT COUNT(id)
+		FROM sat
+		WHERE fac_num = #{facNum}		
 	</select>
 	
 </mapper>

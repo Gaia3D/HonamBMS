@@ -78,10 +78,10 @@
 				<ul class="bridgeSubInfoGroup">
 					<li>
 						<input type="radio" id="satVisibleTrue" name="satVisible" value="true" 
-							onclick="showSat('{{bridge.facNum}}', 'true');" style="width : 50px;" />
+							onclick="showSat('{{bridge.gid}}', '{{bridge.facNum}}', 'true');" style="width : 50px;" />
 						<label for="satVisibleTrue" style="width : 50px;">표시</label>
 						<input type="radio" id="satVisibleFalse" name="satVisible" value="false" 
-							onclick="showSat('{{bridge.facNum}}', 'false');" checked="checked" style="width : 50px;" />
+							onclick="showSat('{{bridge.gid}}', '{{bridge.facNum}}', 'false');" checked="checked" style="width : 50px;" />
 						<label for="satVisibleFalse" style="width : 50px;">비표시</label>
 					</li>
 					<li>
@@ -245,6 +245,11 @@
 				{{bridge.grade}}
 			</li>
 		</ul>
+	</div>
+
+	<!-- 위성 영상 관련 분석결과영역 -->
+	<div class="analysisGraphic">
+		<canvas id="analysisGraphic"></canvas>
 	</div>
 </div>
 </script>

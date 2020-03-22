@@ -200,44 +200,6 @@ public class BridgeRestController {
 		return result;
 	}
 
-	@GetMapping("/{gid:[0-9]+}/sat/avg")
-	public Map<String, Object> getListSatAvg(Bridge bridge, @PathVariable Integer gid) {
-		log.info("@@@@ gid = {}", gid);
-
-		Map<String, Object> result = new HashMap<>();
-		String errorCode = null;
-		String message = null;
-		
-		long satAvgCount = satService.getSatAvgTotalCount(bridge.getFacNum());
-		List<Sat> satAvgList = satService.getListSatAvg(bridge.getFacNum());
-		int statusCode = HttpStatus.OK.value();
-
-		result.put("satAvgList", satAvgList);
-		result.put("satAvgCount", satAvgCount);
-		result.put("statusCode", statusCode);
-		result.put("errorCode", errorCode);
-		result.put("message", message);
-		return result;
-	}
-
-	@GetMapping("/{gid:[0-9]+}/sat/value")
-	public Map<String, Object> getListSatValue(Sat sat, @PathVariable Integer gid) {
-		log.info("@@@@ gid = {}", gid);
-
-		Map<String, Object> result = new HashMap<>();
-		String errorCode = null;
-		String message = null;
-		
-		List<Sat> satValueList = satService.getListSatValueByLonLat(sat);
-		int statusCode = HttpStatus.OK.value();
-
-		result.put("satValueList", satValueList);
-		result.put("statusCode", statusCode);
-		result.put("errorCode", errorCode);
-		result.put("message", message);
-		return result;
-	}
-
 	@GetMapping("/{gid:[0-9]+}/sensor")
 	public Map<String, Object> getListSensorId(Bridge bridge, @PathVariable Integer gid) {
 		log.info("@@@@ gid = {}", gid);
