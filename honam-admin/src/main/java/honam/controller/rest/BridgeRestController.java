@@ -1,5 +1,7 @@
 package honam.controller.rest;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -130,8 +132,18 @@ public class BridgeRestController {
 
 
 	@GetMapping("/dronfile/{gid:[0-9]+}")
-	public Map<String, Object> getBridgeDronFileList(HttpServletRequest request, @PathVariable Integer gid, BridgeDroneFile bridgeDronFile) {
-		log.info("@@@@@@@@@@ bridge date = {}", bridgeDronFile.getCreateDate());
+	public Map<String, Object> getBridgeDronFileList(HttpServletRequest request, @PathVariable Integer gid, @RequestParam(defaultValue="1") String pageNo, String createDate) {
+		log.info("@@@@@@@@@@ bridge date = {}", createDate);
+		SimpleDateFormat transFormat = new SimpleDateFormat("yyyy-MM-dd");
+		Date date = null;
+		try {
+			date = transFormat.parse(createDate);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+
+		BridgeDroneFile bridgeDronFile = new BridgeDroneFile();
+		bridgeDronFile.setCreateDate(date);
 
 		Map<String, Object> result = new HashMap<>();
 		String errorCode = null;
@@ -143,7 +155,7 @@ public class BridgeRestController {
 		Pagination pagination = new Pagination(	request.getRequestURI(),
 												stringParameters,
 												bridgeDroneFileTotalCount,
-												Long.valueOf(1).longValue(),
+												Long.valueOf(pageNo).longValue(),
 												PAGE_ROWS,
 												PAGE_LIST
 												);
@@ -310,14 +322,14 @@ public class BridgeRestController {
 		result.put("message", message);
 		return result;
 	}
-	
+
 	@GetMapping("/sensor/{sensorid}")
 	public Map<String, Object> getListSensorData(HttpServletRequest request, @PathVariable String sensorid) {
 
 		Map<String, Object> result = new HashMap<>();
 		String errorCode = null;
 		String message = null;
-		
+
 		List<Sensor> sensorDataList = sensorService.getListSensorData(sensorid);
 		int statusCode = HttpStatus.OK.value();
 
@@ -327,7 +339,7 @@ public class BridgeRestController {
 		result.put("message", message);
 		return result;
 	}
-	
+
 	/**
 	 * 시도 목록
 	 * @return

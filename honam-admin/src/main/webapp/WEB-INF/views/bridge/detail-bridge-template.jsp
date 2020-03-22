@@ -3,11 +3,11 @@
 <div class="subHeader">
 	<h2>교량 검색  > 상세 정보</h2>
 	<div class="ctrlBtn">
-		<a href="#" onClick="viewBridgeList();" style="padding-top:3px; font-size:13px; color: #fff;">목록 보기</a>
+		<a href="#" onClick="viewBridgeList(); return false;" style="padding-top:3px; font-size:13px; color: #fff;">목록 보기</a>
 	</div>
 </div>
 
-<div class="subContents">
+<div class="subContents" style="height: calc(100% - 65px);">
 	<table class="list-table scope-col">
 		<col class="col-number" />
 		<col class="col-toggle" />
@@ -52,17 +52,17 @@
 		</tbody>
 	</table>
 
-	<ul id="bridgeSubContents" class="listDrop" style="margin-top: 20px;">
+	<ul id="bridgeSubContents" class="listDrop" style="margin-top: 20px;height: calc(100% - 240px);overflow: auto;">
 		<li id="dataContent">
 			<p onclick="toggleSubContent('data', 'dataInfo');">교량 3차원 모델<span class="collapse-icon">icon</span></p>
 			<div id="dataInfo" class="listContents">
 				<ul class="bridgeSubInfoGroup">
 					<li>
 {{#greaterThan bridge.dataId 0}}
-						<input type="radio" id="dataVisibleTrue" name="dataVisible" value="true" 
+						<input type="radio" id="dataVisibleTrue" name="dataVisible" value="true"
 							onclick="show3DData('{{bridge.dataGroupId}}', '{{bridge.facNum}}', 'true');" checked="checked" style="width : 50px;" />
 						<label for="dataVisibleTrue" style="width : 50px;">표시</label>
-						<input type="radio" id="dataVisibleFalse" name="dataVisible" value="false" 
+						<input type="radio" id="dataVisibleFalse" name="dataVisible" value="false"
 							onclick="show3DData('{{bridge.dataGroupId}}', '{{bridge.facNum}}', 'false');"  style="width : 50px;" />
 						<label for="dataVisibleFalse" style="width : 50px;">비표시</label>
 {{else}}
@@ -77,10 +77,10 @@
 			<div id="satInfo" class="listContents">
 				<ul class="bridgeSubInfoGroup">
 					<li>
-						<input type="radio" id="satVisibleTrue" name="satVisible" value="true" 
+						<input type="radio" id="satVisibleTrue" name="satVisible" value="true"
 							onclick="showSat('{{bridge.gid}}', '{{bridge.facNum}}', 'true');" style="width : 50px;" />
 						<label for="satVisibleTrue" style="width : 50px;">표시</label>
-						<input type="radio" id="satVisibleFalse" name="satVisible" value="false" 
+						<input type="radio" id="satVisibleFalse" name="satVisible" value="false"
 							onclick="showSat('{{bridge.gid}}', '{{bridge.facNum}}', 'false');" checked="checked" style="width : 50px;" />
 						<label for="satVisibleFalse" style="width : 50px;">비표시</label>
 					</li>
@@ -146,17 +146,17 @@
 				<ul class="bridgeSubInfoGroup">
 					<li>
 {{#if bdfCreateDateList}}
-						<select id="droneCreateDateList">
+					<select id="droneCreateDateList">
 						{{#each bdfCreateDateList}}
 							<option value="{{this}}">{{this}}</option>
 						{{/each}}
-						</select>
+					</select>
 
 <div class="count" style="margin-top: 20px; margin-bottom: 5px;">
 	전체 <em>{{pagination.totalCount}}</em> 건
 	{{pagination.pageNo}} / {{pagination.lastPage}} 페이지
 </div>
-<div class="transferDataList">
+<div>
 	<table class="list-table scope-col">
 		<col class="col-number" />
 		<col class="col-toggle" />
@@ -165,7 +165,7 @@
 			<tr>
 				<th scope="col" class="col-number">번호</th>
 				<th scope="col" class="col-toggle">파일명</th>
-				<th scope="col" class="col-name">영상보기</th>
+				<th scope="col" class="col-name">이동</th>
 			</tr>
 		</thead>
 		<tbody id="transferDataList">
@@ -173,8 +173,10 @@
 			{{#each bdfList}}
 				<tr>
 					<td class="col-number">{{#replaceRowNumber ../pagination.pageNo @index}}{{/replaceRowNumber}}</td>
-					<td class="col-toggle">{{fileName}}</td>
-					<td class="col-name"><a href="#" onClick="">보기</a></td>
+					<td class="col-toggle">
+						<a href="#" onclick="window.open('/upload/{{filePath}}/{{fileName}}', 'popup', 'width=600,height=300'); return false;">{{fileName}}</a>
+					</td>
+					<td class="col-name"><a href="#" onclick="gotoFlyBridge({{longitude}}, {{latitude}}, {{altitude}}); return false;">이동</a></td>
 				</tr>
 			{{/each}}
 		{{else}}
@@ -182,6 +184,29 @@
 		{{/if}}
 		</tbody>
 	</table>
+{{#if pagination.totalCount}}
+    <ul class="pagination">
+        <li class="ico first" onClick="getListBridgeDroneFile({{pagination.firstPage}})"></li>
+    {{#if pagination.existPrePage}}
+        <li class="ico forward" onClick="getListBridgeDroneFile({{pagination.prePageNo}})"></li>
+    {{/if}}
+
+    {{#forEachStep pagination.startPage pagination.endPage 1}}
+        {{#if (indexCompare this ../pagination.pageNo)}}
+            <li class="on"><a href='#'>{{this}}</a></li>
+        {{else}}
+            <li onClick="getListBridgeDroneFile({{this}})"><a href='#'>{{this}}</a></li>
+        {{/if}}
+    {{/forEachStep}}
+
+    {{#if pagination.existNextPage}}
+        <li class="ico back" onClick="getListBridgeDroneFile({{pagination.nextPageNo}})"></li>
+    {{/if}}
+        <li class="ico end" onClick="getListBridgeDroneFile({{pagination.lastPage}})"></li>
+    </ul>
+{{/if}}
+
+
 </div>
 
 {{else}}

@@ -23,7 +23,7 @@
 				<tr>
 					<td class="col-number">{{#replaceRowNumber ../pagination.pageNo @index}}{{/replaceRowNumber}}</td>
 					<td class="col-toggle">
-						<a href="#" onClick="getBridgeInfo({{gid}}, {{longitude}}, {{latitude}})">{{brgNam}}</a>
+						<a href="#" onClick="getBridgeInfo({{gid}}, {{longitude}}, {{latitude}}); return false;">{{brgNam}}</a>
 					</td>
 					<td class="col-name">{{#replaceYear endAmd}}{{/replaceYear}}</td>
 					<td class="col-name">{{grade}}</td>
@@ -34,7 +34,7 @@
 		{{/if}}
 		</tbody>
 	</table>
-	
+
 {{#if pagination.totalCount}}
     <ul class="pagination">
         <li class="ico first" onClick="getListBridge({{pagination.firstPage}})"></li>

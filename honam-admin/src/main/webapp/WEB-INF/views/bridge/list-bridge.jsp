@@ -81,8 +81,8 @@
 				<!-- E: 교량 목록 -->
 			</div>
 		</div>
-		<div id ="bridgeDetailContent" style="display:none;">
-			<div id="BridgeDetailInfoArea"></div>
+		<div id ="bridgeDetailContent" style="display:none; height: 100%;">
+			<div id="BridgeDetailInfoArea" style="height: 100%;"></div>
 			<%@ include file="/WEB-INF/views/bridge/detail-bridge-template.jsp" %>
 		</div>
 		<div id="bridgeGroupContent" style="display: none;">
@@ -139,11 +139,11 @@
 <script type="text/javascript">
 	var viewer = null;
 	var MAGO3D_INSTANCE;
-	//TODO: policy 개발 후 변경 
+	//TODO: policy 개발 후 변경
 	var HONAMBMS = HONAMBMS || {
 		policy : ${policy}
 	};
-	
+
 	// 위성 영상 처리 관련 변수
 	var satValue = null;
 	var BRIDGE_GID = null;
@@ -194,7 +194,7 @@
 		cesiumViewerOption.baseLayerPicker = false;
 		cesiumViewerOption.sceneModePicker = false;
 		//cesiumViewerOption.terrainProvider = new Cesium.EllipsoidTerrainProvider();
-		cesiumViewerOption.terrainProvider = geoPolicyJson.online ? 
+		cesiumViewerOption.terrainProvider = geoPolicyJson.online ?
 				new Cesium.CesiumTerrainProvider({url : 'http://168.131.227.76:9090/tilesets/korea/'}) : new Cesium.EllipsoidTerrainProvider();
 		cesiumViewerOption.imageryProvider = new Cesium.ArcGisMapServerImageryProvider({
 		    url : 'https://services.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer'
@@ -441,9 +441,12 @@
 	    });
 	}
 
-	function gotoFlyBridge(longitude, latitude) {
+	function gotoFlyBridge(longitude, latitude, altitude) {
+		if (!altitude) {
+			altitude = 200;
+		}
 		viewer.camera.flyTo({
-		    destination : Cesium.Cartesian3.fromDegrees(longitude, latitude, 200)
+		    destination : Cesium.Cartesian3.fromDegrees(longitude, latitude, altitude)
 		});
 	}
 
@@ -549,7 +552,7 @@
 			var existDroneEntity = existDroneEntities[i];
 			entities.remove(existDroneEntity);
 		}
-		
+
 		for(var i=0,len=droneList.length;i<len;i++) {
 			var drone = droneList[i];
 			var droneId = drone.uploadDroneFileId;
@@ -566,7 +569,7 @@
 				}),
 				properties : new Cesium.PropertyBag(drone)
 			});
-			
+
 		}
 	}
 
@@ -664,26 +667,26 @@
 			}
 		}
 	}
-	
+
 	function toggleSubContent(type, contentId) {
 		if($("#" + contentId).css("display") == "none") {
 			$("#" + contentId).show();
 		} else {
 			$("#" + contentId).hide();
-		}	
-		
+		}
+
 		// 부가적인 처리가 필요한 경우
 		if(type === "data") {
 			$("#dataContent").toggleClass("on");
 		} else if(type === "sat") {
-			$("#satContent").toggleClass("on");	
+			$("#satContent").toggleClass("on");
 		} else if(type === "sensor") {
 			$("#sensorContent").toggleClass("on");
 		} else if(type === "drone") {
 			$("#droneContent").toggleClass("on");
 		}
 	}
-	
+
 	// 교량 상세 페이지에서 3D 데이터 표시/비표시 라디오 버튼 클릭시
 	function show3DData(dataGroupId, dataKey, value) {
 		var option = false;
@@ -692,10 +695,10 @@
 		}
 		dataGroupId = parseInt(dataGroupId);
 		//var nodeMap = MAGO3D_INSTANCE.getMagoManager().hierarchyManager.getNodesMap(dataGroupId);
-		
+
 		//isExistDataAPI(MAGO3D_INSTANCE, dataGroupId, dataKey);
 		//isDataReadyToRender(MAGO3D_INSTANCE, dataGroupId, dataKey);
-		
+
 		if (!isExistDataAPI(MAGO3D_INSTANCE, dataGroupId, dataKey)) {
 			alert('아직 로드되지 않은 데이터입니다.\n이동 후 다시 시도해 주시기 바랍니다.');
 			return;
@@ -704,17 +707,17 @@
 		var optionObject = { isVisible : option };
 		setNodeAttributeAPI(MAGO3D_INSTANCE, dataGroupId, dataKey, optionObject);
 	}
-	
+
 	function showSat(gid, facNum, value) {
 		var option = false;
 		if(value === "true") {
 			option = true;
 		}
-		
+
 		if(option) {
 			if(satValue == null) {
 				satValue = viewer.entities.add(new Cesium.Entity());
-				var arrSatValue = new Array(); 
+				var arrSatValue = new Array();
 		   		$.ajax({
 					url: "/sats/" + facNum + "/average",
 					type: "GET",
@@ -743,14 +746,52 @@
 		} else {
 			//var aa = viewer.entities.values.filter(function(i){return i.name === 'Mean velocity (mm/yr)'});
 			//for(var i in aa){var a =aa[i];viewer.entities.removeById(a.id)}
-			
+
 			//viewer.entities.remove(satValue);
 			//satValue = null;
-			
+
 			satValue.show = !satValue.show;
 			$(".analysisGraphic").hide();
 		}
 	}
+
+function getListBridgeDroneFile(number) {
+	var pageNo = (number === undefined) ? 1 : number;
+	var parms = {
+			pageNo : pageNo,
+			createDate : $('#droneCreateDateList').val(),
+	}
+	$.ajax({
+		url: '/bridges/dronfile/' + BRIDGE_GID,
+		type: 'GET',
+		data: parms,
+		headers: {'X-Requested-With': 'XMLHttpRequest'},
+		dataType: 'json',
+		success: function(res){
+			if(res.statusCode <= 200) {
+				console.info(res);
+				/* res.pagination.pageList = [];
+				var start = res.pagination.startPage;
+				var end = res.pagination.endPage;
+				for(i = start; i <= end; i++) {
+					res.pagination.pageList.push(i);
+				}
+				var template = Handlebars.compile($("#templateBridgeList").html());
+				var htmlList = template(res);
+				$("#bridgeListTable").html("");
+				$("#bridgeListTable").append(htmlList); */
+			} else {
+				alert(JS_MESSAGE[res.errorCode]);
+				console.log("---- " + res.message);
+			}
+		},
+		error: function(request, status, error) {
+			alert(JS_MESSAGE["ajax.error.message"]);
+		}
+	});
+}
+
+
 </script>
 </body>
 </html>
