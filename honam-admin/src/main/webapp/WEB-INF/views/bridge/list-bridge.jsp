@@ -187,7 +187,10 @@
 		cesiumViewerOption.geocoder = false;
 		cesiumViewerOption.baseLayerPicker = false;
 		cesiumViewerOption.sceneModePicker = false;
-		cesiumViewerOption.terrainProvider = new Cesium.EllipsoidTerrainProvider();
+		//cesiumViewerOption.terrainProvider = new Cesium.EllipsoidTerrainProvider();
+		cesiumViewerOption.terrainProvider = new Cesium.CesiumTerrainProvider({
+			url : 'http://168.131.227.76:9090/tilesets/korea/'
+		});
 		cesiumViewerOption.imageryProvider = new Cesium.ArcGisMapServerImageryProvider({
 		    url : 'https://services.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer'
 		});
@@ -421,6 +424,7 @@
 	        		gotoFlyBridge(longitude, latitude);
 	        		viewBridgeInfo();
 	        		addSensorData(msg.sensorList);
+	        		addDrone(msg.bdfListAll);
 	        	} else {
 					alert(JS_MESSAGE[msg.errorCode]);
 					console.log("---- " + msg.message);
@@ -513,6 +517,41 @@
 					outlineWidth : 2
 				})
 			});
+		}
+	}
+
+	function addDrone(droneList) {
+		if(!droneList || droneList.length === 0) {
+			return;
+		}
+
+		var delimeterPrefix = 'drone_';
+		var viewer = MAGO3D_INSTANCE.getViewer();
+		var entities = viewer.entities;
+		var existDroneEntities = entities.values.filter(function(e){
+			return e.id.startsWith(delimeterPrefix);
+		});
+		for(var i in existDroneEntities) {
+			var existDroneEntity = existDroneEntities[i];
+			entities.remove(existDroneEntity);
+		}
+		
+		for(var i=0,len=droneList.length;i<len;i++) {
+			var drone = droneList[i];
+			var droneId = drone.uploadDroneFileId;
+			var delimeter = delimeterPrefix + droneId + '_'+drone.ogcFid;
+			entities.add({
+				id : delimeter,
+				name : delimeter,
+				position : Cesium.Cartesian3.fromDegrees(drone.longitude, drone.latitude, drone.altitude),
+				point : new Cesium.PointGraphics({
+					pixelSize : 10,
+					color : Cesium.Color.BROWN,
+					outlineColor : Cesium.Color.WHITE,
+					outlineWidth : 2
+				})
+			});
+			
 		}
 	}
 
