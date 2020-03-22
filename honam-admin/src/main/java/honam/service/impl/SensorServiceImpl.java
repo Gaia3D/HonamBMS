@@ -52,4 +52,14 @@ public class SensorServiceImpl implements SensorService {
 	public List<Sensor> getListSensorIDBySensorType(Sensor sensor) {
 		return sensorMapper.getListSensorIDBySensorType(sensor);
 	}
+	
+	/**
+	 * sensordata 목록 
+	 * @param sensorid
+	 * @return
+	 */
+	@Transactional(readOnly=true)
+	public List<Sensor> getListSensorData(String sensorid) {
+		return sensorMapper.getListSensorData(sensorid);
+	}
 }

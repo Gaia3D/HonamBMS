@@ -1,10 +1,21 @@
-function getSensorMonitoringData(sensorid) {
-	console.log(sensorid);
-}
-
 function handlerSensorPopup(that) {
 	$(that).parent("ul").hide();
-	//TODO: 센서 data 차트 가시화
+	var sensorid = $(that).data("sensorid");
+	$.ajax({
+		url: "/bridges/sensor/"+ sensorid,
+		type: "GET",
+		headers: {"X-Requested-With": "XMLHttpRequest"},
+		dataType: "json",
+		success: function(msg){
+			if(msg.statusCode <= 200) {
+			} else {
+				alert(JS_MESSAGE[msg.errorCode]);
+			}
+		},
+		error:function(request,status,error){
+			alert(JS_MESSAGE["ajax.error.message"]);
+		}
+	});
 }
 
 //// 센서 데이터 가시화
