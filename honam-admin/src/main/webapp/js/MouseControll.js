@@ -25,7 +25,7 @@ function MouseControll() {
         		if(pick[i].id._name === "SENSOR") {
         			businessType = "SENSOR";
         			var sensorid = pick[i].id._id;
-        			$("#selectEntityList").append("<li data-sensorid="+sensorid +">sensorID : " + sensorid + "</li>");
+        			$("#selectEntityList").append("<li data-type=" + businessType + " data-sensorid="+sensorid +">sensorID : " + sensorid + "</li>");
         		} else if(pick[i].id._name === "Mean velocity (mm/yr)") {
         			businessType = "SAT";
         			$(".analysisGraphic").show();
@@ -37,15 +37,31 @@ function MouseControll() {
         			//드론 엔티티 클릭 시 
         			businessType = "DRONE";
         			var properties = pick[i].id.properties;
+        			
         			var filePath = properties.filePath.getValue();
         			var fileName = properties.fileName.getValue();
-        			popup('http://localhost/upload/' + filePath + '/' + fileName, fileName,500,500,'yes');
-        			
+        			var url = '/upload/' + filePath + '/' + fileName
+        			$("#selectEntityList").append("<li data-type=" + businessType + " data-filename=" + fileName + " data-url=" + url +">fileName : " + fileName + "</li>");
         		}
         	}
         	
-        	if(businessType === "SENSOR") {
-	        	var x;
+        	if(businessType === "SENSOR" || businessType === "DRONE") {
+        		$("#selectEntityList").show();
+        		openEntityPopop(movement);
+	        	$("#selectEntityList").one("click", 'li', function(){
+	        		if($(this).data('type') === 'SENSOR') {
+	        			handlerSensorPopup(this);
+	        		} else {
+	        			$("#selectEntityList").hide();
+	        			var data = $(this).data();
+	        			var url = data.url;
+	        			var fileName = data.fileName;
+	        			popup(url,fileName,700,700,'yes');
+	        		}
+	            });
+        	}
+        	function openEntityPopop(movement){
+        		var x;
 	        	// 좌측메뉴가 display일 경우 그 만큼 x값을 더해준다.  
 	        	if($("#leftMenuArea").css("display") === "block") {
 	        		x = movement.position.x + 390;
@@ -55,9 +71,6 @@ function MouseControll() {
 	        	$("#entityPopup").css("left", x + 'px');
 	        	$("#entityPopup").css("top", movement.position.y + 'px');
 	        	$("#entityPopup").show();
-	        	$("#selectEntityList").one("click", 'li', function(){
-	                handlerSensorPopup(this);
-	            });
         	}
         }
     }, Cesium.ScreenSpaceEventType.LEFT_CLICK);   

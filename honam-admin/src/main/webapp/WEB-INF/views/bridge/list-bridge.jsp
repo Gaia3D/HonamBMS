@@ -496,6 +496,15 @@
 	function addSensorData(sensorList) {
 		if(sensorList.length === 0) return;
 		var viewer = MAGO3D_INSTANCE.getViewer();
+		var entities = viewer.entities;
+		var existSensorEntities = entities.values.filter(function(e){
+			return e.name === 'SENSOR';
+		});
+		for(var i in existSensorEntities) {
+			var existSensoreEntity = existSensorEntities[i];
+			entities.remove(existSensoreEntity);
+		}
+		
 		for(var i=0; i< sensorList.length;i++) {
 			var sensorType = sensorList[i].sensorType;
 			var x = sensorList[i].lonWgs;
