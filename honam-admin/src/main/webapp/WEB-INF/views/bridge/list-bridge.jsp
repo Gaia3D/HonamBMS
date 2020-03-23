@@ -102,9 +102,16 @@
 
 	<!-- S: 화면하단 분석결과영역 -->
 	<div class="analysisGraphic">
+		<div class="chartClose">
+			<button type="button" title="닫기" class="close">닫기</button>
+		</div>
 		<canvas id="analysisGraphic"></canvas>
 	</div>
 	<div class="sensorDataGraphic">
+		<select id="sensorDataSelect" style="position:absolute;top:19px;"></select>
+		<div class="chartClose">
+			<button type="button" title="닫기" class="close">닫기</button>
+		</div>
 		<canvas id="sensorDataGraphic"></canvas>
 	</div>
 	<!-- S: MAPWRAP -->
@@ -176,7 +183,12 @@
 		$("#bridgeDetailContent").on('change', '#droneCreateDateList', function() {
 			getListBridgeDroneFile();
 		});
-
+		
+		// 차트 close 이벤트
+		$(".chartClose").on("click", function(){
+			$(".analysisGraphic").hide();
+			$(".sensorDataGraphic").hide();
+		});
 
 	});
 

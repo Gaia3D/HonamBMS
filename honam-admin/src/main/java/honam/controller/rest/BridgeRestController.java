@@ -339,7 +339,7 @@ public class BridgeRestController {
 	}
 
 	@GetMapping("/sensor/{sensorid}")
-	public Map<String, Object> getListSensorData(HttpServletRequest request, @PathVariable String sensorid) {
+	public Map<String, Object> getListSensorData(HttpServletRequest request, @PathVariable String sensorid, @RequestParam String time) {
 
 		Map<String, Object> result = new HashMap<>();
 		String errorCode = null;
@@ -350,8 +350,22 @@ public class BridgeRestController {
 		List<Sensor> sensorDataList = new ArrayList<>();
 		sensorTimeList = sensorService.getListSensorTime(sensorid);
 		if(sensorTimeList.size() > 0) {
-			sensorDataList = sensorService.getListSensorData(sensorTimeList.get(0));
-		}
+			Sensor sensor = sensorTimeList.get(0);
+			if(time == null || time.equals("null")) {
+				 
+			} else {
+				Date dateTime = null;
+				try {
+					dateTime = new SimpleDateFormat("yyyy-MM-dd").parse(time);
+				} catch (ParseException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				sensor.setTime(dateTime);
+			}
+			sensorDataList = sensorService.getListSensorData(sensor);
+		} 
+		
 		int statusCode = HttpStatus.OK.value();
 
 		result.put("sensorDataList", sensorDataList);

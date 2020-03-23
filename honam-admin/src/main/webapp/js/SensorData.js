@@ -1,15 +1,30 @@
+$(document).ready(function() {
+	$("#sensorDataSelect").on("change", function() {
+		var time = $("#sensorDataSelect option:selected").val();
+		var sensorid = sensorValueChart.config.id;
+		getSensorData(sensorid, time);
+	});
+});
+
 function handlerSensorPopup(that) {
 	$(that).parent("ul").hide();
 	var sensorid = $(that).data("sensorid");
+	getSensorData(sensorid);
+}
+
+function getSensorData(sensorid, time) {
+	if(!time) time = null;
 	$.ajax({
-		url: "/bridges/sensor/"+ sensorid,
+		url: "/bridges/sensor/"+ sensorid+"?time="+time,
 		type: "GET",
 		headers: {"X-Requested-With": "XMLHttpRequest"},
 		dataType: "json",
 		success: function(msg){
 			if(msg.statusCode <= 200) {
 				if(msg.sensorDataList.length > 0) {
+					initSensorTime(msg.sensorTimeList);
 					createSensorValueGraph(msg.sensorDataList);
+					$(".sensorDataGraphic").show();
 				} else {
 					alert("해당 sensor의 데이터가 존재하지 않습니다.");
 				}
@@ -23,6 +38,13 @@ function handlerSensorPopup(that) {
 	});
 }
 
+function initSensorTime(timeList) {
+	$("#sensorDataSelect").empty();
+	for(var i=0; i< timeList.length;i++) {
+		var time = timeList[i].time;
+		$("#sensorDataSelect").append("<option value="+time+">"+time+"</option>");
+	}
+}
 var sensorValueChart = null;
 function createSensorValueGraph(data) {
 	var minData = [];
@@ -42,6 +64,7 @@ function createSensorValueGraph(data) {
 		sensorValueChart.destroy();
 	}		
 	sensorValueChart = new Chart(document.getElementById("sensorDataGraphic"), {
+		id : sensorid,
 	    type: 'scatter',
 	    data: {
 	        datasets: [{

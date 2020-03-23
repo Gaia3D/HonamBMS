@@ -1624,3 +1624,22 @@ cursor: pointer;
 #entityPopup ul > li:hover {
 background-color: #0073e2;
 }
+
+.chartClose {
+position: absolute;
+top: 4px;
+right: 5px;
+}
+.chartClose > button.close {
+width:28px;
+height: 28px;
+border-radius: 14px;
+background-position: -43px -393px;	
+}
+.chartClose > button {
+text-indent: -999em;
+border: none;
+background-image: url(../../images/ico.png);
+background-repeat: no-repeat;
+background-color: #80808078;
+}
