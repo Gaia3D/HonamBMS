@@ -104,7 +104,9 @@
 	<div class="analysisGraphic">
 		<canvas id="analysisGraphic"></canvas>
 	</div>
-
+	<div class="sensorDataGraphic">
+		<canvas id="sensorDataGraphic"></canvas>
+	</div>
 	<!-- S: MAPWRAP -->
 	<div id="MapContainer" class="mapWrap" >
 		<div class="mapInfo">
