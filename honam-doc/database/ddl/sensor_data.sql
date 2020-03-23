@@ -7,8 +7,8 @@ create table sensor_data(
 	sensor_data_id			serial,
 	sensorid				varchar(10),
 	time					timestamp with time zone,
-	min_valueue				numeric(10,10),
-	max_valueue				numeric(9,9),
+	min_value				numeric(10,10),
+	max_value				numeric(9,9),
 	condition				integer
 );
 
