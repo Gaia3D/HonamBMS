@@ -34,5 +34,11 @@ public interface SensorService {
 	 * @param sensorid
 	 * @return
 	 */
-	List<Sensor> getListSensorData(String sensorid);
+	List<Sensor> getListSensorData(Sensor sensor);
+	
+	/**
+	 * 데이터중 최근 10일 날짜 목록
+	 * @return
+	 */
+	List<Sensor> getListSensorTime(String sensorid);
 }

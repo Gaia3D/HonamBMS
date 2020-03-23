@@ -10,7 +10,6 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.apache.http.client.utils.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -345,11 +344,18 @@ public class BridgeRestController {
 		Map<String, Object> result = new HashMap<>();
 		String errorCode = null;
 		String message = null;
-
-		List<Sensor> sensorDataList = sensorService.getListSensorData(sensorid);
+		
+		// 데이터에서 최근 10일의 날짜를 가져옴
+		List<Sensor> sensorTimeList = new ArrayList<>();
+		List<Sensor> sensorDataList = new ArrayList<>();
+		sensorTimeList = sensorService.getListSensorTime(sensorid);
+		if(sensorTimeList.size() > 0) {
+			sensorDataList = sensorService.getListSensorData(sensorTimeList.get(0));
+		}
 		int statusCode = HttpStatus.OK.value();
 
 		result.put("sensorDataList", sensorDataList);
+		result.put("sensorTimeList", sensorTimeList);
 		result.put("statusCode", statusCode);
 		result.put("errorCode", errorCode);
 		result.put("message", message);

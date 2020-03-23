@@ -8,6 +8,11 @@ function handlerSensorPopup(that) {
 		dataType: "json",
 		success: function(msg){
 			if(msg.statusCode <= 200) {
+				if(msg.sensorDataList.length > 0) {
+					createSensorValueGraph(msg.sensorDataList);
+				} else {
+					alert("해당 sensor의 데이터가 존재하지 않습니다.");
+				}
 			} else {
 				alert(JS_MESSAGE[msg.errorCode]);
 			}
@@ -15,6 +20,107 @@ function handlerSensorPopup(that) {
 		error:function(request,status,error){
 			alert(JS_MESSAGE["ajax.error.message"]);
 		}
+	});
+}
+
+var sensorValueChart = null;
+function createSensorValueGraph(data) {
+	var minData = [];
+	var maxData = [];
+	var sensorid = data[0].sensorid;
+	for(var i=0; i < data.length; i++) {
+		minData.push({
+			x : new Date(data[i].time),
+			y : data[i].minValue
+		});
+		maxData.push({
+			x : new Date(data[i].time),
+			y : data[i].maxValue
+		});
+	}
+	if (sensorValueChart != null) {
+		sensorValueChart.destroy();
+	}		
+	sensorValueChart = new Chart(document.getElementById("sensorDataGraphic"), {
+	    type: 'scatter',
+	    data: {
+	        datasets: [{
+	        	label : "max Value",
+	            data: maxData,
+	            borderColor: [
+	                'rgba(44,130,255,1)'
+	            ],
+				pointBackgroundColor: 'rgba(255, 108, 108, 1)',
+				pointRadius: 5,
+				pointHoverRadius: 10,
+				pointHitRadius: 10,
+				pointStyle: 'circle'
+	        }, {
+	        	label : "min Value",
+	        	data: minData,
+	            borderColor: [
+	                'rgba(44,130,255,1)'
+	            ],
+				pointBackgroundColor: 'rgba(255, 255, 178, 1)',
+				pointRadius: 5,
+				pointHoverRadius: 10,
+				pointHitRadius: 10,
+				pointStyle: 'circle'
+	        }]
+	    },
+	    options: {
+	    	title: {
+	            display: true,
+	            text: "sensorID : " + sensorid 
+	        },	
+			responsive: true,
+			maintainAspectRatio: false,
+			legend: {
+				display: false,
+				position: 'top',
+				labels: {
+					boxWidth: 80,
+					fontColor: 'black'
+				}
+			},
+			hover: {
+				mode: 'index',
+				intersect: true
+			},
+	        scales: {
+				xAxes: [{
+	            	type: 'time',
+	                time: {
+	                    millisecond: 'mm:ss',
+	                    second: 'mm:ss',
+	                    minute: 'HH:mm',
+	                    hour: 'HH:mm',
+	                    day: 'MMM DD',
+	                    week: 'MMM DD',
+	                    month: 'YYYY MMM',
+	                    quarter: 'YYYY MMM',
+	                  },
+					display: true,
+					scaleLabel: {
+						display: true,
+						labelString: 'date'
+					}
+				}],
+	            yAxes: [{		            	
+					display: true,
+					scaleLabel: {
+						display: true,
+						labelString: 'gal (10min/Uint)'
+					},
+					ticks: {
+						autoSkip: true,
+						minRotation: 0,
+						min: -1,
+						max: 1
+					}
+	            }]
+	        }
+	    }
 	});
 }
 

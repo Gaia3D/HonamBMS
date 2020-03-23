@@ -7,8 +7,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import honam.domain.Sensor;
-import honam.service.SensorService;
 import honam.persistence.SensorMapper;
+import honam.service.SensorService;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -59,7 +59,16 @@ public class SensorServiceImpl implements SensorService {
 	 * @return
 	 */
 	@Transactional(readOnly=true)
-	public List<Sensor> getListSensorData(String sensorid) {
-		return sensorMapper.getListSensorData(sensorid);
+	public List<Sensor> getListSensorData(Sensor sensor) {
+		return sensorMapper.getListSensorData(sensor);
+	}
+	
+	/**
+	 * 데이터중 최근 10일 날짜 목록
+	 * @return
+	 */
+	@Transactional(readOnly=true)
+	public List<Sensor> getListSensorTime(String sensorid) {
+		return sensorMapper.getListSensorTime(sensorid);
 	}
 }

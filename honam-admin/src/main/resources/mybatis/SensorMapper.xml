@@ -49,9 +49,23 @@
 		AND A.sensorid LIKE '%' || #{sensorType} || '%'	
 	</select>
 	
-	<select id="getListSensorData" parameterType="string" resultType="sensor">
+	<select id="getListSensorData" parameterType="sensor" resultType="sensor">
 		/* getListSensorData */
-		SELECT * from sensor_data where sensorid=#{value}	
+		SELECT * 
+		FROM sensor_data 
+		WHERE sensorid=#{sensorid} 
+		<if test="time != null">
+		AND time::date = TO_DATE(#{time}, 'YYYY-MM-DD')
+		</if>
+	</select>
+	
+	<select id="getListSensorTime" parameterType="string" resultType="sensor">
+		/* getListSensorTime */
+		SELECT DISTINCT time::date, sensorid  
+		FROM sensor_data
+		WHERE sensorid=#{value} 
+		ORDER BY time DESC	
+		LIMIT 10
 	</select>
 	
 		

@@ -50,6 +50,7 @@ function MouseControll() {
         		openEntityPopop(movement);
 	        	$("#selectEntityList").one("click", 'li', function(){
 	        		if($(this).data('type') === 'SENSOR') {
+	        			$(".sensorDataGraphic").show();
 	        			handlerSensorPopup(this);
 	        		} else {
 	        			$("#selectEntityList").hide();
