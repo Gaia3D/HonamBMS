@@ -19,6 +19,7 @@
 
 		<typeAlias type="honam.domain.Policy" alias="policy" />
 
+		<typeAlias type="honam.domain.UserGroup" alias="userGroup" />
 		<typeAlias type="honam.domain.UserInfo" alias="userInfo" />
 		<typeAlias type="honam.domain.UserSession" alias="userSession" />
 

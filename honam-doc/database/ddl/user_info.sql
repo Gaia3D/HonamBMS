@@ -48,3 +48,35 @@ comment on column user_info.last_signin_date is '마지막 사인인 날짜';
 comment on column user_info.last_password_change_date is '마지막 사인인 비밀번호 변경 날짜';
 comment on column user_info.update_date is '개인정보 수정 날짜';
 comment on column user_info.insert_date is '등록일';
+
+
+-- 사용자 그룹
+create table user_group(
+	user_group_id				integer,
+	user_group_key				varchar(60)							not null ,
+	user_group_name				varchar(100)						not null,
+	ancestor					integer								default 0,
+	parent						integer								default 1,
+	depth						integer								default 1,
+	view_order					integer								default 1,
+	children					integer								default 0,
+	basic						boolean								default false,
+	available					boolean								default true,
+	description					varchar(256),
+	insert_date					timestamp with time zone			default now(),
+	constraint user_group_pk 	primary key (user_group_id)
+);
+
+comment on table user_group is '사용자 그룹';
+comment on column user_group.user_group_id is '고유번호';
+comment on column user_group.user_group_key is '링크 활용 등을 위한 확장 컬럼';
+comment on column user_group.user_group_name is '그룹명';
+comment on column user_group.ancestor is '조상 고유번호';
+comment on column user_group.parent is '부모 고유번호';
+comment on column user_group.depth is '깊이';
+comment on column user_group.view_order is '나열 순서';
+comment on column user_group.children is '자식 존재 개수';
+comment on column user_group.basic is '삭제 불가, true : 기본, false : 선택';
+comment on column user_group.available is '사용유무, true : 사용, false : 사용안함';
+comment on column user_group.description is '설명';
+comment on column user_group.insert_date is '등록일';

@@ -1,3 +1,7 @@
+insert into user_group(	user_group_id, user_group_key, user_group_name, ancestor, parent, depth, view_order, basic, available, description)
+values
+	(1, 'SUPER_ADMIN', '슈퍼 관리자', 1, 0, 1, 1, 'Y', 'Y', '기본값');
+
 -- 슈퍼 관리자 등록
 insert into user_info(
 	user_id, user_group_id, user_name, password, user_role_check_yn, last_signin_date)
