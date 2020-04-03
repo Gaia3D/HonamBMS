@@ -233,6 +233,13 @@
 		if(viewer.baseLayerPicker) {
 			viewer.baseLayerPicker.destroy();
 		}
+		
+		// terrain 직접 생성한 경우 추가
+        viewer.scene.globe.depthTestAgainstTerrain = true;
+        viewer.scene.screenSpaceCameraController.minimumZoomDistance = 10;
+        viewer.terrainProvider = new Cesium.CesiumTerrainProvider({
+            url:'http://168.131.227.76/tilesets/korea'
+        });
 
 		//
 		var satValueCount = null;
