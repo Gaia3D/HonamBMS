@@ -238,7 +238,7 @@
         viewer.scene.globe.depthTestAgainstTerrain = true;
         viewer.scene.screenSpaceCameraController.minimumZoomDistance = 10;
         viewer.terrainProvider = new Cesium.CesiumTerrainProvider({
-            url:'http://168.131.227.76/tilesets/korea'
+            url:'http://168.131.227.76:9090/tilesets/korea'
         });
 
 		//
