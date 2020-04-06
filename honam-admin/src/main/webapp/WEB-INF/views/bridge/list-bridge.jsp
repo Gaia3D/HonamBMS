@@ -381,7 +381,7 @@
 			var markerImage = "/images/${lang}/"+bridge.grade+".png";
 			viewer.entities.add({
 				name : bridge.brgNam,
-		        position : Cesium.Cartesian3.fromDegrees(parseFloat(bridge.longitude), parseFloat(bridge.latitude), 0),
+		        position : Cesium.Cartesian3.fromDegrees(parseFloat(bridge.longitude), parseFloat(bridge.latitude), 20),
 		        billboard : {
 		            image : markerImage,
 		            width : 35,
@@ -543,9 +543,14 @@
 			var sensorType = sensorList[i].sensorType;
 			var x = sensorList[i].lonWgs;
 			var y = sensorList[i].latWgs;
-			var z = sensorList[i].z;
+			var z = sensorList[i].alt;
 			var sensorid = sensorList[i].sensorid;
 			var color;
+			var condition;
+			if(sensorList[i].condition === 0) {
+				condition = '정상';
+			} else condition = sensorList[i].condition === 1 ? '비정상' : '알수없음';
+
 			if(sensorType === "ACC") {
 				color = Cesium.Color.RED;
 			} else if(sensorType === "STR") {
@@ -559,11 +564,21 @@
 				position : Cesium.Cartesian3.fromDegrees(x, y, z),
 				point : new Cesium.PointGraphics({
 					pixelSize : 10,
-					heightReference : Cesium.HeightReference.CLAMP_TO_GROUND,
 					color : color,
 					outlineColor : Cesium.Color.WHITE,
 					outlineWidth : 2
-				})
+				}),
+				label : {
+					fillColor : Cesium.Color.fromCssColorString('#242424'),
+					font : "12pt",
+					scaleByDistance : new Cesium.NearFarScalar(25000, 1.0, 50000, 0.0),
+					pixelOffset : new Cesium.Cartesian2(5, 20),
+					style: Cesium.LabelStyle.FILL,
+					outlineWidth: 1,
+					text : condition,
+					showBackground : true,
+					backgroundColor : Cesium.Color.fromCssColorString('#EDEDED')
+				}
 			});
 		}
 	}

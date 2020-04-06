@@ -13,11 +13,17 @@
 				ST_X(ST_Centroid(A.wkb_geometry)) AS lon_wgs,
 				ST_Y(ST_Centroid(A.wkb_geometry)) AS lat_wgs, 
 				A.z AS alt, 
-				A.condition,
+				B.condition,
 				A.time,
 				A.meanvalue,
 				A.maxvalue
 		FROM sensorid A
+		LEFT JOIN (SELECT DISTINCT  sensorid, condition FROM (
+			SELECT *
+			FROM sensor_data
+			ORDER BY time DESC
+			)a)
+		 B ON B.sensorid = A.sensorid
 		WHERE A.fac_num = #{facNum}
 	</select>
 	
