@@ -34,12 +34,12 @@ function viewBridgeSatAvg(lon, lat, avg) {
 			id : lon + ',' + lat ,
 			name : 'Mean velocity (mm/yr)',
 		    description  : avg ,
-			position : Cesium.Cartesian3.fromDegrees(lon, lat, 25),
+			position : Cesium.Cartesian3.fromDegrees(lon, lat, 20),
 			point : new Cesium.PointGraphics({
 				pixelSize : 10,
 				color : Cesium.Color.RED,
-				outlineColor : Cesium.Color.WHITE,
-				outlineWidth : 2
+				//outlineColor : Cesium.Color.WHITE,
+				outlineWidth : 1
 			})
 			// ellipsoid : {
 			// 		radii : new Cesium.Cartesian3(1.3, 1.3, 1.3),
@@ -52,12 +52,12 @@ function viewBridgeSatAvg(lon, lat, avg) {
 			id : lon + ',' + lat ,
 			name : 'Mean velocity (mm/yr)',
 			description  : avg ,
-			position : Cesium.Cartesian3.fromDegrees(lon, lat, 25),
+			position : Cesium.Cartesian3.fromDegrees(lon, lat, 20),
 			point : new Cesium.PointGraphics({
 				pixelSize : 10,
 				color : Cesium.Color.ORANGERED,
-				outlineColor : Cesium.Color.WHITE,
-				outlineWidth : 2
+				//outlineColor : Cesium.Color.WHITE,
+				outlineWidth : 1
 			})
 			// ellipsoid : {
 			// 		radii : new Cesium.Cartesian3(1.3, 1.3, 1.3),
@@ -70,12 +70,12 @@ function viewBridgeSatAvg(lon, lat, avg) {
 			id : lon + ',' + lat ,
 			name : 'Mean velocity (mm/yr)',
 			description  : avg ,
-			position : Cesium.Cartesian3.fromDegrees(lon, lat, 25),
+			position : Cesium.Cartesian3.fromDegrees(lon, lat, 20),
 			point : new Cesium.PointGraphics({
 				pixelSize : 10,
 				color : Cesium.Color.ORANGE,
-				outlineColor : Cesium.Color.WHITE,
-				outlineWidth : 2
+				//outlineColor : Cesium.Color.WHITE,
+				outlineWidth : 1
 			})
 			// ellipsoid : {
 			// 		radii : new Cesium.Cartesian3(1.3, 1.3, 1.3),
@@ -88,12 +88,12 @@ function viewBridgeSatAvg(lon, lat, avg) {
 			id : lon + ',' + lat ,
 			name : 'Mean velocity (mm/yr)',
 			description  : avg ,
-			position : Cesium.Cartesian3.fromDegrees(lon, lat, 25),
+			position : Cesium.Cartesian3.fromDegrees(lon, lat, 20),
 			point : new Cesium.PointGraphics({
 				pixelSize : 10,
 				color : Cesium.Color.YELLOW,
-				outlineColor : Cesium.Color.WHITE,
-				outlineWidth : 2
+				//outlineColor : Cesium.Color.WHITE,
+				outlineWidth : 1
 			})
 			// ellipsoid : {
 			// 		radii : new Cesium.Cartesian3(1.3, 1.3, 1.3),
@@ -106,12 +106,12 @@ function viewBridgeSatAvg(lon, lat, avg) {
 			id : lon + ',' + lat ,
 			name : 'Mean velocity (mm/yr)',
 			description  : avg ,
-			position : Cesium.Cartesian3.fromDegrees(lon, lat, 25),
+			position : Cesium.Cartesian3.fromDegrees(lon, lat, 20),
 			point : new Cesium.PointGraphics({
 				pixelSize : 10,
-				color : Cesium.Color.RED,
-				outlineColor : Cesium.Color.LIME,
-				outlineWidth : 2
+				color : Cesium.Color.LIME,
+				//outlineColor : Cesium.Color.WHITE,
+				outlineWidth : 1
 			})
 			// ellipsoid : {
 			// 		radii : new Cesium.Cartesian3(1.3, 1.3, 1.3),
@@ -124,12 +124,12 @@ function viewBridgeSatAvg(lon, lat, avg) {
 			id : lon + ',' + lat ,
 			name : 'Mean velocity (mm/yr)',
 			description  : avg ,
-			position : Cesium.Cartesian3.fromDegrees(lon, lat, 25),
+			position : Cesium.Cartesian3.fromDegrees(lon, lat, 20),
 			point : new Cesium.PointGraphics({
 				pixelSize : 10,
 				color : Cesium.Color.SPRINGGREEN,
-				outlineColor : Cesium.Color.WHITE,
-				outlineWidth : 2
+				//outlineColor : Cesium.Color.WHITE,
+				outlineWidth : 1
 			})
 			// ellipsoid : {
 			// 		radii : new Cesium.Cartesian3(1.3, 1.3, 1.3),
@@ -142,12 +142,12 @@ function viewBridgeSatAvg(lon, lat, avg) {
 			id : lon + ',' + lat ,
 			name : 'Mean velocity (mm/yr)',
 			description  : avg ,
-			position : Cesium.Cartesian3.fromDegrees(lon,lat, 25),
+			position : Cesium.Cartesian3.fromDegrees(lon,lat, 20),
 			point : new Cesium.PointGraphics({
 				pixelSize : 10,
 				color : Cesium.Color.CYAN,
-				outlineColor : Cesium.Color.WHITE,
-				outlineWidth : 2
+				//outlineColor : Cesium.Color.WHITE,
+				outlineWidth : 1
 			})
 			// ellipsoid : {
 			// 		radii : new Cesium.Cartesian3(1.3, 1.3, 1.3),
@@ -160,12 +160,12 @@ function viewBridgeSatAvg(lon, lat, avg) {
 			id : lon + ',' + lat ,
 			name : 'Mean velocity (mm/yr)',
 			description  : avg ,
-			position : Cesium.Cartesian3.fromDegrees(lon,lat, 25),
+			position : Cesium.Cartesian3.fromDegrees(lon,lat, 20),
 			point : new Cesium.PointGraphics({
 				pixelSize : 10,
-				color : Cesium.Color.RED,
-				outlineColor : Cesium.Color.DEEPSKYBLUE,
-				outlineWidth : 2
+				color : Cesium.Color.DEEPSKYBLUE,
+				//outlineColor : Cesium.Color.WHITE,
+				outlineWidth : 1
 			})
 			// ellipsoid : {
 			// 		radii : new Cesium.Cartesian3(1.3, 1.3, 1.3),
@@ -178,11 +178,11 @@ function viewBridgeSatAvg(lon, lat, avg) {
 			id : lon + ',' + lat ,
 			name : 'Mean velocity (mm/yr)',
 			description  : avg ,
-			position : Cesium.Cartesian3.fromDegrees(lon, lat, 25),
+			position : Cesium.Cartesian3.fromDegrees(lon, lat, 20),
 			point : new Cesium.PointGraphics({
 				pixelSize : 10,
 				color : Cesium.Color.BLUE,
-				outlineColor : Cesium.Color.WHITE,
+				//outlineColor : Cesium.Color.WHITE,
 				outlineWidth : 2
 			})
 			// ellipsoid : {
@@ -196,11 +196,11 @@ function viewBridgeSatAvg(lon, lat, avg) {
 		id : lon + ',' + lat ,
 		name : 'Mean velocity (mm/yr)',
 		description  : avg ,
-		position : Cesium.Cartesian3.fromDegrees(lon, lat, 25),
+		position : Cesium.Cartesian3.fromDegrees(lon, lat, 20),
 			point : new Cesium.PointGraphics({
 				pixelSize : 10,
 				color : Cesium.Color.DARKBLUE,
-				outlineColor : Cesium.Color.WHITE,
+				//outlineColor : Cesium.Color.WHITE,
 				outlineWidth : 2
 			})
 		// ellipsoid : {
