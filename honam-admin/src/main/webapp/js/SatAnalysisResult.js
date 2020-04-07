@@ -35,10 +35,16 @@ function viewBridgeSatAvg(lon, lat, avg) {
 			name : 'Mean velocity (mm/yr)',
 		    description  : avg ,
 			position : Cesium.Cartesian3.fromDegrees(lon, lat, 25),
-			ellipsoid : {
-					radii : new Cesium.Cartesian3(1.3, 1.3, 1.3),
-					material : Cesium.Color.RED
-					}
+			point : new Cesium.PointGraphics({
+				pixelSize : 10,
+				color : Cesium.Color.RED,
+				outlineColor : Cesium.Color.WHITE,
+				outlineWidth : 2
+			})
+			// ellipsoid : {
+			// 		radii : new Cesium.Cartesian3(1.3, 1.3, 1.3),
+			// 		material : Cesium.Color.RED
+			// 		}
 		});
 	} else if((avg >= 3) && (avg < 4)) {
 		viewer.entities.add({
@@ -47,10 +53,16 @@ function viewBridgeSatAvg(lon, lat, avg) {
 			name : 'Mean velocity (mm/yr)',
 			description  : avg ,
 			position : Cesium.Cartesian3.fromDegrees(lon, lat, 25),
-			ellipsoid : {
-					radii : new Cesium.Cartesian3(1.3, 1.3, 1.3),
-			        material : Cesium.Color.ORANGERED
-			        }
+			point : new Cesium.PointGraphics({
+				pixelSize : 10,
+				color : Cesium.Color.ORANGERED,
+				outlineColor : Cesium.Color.WHITE,
+				outlineWidth : 2
+			})
+			// ellipsoid : {
+			// 		radii : new Cesium.Cartesian3(1.3, 1.3, 1.3),
+			//         material : Cesium.Color.ORANGERED
+			//         }
 		});
 	} else if((avg >= 2) && (avg < 3)) {
 		viewer.entities.add({
@@ -59,10 +71,16 @@ function viewBridgeSatAvg(lon, lat, avg) {
 			name : 'Mean velocity (mm/yr)',
 			description  : avg ,
 			position : Cesium.Cartesian3.fromDegrees(lon, lat, 25),
-			ellipsoid : {
-					radii : new Cesium.Cartesian3(1.3, 1.3, 1.3),
-			        material : Cesium.Color.ORANGE
-			        }
+			point : new Cesium.PointGraphics({
+				pixelSize : 10,
+				color : Cesium.Color.ORANGE,
+				outlineColor : Cesium.Color.WHITE,
+				outlineWidth : 2
+			})
+			// ellipsoid : {
+			// 		radii : new Cesium.Cartesian3(1.3, 1.3, 1.3),
+			//         material : Cesium.Color.ORANGE
+			//         }
 		});
 	} else if((avg >= 1) && (avg < 2)) {
 		viewer.entities.add({
@@ -71,10 +89,16 @@ function viewBridgeSatAvg(lon, lat, avg) {
 			name : 'Mean velocity (mm/yr)',
 			description  : avg ,
 			position : Cesium.Cartesian3.fromDegrees(lon, lat, 25),
-			ellipsoid : {
-					radii : new Cesium.Cartesian3(1.3, 1.3, 1.3),
-			        material : Cesium.Color.YELLOW
-			    }
+			point : new Cesium.PointGraphics({
+				pixelSize : 10,
+				color : Cesium.Color.YELLOW,
+				outlineColor : Cesium.Color.WHITE,
+				outlineWidth : 2
+			})
+			// ellipsoid : {
+			// 		radii : new Cesium.Cartesian3(1.3, 1.3, 1.3),
+			//         material : Cesium.Color.YELLOW
+			//     }
 		});
 	} else if((avg >= 0) && (avg < 1)) {
 		viewer.entities.add({
@@ -83,10 +107,16 @@ function viewBridgeSatAvg(lon, lat, avg) {
 			name : 'Mean velocity (mm/yr)',
 			description  : avg ,
 			position : Cesium.Cartesian3.fromDegrees(lon, lat, 25),
-			ellipsoid : {
-					radii : new Cesium.Cartesian3(1.3, 1.3, 1.3),
-			        material : Cesium.Color.LIME
-			    }
+			point : new Cesium.PointGraphics({
+				pixelSize : 10,
+				color : Cesium.Color.RED,
+				outlineColor : Cesium.Color.LIME,
+				outlineWidth : 2
+			})
+			// ellipsoid : {
+			// 		radii : new Cesium.Cartesian3(1.3, 1.3, 1.3),
+			//         material : Cesium.Color.LIME
+			//     }
 		});
 	} else if((avg >= -1) && (avg < 0)) {
 		viewer.entities.add({
@@ -95,10 +125,16 @@ function viewBridgeSatAvg(lon, lat, avg) {
 			name : 'Mean velocity (mm/yr)',
 			description  : avg ,
 			position : Cesium.Cartesian3.fromDegrees(lon, lat, 25),
-			ellipsoid : {
-					radii : new Cesium.Cartesian3(1.3, 1.3, 1.3),
-			        material : Cesium.Color.SPRINGGREEN
-			    }
+			point : new Cesium.PointGraphics({
+				pixelSize : 10,
+				color : Cesium.Color.SPRINGGREEN,
+				outlineColor : Cesium.Color.WHITE,
+				outlineWidth : 2
+			})
+			// ellipsoid : {
+			// 		radii : new Cesium.Cartesian3(1.3, 1.3, 1.3),
+			//         material : Cesium.Color.SPRINGGREEN
+			//     }
 		});
 	} else if((avg >= -2) && (avg < -1)) {
 		viewer.entities.add({
@@ -107,10 +143,16 @@ function viewBridgeSatAvg(lon, lat, avg) {
 			name : 'Mean velocity (mm/yr)',
 			description  : avg ,
 			position : Cesium.Cartesian3.fromDegrees(lon,lat, 25),
-			ellipsoid : {
-					radii : new Cesium.Cartesian3(1.3, 1.3, 1.3),
-			        material : Cesium.Color.CYAN 
-			    }
+			point : new Cesium.PointGraphics({
+				pixelSize : 10,
+				color : Cesium.Color.CYAN,
+				outlineColor : Cesium.Color.WHITE,
+				outlineWidth : 2
+			})
+			// ellipsoid : {
+			// 		radii : new Cesium.Cartesian3(1.3, 1.3, 1.3),
+			//         material : Cesium.Color.CYAN
+			//     }
 		});
 	} else if((avg >= -3) && (avg < -2)) {
 		viewer.entities.add({
@@ -119,10 +161,16 @@ function viewBridgeSatAvg(lon, lat, avg) {
 			name : 'Mean velocity (mm/yr)',
 			description  : avg ,
 			position : Cesium.Cartesian3.fromDegrees(lon,lat, 25),
-			ellipsoid : {
-					radii : new Cesium.Cartesian3(1.3, 1.3, 1.3),
-			        material : Cesium.Color.DEEPSKYBLUE 
-			    }
+			point : new Cesium.PointGraphics({
+				pixelSize : 10,
+				color : Cesium.Color.RED,
+				outlineColor : Cesium.Color.DEEPSKYBLUE,
+				outlineWidth : 2
+			})
+			// ellipsoid : {
+			// 		radii : new Cesium.Cartesian3(1.3, 1.3, 1.3),
+			//         material : Cesium.Color.DEEPSKYBLUE
+			//     }
 		});
 	} else if((avg >= -4) && (avg < -3)) {
 		viewer.entities.add({
@@ -131,10 +179,16 @@ function viewBridgeSatAvg(lon, lat, avg) {
 			name : 'Mean velocity (mm/yr)',
 			description  : avg ,
 			position : Cesium.Cartesian3.fromDegrees(lon, lat, 25),
-			ellipsoid : {
-					radii : new Cesium.Cartesian3(1.3, 1.3, 1.3),
-			        material : Cesium.Color.BLUE
-			    }
+			point : new Cesium.PointGraphics({
+				pixelSize : 10,
+				color : Cesium.Color.BLUE,
+				outlineColor : Cesium.Color.WHITE,
+				outlineWidth : 2
+			})
+			// ellipsoid : {
+			// 		radii : new Cesium.Cartesian3(1.3, 1.3, 1.3),
+			//         material : Cesium.Color.BLUE
+			//     }
 		});
 	} else if(avg < -4){
 		viewer.entities.add({
@@ -143,10 +197,16 @@ function viewBridgeSatAvg(lon, lat, avg) {
 		name : 'Mean velocity (mm/yr)',
 		description  : avg ,
 		position : Cesium.Cartesian3.fromDegrees(lon, lat, 25),
-		ellipsoid : {
-				radii : new Cesium.Cartesian3(1.3, 1.3, 1.3),
-		        material : Cesium.Color.DARKBLUE
-		    }
+			point : new Cesium.PointGraphics({
+				pixelSize : 10,
+				color : Cesium.Color.DARKBLUE,
+				outlineColor : Cesium.Color.WHITE,
+				outlineWidth : 2
+			})
+		// ellipsoid : {
+		// 		radii : new Cesium.Cartesian3(1.3, 1.3, 1.3),
+		//         material : Cesium.Color.DARKBLUE
+		//     }
 		});		
 	}	
 }
