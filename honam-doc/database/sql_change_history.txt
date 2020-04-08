@@ -1,0 +1,7 @@
+2020년 4월 8일
+ALTER TABLE bridge 
+ADD COLUMN sat_grade		varchar(10)		default '양호';
+comment on column bridge.sat_grade is '위성영상기반 상태등급';
+
+
+

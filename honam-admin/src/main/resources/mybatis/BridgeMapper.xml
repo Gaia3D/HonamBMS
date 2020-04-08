@@ -172,7 +172,7 @@
 		/* getBridge */
 		SELECT ogc_fid as gid, ufid, fac_num, brg_nam, mng_org, fac_sido, fac_sgg, fac_emd, fac_ri, fac_gra, end_amd, dsn_wet,
 			brg_len, brg_hit, eff_wid, tot_wid, spa_cnt, max_len, tra_cnt, usp_rep, dpi_rep, ST_AsText(wkb_geometry) as geom,
-			gru_num, bridge_cm, bridge_lcc, grade, model, ST_X(ST_Centroid(wkb_geometry)) AS longitude, ST_Y(ST_Centroid(wkb_geometry)) AS latitude,
+			gru_num, sat_grade, bridge_cm, bridge_lcc, grade, model, ST_X(ST_Centroid(wkb_geometry)) AS longitude, ST_Y(ST_Centroid(wkb_geometry)) AS latitude,
 			COALESCE((SELECT data_id FROM data_info WHERE data_key = fac_num), 0) AS dataId,
 			COALESCE((SELECT data_group_id FROM data_info WHERE data_key = fac_num), 0) AS dataGroupId
 		FROM bridge
@@ -191,7 +191,7 @@
 			fac_gra, end_amd, dsn_wet, brg_len, brg_hit,
 			eff_wid, tot_wid, spa_cnt, max_len,
 			tra_cnt, usp_rep, dpi_rep, gru_num,
-			bridge_cm, bridge_lcc, grade,
+			sat_grade, bridge_cm, bridge_lcc, grade,
 			model, insert_dt, wkb_geometry
 		) VALUES (
 			#{gid}, #{facNum}, #{brgNam}, #{mngOrg},
@@ -199,7 +199,7 @@
 			#{facGra}, #{endAmd}, #{dsnWet}, #{brgLen}, #{brgHit},
 			#{effWid}, #{totWid}, #{spaCnt}, #{maxLen},
 			#{traCnt}, #{uspRep}, #{dpiRep}, #{gruNum},
-			#{bridgeCm}, #{bridgeLcc}, #{grade},
+			#{satGrade}, #{bridgeCm}, #{bridgeLcc}, #{grade},
 			0, now(), ST_GeomFromText(#{geom}, 4326)
 		)
 	</insert>
@@ -268,6 +268,9 @@
 			</if>
 			<if test="gruNum != null and gruNum != ''">
 				gru_num = #{gruNum},
+			</if>
+			<if test="satGrade !-null and satGrade != ''">
+				sat_grade = #{satGrade},
 			</if>
 			<if test="bridgeCm != null and bridgeCm > 0">
 				bridge_cm = #{bridgeCm},

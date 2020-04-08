@@ -22,20 +22,8 @@
 		</thead>
 		<tbody>
 			<tr>
-				<td class="col-number" style="background:#efefef";>관리주체</td>
-				<td class="col-name">{{bridge.mngOrg}}</td>
-				<td class="col-number" style="background:#efefef";>종별</td>
-				<td class="col-name">{{bridge.facGra}}</td>
-			</tr>
-			<tr>
-				<td class="col-number" style="background:#efefef";>준공년도</td>
-				<td class="col-name">{{#replaceYear bridge.endAmd}}{{/replaceYear}}</td>
-				<td class="col-number" style="background:#efefef";>연장(m)</td>
-				<td class="col-name">{{bridge.brgLen}}</td>
-			</tr>
-			<tr>
-				<td class="col-number" style="background:#efefef";>폭(m)</td>
-				<td class="col-name">{{bridge.totWid}}</td>
+				<td class="col-number" style="background:#efefef";>위성영상</td>
+				<td class="col-name">{{bridge.satGrade}}</td>
 				<td class="col-number" style="background:#efefef";>목표성능</td>
 				<td class="col-name">{{bridge.bridgeCm}}</td>
 			</tr>
@@ -44,10 +32,6 @@
 				<td class="col-name">{{bridge.bridgeLcc}}</td>
 				<td class="col-number" style="background:#efefef";>교량등급</td>
 				<td class="col-name">{{bridge.grade}}</td>
-			</tr>
-			<tr>
-				<td class="col-number" style="background:#eeeeee";>주소</td>
-				<td colspan="3" class="col-name">{{bridge.facSido}} {{bridge.facSgg}} {{bridge.facEmd}} {{bridge.facRi}}</td>
 			</tr>
 		</tbody>
 	</table>

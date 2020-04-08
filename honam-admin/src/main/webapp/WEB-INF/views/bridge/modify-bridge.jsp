@@ -135,6 +135,13 @@
 							<option value="C" ${bridge.grade eq 'C' ? 'selected' : ''}>C</option>
 							<option value="D" ${bridge.grade eq 'D' ? 'selected' : ''}>D</option>
 						</select>
+						<label for="bridgeLcc">위성기반 상태평가</label>
+						<select id="satGrage" name="satGrade">
+							<option>위성기반 상태평가</option>
+							<option value="1" ${bridge.satGrade eq '양호' ? 'selected' : ''}>양호</option>
+							<option value="2" ${bridge.satGrade eq '주의' ? 'selected' : ''}>주의</option>
+							<option value="3" ${bridge.satGrade eq '점검필요' ? 'selected' : ''}>점검필요</option>
+						</select>
 					</div>
 				</div>
 				<div class="form-inline">

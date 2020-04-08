@@ -82,6 +82,8 @@ public class Bridge extends Search {
 	// Multi Polygon
 	private String geom;
 
+	// 교량의 위성영상 기반 상태 평가
+	private String satGrade;
 	// 교량의 유지 관리 목표 성능
 	private Double bridgeCm;
 	// 교량의 내하 성능 수치

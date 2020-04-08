@@ -381,7 +381,7 @@
 			var markerImage = "/images/${lang}/"+bridge.grade+".png";
 			viewer.entities.add({
 				name : bridge.brgNam,
-		        position : Cesium.Cartesian3.fromDegrees(parseFloat(bridge.longitude), parseFloat(bridge.latitude), 20),
+		        position : Cesium.Cartesian3.fromDegrees(parseFloat(bridge.longitude), parseFloat(bridge.latitude), 30),
 		        billboard : {
 		            image : markerImage,
 		            width : 35,
