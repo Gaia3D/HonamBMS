@@ -24,12 +24,12 @@
 			<tr>
 				<td class="col-number" style="background:#efefef";>위성영상</td>
 				<td class="col-name">{{bridge.satGrade}}</td>
-				<td class="col-number" style="background:#efefef";>목표성능</td>
-				<td class="col-name">{{bridge.bridgeCm}}</td>
-			</tr>
-			<tr>
 				<td class="col-number" style="background:#efefef";>내하성능</td>
 				<td class="col-name">{{bridge.bridgeLcc}}</td>
+			</tr>
+			<tr>
+				<td class="col-number" style="background:#efefef";>목표성능</td>
+				<td class="col-name">{{bridge.bridgeCm}}</td>
 				<td class="col-number" style="background:#efefef";>교량등급</td>
 				<td class="col-name">{{bridge.grade}}</td>
 			</tr>
@@ -57,7 +57,7 @@
 			</div>
 		</li>
 		<li id="satContent" style="margin-top: 10px;">
-			<p onclick="toggleSubContent('sat', 'satInfo');">위성 영상 지표 변이 분석 결과(평균값)<span class="collapse-icon">icon</span></p>
+			<p onclick="toggleSubContent('sat', 'satInfo');">위성 영상 - 교량 평균 변위 정보<span class="collapse-icon">icon</span></p>
 			<div id="satInfo" class="listContents">
 				<ul class="bridgeSubInfoGroup">
 					<li>
@@ -72,33 +72,33 @@
 						<table>
 							<tr>
 								<td style="width:20px;height:20px;position:fixed;background-color:#FF0000"></td>
-								<td style="width: 100px;">4 이상</td>
+								<td style="width: 100px;">4mm/yr 이상 </td>
 								<td style="width:20px;height:20px;position:fixed;background-color:#FF4500"></td>
-								<td style="width: 100px;">3 ~ 4</td>
+								<td style="width: 100px;">3 ~ 4mm/yr</td>
 							</tr>
 							<tr>
 								<td style="width:20px;height:20px;position:fixed;background-color:#FF8C00"></td>
-								<td style="width: 100px;">2 ~ 3</td>
+								<td style="width: 100px;">2 ~ 3mm/yr</td>
 								<td style="width:20px;height:20px;position:fixed;background-color:#FFFF00"></td>
-								<td style="width: 100px;">1 ~ 2</td>
+								<td style="width: 100px;">1 ~ 2mm/yr</td>
 							</tr>
 							<tr>
 								<td style="width:20px;height:20px;position:fixed;background-color:#00FF00"></td>
-								<td style="width: 100px;">0 ~ 1</td>
+								<td style="width: 100px;">0 ~ 1mm/yr</td>
 								<td style="width:20px;height:20px;position:fixed;background-color:#00FF7F"></td>
-								<td style="width: 100px;">-1 ~ 0</td>
+								<td style="width: 100px;">-1 ~ 0mm/yr</td>
 							</tr>
 							<tr>
 								<td style="width:20px;height:20px;position:fixed;background-color:#00FFFF"></td>
-								<td style="width: 100px;">-2 ~ -1</td>
+								<td style="width: 100px;">-2 ~ -1mm/yr</td>
 								<td style="width:20px;height:20px;position:fixed;background-color:#00BFFF"></td>
-								<td style="width: 100px;">-3 ~ -2</td>
+								<td style="width: 100px;">-3 ~ -2mm/yr</td>
 							</tr>
 							<tr>
 								<td style="width:20px;height:20px;position:fixed;background-color:#0000FF"></td>
-								<td style="width: 100px;">-4 ~ -3</td>
+								<td style="width: 100px;">-4 ~ -3mm/yr</td>
 								<td style="width:20px;height:20px;position:fixed;background-color:#00008B"></td>
-								<td style="width: 100px;">-4 이하</td>
+								<td style="width: 100px;">-4mm/yr 이하</td>
 							</tr>
 						</table>
 					</li>
@@ -273,6 +273,10 @@
 			<li>
 				<label>하부 형식</label>
 				{{bridge.dpiRep}}
+			</li>
+			<li>
+				<label>위성영상기반 상태평가</label>
+				{{bridge.satGrade}}
 			</li>
 			<li>
 				<label>내하성능</label>
