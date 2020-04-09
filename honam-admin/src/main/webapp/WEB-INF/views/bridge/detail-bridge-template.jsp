@@ -36,7 +36,7 @@
 		</tbody>
 	</table>
 
-	<ul id="bridgeSubContents" class="listDrop" style="margin-top: 20px;height: calc(100% - 240px);overflow: auto;">
+	<ul id="bridgeSubContents" class="listDrop" style="margin-top: 20px;height: calc(100% - 150px);overflow: auto;">
 		<li id="dataContent">
 			<p onclick="toggleSubContent('data', 'dataInfo');">교량 3차원 모델<span class="collapse-icon">icon</span></p>
 			<div id="dataInfo" class="listContents">
@@ -110,6 +110,15 @@
 			<div id="sensorInfo" class="listContents">
 				<ul class="bridgeSubInfoGroup">
 					<li>
+						<input type="radio" id="sensorVisibleTrue" name="sensorVisible" value="true"
+							onclick="showSensor('{{bridge.gid}}', '{{bridge.facNum}}', 'true');" checked="checked" style="width : 50px;" />
+						<label for="satVisibleTrue" style="width : 50px;">표시</label>
+						<input type="radio" id="sensorVisibleFalse" name="sensorVisible" value="false"
+							onclick="showSensor('{{bridge.gid}}', '{{bridge.facNum}}', 'false');" style="width : 50px;" />
+						<label for="satVisibleFalse" style="width : 50px;">비표시</label>
+					</li>
+
+					<li>
 						<div style="width:20px;height:20px;position:fixed;background-color:red"></div>
 						<lable style="margin-left:30px;">ACC(가속도계)</label>
 					</li>
@@ -128,14 +137,36 @@
 			<p onclick="toggleSubContent('drone', 'droneInfo');">드론 영상<span class="collapse-icon">icon</span></p>
 			<div id="droneInfo" class="listContents">
 				<ul class="bridgeSubInfoGroup">
-					<li>
 {{#if bdfCreateDateList}}
+					<li> 정사 영상 : 
+                    </li>
+					<li>
+						<select id="orthoList">
+							<option value="ortho_19-04-27">2019-04-27</option>
+							<option value="ortho_19-07-06">2019-07-06</option>
+						</select>
+						<input type="checkbox" name="ortho"
+							onclick="initImageLayer('ortho')" style="width : 30px;" />
+						<label for="ortho" style="width : 50px;">표시</label>
+					</li>
+					<li> change detection 영상 : 
+                    </li>
+						<select id="changedetectionList">
+							<option value="change_12">1-2 시기</option>
+							<option value="change_23">2-3 시기</option>
+						</select>	
+						<input type="checkbox" name="change" 
+							onclick="initImageLayer('changedetection')"  style="width : 30px;" />
+						<label for="change" style="width : 50px;">표시</label>	
+					</li>
+					<li> 촬영 날짜 :
 					<select id="droneCreateDateList">
 						{{#each bdfCreateDateList}}
 							<option value="{{this}}">{{this}}</option>
 						{{/each}}
 					</select>
-
+					&nbsp;&nbsp;<button class="intd" onclick="getListBridgeDroneFile()">검색</button>
+											
 <div class="count" style="margin-top: 20px; margin-bottom: 5px;">
 	전체 <em>{{pagination.totalCount}}</em> 건
 	{{pagination.pageNo}} / {{pagination.lastPage}} 페이지
@@ -144,10 +175,12 @@
 	<table class="list-table scope-col">
 		<col class="col-number" />
 		<col class="col-toggle" />
+		<col class="col-bridge" />
 		<col class="col-name" />
 		<thead>
 			<tr>
 				<th scope="col" class="col-number">번호</th>
+				<th scope="col" class="col-bridge">구성</th>
 				<th scope="col" class="col-toggle">파일명</th>
 				<th scope="col" class="col-name">이동</th>
 			</tr>
@@ -157,10 +190,11 @@
 			{{#each bdfList}}
 				<tr>
 					<td class="col-number">{{#replaceRowNumber ../pagination.pageNo @index}}{{/replaceRowNumber}}</td>
+					<td class="col-bridge"></td>
 					<td class="col-toggle">
 						<a href="#" onclick="window.open('/upload/{{filePath}}/{{fileName}}', 'popup', 'width=600,height=300'); return false;">{{fileName}}</a>
 					</td>
-					<td class="col-name"><a href="#" onclick="gotoFlyBridge({{longitude}}, {{latitude}}, {{altitude}}); return false;">이동</a></td>
+					<td class="col-name"><a href="#" onclick="gotoFlyBridge({{longitude}}, {{latitude}}, {{altitude}}); return false;"></a></td>
 				</tr>
 			{{/each}}
 		{{else}}

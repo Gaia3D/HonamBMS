@@ -162,6 +162,10 @@
 	var satValue = null;
 	var BRIDGE_GID = null;
 	var BRIDGE_FAC_NUM = null;
+	
+	// 센서데이터 관련 변수
+	var sensorValue = null;
+	
 
    	// 초기 로딩 설정
 	$(document).ready(function() {
@@ -180,7 +184,7 @@
 // 		DistrictControll(viewer);
 // 		MapControll(viewer);
 
-		$("#bridgeDetailContent").on('change', '#droneCreateDateList', function() {
+		$("#bridgeDetailContent").on('changed', '#droneCreateDateList', function() {
 			getListBridgeDroneFile();
 		});
 		
@@ -262,6 +266,8 @@
 			initMenu("#bridgegroupMenu");
 			initBridgeGroupLayer();
 		}
+//		initOrthoImageLayer();
+//		initChangeDetecteLayer();
 	}
 
 	// 시도 목록
@@ -384,8 +390,8 @@
 		        position : Cesium.Cartesian3.fromDegrees(parseFloat(bridge.longitude), parseFloat(bridge.latitude), 30),
 		        billboard : {
 		            image : markerImage,
-		            width : 35,
-		            height : 35,
+		            width : 30,
+		            height : 30,
 		            disableDepthTestDistance : Number.POSITIVE_INFINITY,
 		            scaleByDistance : new Cesium.NearFarScalar(10000, 1.5, 1000000, 0.0)
 		        },
@@ -640,6 +646,56 @@
 
 		viewer.imageryLayers.addImageryProvider(provider);
 	}
+	
+	function initImageLayer(category) {
+		var layer = null;
+		if (category === 'ortho') {
+			layer = $("#orthoList option:selected").val();
+		} else if (category === 'changedetection') {
+			layer = $("#changedetectionList option:selected").val();
+		}
+		console.log(layer);
+		var substr = layer.substring(0,5);
+		if($("input:checkbox[name="+substr+"]").is(":checked")) {
+			var geoserverDataUrl = HONAMBMS.policy.geoserverDataUrl;
+			var geoserverDataWorkspace = HONAMBMS.policy.geoserverDataWorkspace;
+			var provider = new Cesium.WebMapServiceImageryProvider({
+		        url : geoserverDataUrl + "/wms",
+		        layers : [geoserverDataWorkspace + ':'+ layer],
+		        minimumLevel:2,
+		        maximumLevel : 20,
+		        parameters : {
+		            service : 'WMS'
+		            ,version : '1.1.1'
+		            ,request : 'GetMap'
+		            ,transparent : 'true'
+		            ,format : 'image/png'
+		            ,time : 'P2Y/PRESENT'
+		        },
+		        enablePickFeatures : false
+		    });
+	
+			var provider = viewer.imageryLayers.addImageryProvider(provider);
+			provider.id = layer;
+		} else {
+			var imageryLayers = viewer.imageryLayers;
+			var length = imageryLayers.length;
+			var provider;
+			for(var i=0; i < length; i++) {
+				var id = imageryLayers.get(i).id;
+				if(!id) continue;
+				if(imageryLayers.get(i).id === layer){
+		            provider = imageryLayers.get(i);
+		            break;
+		        }
+			}
+			viewer.imageryLayers.remove(provider);
+		}			
+		
+	}
+	
+	
+
 
 	//데이터 그룹 목록
 	function dataGroupList() {
@@ -803,6 +859,7 @@
 
 function getListBridgeDroneFile(number) {
 	var pageNo = (number === undefined) ? 1 : number;
+	currentDate = $('#droneCreateDateList').val();
 	var parms = {
 			pageNo : pageNo,
 			createDate : $('#droneCreateDateList').val(),
@@ -821,10 +878,10 @@ function getListBridgeDroneFile(number) {
 
 				$("#droneContent").html("");
 				var htmlList = "";
-				htmlList += '<p onclick="toggleSubContent(\'drone\', \'droneInfo\');">드론 영상<span class="collapse-icon">icon</span></p>';
+ 				htmlList += '<p onclick="toggleSubContent(\'drone\', \'droneInfo\');">드론 영상<span class="collapse-icon">icon</span></p>';
 				htmlList += '<div id="droneInfo" class="listContents">';
 				htmlList += '<ul class="bridgeSubInfoGroup">';
-				htmlList += '<li>';
+				htmlList += '<li> 촬영 날짜 : ';
 				htmlList += '<select id="droneCreateDateList">';
 				if (bdfCreateDateList.length > 0) {
 					for(var i in bdfCreateDateList) {
@@ -833,17 +890,22 @@ function getListBridgeDroneFile(number) {
 					}
 				}
 				htmlList += '</select>';
+				htmlList += '&nbsp;&nbsp;';
+				htmlList += '<button class="intd" onclick="getListBridgeDroneFile()">검색';
+				htmlList += '</button>';
 				htmlList += '<div class="count" style="margin-top: 20px; margin-bottom: 5px;">';
 				htmlList += '전체 <em>' + pagination.totalCount + '</em> 건 ' + pagination.pageNo + ' / ' +pagination.lastPage+ ' 페이지';
 				htmlList += '</div>';
 				htmlList += '<div>';
 				htmlList += '<table class="list-table scope-col">';
 				htmlList += '<col class="col-number" />';
+				htmlList += '<col class="col-bridge" />';
 				htmlList += '<col class="col-toggle" />';
 				htmlList += '<col class="col-name" />';
 				htmlList += '<thead>';
 				htmlList += '<tr>';
 				htmlList += '<th scope="col" class="col-number">번호</th>';
+				htmlList += '<th scope="col" class="col-bridge">구성</th>';
 				htmlList += '<th scope="col" class="col-toggle">파일명</th>';
 				htmlList += '<th scope="col" class="col-name">이동</th>';
 				htmlList += '</tr>';
@@ -855,6 +917,8 @@ function getListBridgeDroneFile(number) {
 						var number = pagination.offset + (i + 1);
 						htmlList += '<tr>';
 						htmlList += '<td class="col-number">' + number + '</td>';
+						htmlList += '<td class="col-bridge">';
+						htmlList += '</td>'
 						htmlList += '<td class="col-toggle">';
 						htmlList += '<a href="#" onclick="window.open(\'/upload/' + bdf.filePath + '/' + bdf.fileName + '\', \'popup\', \'width=600,height=300\'); return false;">' + bdf.fileName + '</a>';
 						htmlList += '</td>';

@@ -97,6 +97,8 @@ dependencies {
 	
 	implementation 'org.modelmapper:modelmapper:2.3.6'
 	
+	implementation 'com.drewnoakes:metadata-extractor:2.13.0'
+	
 	runtimeOnly 'org.postgresql:postgresql'
 	
 	providedRuntime 'org.apache.tomcat.embed:tomcat-embed-jasper'
