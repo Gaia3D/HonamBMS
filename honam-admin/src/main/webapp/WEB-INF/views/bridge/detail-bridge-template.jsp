@@ -166,8 +166,12 @@
 						{{/each}}
 					</select>
 					&nbsp;&nbsp;<button class="intd" onclick="getListBridgeDroneFile()">검색</button>
-											
-<div class="count" style="margin-top: 20px; margin-bottom: 5px;">
+	<dl class="legendWrap"  style="margin-top: 20px; margin-bottom: 5px;">
+		<dt>교량 구성</dt>
+		<dd><span class="legend co">T</span>상판</dd>
+		<dd><span class="legend pr">P</span>교각</dd>
+	</dl>							
+<div class="count">
 	전체 <em>{{pagination.totalCount}}</em> 건
 	{{pagination.pageNo}} / {{pagination.lastPage}} 페이지
 </div>

@@ -655,7 +655,6 @@
 			layer = $("#changedetectionList option:selected").val();
 		}
 		var substr = layer.substring(0,6);
-		console.log(substr);
 		if($("input:checkbox[name="+substr+"]").is(":checked")) {
 			var geoserverDataUrl = HONAMBMS.policy.geoserverDataUrl;
 			var geoserverDataWorkspace = HONAMBMS.policy.geoserverDataWorkspace;
@@ -881,6 +880,20 @@ function getListBridgeDroneFile(number) {
  				htmlList += '<p onclick="toggleSubContent(\'drone\', \'droneInfo\');">드론 영상<span class="collapse-icon">icon</span></p>';
 				htmlList += '<div id="droneInfo" class="listContents">';
 				htmlList += '<ul class="bridgeSubInfoGroup">';
+				htmlList += '<li> 정사 영상 : </li>';
+				htmlList += '<li> <select id="orthoList">';
+				htmlList += '<option value="orthoi_19-04-27">2019-04-27</option>';
+				htmlList += '<option value="orthoi_19-07-06">2019-07-06</option>';
+				htmlList += '</select>';
+				htmlList += '<input type="checkbox" name="orthoi" onclick="initImageLayer(\'ortho\')" style="width : 30px;" />';
+				htmlList += '<label for="ortho" style="width : 50px;">표시</label> </li>';
+				htmlList += '<li> change detection 영상 : </li>';
+				htmlList += '</li> <select id="changedetectionList">';
+				htmlList += '<option value="change_12">1-2 시기</option>';
+				htmlList += '<option value="change_23">2-3 시기</option>';
+				htmlList += '</select>';
+				htmlList += '<input type="checkbox" name="change" onclick="initImageLayer(\'changedetection\')"  style="width : 30px;" />';
+				htmlList += '<label for="change" style="width : 50px;">표시</label> </li>';
 				htmlList += '<li> 촬영 날짜 : ';
 				htmlList += '<select id="droneCreateDateList">';
 				if (bdfCreateDateList.length > 0) {
