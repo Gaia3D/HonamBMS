@@ -654,8 +654,8 @@
 		} else if (category === 'changedetection') {
 			layer = $("#changedetectionList option:selected").val();
 		}
-		console.log(layer);
-		var substr = layer.substring(0,5);
+		var substr = layer.substring(0,6);
+		console.log(substr);
 		if($("input:checkbox[name="+substr+"]").is(":checked")) {
 			var geoserverDataUrl = HONAMBMS.policy.geoserverDataUrl;
 			var geoserverDataWorkspace = HONAMBMS.policy.geoserverDataWorkspace;

@@ -142,10 +142,10 @@
                     </li>
 					<li>
 						<select id="orthoList">
-							<option value="ortho_19-04-27">2019-04-27</option>
-							<option value="ortho_19-07-06">2019-07-06</option>
+							<option value="orthoi_19-04-27">2019-04-27</option>
+							<option value="orthoi_19-07-06">2019-07-06</option>
 						</select>
-						<input type="checkbox" name="ortho"
+						<input type="checkbox" name="orthoi"
 							onclick="initImageLayer('ortho')" style="width : 30px;" />
 						<label for="ortho" style="width : 50px;">표시</label>
 					</li>
