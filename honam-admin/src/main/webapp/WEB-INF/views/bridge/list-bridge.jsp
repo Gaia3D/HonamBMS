@@ -880,22 +880,22 @@ function getListBridgeDroneFile(number) {
  				htmlList += '<p onclick="toggleSubContent(\'drone\', \'droneInfo\');">드론 영상<span class="collapse-icon">icon</span></p>';
 				htmlList += '<div id="droneInfo" class="listContents">';
 				htmlList += '<ul class="bridgeSubInfoGroup">';
-				htmlList += '<li> 정사 영상 : </li>';
-				htmlList += '<li> <select id="orthoList">';
+				htmlList += '<li> 정사 영상 : ';
+				htmlList += '<select id="orthoList" style="width: 100px;">';
 				htmlList += '<option value="orthoi_19-04-27">2019-04-27</option>';
 				htmlList += '<option value="orthoi_19-07-06">2019-07-06</option>';
 				htmlList += '</select>';
 				htmlList += '<input type="checkbox" name="orthoi" onclick="initImageLayer(\'ortho\')" style="width : 30px;" />';
 				htmlList += '<label for="ortho" style="width : 50px;">표시</label> </li>';
-				htmlList += '<li> change detection 영상 : </li>';
-				htmlList += '</li> <select id="changedetectionList">';
+				htmlList += '<li> 변화 탐지 영상 : ';
+				htmlList += '<select id="changedetectionList" style="width: 80px;">';
 				htmlList += '<option value="change_12">1-2 시기</option>';
 				htmlList += '<option value="change_23">2-3 시기</option>';
 				htmlList += '</select>';
 				htmlList += '<input type="checkbox" name="change" onclick="initImageLayer(\'changedetection\')"  style="width : 30px;" />';
 				htmlList += '<label for="change" style="width : 50px;">표시</label> </li>';
-				htmlList += '<li> 촬영 날짜 : ';
-				htmlList += '<select id="droneCreateDateList">';
+				htmlList += '<li style="margin-top: 10px; margin-bottom: 5px;"> 촬영 날짜 : ';
+				htmlList += '<select id="droneCreateDateList" style="margin-right: 5px">';
 				if (bdfCreateDateList.length > 0) {
 					for(var i in bdfCreateDateList) {
 						var date = bdfCreateDateList[i];
@@ -903,22 +903,24 @@ function getListBridgeDroneFile(number) {
 					}
 				}
 				htmlList += '</select>';
-				htmlList += '&nbsp;&nbsp;';
 				htmlList += '<button class="intd" onclick="getListBridgeDroneFile()">검색';
 				htmlList += '</button>';
-				htmlList += '<div class="count" style="margin-top: 20px; margin-bottom: 5px;">';
+				htmlList += '<dl class="legendWrap"  style="margin-top: 5px;">';
+				htmlList += '<dt>교량 구조</dt>';
+				htmlList += '<dd> <span class="legend co"> T </span> 상판 </dd>';
+				htmlList += '<dd> <span class="legend pr"> P </span> 교각 </dd>';
+				htmlList += '</dl>';
+				htmlList += '<div class="count">';
 				htmlList += '전체 <em>' + pagination.totalCount + '</em> 건 ' + pagination.pageNo + ' / ' +pagination.lastPage+ ' 페이지';
 				htmlList += '</div>';
 				htmlList += '<div>';
 				htmlList += '<table class="list-table scope-col">';
 				htmlList += '<col class="col-number" />';
-				htmlList += '<col class="col-bridge" />';
 				htmlList += '<col class="col-toggle" />';
 				htmlList += '<col class="col-name" />';
 				htmlList += '<thead>';
 				htmlList += '<tr>';
 				htmlList += '<th scope="col" class="col-number">번호</th>';
-				htmlList += '<th scope="col" class="col-bridge">구성</th>';
 				htmlList += '<th scope="col" class="col-toggle">파일명</th>';
 				htmlList += '<th scope="col" class="col-name">이동</th>';
 				htmlList += '</tr>';
@@ -930,9 +932,9 @@ function getListBridgeDroneFile(number) {
 						var number = pagination.offset + (i + 1);
 						htmlList += '<tr>';
 						htmlList += '<td class="col-number">' + number + '</td>';
-						htmlList += '<td class="col-bridge">';
 						htmlList += '</td>'
 						htmlList += '<td class="col-toggle">';
+						htmlList += '<span class="legend co">T</span> ';
 						htmlList += '<a href="#" onclick="window.open(\'/upload/' + bdf.filePath + '/' + bdf.fileName + '\', \'popup\', \'width=600,height=300\'); return false;">' + bdf.fileName + '</a>';
 						htmlList += '</td>';
 						htmlList += '<td class="col-name"><a href="#" onclick="gotoFlyBridge(' + bdf.longitude + ', ' + bdf.latitude + ', ' + bdf.altitude + '); return false;">이동</a></td>';

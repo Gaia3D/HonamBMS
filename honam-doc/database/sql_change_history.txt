@@ -3,5 +3,7 @@ ALTER TABLE bridge
 ADD COLUMN sat_grade		varchar(10)		default '양호';
 comment on column bridge.sat_grade is '위성영상기반 상태등급';
 
-
-
+2020년 4월 10일
+ALTER TABLE bridge_drone_file 
+ADD COLUMN bridge_structure		varchar(100) ;
+comment on column bridge_drone_file.bridge_structure is '드론이 촬영하는 교량 구성';

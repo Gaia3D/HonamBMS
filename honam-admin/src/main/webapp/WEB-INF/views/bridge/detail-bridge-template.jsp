@@ -139,9 +139,7 @@
 				<ul class="bridgeSubInfoGroup">
 {{#if bdfCreateDateList}}
 					<li> 정사 영상 : 
-                    </li>
-					<li>
-						<select id="orthoList">
+						<select id="orthoList" style="width: 100px;">
 							<option value="orthoi_19-04-27">2019-04-27</option>
 							<option value="orthoi_19-07-06">2019-07-06</option>
 						</select>
@@ -149,9 +147,8 @@
 							onclick="initImageLayer('ortho')" style="width : 30px;" />
 						<label for="ortho" style="width : 50px;">표시</label>
 					</li>
-					<li> change detection 영상 : 
-                    </li>
-						<select id="changedetectionList">
+					<li> 변화 탐지 영상 : 
+						<select id="changedetectionList" style="width: 80px;">
 							<option value="change_12">1-2 시기</option>
 							<option value="change_23">2-3 시기</option>
 						</select>	
@@ -159,15 +156,15 @@
 							onclick="initImageLayer('changedetection')"  style="width : 30px;" />
 						<label for="change" style="width : 50px;">표시</label>	
 					</li>
-					<li> 촬영 날짜 :
-					<select id="droneCreateDateList">
+					<li style="margin-top: 10px; margin-bottom: 5px;"> 촬영 날짜 :
+					<select id="droneCreateDateList" style="margin-right: 5px">
 						{{#each bdfCreateDateList}}
 							<option value="{{this}}">{{this}}</option>
 						{{/each}}
 					</select>
-					&nbsp;&nbsp;<button class="intd" onclick="getListBridgeDroneFile()">검색</button>
-	<dl class="legendWrap"  style="margin-top: 20px; margin-bottom: 5px;">
-		<dt>교량 구성</dt>
+					<button class="intd" onclick="getListBridgeDroneFile()">검색</button>
+	<dl class="legendWrap" style="margin-top: 5px;">
+		<dt>교량 구조</dt>
 		<dd><span class="legend co">T</span>상판</dd>
 		<dd><span class="legend pr">P</span>교각</dd>
 	</dl>							
@@ -179,12 +176,10 @@
 	<table class="list-table scope-col">
 		<col class="col-number" />
 		<col class="col-toggle" />
-		<col class="col-bridge" />
 		<col class="col-name" />
 		<thead>
 			<tr>
 				<th scope="col" class="col-number">번호</th>
-				<th scope="col" class="col-bridge">구성</th>
 				<th scope="col" class="col-toggle">파일명</th>
 				<th scope="col" class="col-name">이동</th>
 			</tr>
@@ -194,11 +189,11 @@
 			{{#each bdfList}}
 				<tr>
 					<td class="col-number">{{#replaceRowNumber ../pagination.pageNo @index}}{{/replaceRowNumber}}</td>
-					<td class="col-bridge"></td>
 					<td class="col-toggle">
+						<span class="legend co">T</span>
 						<a href="#" onclick="window.open('/upload/{{filePath}}/{{fileName}}', 'popup', 'width=600,height=300'); return false;">{{fileName}}</a>
 					</td>
-					<td class="col-name"><a href="#" onclick="gotoFlyBridge({{longitude}}, {{latitude}}, {{altitude}}); return false;"></a></td>
+					<td class="col-name"><a href="#" onclick="gotoFlyBridge({{longitude}}, {{latitude}}, {{altitude}}); return false;">이동</a></td>
 				</tr>
 			{{/each}}
 		{{else}}

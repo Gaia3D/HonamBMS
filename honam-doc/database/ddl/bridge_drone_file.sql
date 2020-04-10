@@ -19,6 +19,7 @@ create table bridge_drone_file (
 	create_date						timestamp with time zone			default now(),
 	location		 				GEOMETRY(POINT, 4326),
 	altitude						numeric(13,7),
+	bridge_structure				varchar(100),
 	constraint bridge_drone_file_pk 	primary key (upload_drone_file_id)
 );
 
@@ -39,5 +40,6 @@ comment on column bridge_drone_file.insert_date is '등록일';
 comment on column bridge_drone_file.create_date is '사진촬영일';
 comment on column bridge_drone_file.location is 'POINT(위도, 경도). 공간 검색 속도 때문에 altitude는 분리';
 comment on column bridge_drone_file.altitude is '높이';
+comment on column bridge_drone_file.bridge_structure is '드론이 촬영하는 교량 구조';
 
 commit;

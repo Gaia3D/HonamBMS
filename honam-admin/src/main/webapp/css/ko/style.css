@@ -1670,8 +1670,8 @@ vertical-align: middle;
 }
 .legendWrap > dt {
 display: inline-block;
-width: 26px;
-padding: 4px 5px;
+width: 60px;
+padding: 6px 5px;
 background-color: #f3f3f3;
 font-weight: bold;
 border-right: 1px solid #ddd;

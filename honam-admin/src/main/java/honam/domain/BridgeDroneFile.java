@@ -40,4 +40,8 @@ public class BridgeDroneFile extends Search {
 	private String location;
 	// 높이
 	private BigDecimal altitude;
+	
+	// 촬영이 촬영한 교량 구조
+	private String bridgeStructure;
+	
 }

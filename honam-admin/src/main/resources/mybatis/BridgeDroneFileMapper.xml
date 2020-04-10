@@ -12,11 +12,11 @@
 		INSERT INTO bridge_drone_file(
 			upload_drone_file_id, ogc_fid, user_id,
 			file_name, file_real_name, file_path, file_sub_path, file_size,
-			file_ext, error_message, create_date, location, altitude
+			file_ext, error_message, create_date, location, altitude, bridge_structure
 		) VALUES (
 			#{uploadDroneFileId}, #{ogcFid}, #{userId},
 			#{fileName}, #{fileRealName}, #{filePath}, #{fileSubPath}, #{fileSize},
-			#{fileExt}, #{errorMessage}, #{createDate}, ST_GeomFromText(#{location}, 4326), #{altitude}
+			#{fileExt}, #{errorMessage}, #{createDate}, ST_GeomFromText(#{location}, 4326), #{altitude} #{bridgeStructure}
 		)
 	</insert>
 
