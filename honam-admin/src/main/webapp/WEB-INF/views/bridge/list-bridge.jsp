@@ -184,9 +184,9 @@
 // 		DistrictControll(viewer);
 // 		MapControll(viewer);
 
-		$("#bridgeDetailContent").on('changed', '#droneCreateDateList', function() {
-			getListBridgeDroneFile();
-		});
+//		$("#bridgeDetailContent").on('changed', '#droneCreateDateList', function() {
+//			getListBridgeDroneFile();
+//		});
 		
 		// 차트 close 이벤트
 		$(".chartClose").on("click", function(){
@@ -874,7 +874,8 @@ function getListBridgeDroneFile(number) {
 				var bdfCreateDateList = res.bdfCreateDateList;
 				var pagination = res.pagination;
 				var bdfList = res.bdfList;
-
+				addDrone(res.bdfListAll);
+				
 				$("#droneContent").html("");
 				var htmlList = "";
  				htmlList += '<p onclick="toggleSubContent(\'drone\', \'droneInfo\');">드론 영상<span class="collapse-icon">icon</span></p>';

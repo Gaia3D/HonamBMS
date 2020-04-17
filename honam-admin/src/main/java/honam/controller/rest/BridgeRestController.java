@@ -173,10 +173,12 @@ public class BridgeRestController {
 		bridgeDronFile.setLimit(pagination.getPageRows());
 
 		List<BridgeDroneFile> bridgeDroneFileList = bridgeDroneFileService.getBridgeDroneFile(bridgeDronFile);
+		List<BridgeDroneFile> bridgeDroneFileListAll = bridgeDroneFileService.getBridgeDroneFileAll(bridgeDronFile);
 
 		int statusCode = HttpStatus.OK.value();
 		result.put("pagination", pagination);
 		result.put("bdfList", bridgeDroneFileList);
+		result.put("bdfListAll", bridgeDroneFileListAll);
 		result.put("statusCode", statusCode);
 		result.put("errorCode", errorCode);
 		result.put("message", message);
