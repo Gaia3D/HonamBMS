@@ -190,7 +190,12 @@
 				<tr>
 					<td class="col-number">{{#replaceRowNumber ../pagination.pageNo @index}}{{/replaceRowNumber}}</td>
 					<td class="col-toggle">
+				{{#ifMatch bridgeStructure '상판'}}
 						<span class="legend co">T</span>
+				{{/ifMatch}}
+				{{#ifMatch bridgeStructure '교각'}}
+						<span class="legend pr">P</span>
+				{{/ifMatch}}
 						<a href="#" onclick="window.open('/upload/{{filePath}}/{{fileName}}', 'popup', 'width=600,height=300'); return false;">{{fileName}}</a>
 					</td>
 					<td class="col-name"><a href="#" onclick="gotoFlyBridge({{longitude}}, {{latitude}}, {{altitude}}); return false;">이동</a></td>

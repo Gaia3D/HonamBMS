@@ -637,7 +637,7 @@ INSERT INTO bridge_drone_file(
 	file_ext, error_message, create_date, location, altitude, bridge_structure
 ) VALUES (
 	NEXTVAL('bridge_drone_file_seq'), 1, 'admin',
-	'1DJI_0704_1_0720.JPG', 'DJI_0704_1_0720.JPG', 'C:\data\honam\mago3d\upload\deokyang\190704', '190704', 8963278,
+	'DJI_0704_1_0720.JPG', 'DJI_0704_1_0720.JPG', 'C:\data\honam\mago3d\upload\deokyang\190704', '190704', 8963278,
 	'JPG', null, TO_TIMESTAMP('2019/07/04 00:00:00', 'YYYY/MM/DD/ HH24:MI:SS'), ST_GeomFromText('POINT(127.6356381 34.79877039)', 4326), 9.887375337, '교각'
 );
 INSERT INTO bridge_drone_file(

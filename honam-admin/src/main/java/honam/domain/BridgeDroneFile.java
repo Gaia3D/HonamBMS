@@ -39,8 +39,7 @@ public class BridgeDroneFile extends Search {
 	// POINT(위도, 경도). 공간 검색 속도 때문에 altitude는 분리
 	private String location;
 	// 높이
-	private BigDecimal altitude;
-	
+	private BigDecimal altitude;	
 	// 촬영이 촬영한 교량 구조
 	private String bridgeStructure;
 	

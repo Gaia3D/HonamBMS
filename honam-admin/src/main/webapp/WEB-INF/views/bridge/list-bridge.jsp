@@ -184,9 +184,9 @@
 // 		DistrictControll(viewer);
 // 		MapControll(viewer);
 
-//		$("#bridgeDetailContent").on('changed', '#droneCreateDateList', function() {
-//			getListBridgeDroneFile();
-//		});
+		$("#bridgeDetailContent").on('changed', '#droneCreateDateList', function() {
+			getListBridgeDroneFile();
+		});
 		
 		// 차트 close 이벤트
 		$(".chartClose").on("click", function(){
@@ -935,7 +935,13 @@ function getListBridgeDroneFile(number) {
 						htmlList += '<td class="col-number">' + number + '</td>';
 						htmlList += '</td>'
 						htmlList += '<td class="col-toggle">';
-						htmlList += '<span class="legend co">T</span> ';
+						if (bdf.bridgeStructure == '상판') {
+							console.log(bdf.bridgeStructure);
+							htmlList += '<span class="legend co">T</span> ';
+						}
+						else if (bdf.bridgeStructure == '교각') {
+							htmlList += '<span class="legend pr">P</span> ';
+						}
 						htmlList += '<a href="#" onclick="window.open(\'/upload/' + bdf.filePath + '/' + bdf.fileName + '\', \'popup\', \'width=600,height=300\'); return false;">' + bdf.fileName + '</a>';
 						htmlList += '</td>';
 						htmlList += '<td class="col-name"><a href="#" onclick="gotoFlyBridge(' + bdf.longitude + ', ' + bdf.latitude + ', ' + bdf.altitude + '); return false;">이동</a></td>';
