@@ -16,7 +16,7 @@ public class Sensor {
 	
 	// 고유 번호
 	private Integer gid;	
-	// 시섧물 번호
+	// 시설물 번호
 	private String facNum;
 	// sensor Type
 	private String sensorType;

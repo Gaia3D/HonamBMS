@@ -110,15 +110,6 @@
 			<div id="sensorInfo" class="listContents">
 				<ul class="bridgeSubInfoGroup">
 					<li>
-						<input type="radio" id="sensorVisibleTrue" name="sensorVisible" value="true"
-							onclick="showSensor('{{bridge.gid}}', '{{bridge.facNum}}', 'true');" checked="checked" style="width : 50px;" />
-						<label for="satVisibleTrue" style="width : 50px;">표시</label>
-						<input type="radio" id="sensorVisibleFalse" name="sensorVisible" value="false"
-							onclick="showSensor('{{bridge.gid}}', '{{bridge.facNum}}', 'false');" style="width : 50px;" />
-						<label for="satVisibleFalse" style="width : 50px;">비표시</label>
-					</li>
-
-					<li>
 						<div style="width:20px;height:20px;position:fixed;background-color:red"></div>
 						<lable style="margin-left:30px;">ACC(가속도계)</label>
 					</li>

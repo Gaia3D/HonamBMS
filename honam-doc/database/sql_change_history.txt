@@ -7,3 +7,8 @@ comment on column bridge.sat_grade is '위성영상기반 상태등급';
 ALTER TABLE bridge_drone_file 
 ADD COLUMN bridge_structure		varchar(100) ;
 comment on column bridge_drone_file.bridge_structure is '드론이 촬영하는 교량 구성';
+
+2020년 4월 21일
+ALTER TABLE bridge
+ALTER COLUMN bridge_lcc TYPE varchar(50) ;
+

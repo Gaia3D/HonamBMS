@@ -87,7 +87,7 @@ public class Bridge extends Search {
 	// 교량의 유지 관리 목표 성능
 	private Double bridgeCm;
 	// 교량의 내하 성능 수치
-	private Double bridgeLcc;
+	private String bridgeLcc;
 	// 교량 등급
 	private String grade;
 
