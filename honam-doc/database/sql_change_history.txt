@@ -12,3 +12,6 @@ comment on column bridge_drone_file.bridge_structure is '드론이 촬영하는 
 ALTER TABLE bridge
 ALTER COLUMN bridge_lcc TYPE varchar(50) ;
 
+2020년 4월 21일
+ALTER TABLE sensor_data
+RENAME COLUMN min_value to mean_value;

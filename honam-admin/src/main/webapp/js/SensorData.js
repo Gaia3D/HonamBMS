@@ -47,13 +47,13 @@ function initSensorTime(timeList) {
 }
 var sensorValueChart = null;
 function createSensorValueGraph(data) {
-	var minData = [];
+	var meanData = [];
 	var maxData = [];
 	var sensorid = data[0].sensorid;
 	for(var i=0; i < data.length; i++) {
-		minData.push({
+		meanData.push({
 			x : new Date(data[i].time),
-			y : data[i].minValue
+			y : data[i].meanValue
 		});
 		maxData.push({
 			x : new Date(data[i].time),
@@ -79,8 +79,8 @@ function createSensorValueGraph(data) {
 				pointHitRadius: 10,
 				pointStyle: 'circle'
 	        }, {
-	        	label : "min Value",
-	        	data: minData,
+	        	label : "mean Value",
+	        	data: meanData,
 	            borderColor: [
 	                'rgba(44,130,255,1)'
 	            ],
@@ -138,8 +138,6 @@ function createSensorValueGraph(data) {
 					ticks: {
 						autoSkip: true,
 						minRotation: 0,
-						min: -1,
-						max: 1
 					}
 	            }]
 	        }

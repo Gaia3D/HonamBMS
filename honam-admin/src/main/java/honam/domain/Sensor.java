@@ -42,7 +42,7 @@ public class Sensor {
 	// condition (0 or 1)
 	private Integer condition;
 	// mean value
-	private Double minValue;
+	private Double meanValue;
 	// max value
 	private Double maxValue;
 	// 총 건수
