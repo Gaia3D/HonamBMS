@@ -25,7 +25,7 @@
 				<td class="col-number" style="background:#efefef";>위성영상</td>
 				<td class="col-name">{{bridge.satGrade}}</td>
 				<td class="col-number" style="background:#efefef";>내하성능</td>
-				<td class="col-name">{{bridge.bridgeLcc}}</td>
+				<td class="col-name"><a href ="#" onclick="viewBridgeLCCGraph();">{{bridge.bridgeLcc}}</a></td>
 			</tr>
 			<tr>
 				<td class="col-number" style="background:#efefef";>목표성능</td>

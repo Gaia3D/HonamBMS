@@ -377,7 +377,28 @@ public class BridgeRestController {
 		result.put("message", message);
 		return result;
 	}
+	
+	// 선택된 교량의 LCC 
+	@GetMapping(value = "/{facNum}/lcc")
+	public Map<String, Object> getListSensorLCC(HttpServletRequest request, @PathVariable String facNum) {
 
+		Map<String, Object> result = new HashMap<>();
+		String errorCode = null;
+		String message = null;
+
+		List<Sensor> sensorLCCList = sensorService.getListLCCData(facNum);
+
+		int statusCode = HttpStatus.OK.value();
+
+		result.put("sensorLCCList", sensorLCCList);
+		result.put("statusCode", statusCode);
+		result.put("errorCode", errorCode);
+		result.put("message", message);
+		return result;
+	}
+	
+	
+	
 	/**
 	 * 시도 목록
 	 * @return

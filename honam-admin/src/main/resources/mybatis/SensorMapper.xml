@@ -74,5 +74,12 @@
 		LIMIT 10
 	</select>
 	
+	<!-- 해당 교량의 시간대별 LCC 목록  -->
+	<select id="getListLCCData" parameterType="string" resultType="sensor">
+		/* getListLCCData */
+		SELECT *
+		FROM lcc_data 
+		WHERE fac_num =  #{fac_num}
+	</select>
 		
 </mapper>

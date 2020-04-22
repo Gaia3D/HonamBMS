@@ -38,6 +38,30 @@ function getSensorData(sensorid, time) {
 	});
 }
 
+function getSensorLCCData(facnum) {
+	$.ajax({
+		url: "/bridges/"+ facnum + "/lcc",
+		type: "GET",
+		headers: {"X-Requested-With": "XMLHttpRequest"},
+		dataType: "json",
+		success: function(msg){
+			if(msg.statusCode <= 200) {
+				if(msg.sensorLCCList.length > 0) {
+					createSensorLCCGraph(msg.sensorLCCList);
+					$(".sensorDataGraphic").show();
+				} else {
+					alert("해당 sensor의 데이터가 존재하지 않습니다.");
+				}
+			} else {
+				alert(JS_MESSAGE[msg.errorCode]);
+			}
+		},
+		error:function(request,status,error){
+			alert(JS_MESSAGE["ajax.error.message"]);
+		}
+	});
+}
+
 function initSensorTime(timeList) {
 	$("#sensorDataSelect").empty();
 	for(var i=0; i< timeList.length;i++) {
@@ -45,6 +69,105 @@ function initSensorTime(timeList) {
 		$("#sensorDataSelect").append("<option value="+time+">"+time+"</option>");
 	}
 }
+var sensorLCCChart = null;
+function createSensorLCCGraph(data) {
+	var lccData = [];
+	var guideline = [];
+	var facnum = data[0].facnum;
+	for(var i=0; i < data.length; i++) {
+		lccData.push({
+			x : new Date(data[i].time),
+			y : data[i].lcc
+		});
+		guideline.push({
+			x : new Date(data[i].time),
+			y : 24
+		});
+	}
+	if (sensorLCCChart != null) {
+		sensorLCCChart.destroy();
+	}		
+	sensorLCCChart = new Chart(document.getElementById("lccDataGraphic"), {
+		id : facnum,
+	    type: 'line',
+	    data: {
+	        datasets: [{
+	        	label : "LCC",
+	            data: lccData,
+	            borderColor: [
+	                'rgba(44,130,255,1)'
+	            ],
+				pointBackgroundColor: 'rgba(255, 108, 108, 1)',
+				pointRadius: 5,
+				pointHoverRadius: 10,
+				pointHitRadius: 10,
+				pointStyle: 'circle',
+		        fill: false
+	        },{
+	        	label : "DB-24",
+	            data: guideline,
+	            borderColor: [
+	                'rgba(255,0,0,1)'
+	            ],
+	            pointRadius: 0,
+		        fill: false
+	        }],
+
+	    },
+	    options: {
+	    	title: {
+	            display: false,
+	        },	
+			responsive: true,
+			maintainAspectRatio: false,
+			legend: {
+				display: false,
+				position: 'top',
+				labels: {
+					boxWidth: 80,
+					fontColor: 'black'
+				}
+			},
+			hover: {
+				mode: 'index',
+				intersect: true
+			},
+	        scales: {
+				xAxes: [{
+	            	type: 'time',
+	                time: {
+	                    millisecond: 'mm:ss',
+	                    second: 'mm:ss',
+	                    minute: 'HH:mm',
+	                    hour: 'HH:mm',
+	                    day: 'MMM DD',
+	                    week: 'MMM DD',
+	                    month: 'YYYY MMM',
+	                    quarter: 'YYYY MMM',
+	                  },
+					display: true,
+					scaleLabel: {
+						display: true,
+						labelString: 'date'
+					}
+				}],
+	            yAxes: [{		            	
+					display: true,
+					scaleLabel: {
+						display: true,
+						labelString: 'LCC'
+					},
+					ticks: {
+						autoSkip: true,
+						minRotation: 0,						
+						min: 0
+					}
+	            }]
+	        }
+	    }
+	});
+}
+
 var sensorValueChart = null;
 function createSensorValueGraph(data) {
 	var meanData = [];
@@ -144,7 +267,6 @@ function createSensorValueGraph(data) {
 	    }
 	});
 }
-
 //// 센서 데이터 가시화
 //function getListSensorID(gid, facNum) {
 //	var condition;

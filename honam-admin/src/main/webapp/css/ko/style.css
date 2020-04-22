@@ -1149,7 +1149,21 @@ background: rgba(53, 53, 61, 0.7);
 .sensorDataGraphic canvas {
 	border: 1px dotted red;
 }
-
+.lccDataGraphic {
+	position: absolute;
+	bottom: 20px;
+	left: 410px;
+	right: 0;
+	height: 250px;
+	padding: 20px;
+	margin: 10px;
+	background-color: #fff;
+	z-index: 9;
+	display: none;
+}
+.lccDataGraphic canvas {
+	border: 1px dotted red;
+}
 /* ////////// 레이어 ////////// */
 .layer {
 position: absolute;

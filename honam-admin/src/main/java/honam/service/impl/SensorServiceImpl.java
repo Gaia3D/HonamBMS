@@ -71,4 +71,14 @@ public class SensorServiceImpl implements SensorService {
 	public List<Sensor> getListSensorTime(String sensorid) {
 		return sensorMapper.getListSensorTime(sensorid);
 	}
+	
+	/**
+	 * LCCdata 목록
+	 * @param fac_num
+	 * @return
+	 */
+	@Transactional(readOnly=true)
+	public List<Sensor> getListLCCData(String fac_num) {
+		return sensorMapper.getListLCCData(fac_num);
+	}
 }

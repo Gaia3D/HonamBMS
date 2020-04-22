@@ -43,4 +43,11 @@ public interface SensorMapper {
 	 * @return
 	 */
 	List<Sensor> getListSensorTime(String sensorid);
+	
+	/**
+	 * LCCdata 목록
+	 * @param fac_num
+	 * @return
+	 */
+	List<Sensor> getListLCCData(String fac_num);
 }

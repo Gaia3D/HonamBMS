@@ -47,4 +47,7 @@ public class Sensor {
 	private Double maxValue;
 	// 총 건수
 	private Double sensorIDCount;
+	
+	// lcc
+	private Double lcc;
 }
