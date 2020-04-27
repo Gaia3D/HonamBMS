@@ -71,34 +71,34 @@
 					<li>
 						<table>
 							<tr>
-								<td style="width:20px;height:20px;position:fixed;background-color:#FF0000"></td>
-								<td style="width: 100px;">4mm/yr 이상 </td>
-								<td style="width:20px;height:20px;position:fixed;background-color:#FF4500"></td>
-								<td style="width: 100px;">3 ~ 4mm/yr</td>
+								<td style="width:20px;height:20px;background-color:#FF0000"></td>
+								<td style="width: 100px;margin: auto; text-align: center">4mm/yr 이상 </td>
+								<td style="width:20px;height:20px;background-color:#FF4500"></td>
+								<td style="width: 100px;margin: auto; text-align: center">3 ~ 4mm/yr</td>
 							</tr>
 							<tr>
-								<td style="width:20px;height:20px;position:fixed;background-color:#FF8C00"></td>
-								<td style="width: 100px;">2 ~ 3mm/yr</td>
-								<td style="width:20px;height:20px;position:fixed;background-color:#FFFF00"></td>
-								<td style="width: 100px;">1 ~ 2mm/yr</td>
+								<td style="width:20px;height:20px;background-color:#FF8C00"></td>
+								<td style="width: 100px;margin: auto; text-align: center">2 ~ 3mm/yr</td>
+								<td style="width:20px;height:20px;background-color:#FFFF00"></td>
+								<td style="width: 100px;margin: auto; text-align: center">1 ~ 2mm/yr</td>
 							</tr>
 							<tr>
-								<td style="width:20px;height:20px;position:fixed;background-color:#00FF00"></td>
-								<td style="width: 100px;">0 ~ 1mm/yr</td>
-								<td style="width:20px;height:20px;position:fixed;background-color:#00FF7F"></td>
-								<td style="width: 100px;">-1 ~ 0mm/yr</td>
+								<td style="width:20px;height:20px;background-color:#00FF00"></td>
+								<td style="width: 100px;margin: auto; text-align: center">0 ~ 1mm/yr</td>
+								<td style="width:20px;height:20px;background-color:#00FF7F"></td>
+								<td style="width: 100px;margin: auto; text-align: center">-1 ~ 0mm/yr</td>
 							</tr>
 							<tr>
-								<td style="width:20px;height:20px;position:fixed;background-color:#00FFFF"></td>
-								<td style="width: 100px;">-2 ~ -1mm/yr</td>
-								<td style="width:20px;height:20px;position:fixed;background-color:#00BFFF"></td>
-								<td style="width: 100px;">-3 ~ -2mm/yr</td>
+								<td style="width:20px;height:20px;background-color:#00FFFF"></td>
+								<td style="width: 100px;margin: auto; text-align: center">-2 ~ -1mm/yr</td>
+								<td style="width:20px;height:20px;background-color:#00BFFF"></td>
+								<td style="width: 100px;margin: auto; text-align: center">-3 ~ -2mm/yr</td>
 							</tr>
 							<tr>
-								<td style="width:20px;height:20px;position:fixed;background-color:#0000FF"></td>
-								<td style="width: 100px;">-4 ~ -3mm/yr</td>
-								<td style="width:20px;height:20px;position:fixed;background-color:#00008B"></td>
-								<td style="width: 100px;">-4mm/yr 이하</td>
+								<td style="width:20px;height:20px;background-color:#0000FF"></td>
+								<td style="width: 100px;margin: auto; text-align: center">-4 ~ -3mm/yr</td>
+								<td style="width:20px;height:20px;background-color:#00008B"></td>
+								<td style="width: 100px;margin: auto; text-align: center">-4mm/yr 이하</td>
 							</tr>
 						</table>
 					</li>
@@ -110,16 +110,19 @@
 			<div id="sensorInfo" class="listContents">
 				<ul class="bridgeSubInfoGroup">
 					<li>
-						<div style="width:20px;height:20px;position:fixed;background-color:red"></div>
-						<lable style="margin-left:30px;">ACC(가속도계)</label>
+						<div style="width:20px;height:20px;background-color:red">
+							<lable style="width: 150px; margin-left:30px;display:inline-block">ACC (가속도계)</lable>
+						</div>
 					</li>
 					<li>
-						<div style="width:20px;height:20px;position:fixed;background-color:green"></div>
-						<lable style="margin-left:30px;">STR (변형률계)</label>
+						<div style="width:20px;height:20px;background-color:green">
+							<lable style="width: 150px; margin-left:30px;display:inline-block">STR (변형률계)</lable>
+						</div>
 					</li>
 					<li>
-						<div style="width:20px;height:20px;position:fixed;background-color:blue"></div>
-						<lable style="margin-left:30px;">TMP (온도계)</label>
+						<div style="width:20px;height:20px;background-color:blue">
+							<lable style="width: 150px; margin-left:30px;display:inline-block">TMP (온도계)</lable>
+						</div>
 					</li>
 				</ul>
 			</div>

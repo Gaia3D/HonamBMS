@@ -116,7 +116,8 @@ function createSensorLCCGraph(data) {
 	    },
 	    options: {
 	    	title: {
-	            display: false,
+	            display: true,
+	            text: '내하성능(LCC)'
 	        },	
 			responsive: true,
 			maintainAspectRatio: false,

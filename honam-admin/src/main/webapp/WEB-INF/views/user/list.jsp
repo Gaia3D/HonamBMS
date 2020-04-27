@@ -6,7 +6,7 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width">
-	<title>환경설정 | Honam-BMS</title>
+	<title>사용자 목록 | Honam-BMS</title>
 	<link rel="shortcut icon" href="/images/favicon.ico" type="image/x-icon" />
 	<link rel="stylesheet" href="/css/${lang}/style.css">
 	<link rel="stylesheet" href="/css/${lang}/honam-bms.css">
@@ -20,9 +20,6 @@
 <div class="wrapper">
 	<%@ include file="/WEB-INF/views/layouts/menu.jsp" %>
 	<div class="contents-wrapper">
-	
-	
-	
 	
 					<div class="page-content">
 						<%-- <div class="filters">
