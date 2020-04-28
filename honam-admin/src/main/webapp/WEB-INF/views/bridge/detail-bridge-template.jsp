@@ -192,7 +192,7 @@
 				{{/ifMatch}}
 						<a href="#" onclick="window.open('/upload/{{filePath}}/{{fileName}}', 'popup', 'width=600,height=300'); return false;">{{fileName}}</a>
 					</td>
-					<td class="col-name"><a href="#" onclick="gotoFlyBridge({{longitude}}, {{latitude}}, {{altitude}}); return false;">이동</a></td>
+					<td class="col-name"><a href="#" onclick="gotoFlyBridge({{longitude}}, {{latitude}}, {{altitude}}, {{uploadDroneFileId}}, {{ogcFid}}); return false;">이동</a></td>
 				</tr>
 			{{/each}}
 		{{else}}
