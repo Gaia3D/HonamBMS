@@ -493,12 +493,16 @@
 		if (!altitude) {
 			altitude = 200;
 		}
-		viewer.camera.flyTo({
-		    destination : Cesium.Cartesian3.fromDegrees(longitude, latitude, altitude)
-		});	
-		console.log(uploadDroneFileId);
+
 		if(uploadDroneFileId) {
 			selectedDrone(uploadDroneFileId, ogcFid);
+			viewer.camera.flyTo({
+			    destination : Cesium.Cartesian3.fromDegrees(longitude, latitude, 100)
+			});	
+		} else {
+			viewer.camera.flyTo({
+			    destination : Cesium.Cartesian3.fromDegrees(longitude, latitude, altitude)
+			});	
 		}
 	}
 
