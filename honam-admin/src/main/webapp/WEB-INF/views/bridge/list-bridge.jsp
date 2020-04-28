@@ -171,8 +171,10 @@
 	
 	// 센서데이터 관련 변수
 	var sensorValue = null;
-	
 
+	// 드론 날짜
+	var currentDate = null;
+	
    	// 초기 로딩 설정
 	$(document).ready(function() {
 		/*
@@ -192,6 +194,7 @@
 
 		$("#bridgeDetailContent").on('changed', '#droneCreateDateList', function() {
 			getListBridgeDroneFile();
+			currentDate = $('#droneCreateDateList').val();
 		});
 		
 		// 차트 close 이벤트
@@ -394,12 +397,13 @@
 			var markerImage = "/images/${lang}/"+bridge.grade+".png";
 			viewer.entities.add({
 				name : bridge.brgNam,
-		        position : Cesium.Cartesian3.fromDegrees(parseFloat(bridge.longitude), parseFloat(bridge.latitude), 30),
+		        position : Cesium.Cartesian3.fromDegrees(parseFloat(bridge.longitude), parseFloat(bridge.latitude),40),
 		        billboard : {
 		            image : markerImage,
 		            width : 30,
 		            height : 30,
 		            disableDepthTestDistance : Number.POSITIVE_INFINITY,
+		            distanceDisplayCondition : new Cesium.DistanceDisplayCondition(10.0, 15000.0),
 		            scaleByDistance : new Cesium.NearFarScalar(10000, 1.5, 1000000, 0.0)
 		        },
 		        label : {
@@ -485,13 +489,17 @@
 	    });
 	}
 
-	function gotoFlyBridge(longitude, latitude, altitude) {
+	function gotoFlyBridge(longitude, latitude, altitude, uploadDroneFileId, ogcFid) {
 		if (!altitude) {
 			altitude = 200;
 		}
 		viewer.camera.flyTo({
 		    destination : Cesium.Cartesian3.fromDegrees(longitude, latitude, altitude)
-		});
+		});	
+		console.log(uploadDroneFileId);
+		if(uploadDroneFileId) {
+			selectedDrone(uploadDroneFileId, ogcFid);
+		}
 	}
 
 	function viewBridgeDetailInfo() {
@@ -600,7 +608,6 @@
 		if(!droneList || droneList.length === 0) {
 			return;
 		}
-
 		var delimeterPrefix = 'drone_';
 		var viewer = MAGO3D_INSTANCE.getViewer();
 		var entities = viewer.entities;
@@ -631,6 +638,24 @@
 
 		}
 	}
+	
+	function selectedDrone(uploadDroneFileId, ogcFid){
+		var viewer = MAGO3D_INSTANCE.getViewer();
+		var entities = viewer.entities;
+		var delimeterPrefix = 'drone_';
+		var delimeter = delimeterPrefix + uploadDroneFileId + '_' + ogcFid;
+		var existDroneEntities = entities.values.filter(function(e){
+			return e.id.startsWith(delimeterPrefix);
+		});
+		for(var i in existDroneEntities) {
+			var existDroneEntity = existDroneEntities[i];
+			entities.getById(existDroneEntity._id).point.color = Cesium.Color.BROWN;
+		}
+
+		entities.getById(delimeter).point.color = Cesium.Color.LIME;
+
+	}
+
 
 	function initBridgeGroupLayer() {
 		var geoserverDataUrl = HONAMBMS.policy.geoserverDataUrl;
@@ -865,7 +890,7 @@
 
 	function getListBridgeDroneFile(number) {
 		var pageNo = (number === undefined) ? 1 : number;
-		currentDate = $('#droneCreateDateList').val();
+//		currentDate = $('#droneCreateDateList').val();
 		var parms = {
 				pageNo : pageNo,
 				createDate : $('#droneCreateDateList').val(),
@@ -951,7 +976,7 @@
 							}
 							htmlList += '<a href="#" onclick="window.open(\'/upload/' + bdf.filePath + '/' + bdf.fileName + '\', \'popup\', \'width=600,height=300\'); return false;">' + bdf.fileName + '</a>';
 							htmlList += '</td>';
-							htmlList += '<td class="col-name"><a href="#" onclick="gotoFlyBridge(' + bdf.longitude + ', ' + bdf.latitude + ', ' + bdf.altitude + '); return false;">이동</a></td>';
+							htmlList += '<td class="col-name"><a href="#" onclick="gotoFlyBridge(' + bdf.longitude + ', ' + bdf.latitude + ', ' + bdf.altitude + ', ' + bdf.uploadDroneFileId + ', ' + bdf.ogcFid + '); return false;">이동</a></td>';
 							htmlList += '</tr>';
 						}
 					} else {
@@ -1005,7 +1030,6 @@
 		$(".lccDataGraphic").show();
 		getSensorLCCData(BRIDGE_FAC_NUM);
 	}
-
 </script>
 </body>
 </html>
