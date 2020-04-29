@@ -6,10 +6,9 @@
 	<!-- 년간 변위율(평균값) 목록  -->
 	<select id="getListSatAvg" parameterType="string" resultType="sat">
 		/* getListSatAvg */
-		SELECT lon, lat , AVG(value) AS displacement
+		SELECT DISTINCT lon, lat , slope
 		FROM sat
 		WHERE fac_num = #{facNum}
-		GROUP BY lon, lat
 	</select>
 	
 	<!-- 선택된 지점의 날짜별 변위값 목록  -->

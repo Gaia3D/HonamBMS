@@ -22,6 +22,8 @@ public class Sat {
 	private Integer acquireDate;
 	// 변위값
 	private Double value;
+	// slope (mm/yr)
+	private Double slope;
 	// Multi Polygon
 	@Setter(AccessLevel.NONE)
 	private String geom;

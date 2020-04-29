@@ -30,8 +30,8 @@ function MouseControll() {
         			businessType = "SAT";
         			$(".analysisGraphic").show();
         			var location = pick[i].id._id.split(",");
-        			var averageValue = pick[i].id.description;
-        			getListSatValue(BRIDGE_GID, BRIDGE_FAC_NUM, averageValue, location[0], location[1]);
+        			var slope = pick[i].id.description;
+        			getListSatValue(BRIDGE_GID, BRIDGE_FAC_NUM, slope, location[0], location[1]);
         			break;
         		} else if(pick[i].id._name.toLowerCase().startsWith('drone')) {
         			//드론 엔티티 클릭 시 
