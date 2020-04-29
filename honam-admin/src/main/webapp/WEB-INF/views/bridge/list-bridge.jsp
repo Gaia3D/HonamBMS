@@ -475,6 +475,12 @@
 	        		viewBridgeInfo();
 	        		addSensorData(msg.sensorList);
 	        		addDrone(msg.bdfListAll);
+	        		
+	        		var aa = viewer.entities.values.filter(function(i){return i.name === 'Mean velocity (mm/yr)'});
+	    			for(var i in aa){var a =aa[i];viewer.entities.removeById(a.id)}
+	    			viewer.entities.remove(satValue);
+	    			satValue = null;
+	             		
 	        	} else {
 					alert(JS_MESSAGE[msg.errorCode]);
 					console.log("---- " + msg.message);
@@ -897,12 +903,11 @@
 				satValue.show = !satValue.show;
 			}
 		} else {
-			var aa = viewer.entities.values.filter(function(i){return i.name === 'Mean velocity (mm/yr)'});
+/* 			var aa = viewer.entities.values.filter(function(i){return i.name === 'Mean velocity (mm/yr)'});
 			for(var i in aa){var a =aa[i];viewer.entities.removeById(a.id)}
-
 			viewer.entities.remove(satValue);
 			satValue = null;
-
+ */
 			satValue.show = !satValue.show;
 			$(".analysisGraphic").hide();
 		}
