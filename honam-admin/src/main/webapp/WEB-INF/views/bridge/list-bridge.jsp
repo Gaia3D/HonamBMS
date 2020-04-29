@@ -882,8 +882,8 @@
 				       		var len = satAvgList.length;
 				       		for(var i=0; i < len; i++) {
 			                	var satPoint = satAvgList[i];
-			                	viewBridgeSatAvg(satPoint.lon, satPoint.lat, satPoint.displacement);
-			                	arrSatValue.push(satPoint.displacement);
+			                	viewBridgeSatAvg(satPoint.lon, satPoint.lat, satPoint.slope);
+			                	arrSatValue.push(satPoint.slope);
 			                }
 						} else {
 							alert(JS_MESSAGE[msg.errorCode]);
@@ -897,11 +897,11 @@
 				satValue.show = !satValue.show;
 			}
 		} else {
-			//var aa = viewer.entities.values.filter(function(i){return i.name === 'Mean velocity (mm/yr)'});
-			//for(var i in aa){var a =aa[i];viewer.entities.removeById(a.id)}
+			var aa = viewer.entities.values.filter(function(i){return i.name === 'Mean velocity (mm/yr)'});
+			for(var i in aa){var a =aa[i];viewer.entities.removeById(a.id)}
 
-			//viewer.entities.remove(satValue);
-			//satValue = null;
+			viewer.entities.remove(satValue);
+			satValue = null;
 
 			satValue.show = !satValue.show;
 			$(".analysisGraphic").hide();
