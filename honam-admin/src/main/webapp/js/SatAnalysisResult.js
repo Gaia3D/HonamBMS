@@ -1,4 +1,4 @@
-function getListSatValue(gid, facNum, averageValue, lon, lat) {	
+function getListSatValue(gid, facNum, slope, lon, lat) {	
 	var arrSatValue = new Array();
 	
 	var info = "facNum=" + facNum + "&lon=" + lon + "&lat=" + lat;
@@ -16,7 +16,7 @@ function getListSatValue(gid, facNum, averageValue, lon, lat) {
 					var satDisplacement = satValueList[i];
 					arrSatValue.push([satDisplacement.acquireDate, satDisplacement.value]);
 	       		}
-	       		createSatValueGraph(averageValue, lon, lat, arrSatValue);
+	       		createSatValueGraph(slope, lon, lat, arrSatValue);
 			} else {
 				alert(JS_MESSAGE[msg.errorCode]);
 			}
@@ -27,13 +27,13 @@ function getListSatValue(gid, facNum, averageValue, lon, lat) {
 	});
 }
 	
-function viewBridgeSatAvg(lon, lat, avg) {
-	if(avg >= 4){
+function viewBridgeSatAvg(lon, lat, slope) {
+	if(slope >= 4){
 		viewer.entities.add({
 			parent : satValue,
 			id : lon + ',' + lat ,
 			name : 'Mean velocity (mm/yr)',
-		    description  : avg ,
+		    description  : slope ,
 			position : Cesium.Cartesian3.fromDegrees(lon, lat, 20),
 			point : new Cesium.PointGraphics({
 				pixelSize : 10,
@@ -46,12 +46,12 @@ function viewBridgeSatAvg(lon, lat, avg) {
 			// 		material : Cesium.Color.RED
 			// 		}
 		});
-	} else if((avg >= 3) && (avg < 4)) {
+	} else if((slope >= 3) && (slope < 4)) {
 		viewer.entities.add({
 			parent : satValue,
 			id : lon + ',' + lat ,
 			name : 'Mean velocity (mm/yr)',
-			description  : avg ,
+			description  : slope ,
 			position : Cesium.Cartesian3.fromDegrees(lon, lat, 20),
 			point : new Cesium.PointGraphics({
 				pixelSize : 10,
@@ -64,12 +64,12 @@ function viewBridgeSatAvg(lon, lat, avg) {
 			//         material : Cesium.Color.ORANGERED
 			//         }
 		});
-	} else if((avg >= 2) && (avg < 3)) {
+	} else if((slope >= 2) && (slope < 3)) {
 		viewer.entities.add({
 			parent : satValue,
 			id : lon + ',' + lat ,
 			name : 'Mean velocity (mm/yr)',
-			description  : avg ,
+			description  : slope ,
 			position : Cesium.Cartesian3.fromDegrees(lon, lat, 20),
 			point : new Cesium.PointGraphics({
 				pixelSize : 10,
@@ -82,12 +82,12 @@ function viewBridgeSatAvg(lon, lat, avg) {
 			//         material : Cesium.Color.ORANGE
 			//         }
 		});
-	} else if((avg >= 1) && (avg < 2)) {
+	} else if((slope >= 1) && (slope < 2)) {
 		viewer.entities.add({
 			parent : satValue,
 			id : lon + ',' + lat ,
 			name : 'Mean velocity (mm/yr)',
-			description  : avg ,
+			description  : slope ,
 			position : Cesium.Cartesian3.fromDegrees(lon, lat, 20),
 			point : new Cesium.PointGraphics({
 				pixelSize : 10,
@@ -100,12 +100,12 @@ function viewBridgeSatAvg(lon, lat, avg) {
 			//         material : Cesium.Color.YELLOW
 			//     }
 		});
-	} else if((avg >= 0) && (avg < 1)) {
+	} else if((slope >= 0) && (slope < 1)) {
 		viewer.entities.add({
 			parent : satValue,
 			id : lon + ',' + lat ,
 			name : 'Mean velocity (mm/yr)',
-			description  : avg ,
+			description  : slope ,
 			position : Cesium.Cartesian3.fromDegrees(lon, lat, 20),
 			point : new Cesium.PointGraphics({
 				pixelSize : 10,
@@ -118,12 +118,12 @@ function viewBridgeSatAvg(lon, lat, avg) {
 			//         material : Cesium.Color.LIME
 			//     }
 		});
-	} else if((avg >= -1) && (avg < 0)) {
+	} else if((slope >= -1) && (slope < 0)) {
 		viewer.entities.add({
 			parent : satValue,
 			id : lon + ',' + lat ,
 			name : 'Mean velocity (mm/yr)',
-			description  : avg ,
+			description  : slope ,
 			position : Cesium.Cartesian3.fromDegrees(lon, lat, 20),
 			point : new Cesium.PointGraphics({
 				pixelSize : 10,
@@ -136,12 +136,12 @@ function viewBridgeSatAvg(lon, lat, avg) {
 			//         material : Cesium.Color.SPRINGGREEN
 			//     }
 		});
-	} else if((avg >= -2) && (avg < -1)) {
+	} else if((slope >= -2) && (slope < -1)) {
 		viewer.entities.add({
 			parent : satValue,
 			id : lon + ',' + lat ,
 			name : 'Mean velocity (mm/yr)',
-			description  : avg ,
+			description  : slope ,
 			position : Cesium.Cartesian3.fromDegrees(lon,lat, 20),
 			point : new Cesium.PointGraphics({
 				pixelSize : 10,
@@ -154,12 +154,12 @@ function viewBridgeSatAvg(lon, lat, avg) {
 			//         material : Cesium.Color.CYAN
 			//     }
 		});
-	} else if((avg >= -3) && (avg < -2)) {
+	} else if((slope >= -3) && (slope < -2)) {
 		viewer.entities.add({
 			parent : satValue,
 			id : lon + ',' + lat ,
 			name : 'Mean velocity (mm/yr)',
-			description  : avg ,
+			description  : slope ,
 			position : Cesium.Cartesian3.fromDegrees(lon,lat, 20),
 			point : new Cesium.PointGraphics({
 				pixelSize : 10,
@@ -172,12 +172,12 @@ function viewBridgeSatAvg(lon, lat, avg) {
 			//         material : Cesium.Color.DEEPSKYBLUE
 			//     }
 		});
-	} else if((avg >= -4) && (avg < -3)) {
+	} else if((slope >= -4) && (slope < -3)) {
 		viewer.entities.add({
 			parent : satValue,
 			id : lon + ',' + lat ,
 			name : 'Mean velocity (mm/yr)',
-			description  : avg ,
+			description  : slope ,
 			position : Cesium.Cartesian3.fromDegrees(lon, lat, 20),
 			point : new Cesium.PointGraphics({
 				pixelSize : 10,
@@ -190,12 +190,12 @@ function viewBridgeSatAvg(lon, lat, avg) {
 			//         material : Cesium.Color.BLUE
 			//     }
 		});
-	} else if(avg < -4){
+	} else if(slope < -4){
 		viewer.entities.add({
 		parent : satValue,
 		id : lon + ',' + lat ,
 		name : 'Mean velocity (mm/yr)',
-		description  : avg ,
+		description  : slope ,
 		position : Cesium.Cartesian3.fromDegrees(lon, lat, 20),
 			point : new Cesium.PointGraphics({
 				pixelSize : 10,
@@ -235,12 +235,12 @@ function parse(str) {
 }
 
 var satValueChart = null;
-function createSatValueGraph(averageValue, longitude, latitude, data) {
+function createSatValueGraph(slope, longitude, latitude, data) {
 	var date= [];
 	var displacement = [];
 	var value = [];
 	var label = [];
-	var title = "Mean velocity : " + averageValue + ", 경도 : " + longitude + ", 위도 : " + latitude;
+	var title = "slope (mm/yr) : " + slope + ", 경도 : " + longitude + ", 위도 : " + latitude;
 	
 	for (i = 0; i < data.length-1; i++) {
 		date.push(parse(String(data[i][0])));
