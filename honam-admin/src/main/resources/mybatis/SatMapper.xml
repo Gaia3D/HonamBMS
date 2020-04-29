@@ -25,7 +25,7 @@
 	<!-- 년간 변위율(평균값) 건수  -->
 	<select id="getSatAvgTotalCount" parameterType="string" resultType="long">
 		/* getSatAvgTotalCount */
-		SELECT COUNT(id)
+		SELECT COUNT(ogc_fid)
 		FROM sat
 		WHERE fac_num = #{facNum}		
 	</select>

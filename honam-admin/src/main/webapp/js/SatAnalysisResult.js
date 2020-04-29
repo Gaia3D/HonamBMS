@@ -320,9 +320,7 @@ function createSatValueGraph(averageValue, longitude, latitude, data) {
 					},
 					ticks: {
 						autoSkip: true,
-						minRotation: 0,
-						min: -15,
-						max: 15
+						minRotation: 0
 					}
 	            }]
 	        }
