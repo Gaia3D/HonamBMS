@@ -163,14 +163,11 @@
 	var HONAMBMS = HONAMBMS || {
 		policy : ${policy}
 	};
-
+	
 	// 위성 영상 처리 관련 변수
 	var satValue = null;
 	var BRIDGE_GID = null;
-	var BRIDGE_FAC_NUM = null;
-	
-	// 센서데이터 관련 변수
-	var sensorValue = null;
+	var BRIDGE_FAC_NUM = null;	
 
 	// 드론 날짜
 	var currentDate = null;
@@ -552,7 +549,7 @@
 		viewer.imageryLayers.addImageryProvider(provider);
 	}
 
-	function addSensorData(sensorList) {
+	function addSensorData(sensorList) {		
 		if(sensorList.length === 0) return;
 		var viewer = MAGO3D_INSTANCE.getViewer();
 		var entities = viewer.entities;
@@ -606,6 +603,25 @@
 				}
 			});
 		}
+	}
+		
+	function showSensorData(value) {
+		var option = false;
+		if (value === "true") {
+			option = true;
+		}
+		
+		var viewer = MAGO3D_INSTANCE.getViewer();
+		var entities = viewer.entities;
+		var sensorEntities = null;
+		var existSensorEntities = entities.values.filter(function(e){
+			return e.name === 'SENSOR';
+		});
+		for(var i in existSensorEntities) {
+			var existSensorEntity = existSensorEntities[i];
+			entities.getById(existSensorEntity._id).show = option;
+		}
+
 	}
 
 	function addDrone(droneList) {

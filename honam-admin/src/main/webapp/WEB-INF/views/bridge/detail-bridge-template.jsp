@@ -110,6 +110,14 @@
 			<div id="sensorInfo" class="listContents">
 				<ul class="bridgeSubInfoGroup">
 					<li>
+						<input type="radio" id="sensorVisibleTrue" name="sensorVisible" value="true"
+							onclick="showSensorData('true');" checked="checked" style="width : 50px;" />
+						<label for="sensorVisibleTrue" style="width : 50px;">표시</label>
+						<input type="radio" id="sensorVisibleFalse" name="sensorVisible" value="false"
+							onclick="showSensorData('false');" style="width : 50px;" />
+						<label for="sensorVisibleFalse" style="width : 50px;">비표시</label>
+					</li>
+					<li>
 						<div style="width:20px;height:20px;background-color:red">
 							<lable style="width: 150px; margin-left:30px;display:inline-block">ACC (가속도계)</lable>
 						</div>
