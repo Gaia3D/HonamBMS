@@ -136,7 +136,7 @@ public class BridgeManageRestController {
 		}
 
 		// DB insert
-		bridgeService.insertBridge(bridge, bridgeDroneFileList);
+		bridgeService.insertBridge(bridge);
 
 		int statusCode = HttpStatus.OK.value();
 		result.put("statusCode", statusCode);

@@ -681,6 +681,26 @@
 		entities.getById(delimeter).point.color = Cesium.Color.LIME;
 
 	}
+	
+	function showDroneData(value) {
+		var delimeterPrefix = 'drone_';
+		var option = false;
+		if (value === "true") {
+			option = true;
+		}
+		
+		var viewer = MAGO3D_INSTANCE.getViewer();
+		var entities = viewer.entities;
+		var droneEntities = null;
+		var existDroneEntities = entities.values.filter(function(e){
+			return e.id.startsWith(delimeterPrefix);
+		});
+		for(var i in existDroneEntities) {
+			var existDroneEntity = existDroneEntities[i];
+			entities.getById(existDroneEntity._id).show = option;
+		}
+
+	}
 
 
 	function initBridgeGroupLayer() {
@@ -963,6 +983,12 @@
 					htmlList += '</select>';
 					htmlList += '<button class="intd" onclick="getListBridgeDroneFile()">검색';
 					htmlList += '</button>';
+					htmlList += '<li> <input type="radio" id="droneVisibleTrue" name="droneVisible" value="true"';
+					htmlList += 'onclick="showDroneData(\'true\');" checked="checked" style="width : 50px;" />';
+					htmlList += '<label for="droneVisibleTrue" style="width : 50px;">표시</label>';
+					htmlList += '<input type="radio" id="sensorVisibleFalse" name="droneVisible" value="false"';
+					htmlList += 'onclick="showDroneData(\'false\');" style="width : 50px;" />';
+					htmlList += '<label for="droneVisibleFalse" style="width : 50px;">비표시</label> </li>';
 					htmlList += '<dl class="legendWrap"  style="margin-top: 5px;">';
 					htmlList += '<dt>교량 구조</dt>';
 					htmlList += '<dd> <span class="legend co"> T </span> 상판 </dd>';

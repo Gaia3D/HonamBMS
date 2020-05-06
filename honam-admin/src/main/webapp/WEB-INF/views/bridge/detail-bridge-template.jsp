@@ -144,6 +144,7 @@
 						<select id="orthoList" style="width: 100px;">
 							<option value="orthoi_19-04-27">2019-04-27</option>
 							<option value="orthoi_19-07-06">2019-07-06</option>
+							<option value="orthoi_19-10-04">2019-10-04</option>
 						</select>
 						<input type="checkbox" name="orthoi"
 							onclick="initImageLayer('ortho')" style="width : 30px;" />
@@ -158,6 +159,7 @@
 							onclick="initImageLayer('changedetection')"  style="width : 30px;" />
 						<label for="change" style="width : 50px;">표시</label>	
 					</li>
+					
 					<li style="margin-top: 10px; margin-bottom: 5px;"> 촬영 날짜 :
 					<select id="droneCreateDateList" style="margin-right: 5px">
 						{{#each bdfCreateDateList}}
@@ -165,11 +167,21 @@
 						{{/each}}
 					</select>
 					<button class="intd" onclick="getListBridgeDroneFile()">검색</button>
-	<dl class="legendWrap" style="margin-top: 5px;">
-		<dt>교량 구조</dt>
-		<dd><span class="legend co">T</span>상판</dd>
-		<dd><span class="legend pr">P</span>교각</dd>
-	</dl>							
+
+					<li>
+						<input type="radio" id="droneVisibleTrue" name="droneVisible" value="true"
+							onclick="showDroneData('true');" checked="checked" style="width : 50px;" />
+						<label for="droneVisibleTrue" style="width : 50px;">표시</label>
+						<input type="radio" id="sensorVisibleFalse" name="droneVisible" value="false"
+							onclick="showDroneData('false');" style="width : 50px;" />
+						<label for="droneVisibleFalse" style="width : 50px;">비표시</label>
+					</li>
+
+			<dl class="legendWrap" style="margin-top: 5px;">
+				<dt>교량 구조</dt>
+				<dd><span class="legend co">T</span>상판</dd>
+				<dd><span class="legend pr">P</span>교각</dd>
+			</dl>							
 <div class="count">
 	전체 <em>{{pagination.totalCount}}</em> 건
 	{{pagination.pageNo}} / {{pagination.lastPage}} 페이지
