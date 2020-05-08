@@ -22,8 +22,8 @@
 	<div class="contents-wrapper">
 		<nav class="manage-tab">
 			<ul>
-				<li><a href="/user/list">사용자 목록</a></li>
-				<li><a href="/user/input">사용자 등록</a></li>
+				<li id = "userList"><a href="/user/list">사용자 목록</a></li>
+				<li id = "userInput"><a href="/user/input">사용자 등록</a></li>
 			</ul>
 		</nav>
 		<!-- S: 사용자 등록 -->
@@ -95,7 +95,7 @@
 					<div class="alignCenter">
 						<button type="button" class="point" onclick="insertUser();"><spring:message code='save'/></button>
 						<button type="button" class="point" onclick="formClear(); return false;">초기화</button>
-						<button type="button" class="point" onclick="insertDrone();">목록</button>						
+						<button type="button" class="point" onclick="listUser()">목록</button>						
 					</div>
 				</div>
 			</form:form>
@@ -114,10 +114,173 @@
 	//초기 로딩 설정
 	$(document).ready(function() {
 		initMenu("#userMenu");
+		$('#userList').css('background-color','#999');
+	});
+	
+	var userDialog = $("#userGroupListDialog").dialog({
+		autoOpen: false,
+		height: 600,
+		width: 1200,
+		modal: true,
+		overflow : "auto",
+		resizable: false
 	});
 
+	// 부모 찾기
+	$("#userGroupButton").on("click", function() {
+		userDialog.dialog("open");
+		userDialog.dialog("option", "title", "사용자 그룹 선택");
+		$('#rootParentSelect').hide();
+	});
+
+	// 상위 Node
+	function confirmParent(parent, parentName) {
+		$("#userGroupId").val(parent);
+		$("#userGroupName").val(parentName);
+		userDialog.dialog("close");
+	}
+
+	// 입력값이 변경되면 중복체크, 영문+숫자
+	$("#userId").on("keyup", function(event) {
+		$("#duplicationValue").val(null);
+		if (!(event.keyCode >=37 && event.keyCode<=40)) {
+			var inputValue = $(this).val();
+			$(this).val(inputValue.replace(/[^a-z0-9]/gi,''));
+		}
+	});
+
+	// 아이디 중복 확인
+ 	$("#userDuplicationButton").on("click", function() {
+		var userId = $("#userId").val();
+		if (userId == "") {
+			alert(JS_MESSAGE["user.id.empty"]);
+			$("#userId").focus();
+			return false;
+		} else if (userId.length < "${policy.userIdMinLength}"*1) {
+			alert(JS_MESSAGE["user.id.min_length.invalid"]);
+			$("#userId").focus();
+			return false;
+		}
+		$.ajax({
+			url: "/users/duplication",
+			type: "GET",
+			data: {"userId": userId},
+			headers: {"X-Requested-With": "XMLHttpRequest"},
+			dataType: "json",
+			success: function(msg){
+				if(msg.statusCode <= 200) {
+					if(msg.duplication == true) {
+						alert(JS_MESSAGE["user.id.duplication"]);
+						$("#userId").focus();
+						return false;
+					} else {
+						alert(JS_MESSAGE["user.id.enable"]);
+						$("#duplicationValue").val(msg.duplication);
+					}
+				} else {
+					alert(JS_MESSAGE[msg.errorCode]);
+					console.log("---- " + msg.message);
+				}
+			},
+			error:function(request, status, error) {
+				//alert(JS_MESSAGE["ajax.error.message"]);
+				alert(" code : " + request.status + "\n" + ", message : " + request.responseText + "\n" + ", error : " + error);
+    		}
+		});
+	});
+
+	// 사용자 등록
+	var insertUserFlag = true;
+	function insertUser() {
+		if (checkData() == false) {
+			return false;
+		}
+		if(insertUserFlag) {
+			insertUserFlag = false;
+			var info = $("#userInfo").serialize();
+			$.ajax({
+				url: "/users/insert",
+				type: "POST",
+				data: info,
+				headers: {"X-Requested-With": "XMLHttpRequest"},
+				dataType: "json",
+				success: function(msg){
+					if(msg.statusCode <= 200) {
+						alert(JS_MESSAGE["user.insert"]);
+						window.location.reload();
+					} else {
+						alert(JS_MESSAGE[msg.errorCode]);
+						console.log("---- " + msg.message);
+					}
+					insertUserFlag = true;
+				},
+				error:function(request,status,error){
+			        alert(JS_MESSAGE["ajax.error.message"]);
+			        alert(" code : " + request.status + "\n" + ", message : " + request.responseText + "\n" + ", error : " + error);
+			        insertUserFlag = true;
+				}
+			});
+		} else {
+			alert(JS_MESSAGE["button.dobule.click"]);
+			return;
+		}
+	}
+
+	function checkData() {
+		var passwordValidation = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!#^%*?&])[A-Za-z\d$@$!#^%*?&]{${policy.passwordMinLength},${policy.passwordMaxLength}}$/;
+
+		if($("#duplicationValue").val() == null || $("#duplicationValue").val() == "") {
+			alert(JS_MESSAGE["check.id.duplication"]);
+			return false;
+		} else if($("#duplicationValue").val() == "1") {
+			alert(JS_MESSAGE["user.id.duplication"]);
+			return false;
+		}
+		if (!$("#userGroupId").val()) {
+			alert(JS_MESSAGE["user.group.select"]);
+			$("#userGroupId").focus();
+			return false;
+		}
+		if (!$("#userName").val()) {
+			alert(JS_MESSAGE["user.name.empty"]);
+			$("#userName").focus();
+			return false;
+		}
+		if (!$("#password").val()) {
+			alert(JS_MESSAGE["password.empty"]);
+			$("#password").focus();
+			return false;
+		} else if(!passwordValidation.test($("#password").val())) {
+			alert(JS_MESSAGE["user.password.invalid"]);
+			$("#password").focus();
+			return false;
+		} else if($("#passwordConfirm").val() == "") {
+			alert(JS_MESSAGE["password.correct.empty"]);
+			$("#passwordConfirm").focus();
+			return false;
+		} else if($("#password").val() !== $("#passwordConfirm").val()) {
+			alert("입력한 비밀번호와 비밀번호 확인이 일치하지 않습니다.");
+			$("#passwordConfirm").focus();
+			return false;
+		}
+	}
+
+	// 초기화
+	function formClear() {
+		$("#userId").val("");
+		$("#userGroupId").val("");
+		$("#userGroupName").val("");
+		$("#userName").val("");
+		$("#password").val("");
+		$("#passwordConfirm").val("");
+		$("#duplicationValue").val("");
+	}
 	
-	
+	// 사용자 목록으로 이동
+	function listUser() {
+		location.href = '/user/list';
+	}
+
 </script>
 
 </body>

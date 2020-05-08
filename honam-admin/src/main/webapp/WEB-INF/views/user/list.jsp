@@ -22,8 +22,8 @@
 	<div class="contents-wrapper">
 		<nav class="manage-tab">
 			<ul>
-				<li><a href="/user/list">사용자 목록</a></li>
-				<li><a href="/user/input">사용자 등록</a></li>
+				<li id = "userList"><a href="/user/list">사용자 목록</a></li>
+				<li id = "userInput"><a href="/user/input">사용자 등록</a></li>
 			</ul>
 		</nav>
 		<!-- S: 사용자 목록 -->
@@ -149,6 +149,7 @@
 	//초기 로딩 설정
 	$(document).ready(function() {
 		initMenu("#userMenu");
+		$('#userInput').css('background-color','#999');
 	});
 
 	//전체 선택
