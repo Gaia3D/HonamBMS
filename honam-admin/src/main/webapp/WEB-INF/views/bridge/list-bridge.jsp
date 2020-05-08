@@ -172,6 +172,8 @@
 	// 드론 날짜
 	var currentDate = null;
 	
+	var INTERVAL_TIME = 10000; 
+	
    	// 초기 로딩 설정
 	$(document).ready(function() {
 		/*
@@ -186,6 +188,7 @@
 
    		magoStart();
 
+
 // 		DistrictControll(viewer);
 // 		MapControll(viewer);
 
@@ -193,6 +196,7 @@
 			getListBridgeDroneFile();
 			currentDate = $('#droneCreateDateList').val();
 		});
+		
 		
 		// 차트 close 이벤트
 		$(".chartClose").on("click", function(){
@@ -258,7 +262,7 @@
 	   	MouseControll();
 	   	MapControll(viewer);
 
-	   	dataGroupList();
+//	   	dataGroupList();
 
 		getListSdo();
 	   	getListManageOrg();
@@ -273,10 +277,13 @@
 			initMenu("#bridgegroupMenu");
 			initBridgeGroupLayer();
 		}
+		
+		loadData();
 //		initOrthoImageLayer();
 //		initChangeDetecteLayer();
 	}
-
+	
+	
 	// 시도 목록
 	function getListSdo() {
 		$.ajax({
@@ -772,7 +779,9 @@
 	}
 	
 	
-
+	function loadData() {
+		setTimeout(dataGroupList, INTERVAL_TIME);
+	}
 
 	//데이터 그룹 목록
 	function dataGroupList() {

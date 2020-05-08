@@ -652,3 +652,63 @@ border: 1px solid #477cdb;
 .bridgeSubInfoGroup .routeList .r_row.on {
 	background-color: #eee;
 }
+
+
+
+/* Input Table
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+
+.input-table input[type=search],
+.input-table input[type=password],
+.input-table input[type=text],
+.input-table textarea {
+	background-color: #fff; }
+
+.input-table input[readonly=readonly],
+.input-table input[disabled=disabled] {
+	background-color: #ececec; }
+
+/* Table
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+.table-desc {
+	color: #a0a0a0;
+	font-size: 90%; }
+	
+	
+/*	Image button */
+.image-button {
+	display: inline-block;
+	text-indent: -9999px;
+	width: 30px;
+	height: 30px;
+	padding: 0;
+	margin: 0;
+	text-align: center;
+	text-decoration: none;
+	white-space: nowrap;
+	cursor: pointer;
+	box-sizing: border-box;
+	background: url(/images/ko/icon/image/image.png) no-repeat 0 0; }
+
+.image-button.button-area {
+	border: 1px solid #e1e1e1;
+	background-color: #f2f2f2;
+	margin: 0 1px; }
+
+.image-button.button-area:hover,
+.image-button.button-area:focus {
+	background-color: #ededed; }
+
+.button-new {}
+
+.button-batch-upload {
+	background-position: -30px 0; }
+
+.button-batch-download {
+	background-position: -60px 0; }
+
+.button-edit {
+	background-position: -90px 0; }
+
+.button-delete {
+	background-position: -120px 0; }

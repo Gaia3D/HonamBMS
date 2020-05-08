@@ -15,6 +15,23 @@ JS_MESSAGE["delete"] = "삭제 되었습니다.";
 JS_MESSAGE["success"] = "성공 하였습니다.";
 JS_MESSAGE["apply"] = "적용되었습니다.";
 
+JS_MESSAGE["upload"] = "업로딩 중입니다.";
+JS_MESSAGE["proceed.confirm"] = "진행 하시겠습니까?";
+JS_MESSAGE["move.confirm"] = "이동 하시겠습니까?";
+JS_MESSAGE["delete.confirm"] = "삭제 하시겠습니까?";
+JS_MESSAGE["check.value.required"] = "선택된 항목이 없습니다.";
+JS_MESSAGE["commingsoon"] = "준비중입니다";
+JS_MESSAGE["check.group.required"] = "그룹이 선택되지 않았습니다.";
+JS_MESSAGE["check.id.duplication"] = "아이디 중복확인을 해주십시오.";
+JS_MESSAGE["use.id.other.id.select"] = "사용중인 아이디 입니다. 다른 아이디를 선택해 주십시오.";
+JS_MESSAGE["total.count"] = "총건수:";
+JS_MESSAGE["total.few"] = "건";
+JS_MESSAGE["user"] = "사용자";
+JS_MESSAGE["server"] = "서버";
+JS_MESSAGE["account"] = "계정";
+JS_MESSAGE["use"] = "사용";
+JS_MESSAGE["not.use"] = "미사용";
+
 // 드론관리
 JS_MESSAGE["drone.name.empty"] = "드론 명을 입력해 주세요.";
 
@@ -107,3 +124,25 @@ JS_MESSAGE["user.session.close"] = "선택하신 사용자의 세션을 종료 �
 JS_MESSAGE["user.insert"] = "사용자를 등록 하였습니다.";
 JS_MESSAGE["user.info.update"] = "사용자 정보를 수정 하였습니다.";
 JS_MESSAGE["user.id.notexist"] = "아이디가 존재하지 않습니다.";
+
+//user group
+JS_MESSAGE["user.group.select"] = "사용자 그룹을 선택해 주세요.";
+JS_MESSAGE["user.group.top.not.insert"] = "최상위 그룹에는 사용자를 등록할 수 없습니다.";
+JS_MESSAGE["user.group.role.top.not.insert"] = "최상위 그룹에는 Role을 등록할 수 없습니다.";
+JS_MESSAGE["user.group.not.group.id"] = "그룹 아이디가 없습니다.";
+JS_MESSAGE["user.group.not.select"] = "선택된 항목이 없습니다.";
+
+//input group
+JS_MESSAGE["user.group.id.minlength"] = "사용자 아이디 최소 길이는";
+JS_MESSAGE["user.group.id.minlength.2"] = "입니다";
+JS_MESSAGE["user.group.password.not.same"] = "비밀번호가 비밀번호 확인 이랑 일치하지 않습니다.";
+JS_MESSAGE["user.group.phone.number.type"] = "전화번호 형식에 맞게 입력해 주십시오.";
+JS_MESSAGE["user.group.email.type"] = "이메일 형식에 맞게 입력해 주십시오."
+JS_MESSAGE["user.group.mobiler.type"] = "휴대폰 번호 형식에맞게 입력해 주십시오."
+JS_MESSAGE["user.basic.information.input"] = "사용자 기본 정보 등록 후 이용 가능 합니다.";
+JS_MESSAGE["use.device.name.input"] = "사용 기기명을 입력해 주십시오.";
+JS_MESSAGE["input.ip"] = "IP 형식에 맞게 입력해 주십시오.";
+JS_MESSAGE["user.device.input.max.five"] = "사용자 디바이스 등록은 최대 5개 까지 가능합니다.";
+JS_MESSAGE["error.exist.in.processing"] = "처리 과정에서 오류가 발생하였습니다. 확인하여 주십시오.";
+JS_MESSAGE["user.group.role.invalid"] = "사용자 그룹 권한이 유효하지 않습니다.";
+
