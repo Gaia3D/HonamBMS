@@ -436,7 +436,7 @@ right: 0;
 /* 게시판 / 목록 */
 div.boardList {
 position: relative;
-margin: 15px 0;
+margin: 20px 0;
 overflow-x: hidden;
 overflow-y: auto;
 max-height: 650px;
@@ -446,7 +446,7 @@ width: 100%;
 
 }
 div.boardList > table thead th {
-padding: 10px;
+padding: 5px;
 color: #000;
 font-weight: normal;
 border-top: 1px solid #5c7be8;

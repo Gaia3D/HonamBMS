@@ -46,7 +46,6 @@ tr:hover td {
 	text-decoration: underline; }
 	
 
-	
 /* Table Cols
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
 .scope-col td.col-checkbox,
@@ -82,6 +81,7 @@ tr:hover td {
 .scope-col td.col-space {
 	text-align: right;
 	padding-right: 20px; }
+
 
 /*	
 .scope-col.inner-table th {

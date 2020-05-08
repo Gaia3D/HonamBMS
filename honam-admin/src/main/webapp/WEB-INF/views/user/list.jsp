@@ -28,33 +28,107 @@
 		</nav>
 		<!-- S: 교량 목록 -->
 		<div class="list-wrapper" style="width: calc(100% - 80px);">
-			<div class="boardHeader" style="margin:0;">
-				<h2>사용자 목록</h2>
+			<h2>사용자 목록</h2>
+			<div class="boardHeader">
 				<div class="button-wrapper-right">
 					<button class="basic" onclick="location.href='/bridge/input-bridge'">사용자 잠금</button>
 					<button id="deleteSelected" class="basic">사용자 해제</button>
 				</div>
+				<p>
+					<spring:message code='all.d'/> <strong></strong><fmt:formatNumber value="${pagination.totalCount}" type="number"/></strong> <spring:message code='search.what.count'/>
+					<fmt:formatNumber value="${pagination.pageNo}" type="number"/> / <fmt:formatNumber value="${pagination.lastPage }" type="number"/> <spring:message code='search.page'/>
+				</p>
 			</div>
 			<div class="boardList">
-				<table>
+				<table class="list-table scope-col" summary="사용자 목록 조회 ">
+					<col class="col-checkbox" />
 					<col class="col-number" />
-					<col class="col-toggle" />
 					<col class="col-name" />
+					<col class="col-name" />
+					<col class="col-name" />
+					<col class="col-type" />
+					<col class="col-functions" />
+					<col class="col-functions" />
+					<col class="col-functions" />
 					<thead>
 						<tr>
-							<th scope="col" class="col-name" style="width:5%; font-weight: bold">
-								<input type="checkbox" id="selectAll">
-							</th>
-							<th scope="col" class="col-number">번호</th>
-							<th scope="col" class="col-toggle">교량 명</th>
-							<th scope="col" class="col-name">준공년도</th>
-							<th scope="col" class="col-name">상태</th>
-							<!-- <th scope="col" class="col-name">드론영상</th> -->
-							<th scope="col" class="col-name">이동</th>
-							<th scope="col" class="col-name">삭제</th>
+							<th scope="col" class="col-checkbox"><label for="chkAll" class="hiddenTag"></label><input type="checkbox" id="chkAll" name="chkAll" /></th>
+							<th scope="col" class="col-number"><spring:message code='number'/></th>
+							<th scope="col"><spring:message code='user.group.name'/></th>
+		                    <th scope="col">아이디</th>
+		                    <th scope="col">이름</th>
+		                    <th scope="col">상태</th>
+		                    <th scope="col">마지막 로그인</th>
+		                    <th scope="col">편집</th>
+		                    <th scope="col">등록일</th>
 						</tr>
 					</thead>
-					<tbody id="transferDataList"></tbody>
+					<tbody>
+<c:if test="${empty userList}">
+						<tr>
+							<td colspan="9" class="col-none">사용자 목록이 존재하지 않습니다.</td>
+						</tr>
+</c:if>
+<c:if test="${!empty userList}">
+	<c:forEach var="user" items="${userList}" varStatus="status">
+
+						<tr>
+							<td class="col-checkbox">
+								<label for="userId_${user.userId}" class="hiddenTag"></label>
+								<input type="checkbox" id="userId_${user.userId}" name="userId" value="${user.userId}" />
+							</td>
+							<td class="col-number">${pagination.rowNumber - status.index}</td>
+							<td class="col-name ellipsis">${user.userGroupName}</td>
+							<td class="col-name">${user.userId}</td>
+							<td class="col-name">${user.userName}</td>
+							<td class="col-type">
+								<c:choose>
+									<c:when test="${user.status eq '0'}">
+										<span class="icon-glyph glyph-on on" style="margin-right:3px;"></span>
+										<span class="icon-text"><spring:message code='user.group.in.use' /></span>
+									</c:when>
+									<c:when test="${user.status eq '1'}">
+										<span class="icon-glyph glyph-off off" style="margin-right:3px;"></span>
+										<span class="icon-text"><spring:message code='user.group.stop.use'/></span>
+									</c:when>
+									<c:when test="${user.status eq '2'}">
+										<span class="icon-glyph glyph-off off" style="margin-right:3px;"></span>
+										<span class="icon-text"><spring:message code='user.group.lock.password'/></span>
+									</c:when>
+									<c:when test="${user.status eq '3'}">
+										<span class="icon-glyph glyph-off off" style="margin-right:3px;"></span>
+										<span class="icon-text"><spring:message code='user.group.dormancy'/></span>
+									</c:when>
+									<c:when test="${user.status eq '4'}">
+										<span class="icon-glyph glyph-off off" style="margin-right:3px;"></span>
+										<span class="icon-text"><spring:message code='user.group.expires'/></span>
+									</c:when>
+									<c:when test="${user.status eq '5'}">
+										<span class="icon-glyph glyph-off off" style="margin-right:3px;"></span>
+										<span class="icon-text"><spring:message code='user.group.delete'/></span>
+									</c:when>
+									<c:when test="${user.status eq '6'}">
+										<span class="icon-glyph glyph-off off" style="margin-right:3px;"></span>
+										<span class="icon-text"><spring:message code='user.group.temporary.password'/></span>
+									</c:when>
+								</c:choose>
+							</td>
+							<td class="col-type">
+								<fmt:parseDate value="${user.lastSigninDate}" var="viewLastSigninDate" pattern="yyyy-MM-dd HH:mm:ss"/>
+								<fmt:formatDate value="${viewLastSigninDate}" pattern="yyyy-MM-dd HH:mm"/>
+							</td>
+		                    <td class="col-type">
+								<a href="/user/modify?userId=${user.userId}" class="image-button button-edit"><spring:message code='modified'/></a>&nbsp;&nbsp;
+		                    	<a href="/user/delete?userId=${user.userId}" onclick="return deleteWarning();" class="image-button button-delete"><spring:message code='delete'/></a>
+		                    </td>
+							<td class="col-type">
+								<fmt:parseDate value="${user.insertDate}" var="viewInsertDate" pattern="yyyy-MM-dd HH:mm:ss"/>
+								<fmt:formatDate value="${viewInsertDate}" pattern="yyyy-MM-dd HH:mm"/>
+							</td>
+						</tr>
+	</c:forEach>
+</c:if>
+					</tbody>
 				</table>
 			</div>
 			<ul class="pagination"></ul>
