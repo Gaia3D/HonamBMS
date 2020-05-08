@@ -103,6 +103,7 @@
 		<!-- E: 사용자 등록 -->
 	</div>
 </div>
+<%@ include file="/WEB-INF/views/user-group/dialog.jsp" %>
 
 <script type="text/javascript" src="/externlib/jquery-3.3.1/jquery.min.js"></script>
 <script type="text/javascript" src="/externlib/jquery-ui-1.12.1/jquery-ui.min.js"></script>

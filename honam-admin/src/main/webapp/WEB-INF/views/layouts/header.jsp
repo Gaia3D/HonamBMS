@@ -7,14 +7,14 @@
 	<h1><span>호남지역 중소교량의 멀티스케일 Mock-Up 시스템</span></h1>
 
 	<ul class="gnb">
+		<%
+		UserSession userSession = (UserSession) request.getSession().getAttribute(Key.USER_SESSION.name());
+		if (userSession != null && userSession.getUserId() != null && !"".equals(userSession.getUserId())) {
+		%>		
 		<li>
-			도움말
+			<span><%=userSession.getUserName()%> 님</span>
 		</li>
 		<li>
-<%
-	UserSession userSession = (UserSession) request.getSession().getAttribute(Key.USER_SESSION.name());
-	if (userSession != null && userSession.getUserId() != null && !"".equals(userSession.getUserId())) {
-%>		
 			<a href="/sign/signout" title="Sign out" style="color: white;">Sign out</a>
 <% 
 	} else { %>
