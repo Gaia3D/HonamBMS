@@ -23,16 +23,16 @@
 		<nav class="manage-tab">
 			<ul>
 				<li><a href="/user/list">사용자 목록</a></li>
-				<li><a href="/user/input-user">사용자 등록</a></li>
+				<li><a href="/user/input">사용자 등록</a></li>
 			</ul>
 		</nav>
-		<!-- S: 교량 목록 -->
+		<!-- S: 사용자 목록 -->
 		<div class="list-wrapper" style="width: calc(100% - 80px);">
 			<h2>사용자 목록</h2>
 			<div class="boardHeader">
 				<div class="button-wrapper-right">
-					<button class="basic" onclick="location.href='/bridge/input-bridge'">사용자 잠금</button>
-					<button id="deleteSelected" class="basic">사용자 해제</button>
+					<button class="basic" onclick="updateUserStatus('LOCK'); return false;">사용자 잠금</button>
+					<button class="basic" onclick="updateUserStatus('UNLOCK'); return false;">사용자 해제</button>
 				</div>
 				<p>
 					<spring:message code='all.d'/> <strong></strong><fmt:formatNumber value="${pagination.totalCount}" type="number"/></strong> <spring:message code='search.what.count'/>
@@ -145,15 +145,10 @@
 <script type="text/javascript" src="/js/${lang}/message.js"></script>
 <script type="text/javascript" src="/js/Honam-bms.js"></script>
 <script type="text/javascript">
+
+	//초기 로딩 설정
 	$(document).ready(function() {
-		initDatePicker();
-
-		$("#searchWord").val("${userInfo.searchWord}");
-		$("#searchValue").val("${userInfo.searchValue}");
-		$("#orderWord").val("${userInfo.orderWord}");
-		$("#orderValue").val("${userInfo.orderValue}");
-
-		initCalendar(new Array("startDate", "endDate"), new Array("${userInfo.startDate}", "${userInfo.endDate}"));
+		initMenu("#userMenu");
 	});
 
 	//전체 선택
